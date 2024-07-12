@@ -1,0 +1,2729 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../%E5%9B%BE%E8%AE%BA/%E9%AB%98%E7%BA%A7%E7%BA%BF%E6%80%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+      
+      
+        <link rel="next" href="../%E9%AB%98%E7%B2%BE%E5%BA%A6%20%E5%BF%AB%E8%AF%BB%E5%BF%AB%E8%BE%93/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.28">
+    
+    
+      
+        <title>哈希 字符串匹配（从字典树到KMP再到AC自动机） - OI Beats</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="OI Beats" class="md-header__button md-logo" aria-label="OI Beats" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OI Beats
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              哈希 字符串匹配（从字典树到KMP再到AC自动机）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="OI Beats" class="md-nav__button md-logo" aria-label="OI Beats" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    OI Beats
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    动态规划
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            动态规划
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20DP%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP DP优化
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E5%85%A5%E9%97%A8%E5%85%B8%E4%BE%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 入门典例
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E6%A0%91%E5%9E%8B%20%E7%8A%B6%E5%8E%8B%20%E5%80%8D%E5%A2%9E/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 树型 状压 倍增
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 背包问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    图论
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            图论
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/tarjan%20%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tarjan 算法相关
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E4%BA%8C%E5%88%86%E5%9B%BE%20%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二分图 二部图问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    图论基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E5%AD%98%E5%9B%BE%20%E6%9C%80%E7%9F%AD%E8%B7%AF%20%E8%B4%9F%E7%8E%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    存图 最短路 负环
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E6%A0%91%E4%B8%8A%E7%A5%96%E5%85%88%20LCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    树上祖先 LCA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E7%94%9F%E6%88%90%E6%A0%91%20%E5%9F%BA%E7%8E%AF%E6%A0%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    生成树 基环树
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E7%BD%91%E7%BB%9C%E6%B5%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    网络流
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E9%AB%98%E7%BA%A7%E7%BA%BF%E6%80%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级线性数据结构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    字符串
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            字符串
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    哈希 字符串匹配（从字典树到KMP再到AC自动机）
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E9%AB%98%E7%B2%BE%E5%BA%A6%20%E5%BF%AB%E8%AF%BB%E5%BF%AB%E8%BE%93/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高精度 快读快输
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E9%AB%98%E7%BA%A7%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级字符串算法
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    数学
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            数学
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E4%BA%8C%E5%88%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二分
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%8D%9A%E5%BC%88%E8%AE%BA%20SG%E5%87%BD%E6%95%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博弈论 SG函数
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%8E%9F%E6%A0%B9%20%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%20%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    原根 拉格朗日插值 莫比乌斯反演
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%BF%AB%E9%80%9F%E5%B9%82%20%E7%9F%A9%E9%98%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    快速幂 矩阵
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%AE%9A%E7%90%86%20%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数学定理 线性代数
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E7%BB%84%E5%90%88%E8%AE%A1%E6%95%B0%20%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83%20%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    组合计数 高斯消元 容斥原理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    计算几何
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E9%80%86%E5%85%83%20%E7%AD%9B%20%E4%B8%8D%E5%AE%9A%E6%96%B9%E7%A8%8B%20%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    逆元 筛 不定方程 扩展欧几里得
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    数据结构
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            数据结构
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/ST%E8%A1%A8%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%20%E7%BA%BF%E6%AE%B5%E6%A0%91%20%E5%88%86%E5%9D%97%20%E8%8E%AB%E9%98%9F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ST表 树状数组 线段树 分块 莫队
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E4%B8%8E%E5%B9%B3%E8%A1%A1%E6%A0%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二叉查找树与平衡树
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%B9%B6%E6%9F%A5%E9%9B%86%20%E6%89%A9%E5%B1%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    并查集 扩展
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%AB%98%E7%BA%A7%E3%81%AE%E6%A0%91%E4%B8%8A%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级の树上问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【】专题+++ST表+++树状数组+++线段树+++分块+++莫队+4419f177 d45a 4b1d 96ea 88ca36e3ecda
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            【】专题+++ST表+++树状数组+++线段树+++分块+++莫队+4419f177 d45a 4b1d 96ea 88ca36e3ecda
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2BST%E8%A1%A8%2B%2B%2B%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%2B%2B%2B%E7%BA%BF%E6%AE%B5%E6%A0%91%2B%2B%2B%E5%88%86%E5%9D%97%2B%2B%2B%E8%8E%AB%E9%98%9F%2B4419f177-d45a-4b1d-96ea-88ca36e3ecda/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%BB%B4%E6%8A%A4%E7%9A%84%E5%90%84%E7%A7%8D%E4%BF%A1%E6%81%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    上帝造题的七分钟 2 / 花神游历各国
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    算法基础
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            算法基础
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/C%2B%2B%E5%85%B3%E9%94%AE%E5%AD%97%E4%B8%8E%E7%94%9F%E5%83%BBSTL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C++关键字与生僻STL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/Head%2B%2B%2B%E6%A8%A1%E6%9D%BF%E5%A4%B4%2B%E7%BC%BA%E7%9C%81%E6%BA%90%2B2882b258-98b6-47da-be53-6525b90e8dae/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Head+++模板头+缺省源+2882b258 98b6 47da be53 6525b90e8dae
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%BC%80%E5%92%8C%20%E5%B7%AE%E5%88%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    前缀和 差分
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E6%A6%82%E5%BF%B5%20%E6%A6%82%E5%BF%B5%E6%80%A7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    概念 概念性
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E8%B4%AA%E5%BF%83/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    贪心
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E9%80%92%E5%BD%92%20%E9%80%92%E6%8E%A8%20%E6%B7%B1%E6%90%9C%20%E5%B9%BF%E6%90%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    递归 递推 深搜 广搜
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    算法策略
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            算法策略
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E5%88%86%E6%B2%BB%20%E6%8E%92%E5%BA%8F%20%E5%81%8F%E5%BA%8F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    分治 排序 偏序
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E5%90%AF%E5%8F%91%E5%BC%8FA_%20IDA_/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    启发式A  IDA 
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E6%80%9D%E6%83%B3%20%E7%88%AC%E5%B1%B1%E7%AE%97%E6%B3%95%20%E6%A8%A1%E6%8B%9F%E9%80%80%E7%81%AB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    思想 爬山算法 模拟退火
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<p>专题 | 哈希&amp;字符串匹配（从字典树到KMP再到AC自动机）</p>
+<h1 id="_1">目录</h1>
+<ul>
+<li>
+<p>字典树</p>
+<ul>
+<li>01tire</li>
+</ul>
+</li>
+<li>
+<p>KMP算法</p>
+<ul>
+<li>扩展kmp</li>
+</ul>
+</li>
+<li>
+<p>AC自动机算法</p>
+</li>
+<li>
+<p>manacher 算法</p>
+</li>
+<li>
+<p>哈希</p>
+<ul>
+<li>树哈希</li>
+</ul>
+</li>
+<li>
+<p>Sunday 算法</p>
+</li>
+<li>
+<p>子序列自动机</p>
+</li>
+<li>
+<p>有穷自动机</p>
+</li>
+</ul>
+<h1 id="_2">补充资料</h1>
+<p><a href="https://www.cnblogs.com/ailanxier/p/13370753.html">https://www.cnblogs.com/ailanxier/p/13370753.html</a></p>
+<h1 id="trie">字典树 Trie</h1>
+<blockquote>
+<p>多模式串，多询问串</p>
+</blockquote>
+<h2 id="_3">资料</h2>
+<p><a href="https://www.cnblogs.com/fusiwei/p/11972776.html">https://www.cnblogs.com/fusiwei/p/11972776.html</a></p>
+<p><strong>百科定义</strong></p>
+<p>Trie树，是一种树形结构，是一种哈希树的变种。典型应用是用于统计，排序和保存大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的优点是：利用字符串的公共前缀来减少查询时间，最大限度地减少无谓的字符串比较，查询效率比哈希树高。</p>
+<p><strong>性质</strong></p>
+<p>它有3个基本性质：
+根节点不包含字符，除根节点外每一个节点都只包含一个字符； 从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串； 每个节点的所有子节点包含的字符都不相同。</p>
+<p><strong>基本操作</strong></p>
+<p>其基本操作有：查找、插入和删除,当然删除操作比较少见。</p>
+<p><strong>实现方法</strong></p>
+<p>搜索字典项目的方法为：
+(1) 从根结点开始一次搜索；
+(2) 取得要查找关键词的第一个字母，并根据该字母选择对应的子树并转到该子树继续进行检索；
+(3) 在相应的子树上，取得要查找关键词的第二个字母,并进一步选择对应的子树进行检索。
+(4) 迭代过程……
+(5) 在某个结点处，关键词的所有字母已被取出，则读取附在该结点上的信息，即完成查找。
+其他操作类似处理</p>
+<h2 id="_4">思路</h2>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image.png" /></p>
+<p><strong>数据结构</strong>
+结构体实现</p>
+<pre><code class="language-C++">struct node {
+    int nxt[27];
+} trie[N];
+</code></pre>
+<p><strong>建树（插入）</strong></p>
+<blockquote>
+<p>以下仅考虑包含 <span class="arithmatex">\(a\to z\)</span> 26个单词的 Trie</p>
+</blockquote>
+<p>向Trie中插入一个单词 <span class="arithmatex">\(s\)</span></p>
+<pre><code class="language-C++">void add(char s[]) {
+    int now=1,l=strlen(s);
+    for(int i=0; i&lt;l; i++) {
+        int ch=s[i]-'a';
+        if(!trie[now].nxt[ch]) {
+            cnt++;
+            trie[now].nxt[ch]=cnt;
+        }
+        now=trie[now].nxt[ch];
+    }
+}
+</code></pre>
+<p><strong>查询</strong>
+查询是否有单词 <span class="arithmatex">\(s\)</span> 或<strong>以 <span class="arithmatex">\(s\)</span> 为前缀的单词</strong></p>
+<pre><code class="language-C++">int find(char s[]){
+    int now=0,l=strlen(s);
+    for(int i=0;i&lt;l;i++){
+        int ch=getch(s[i]);
+        if(!tre[now].nxt[ch]){
+            return 0;
+        }
+        now=tre[now].nxt[ch];
+
+    }
+    return 1;
+}
+</code></pre>
+<hr />
+<h2 id="_5">例题</h2>
+<p>给定 <span class="arithmatex">\(n\)</span> 个模式串 <span class="arithmatex">\(s_1, s_2, \dots, s_n\)</span> 和 <span class="arithmatex">\(q\)</span> 次询问，每次询问给定一个文本串 <span class="arithmatex">\(t_i\)</span>，请回答 <span class="arithmatex">\(s_1 \sim s_n\)</span> 中有多少个字符串 <span class="arithmatex">\(s_j\)</span> 满足 <span class="arithmatex">\(t_i\)</span> 是 <span class="arithmatex">\(s_j\)</span> 的<strong>前缀</strong>。</p>
+<p>一个字符串 <span class="arithmatex">\(t\)</span> 是 <span class="arithmatex">\(s\)</span> 的前缀当且仅当从 <span class="arithmatex">\(s\)</span> 的末尾删去若干个（可以为 0 个）连续的字符后与 <span class="arithmatex">\(t\)</span> 相同。</p>
+<p>输入的字符串大小敏感。例如，字符串 <code>Fusu</code> 和字符串 <code>fusu</code> 不同。</p>
+<p><strong>本题单测试点内有多组测试数据</strong>。</p>
+<p>输入的第一行是一个整数，表示数据组数 <span class="arithmatex">\(T\)</span>。</p>
+<p>对于每组数据，格式如下：
+第一行是两个整数，分别表示模式串的个数 <span class="arithmatex">\(n\)</span> 和询问的个数 <span class="arithmatex">\(q\)</span>。
+接下来 <span class="arithmatex">\(n\)</span> 行，每行一个字符串，表示一个<strong>模式串</strong>。
+接下来 <span class="arithmatex">\(q\)</span> 行，每行一个字符串，表示一次询问（<strong>询问串</strong>）。</p>
+<p>输出格式</p>
+<p>按照输入的顺序依次输出各测试数据的答案。
+对于每次询问，输出一行一个整数表示答案。</p>
+<h3 id="_6">数据规模与约定</h3>
+<p>对于全部的测试点，保证 <span class="arithmatex">\(1 \leq T, n, q\leq 10^5\)</span>，且输入字符串的总长度不超过 <span class="arithmatex">\(3 \times 10^6\)</span>。输入的字符串只含大小写字母和数字，且不含空串。</p>
+<h3 id="_7">说明</h3>
+<p>std 的 IO 使用的是关闭同步后的 cin/cout，本题不卡常。</p>
+<h2 id="solution">Solution</h2>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=3e6+5;
+int cnt,n,q,T;
+char s[MAXN];
+struct tree{
+    int nxt[63];
+}tre[MAXN];
+int nend[MAXN],sum[MAXN];
+int getch(char c){
+    int ch;
+        if(c&gt;='a')ch=c-'a'+10;// 10~35,a~z
+        else if(c&gt;='A')ch=c-'A'+36;//36~61,A~Z
+        else ch=c-'0'; //0~9,0~9
+        return ch;
+}
+void add(char s[]){
+    int now=0,l=strlen(s);
+    for(int i=0;i&lt;l;i++){
+        int ch=getch(s[i]);
+        if(!tre[now].nxt[ch]){
+            cnt++;
+            tre[now].nxt[ch]=cnt;
+        }
+        now=tre[now].nxt[ch];sum[now]++;
+    }
+}
+int find(char s[]){
+    int now=0,l=strlen(s);
+    for(int i=0;i&lt;l;i++){
+        int ch=getch(s[i]);
+        if(!tre[now].nxt[ch]){
+            return 0;
+        }
+        now=tre[now].nxt[ch];
+
+    }
+    return sum[now];
+}
+int main(){
+    scanf(&quot;%d&quot;,&amp;T);
+    while(T--){
+
+        for(int i=0;i&lt;=cnt;i++){
+            sum[i]=0;
+            for(int j=0;j&lt;=61;j++)tre[i].nxt[j]=0;
+        }
+        cnt=0;
+
+        cin&gt;&gt;n&gt;&gt;q;
+        for(int i=1;i&lt;=n;i++){
+            scanf(&quot;%s&quot;,s);
+            add(s);
+        }for(int i=1;i&lt;=q;i++){
+            scanf(&quot;%s&quot;,s);
+            printf(&quot;%d\n&quot;,find(s));
+        }
+    }
+    return 0;
+} 
+</code></pre>
+<h2 id="_8"><strong>小小的扩展 | 匹配子串</strong></h2>
+<p>本题匹配的是前缀，但如果要匹配的是子串呢？那么我们就这样：假设一个模式串为acde，那么我们就把acde,cde,de,e都加入字典树即可。</p>
+<p><strong>对应习题</strong></p>
+<p><a href="https://flowus.cn/dbb757e3-ed6a-49cc-9566-0593b4e65519">练习 | 南外20230801</a></p>
+<h2 id="01trie">01trie</h2>
+<p>01 trie 是一种特殊的 trie，字符集为 {0,1}，可以维护整数的二进制异或相关信息。</p>
+<p><a href="https://www.luogu.com.cn/problem/CF706D">www.luogu.com.cn</a></p>
+<p>有q次操作和一个集合A，开始时集合中只有一个数0，下面有三种类型的操作：</p>
+<ul>
+<li>
+<p><code>+ x</code> 把x插入集合A</p>
+</li>
+<li>
+<p><code>- x</code> 把x从集合A中删去，保证x已存在于集合A中</p>
+</li>
+<li>
+<p><code>? x</code> 给一个数x在集合A中找一个y使得x^y最大，并求出这个值
+数据范围:<span class="arithmatex">\(1\leq q\leq 200000\)</span> <span class="arithmatex">\(1\leq x_i\leq10^9\)</span></p>
+</li>
+</ul>
+<hr />
+<p>注意我们在建立trie树时应该是高位在上（即二进制的高位靠近树根），否则我们的贪心就失效了！</p>
+<p>注意空间，和线段树一样是开死了的。</p>
+<pre><code class="language-C++">/*                                                                                
+                      Keyblinds Guide
+                    ###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+
+*/
+#include &lt;bits/stdc++.h&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i &lt;= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i &gt;= END##i; --i)
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define pii pair&lt;int, int&gt;
+#define ps second
+#define pf first
+
+// #define innt int
+// #define inr int
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9') {
+        if (ch == '-')
+            ff = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+    if (out &lt; 0)
+        putchar('-'), out = -out;
+    if (out &gt; 9)
+        write(out / 10);
+    putchar(out % 10 + '0');
+}
+
+// const char el='\n';
+// const bool enable_dbg = 1;
+// template &lt;typename T,typename... Args&gt;
+// void dbg(T s,Args... args) {
+//  if constexpr (enable_dbg){
+//     cerr &lt;&lt; s &lt;&lt; ' ';
+//      if constexpr (sizeof...(Args))
+//          dbg(args...);
+//  }
+// }
+
+const int N = 6e6 + 7;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+
+namespace trie{
+    struct ndoe{
+        int s[2];
+        int cnt,val;
+    }t[N];
+    int idx=1;
+    void insert(int m){
+        int x=1;
+        for(int i=63;~i;i--){
+            int v=m&gt;&gt;i&amp;1ll;
+            if(!t[x].s[v])t[x].s[v]=++idx;
+            x=t[x].s[v];
+            t[x].cnt++;
+        }
+        t[x].val=m;
+
+        // while(m){
+        //     int cur=m&amp;1;
+        //     if(!t[x].s[cur])t[x].s[cur]=++idx;
+        //     x=t[x].s[cur];
+        //     t[x].cnt++;
+        //     m&gt;&gt;=1;
+        // }
+    }
+
+    void del(int m){
+        int x=1;
+        for(int i=63;~i;i--){
+            int v=m&gt;&gt;i&amp;1ll;
+            x=t[x].s[v];
+            t[x].cnt--;
+        }
+
+        // while(m--){
+        //     int cur=m&amp;1;
+        //     x=t[x].s[cur];
+        //     t[x].cnt--;
+        //     m&gt;&gt;=1;
+        // }
+    }
+
+    int query(int m){
+        int x=1;
+        // int res=0;
+        // while(1){
+        //     int cur=m&amp;1;
+        //     int f=0;
+        //     if(t[x].s[1^cur]&amp;&amp;t[t[x].s[1^cur]].cnt)x=t[x].s[1^cur],f=1^cur;
+        //     else x=t[x].s[cur],f=cur;
+        //     if(!t[x].cnt)break;
+        //     res&lt;&lt;=1;
+        //     res|=cur^f;
+        //     m&gt;&gt;=1;
+        // }
+        // return res;
+        for(int i=63;~i;i--){
+            int v=m&gt;&gt;i&amp;1ll;
+            if(t[x].s[v^1]&amp;&amp;t[t[x].s[v^1]].cnt)x=t[x].s[v^1];
+            else x=t[x].s[v];
+        }
+        return m^t[x].val;
+    }
+}using namespace trie;
+
+void solve(){
+    int q=rd;
+    insert(0);
+    while(q--){
+        char op;
+        cin&gt;&gt;op;
+        if(op=='-'){
+            del(rd);
+        }if(op=='+'){
+            insert(rd);
+        }if(op=='?'){
+            cout&lt;&lt;query(rd)&lt;&lt;endl;
+        }
+    }
+}
+
+signed main() {
+    int T=1;
+    while(T--){
+        solve();
+    }
+    return 0;
+}
+</code></pre>
+<p><a href="https://www.luogu.com.cn/problem/P4735">www.luogu.com.cn</a></p>
+<p>我们看到01trie是对每一个数字把其二进制加入trie树得到的。</p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%201.png" /></p>
+<p>当我们要查询所有数字中对x异或的最大值，那么我们就从低位到高位、同时从trie根节点往下按贪心策略（x当前位为1，那么走0，反之走1）走。</p>
+<h2 id="01trie_1">可持久化01trie</h2>
+<p>参考<a href="https://flowus.cn/ef4b3baf-5965-403c-b945-941120260c4a">课程 | 树上问题</a>[TJOI2018] 异或</p>
+<h1 id="kmp">KMP算法</h1>
+<h3 id="_9">百科介绍</h3>
+<p>KMP算法的核心是利用匹配失败后的信息，尽量减少模式串与主串的匹配次数以达到快速匹配的目的。具体实现就是通过一个next()函数实现，函数本身包含了模式串的局部匹配信息。KMP算法的时间复杂度O(m+n)</p>
+<p><strong>字符串的模式匹配</strong></p>
+<p>字符串的模式匹配是一种常用的运算。所谓模式匹配,可以简单地理解为在目标(字符串)中寻找一个给定的模式(也是字符串)，返回目标和模式匹配的第一个子串的首字符位置。通常目标串比较大，而模式串则比较短小</p>
+<p><strong>模式匹配的类型</strong></p>
+<p>(1)精确匹配
+如果在目标T中至少一处存在模式P，则称匹配成功，否则即使目标与模式只有一个字符不同也不能称为匹配成功，即匹配失败。给定一个字符或符号组成的字符串目标对象T和一个字符串模式P，模式匹配的目的是在目标T中搜索与模式P完全相同的子串,返回T和P匹配的第一个字符串的首字母位置 。
+(2)近似匹配
+如果模式P与目标T(或其子串)存在某种程度的相似,则认为匹配成功。常用的衡量字符串相似度的方法是根据一个串转换成另一个串所需的基本操作数目来确定。基本操作由字符串的插入、删除和替换来组成 。</p>
+<p><strong>KMP模式匹配算法</strong></p>
+<p>KMP算法是一种改进的字符串匹配算法,其关键是利用匹配失败后的信息,尽量减少模式串与主串的匹配次数以达到快速匹配的目的 。
+求得模式的特征向量之后，基于特征分析的快速模式匹配算法(KMP模式匹配算法)与朴素匹配算法类似，只是在每次匹配过程中发生某次失配时，不再单纯地把模式后移一位，而是根据当前字符的特征数来决定模式右移的位数 。</p>
+<h3 id="_10">例题</h3>
+<h1 id="kmp_1">KMP字符串匹配</h1>
+<h2 id="_11">题目描述</h2>
+<p>给出两个字符串 <span class="arithmatex">\(s_1\)</span> 和 <span class="arithmatex">\(s_2\)</span>，若 <span class="arithmatex">\(s_1\)</span> 的区间 <span class="arithmatex">\([l, r]\)</span> 子串与 <span class="arithmatex">\(s_2\)</span> 完全相同，则称 <span class="arithmatex">\(s_2\)</span> 在 <span class="arithmatex">\(s_1\)</span> 中出现了，其出现位置为 <span class="arithmatex">\(l\)</span>。
+现在请你求出 <span class="arithmatex">\(s_2\)</span> 在 <span class="arithmatex">\(s_1\)</span> 中所有出现的位置。</p>
+<p>定义一个字符串 <span class="arithmatex">\(s\)</span> 的 border 为 <span class="arithmatex">\(s\)</span> 的一个<strong>非 <span class="arithmatex">\(s\)</span> 本身</strong>的子串 <span class="arithmatex">\(t\)</span>，满足 <span class="arithmatex">\(t\)</span> 既是 <span class="arithmatex">\(s\)</span> 的前缀，又是 <span class="arithmatex">\(s\)</span> 的后缀。
+对于 <span class="arithmatex">\(s_2\)</span>，你还需要求出对于其每个前缀 <span class="arithmatex">\(s'\)</span> 的最长 border <span class="arithmatex">\(t'\)</span> 的长度。</p>
+<h2 id="_12">输入格式</h2>
+<p>第一行为一个字符串，即为 <span class="arithmatex">\(s_1\)</span>。
+第二行为一个字符串，即为 <span class="arithmatex">\(s_2\)</span>。</p>
+<h2 id="_13">输出格式</h2>
+<p>首先输出若干行，每行一个整数，<strong>按从小到大的顺序</strong>输出 <span class="arithmatex">\(s_2\)</span> 在 <span class="arithmatex">\(s_1\)</span> 中出现的位置。
+最后一行输出 <span class="arithmatex">\(|s_2|\)</span> 个整数，第 <span class="arithmatex">\(i\)</span> 个整数表示 <span class="arithmatex">\(s_2\)</span> 的长度为 <span class="arithmatex">\(i\)</span> 的前缀的最长 border 长度。</p>
+<h2 id="1">样例 #1</h2>
+<h3 id="1_1">样例输入 #1</h3>
+<p>```Plain Text
+ABABABC
+ABA</p>
+<pre><code>
+### 样例输出 #1
+
+```Plain Text
+1
+3
+0 0 1
+</code></pre>
+<h2 id="_14">提示</h2>
+<h3 id="1_2">样例 1 解释</h3>
+<p><img alt="2257.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/2257.png" /></p>
+<p>对于 <span class="arithmatex">\(s_2\)</span> 长度为 <span class="arithmatex">\(3\)</span> 的前缀 <code>ABA</code>，字符串 <code>A</code> 既是其后缀也是其前缀，且是最长的，因此最长 border 长度为 <span class="arithmatex">\(1\)</span>。</p>
+<h3 id="_15">数据规模与约定</h3>
+<p><strong>本题采用多测试点捆绑测试，共有 3 个子任务</strong>。</p>
+<ul>
+<li>
+<p>Subtask 1（30 points）：<span class="arithmatex">\(|s_1| \leq 15\)</span>，<span class="arithmatex">\(|s_2| \leq 5\)</span>。</p>
+</li>
+<li>
+<p>Subtask 2（40 points）：<span class="arithmatex">\(|s_1| \leq 10^4\)</span>，<span class="arithmatex">\(|s_2| \leq 10^2\)</span>。</p>
+</li>
+<li>
+<p>Subtask 3（30 points）：无特殊约定。</p>
+</li>
+</ul>
+<p>对于全部的测试点，保证 <span class="arithmatex">\(1 \leq |s_1|,|s_2| \leq 10^6\)</span>，<span class="arithmatex">\(s_1, s_2\)</span> 中均只含大写英文字母。</p>
+<h2 id="solution_1">Solution</h2>
+<pre><code class="language-C++">    #include&lt;bits/stdc++.h&gt;
+    using namespace std;
+    char a[1000100],b[1000100];
+    int p[1000100],ls1,ls2,j;
+
+    void pre(){
+        for(int i=2;i&lt;=ls2;i++){
+            while(j&gt;0 &amp;&amp; b[i]!=b[j+1]) j=p[j];
+            if(b[i]==b[j+1]) j++;
+            p[i]=j;
+        }
+    }
+    int main(){
+        scanf(&quot;%s%s&quot;,a+1,b+1);
+        ls1=strlen(a+1),ls2=strlen(b+1);
+        p[1]=0;
+        pre();
+
+        j=0;
+        for(int i=1;i&lt;=ls1;i++){
+            while(j&gt;0 &amp;&amp; a[i]!=b[j+1]) j=p[j];
+            if(a[i]==b[j+1]) j++;
+            if(j==ls2) printf(&quot;%d\n&quot;,i-ls2+1),j=p[j];
+        }
+        for(int i=1;i&lt;ls2;i++)
+        printf(&quot;%d &quot;,p[i]);
+        printf(&quot;%d&quot;,p[ls2]);
+        return 0;
+    }
+</code></pre>
+<h2 id="_16">练习</h2>
+<p>对nxt数组的本质探究</p>
+<p><a href="https://www.luogu.com.cn/problem/P4391">www.luogu.com.cn</a></p>
+<h1 id="kmpexkmp">扩展KMP（exkmp）</h1>
+<p><a href="https://www.bilibili.com/video/BV1Y54y1o7Ca/?spm_id_from=333.999.0.0">183 扩展 KMP(Z 函数)_哔哩哔哩_bilibili</a></p>
+<p>给定两个字符串 <span class="arithmatex">\(a,b\)</span>，你要求出两个数组：</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(b\)</span> 的 <span class="arithmatex">\(z\)</span> 函数数组 <span class="arithmatex">\(z\)</span>，即 <span class="arithmatex">\(b\)</span> 与 <span class="arithmatex">\(b\)</span> 的每一个后缀的 LCP（最长公共前缀）长度。</p>
+</li>
+<li>
+<p><span class="arithmatex">\(b\)</span> 与 <span class="arithmatex">\(a\)</span> 的每一个后缀的 LCP 长度数组 <span class="arithmatex">\(p\)</span>。</p>
+</li>
+</ul>
+<p>对于一个长度为 <span class="arithmatex">\(n\)</span> 的数组 <span class="arithmatex">\(a\)</span>，设其权值为 <span class="arithmatex">\(\operatorname{xor}_{i=1}^n i \times (a_i + 1)\)</span>。</p>
+<pre><code class="language-C++">/*////////ACACACACACACAC///////////
+       . Code  by  Ntsc .
+       . Earn knowledge .
+/*////////ACACACACACACAC///////////
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+#define db double
+#define rtn return
+using namespace std;
+
+const int N=2e7+5;
+const int M=1e5;
+const int Mod=1e5;
+const int INF=1e5;
+
+int n,m,q,T,z[N],p[N],ans;
+char s[N],t[N];
+
+void get_z(char s[],int n){
+    z[1]=n;
+    int l=0,r=0;
+    for(int i=2;i&lt;=n;i++){
+        if(i&lt;=r)z[i]=min(z[i-l+1],r-i+1);
+        while(s[1+z[i]]==s[i+z[i]])z[i]++;
+
+        if(i+z[i]-1&gt;r)l=i,r=i+z[i]-1;//转移box 
+    }
+}
+
+void get_p(char s[],char t[],int n,int m){
+    int l=0,r=0;
+    for(int i=1;i&lt;=m;i++){
+        if(i&lt;=r)p[i]=min(z[i-l+1],r-i+1);
+        while(s[1+p[i]]==t[i+p[i]]&amp;&amp;1+p[i]&lt;=n&amp;&amp;i+p[i]&lt;=m)p[i]++;
+
+        if(i+p[i]-1&gt;r)l=i,r=i+p[i]-1;//转移box 
+    }
+}
+
+signed main(){
+    scanf(&quot;%s&quot;,t+1);
+    scanf(&quot;%s&quot;,s+1);
+    n=strlen(s+1);
+    m=strlen(t+1);
+    get_z(s,n);
+    get_p(s,t,n,m);
+
+//  for(int i=1;i&lt;=n;i++)cerr&lt;&lt;z[i]&lt;&lt;' ';
+//  cerr&lt;&lt;&quot;z[]end\n&quot;;
+    for(int i=1;i&lt;=n;i++)ans^=i*(z[i]+1);
+    cout&lt;&lt;ans&lt;&lt;endl;
+    ans=0;
+    for(int i=1;i&lt;=m;i++)ans^=i*(p[i]+1);
+    cout&lt;&lt;ans&lt;&lt;endl;
+    return 0;
+}
+
+
+</code></pre>
+<p>注意求的是b的z函数</p>
+<h2 id="z">Z函数</h2>
+<p>z 函数
+对于一个长度为 n 的字符串 s 。$ z_i$表示 $s $与其后缀 $s[ i , n ] $的最长公共前缀 （ LCP ） 的长度</p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%202.png" /></p>
+<p>暴力计算自然是O(n^2)</p>
+<h2 id="z-box">Z-box</h2>
+<p>手扶着铁窗~~我望~~外边~~~</p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%203.png" /></p>
+<p>对于 i, 我们称区间$ [i,i+ z[i]- 1 ]$ 是的匹配段 ， 也可以叫 Z-box
+算法过程中我们维护右端点最靠右的匹配段 。 为了方便 ， 记作[l, r ] 。 s [l,r]一定等于 s  的前缀 。
+在计算 z[i] 时我们保证l≤i</p>
+<p>举个例子，此时我们已经处理了z[1\sim 5]，此时盒子为[5,8]，那么我们在处理z[6\sim 8]时就可以直接从z[2\sim 4]转移过来。</p>
+<p><strong>算法流程</strong></p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%204.png" /></p>
+<p>对比一下？马拉车如下：</p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%205.png" /></p>
+<p>我们来解释一下</p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%206.png" /></p>
+<ol>
+<li>
+<p>我们可以保证s[1,r-l+1]=s[l,r]，但是其余部分我们不能保证。如果i在box内
+(1) 如z[i-l+1]&lt;r-i+1，说明z[i-l+1]的对应的字符串全部在box内，所以我们可以保证z[i-l+1]可以完美转移到z[i]
+(2) 如z[i-l+1]≥r-i+1，说明z[i-l+1]的对应的字符串前部分在box内，所以我们可以不能保证z[i-l+1]可以完美转移到z[i]，故对于伸出box外的部分，我们要逐个枚举</p>
+</li>
+<li>
+<p>如果i在box外。那么我们只好暴力枚举了。</p>
+</li>
+</ol>
+<p>但是有一个重点就是box的转移了。要不然这个算法就失去了意义。</p>
+<p>求出 <span class="arithmatex">\(z[i]\)</span> 后 ， 如果 <span class="arithmatex">\(i + z[i] - 1 &gt; r\)</span>, 则更新盒子 <span class="arithmatex">\(l = i , r = i + z [i]-1\)</span>。为什么呢？因为i + z[i] - 1 代表当前z[i]的对应串的右端点。如果i + z[i] - 1 &gt; r，就说明对应串的右端点伸出了当前的box</p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%207.png" /></p>
+<p>很明显，以左图为例，红色box区间已经没有用处了，而现在我们知道蓝色区间对应相等，那么我们就可以把box转移到[l',r']</p>
+<h2 id="_17">代码</h2>
+<pre><code class="language-C++">void get_z(char s[],int n){
+    z[1]=n;
+    int l=0,r=0;
+    for(int i=2;i&lt;=n;i++){
+        if(i&lt;=r)z[i]=min(z[i-l+1],r-i+1);
+        while(s[1+z[i]]==s[i+z[i]])z[i]++;
+        if(i+z[i]-1&gt;r)l=i;r=i+z[i]-1;//转移box 
+    }
+}
+</code></pre>
+<p>时间复杂度分析</p>
+<p>时间复杂度完全取决于while，而我们知道，只有当前z[i]对应字符的右边界伸出了box，伸出多少就跑几遍while。而在伸出后我们又会更新box，所以我们的while次数<span class="arithmatex">\(=r\)</span>从<span class="arithmatex">\(1\sim n=n\)</span>次</p>
+<h2 id="p">P函数</h2>
+<pre><code class="language-C++">void get_p(char s[],char p[],int n,int m){
+    int l=0,r=0;
+    for(int i=1;i&lt;=n;i++){
+        if(i&lt;=r)p[i]=min(z[i-l+1],r-i+1);
+        while(s[1+p[i]]==t[i+p[i]]&amp;&amp;1+p[i]&lt;=n&amp;&amp;i+p[i]&lt;=m)p[i]++;
+
+        if(i+p[i]-1&gt;r)l=i;r=i+p[i]-1;//转移box 
+    }
+}
+</code></pre>
+<h1 id="ac">AC自动机</h1>
+<blockquote>
+<p>单模式串，多询问串</p>
+</blockquote>
+<p>多模式串，多询问串请见字典树</p>
+<h3 id="_18">补充资料</h3>
+<p><a href="https://www.cnblogs.com/hyfhaha/p/10802604.html">https://www.cnblogs.com/hyfhaha/p/10802604.html</a></p>
+<h3 id="_19">百科介绍</h3>
+<p>一个常见的例子就是给出n个单词，再给出一段包含m个字符的文章，让你找出有多少个单词在文章里出现过。
+要搞懂AC自动机，先得有模式树（字典树）Trie和KMP模式匹配算法的基础知识。AC自动机算法分为三步：构造一棵Trie树，构造失败指针和模式匹配过程。
+如果你对KMP算法了解的话，应该知道KMP算法中的next函数（shift函数或者fail函数）是干什么用的。KMP中我们用两个指针i和j分别表示，A[i-j+ 1..i]与B[1..j]完全相等。也就是说，i是不断增加的，随着i的增加j相应地变化，且j满足以A[i]结尾的长度为j的字符串正好匹配B串的前 j个字符，当A[i+1]≠B[j+1]，KMP的策略是调整j的位置（减小j值）使得A[i-j+1..i]与B[1..j]保持匹配且新的B[j+1]恰好与A[i+1]匹配，而next函数恰恰记录了这个j应该调整到的位置。同样AC自动机的失败指针具有同样的功能，也就是说当我们的模式串在Trie上进行匹配时，如果与当前节点的关键字不能继续匹配，就应该去当前节点的失败指针所指向的节点继续进行匹配。</p>
+<p><img alt="OFWS2KEdjRaAv63.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/OFWS2KEdjRaAv63.png" /></p>
+<h2 id="_20">构建</h2>
+<p>1 ．构造 Trie 树</p>
+<p>我们先用 n 个模式串构造一颗 Trie树</p>
+<p>Trie 中的一个节点表示一个从根到当前节点的字符串</p>
+<p>根节点表示空串，如果节点是个模式串，则打个标记 cnt_u=1</p>
+<p><strong>建字典树</strong></p>
+<pre><code class="language-C++">void add(char s[]) {
+    int now=1,l=strlen(s);
+    for(int i=0; i&lt;l; i++) {
+        int ch=s[i]-'a';
+        if(!trie[now].nxt[ch]) {
+            cnt++;
+            trie[now].nxt[ch]=cnt;
+        }
+        now=trie[now].nxt[ch];
+    }
+    trie[now].flag++;   //根据需求变化flag所存的信息
+}
+</code></pre>
+<p>2 ．构造自动机在 Trie 上构建两类边：回跳边和转移边。</p>
+<p><strong>求Fail指针</strong></p>
+<p>注意考虑fail指针的意义</p>
+<p>fail[v] 存节点 v 的回跳边的终点。 回跳边指向父节点的回跳边所指节点的儿子0四个点（ v, u, fail[u], ch[][]) 构成四边形回跳边所指节点一定是当前节点的最长后缀。</p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%208.png" /></p>
+<p>如图，v=7,u=6。那么我们通过v访问u后沿着u往其fail走到x=fail[u]。此时如果存在x→son(x)和u→v所指代的字符相同，那么就链接fail[v]=son(x)，形成了一个四边形。</p>
+<p>ch[u][i]存节点 u 的树边的终点和节点 u 的转移边的终点。 所谓转移边，就是从u连向所有的son(fail[u])。那么它和回调边有什么区别呢？</p>
+<p>回跳边是在当前u的下一个字母失配时快速转移的边，而转移边是在当前u已经是一个被匹配的字符串时，要快速转移到下一个以u为前缀的待匹配字符串。</p>
+<pre><code class="language-C++">queue&lt;int&gt; q;
+void getFail() { //求出Fail指针
+    for(int i=0; i&lt;26; i++)trie[0].nxt[i]=1;
+    q.push(1);
+    trie[1].fail=0;
+    while(q.size()) {
+        int u=q.front();
+        q.pop();
+        for(int i=0; i&lt;26; i++) {
+            int v=trie[u].nxt[i],fail=trie[u].fail;
+            if(!v) {
+                trie[u].nxt[i]=trie[fail].nxt[i];
+                continue;
+            }
+            trie[v].fail=trie[fail].nxt[i];
+            q.push(v);
+        }
+    }
+}
+</code></pre>
+<p>3 ，扫描主串匹配</p>
+<p><strong>查询</strong></p>
+<p>查找出现了几个单词（多个相同的单词算一个）扫描主串，依次取出字符 s[i] ，</p>
+<p>1 ． v 指针走主串对应的节点，沿着树边或转移边走，保证不回退</p>
+<p>2 、 k 指针沿着囗跳边搜索模式串每次从当前节点走到根节点，把当前节点中的所有后缀模式串一网打尽，保证不漏解</p>
+<p>3 、扫描完主串，返回答案0算法一边走串，一边把当前串的所有后缀串搜出来.</p>
+<pre><code class="language-C++">int query(char s[]) {
+    int u=1,ans=0,l=strlen(s);
+    for(int i=0; i&lt;l; i++) {
+        int v=s[i]-'a',k=trie[u].nxt[v];
+        while(k&gt;1&amp;&amp;trie[k].flag!=-1) {
+            ans+=trie[k].flag,trie[k].flag=-1;//因为多个相同的单词算一个，所以这里要青空并且标记-1表示改单词已经被统计过了
+            k=trie[k].fail;
+        }
+        u=trie[u].nxt[v];
+    }
+    return ans;
+}
+
+</code></pre>
+<h3 id="_21">优化</h3>
+<p>有些时候，普通的AC自动机可能会TLE，这个时候我们就需要一点点优化</p>
+<p><strong>拓扑建图优化</strong>
+让我们把Trie上的fail都想象成一条条有向边，那么我们如果在一个点对那个点进行一些操作，那么沿着这个点连出去的点也会进行操作（就是跳fail），所以我们才要暴力跳fail去更新之后的点。</p>
+<p><img alt="5ccaaa22cbf29.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/5ccaaa22cbf29.png" /></p>
+<p>我们先找到了编号4这个点，编号4的fail连向编号7这个点，编号7的fail连向编号9这个点。那么我们要更新编号4这个点的值，同时也要更新编号7和编号9，这就是暴力跳fail的过程。</p>
+<p>我们下一次找到编号7这个点，还要再次更新编号9，所以时间复杂度就在这里被浪费了。</p>
+<p>那么我们可不可以在找到的点打一个标记，最后再一次性将标记全部上传 来 更新其他点的ans
+。例如我们找到编号4，在编号4这个点打一个ans标记为1，下一次找到了编号7，又在编号7这个点打一个ans标记为1，那么最后，我们直接从编号4开始跳fail，然后将标记ans上传，((点i的fail)的ans)加上(点i的ans)，最后使编号4的ans为1，编号7的ans为2，编号9的ans为2，这样的答案和暴力跳fail是一样的，并且每一个点只经过了一次。</p>
+<p>最后我们将有flag标记的ans传到vis数组里，就求出了答案。</p>
+<p>请思考！</p>
+<p>那么现在问题来了，怎么确定更新顺序呢？明显我们打了标记后肯定是从深度大的点开始更新上去的。</p>
+<p>怎么实现呢？拓扑排序！</p>
+<p>我们使每一个点向它的fail
+指针连一条边，明显，每一个点的出度为1
+（fail只有一个），入度可能很多，所以我们就不需要像拓扑排序那样先建个图了，直接往fail
+指针跳就可以了。</p>
+<p>最后我们根据fail
+指针建好图后（想象一下，程序里不用实现），一定是一个DAG，具体原因不解释（很简单的），那么我们就直接在上面跑拓扑排序，然后更新ans就可以了。</p>
+<p>代码实现：
+首先是getfail
+这里，记得将fail的入度in更新。</p>
+<p>在<code>GetFail</code>函数中</p>
+<pre><code class="language-C++">trie[v].fail=trie[fail].nxt[i];
+in[trie[v].fail]++;
+</code></pre>
+<p>在<code>query</code>函数中</p>
+<pre><code class="language-C++">void query(char s[]){
+    int u=1,l=strlen(s);
+    for(int i=0;i&lt;l;i++){
+        u=trie[u].nxt[s[i]-'a'],trie[u].ans++;  //直接打标记就可以了
+    }
+}
+
+//对比下原来的
+/*
+
+int query(char s[]) {
+    int u=1,ans=0,l=strlen(s);
+    for(int i=0; i&lt;l; i++) {
+        int v=s[i]-'a',k=trie[u].nxt[v];
+        while(k&gt;1&amp;&amp;trie[k].flag!=-1) {
+            ans+=trie[k].flag,trie[k].flag=-1;
+            k=trie[k].fail;
+        }
+        u=trie[u].nxt[v];
+    }
+    return ans;
+}
+
+*/
+</code></pre>
+<p>然后是拓扑排序</p>
+<pre><code class="language-C++">void topsort(){
+    for(int i=1;i&lt;=cnt;i++){if(!in[i])q.push(i);}
+    while(!q.empty()){
+        int u=q.front();q,pop();
+        vis[trie[u].flag]=trie[u].ans;
+        int v=trie[u].fail;in[v]--;
+        trie[v].ans+=trie[u].ans;
+        if(!in[v])q.push(v);
+    }
+}
+</code></pre>
+<p>注释见大佬的...</p>
+<pre><code class="language-C++">void topu(){
+    for(int i=1;i&lt;=cnt;++i)
+    if(in[i]==0)q.push(i);              //将入度为0的点全部压入队列里
+    while(!q.empty()){
+        int u=q.front();q.pop();vis[trie[u].flag]=trie[u].ans;  //如果有flag标记就更新vis数组
+        int v=trie[u].fail;in[v]--;     //将唯一连出去的出边fail的入度减去（拓扑排序的操作）
+        trie[v].ans+=trie[u].ans;       //更新fail的ans值
+        if(in[v]==0)q.push(v);          //拓扑排序常规操作
+    }
+}
+
+</code></pre>
+<h3 id="_22">拓扑排序</h3>
+<pre><code>**百科**
+</code></pre>
+<p>对一个有向无环图(Directed Acyclic Graph简称DAG)G进行拓扑排序，是将G中所有顶点排成一个线性序列，使得图中任意一对顶点u和v，若边 <span class="arithmatex">\(&lt;u,v&gt;∈E(G)\)</span> ，则u在线性序列中出现在v之前。通常，这样的线性序列称为满足拓扑次序(Topological Order)的序列，简称拓扑序列。简单的说，由某个集合上的一个偏序得到该集合上的一个全序，这个操作称之为拓扑排序。</p>
+<pre><code>拓扑排序常用来确定一个依赖关系集中，事物发生的顺序。例如，在日常工作中，可能会将项目拆分成A、B、C、D四个子部分来完成，但A依赖于B和D，C依赖于D。为了计算这个项目进行的顺序，可对这个关系集进行拓扑排序，得出一个线性的序列，则排在前面的任务就是需要先完成的任务。
+</code></pre>
+<p>注意：这里得到的排序并不是唯一的！就好像你早上穿衣服可以先穿上衣也可以先穿裤子，只要里面的衣服在外面的衣服之前穿就行。</p>
+<pre><code>**实现**
+
+在图论中，拓扑排序（Topological Sorting）是一个有向无环图（DAG, Directed Acyclic Graph）的所有顶点的线性序列。且该序列必须满足下面两个条件：
+
+- 每个顶点出现且只出现一次。
+
+- 若存在一条从顶点 A 到顶点 B 的路径，那么在序列中顶点 A 出现在顶点 B 的前面。
+</code></pre>
+<p><strong>有向无环图（DAG）才有拓扑排序</strong>，非DAG图没有拓扑排序一说。</p>
+<pre><code>例如，下面这个图：
+
+![20150507001759702](专题+++哈希+++字符串匹配（从字典树到KMP再到AC自动机）+fd6716bb-f405-4698-a9db-2bbd53422388/20150507001759702)
+
+它是一个 DAG 图，那么如何写出它的拓扑排序呢？这里说一种比较常用的方法：
+
+从 DAG 图中选择一个 没有前驱（即入度为0）的顶点并输出。
+</code></pre>
+<p>从图中删除该顶点和所有以它为起点的有向边。
+重复 1 和 2 直到当前的 DAG 图为空或当前图中不存在无前驱的顶点为止。后一种情况说明有向图中<strong>必然存在环</strong>。</p>
+<pre><code>于是，得到拓扑排序后的结果是 { 1, 2, 4, 3, 5 }。
+
+通常，一个有向无环图可以有**一个或多个**拓扑排序序列。
+
+```C++
+void topu(){
+    for(int i=1;i&lt;=n;i++)if(!in[i])q.push(i);//点的入度
+
+    while(q.size()){
+        int u=q.front();
+
+        cout&lt;&lt;u&lt;&lt;' ';//输出topu序
+
+        q.pop();
+        if(vis[u])continue;
+        vis[u]=1;
+        for(auto v:e[u]){
+            if(vis[v])continue;
+            in[v]--;
+            if(!in[v])q.push(v);
+        }
+    }
+}
+```
+
+**拓扑排序的应用**
+
+拓扑排序通常用来“排序”具有依赖关系的任务。
+
+比如，如果用一个DAG图来表示一个工程，其中每个顶点表示工程中的一个任务，用有向边 表示在做任务 B 之前必须先完成任务 A。故在这个工程中，任意两个任务要么具有确定的先后关系，要么是没有关系，绝对不存在互相矛盾的关系（即环路）。
+</code></pre>
+<p>————————————————
+<a href="https://blog.csdn.net/lisonglisonglisong/article/details/45543451">https://blog.csdn.net/lisonglisonglisong/article/details/45543451</a></p>
+<h3 id="_23">例题</h3>
+<h2 id="ac_1">AC 自动机（二次加强版）</h2>
+<h2 id="_24">配乐</h2>
+<p><em>百战成诗2023</em></p>
+<h2 id="_25">题目描述</h2>
+<p>给你一个文本串 <span class="arithmatex">\(S\)</span> 和 <span class="arithmatex">\(n\)</span> 个模式串 <span class="arithmatex">\(T_{1 \sim n}\)</span>，请你分别求出每个模式串 <span class="arithmatex">\(T_i\)</span> 在 <span class="arithmatex">\(S\)</span> 中出现的次数。</p>
+<h2 id="_26">输入格式</h2>
+<p>第一行包含一个正整数 <span class="arithmatex">\(n\)</span> 表示模式串的个数。</p>
+<p>接下来 <span class="arithmatex">\(n\)</span> 行，第 <span class="arithmatex">\(i\)</span> 行包含一个由小写英文字母构成的非空字符串 <span class="arithmatex">\(T_i\)</span>。</p>
+<p>最后一行包含一个由小写英文字母构成的非空字符串 <span class="arithmatex">\(S\)</span>。</p>
+<p><strong>数据不保证任意两个模式串不相同</strong>。</p>
+<h2 id="_27">输出格式</h2>
+<p>输出包含 <span class="arithmatex">\(n\)</span> 行，其中第 <span class="arithmatex">\(i\)</span> 行包含一个非负整数表示 <span class="arithmatex">\(T_i\)</span> 在 <span class="arithmatex">\(S\)</span> 中出现的次数。</p>
+<h2 id="1_3">样例 #1</h2>
+<h3 id="1_4">样例输入 #1</h3>
+<p>```Plain Text
+5
+a
+bb
+aa
+abaa
+abaaa
+abaaabaa</p>
+<pre><code>
+### 样例输出 #1
+
+```Plain Text
+6
+0
+3
+2
+1
+</code></pre>
+<h2 id="_28">提示</h2>
+<p>对于 <span class="arithmatex">\(100 \%\)</span> 的数据，<span class="arithmatex">\(1 \le n \le 2 \times {10}^5\)</span>，<span class="arithmatex">\(T_{1 \sim n}\)</span> 的长度总和不超过 <span class="arithmatex">\(2 \times {10}^5\)</span>，<span class="arithmatex">\(S\)</span> 的长度不超过 <span class="arithmatex">\(2 \times {10}^6\)</span>。</p>
+<h2 id="solution_2">Solution</h2>
+<h3 id="char-schar-s">补充知识点:<code>char* s</code>和<code>char s[]</code>的区别</h3>
+<p><a href="https://blog.csdn.net/weibo1230123/article/details/80278828">https://blog.csdn.net/weibo1230123/article/details/80278828</a></p>
+<h3 id="_29">注意</h3>
+<ul>
+<li>
+<p>普通AC自动机时间复杂度过高</p>
+</li>
+<li>
+<p>不保证任意两个模式串不相同,这道题有相同字符串要统计，所以我们用一个<code>web[]</code>数组存这个字符串指的是Trie中的那个位置，最后把<code>vis[web[i]]</code>输出就OK了。</p>
+</li>
+</ul>
+<p>如果交<a href="https://www.luogu.com.cn/problem/P3796">【模板】AC 自动机（加强版）</a>的代码只有44分</p>
+<h3 id="_30">代码</h3>
+<pre><code class="language-C++">//AC自动机优化模板
+//AC自动机模板
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+
+const int N=2e6+5;
+int n,x,t,i,cnt,vis[N],ans,web[N],in[N];
+char c[N];
+struct node {
+    int nxt[27];
+    int fail,flag,ans;
+    void init() {
+        fail=flag=0;
+        memset(nxt,0,sizeof nxt);
+    }
+} trie[N];
+
+void add(char s[],int num) {
+    int now=1,l=strlen(s);
+    for(int i=0; i&lt;l; i++) {
+        int ch=s[i]-'a';
+        if(!trie[now].nxt[ch]) {
+            cnt++;
+            trie[now].nxt[ch]=cnt;
+        }
+        now=trie[now].nxt[ch];
+    }
+    if(!trie[now].flag)trie[now].flag=num;
+    web[num]=trie[now].flag;
+}
+queue&lt;int&gt; q;
+void getFail() { //求出Fail指针
+    for(int i=0; i&lt;26; i++)trie[0].nxt[i]=1;
+    q.push(1);
+    trie[1].fail=0;
+    while(q.size()) {
+        int u=q.front();
+        q.pop();
+        for(int i=0; i&lt;26; i++) {
+            int v=trie[u].nxt[i],fail=trie[u].fail;
+            if(!v) {
+                trie[u].nxt[i]=trie[fail].nxt[i];
+                continue;
+            }
+            trie[v].fail=trie[fail].nxt[i];
+            in[trie[v].fail]++;
+            q.push(v);
+        }
+    }
+}
+
+void query(char s[]) {  //此次query是void类型
+    int u=1,l=strlen(s);
+    for(int i=0; i&lt;l; i++) {
+        u=trie[u].nxt[s[i]-'a'],trie[u].ans++;  //直接打标记就可以了
+    }
+}
+void topsort() {
+    for(int i=1; i&lt;=cnt; i++) {
+        if(!in[i])q.push(i);
+    }
+    while(!q.empty()) {
+        int u=q.front();
+        q.pop();
+        vis[trie[u].flag]=trie[u].ans;
+        int v=trie[u].fail;
+        in[v]--;
+        trie[v].ans+=trie[u].ans;
+        if(!in[v])q.push(v);
+    }
+}
+void init() {
+    cnt=1;
+}
+signed main() {
+
+    cin&gt;&gt;n;
+    init();
+    for(int i=1; i&lt;=n; i++)
+        scanf(&quot;%s&quot;,&amp;c),add(c,i);
+
+    getFail();
+    char c2[N];
+    scanf(&quot;%s&quot;,&amp;c2);
+    query(c2);
+    topsort();
+
+    for(int i=1; i&lt;=n; i++)
+        cout&lt;&lt;vis[web[i]]&lt;&lt;endl;
+
+
+    return 0;
+}
+
+</code></pre>
+<h1 id="manacher">manacher 马拉车算法</h1>
+<h3 id="_31">算法用途</h3>
+<p>给定一个字符串，然后输出这个字符串包含的最长回文子串。</p>
+<p>普通算法的时间复杂度为<span class="arithmatex">\(O(n^2)\)</span>，如下图</p>
+<p><img alt="https://pic1.zhimg.com/80/v2-aedfd21423ce2629f3165273005f4208_720w.webp" src="https://pic1.zhimg.com/80/v2-aedfd21423ce2629f3165273005f4208_720w.webp" /></p>
+<p>但manacher 算法的复杂度是<span class="arithmatex">\(O(n)\)</span>，惊不惊喜意不意外！</p>
+<h3 id="_32">算法实现</h3>
+<p><a href="https://www.bilibili.com/video/BV173411V7Ai/?spm_id_from=333.999.0.0&amp;vd_source=f45ea4e1e4b3b73d5f07c57b46c43aba">184 Manacher(马拉车)_哔哩哔哩_bilibili</a></p>
+<p><strong>初始化</strong></p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%209.png" /></p>
+<p>Code</p>
+<pre><code class="language-C++">void init(){
+    scanf(&quot;%s&quot;,a+1);
+//  scanf(&quot;%s&quot;,b+1);
+    int n=strlen(a+1);
+    s[0]='$';
+    for(int i=1;i&lt;=n;i++){
+        s[++ls]='#',s[++ls]=a[i];
+    }   
+    s[++ls]='#';
+}
+</code></pre>
+<p><strong>优化数组</strong></p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%2010.png" /></p>
+<p>注释：d[i]记录长度的一半，向上取整（即<span class="arithmatex">\((len+1)\div 2\)</span>），即类似圆的半径，包含中间的那个字符</p>
+<p>在“加速盒子”中，当枚举到点i=6时，加速盒子的区间变成<span class="arithmatex">\([i-d_i+1=3,i+d_i-1=9]\)</span>，当枚举到点<span class="arithmatex">\(j(j&gt;i,j&lt;i+d_i-1)\)</span>时，d[j]就可以直接从d[2\times i-j]转移过来。但注意，对于边界的点d[i+d_i-1=9]不能直接转移，这个请看下面的分析。盒子外的暴力。</p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%2011.png" /></p>
+<p>情况</p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%2012.png" /></p>
+<ul>
+<li>情况1：<span class="arithmatex">\(i+d[r-i+l]≤r\)</span>时</li>
+</ul>
+<p>我们盒子内的情况已知，所以可以安心地转移<span class="arithmatex">\(d[i]=d[r-i+l]\)</span></p>
+<ul>
+<li>情况2：<span class="arithmatex">\(i+d[r-i+l]&gt;r\)</span>时</li>
+</ul>
+<p>由于直接转移过来后以i为中心的回文串（图中i下方的蓝色长条）延申出了盒子，但是我们不知道盒子左右两侧的字符串是否也对称（即我们不知道盒子右边的信息），所以对于延申出盒子的部分我们要慢慢枚举。也就是说d[i]=d[r-i+1]是保底的，但r后面的就需要一个个去枚举判定了。</p>
+<p>求出d[i] 后，如果i回文串（我们就姑且这么称呼它）的右端点延申到了当前盒子外，那么就应该更新盒子的l,r了。</p>
+<p>转移以下两幅图表达方式是等效的，作者可能在不经意间转换表达方式哦。</p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%2013.png" /></p>
+<p><strong>Code</strong></p>
+<pre><code class="language-C++">
+void getd(){
+    d[1]=1;
+    int l,r=1;//r只要小于2即可,目的是让下面第一次循环在i&lt;=r不成立
+    for(int i=2;i&lt;=ls;i++){
+        if(i&lt;=r)d[i]=min(d[r-i+l],r-i+1);//转移d[i]且判定是否超出r
+        while(s[i-d[i]]==s[i+d[i]])d[i]++;//如果d[i]没有超出r,那么第一次while判定就不成立,该语句不会执行.如果i本来就在盒子外面,则上面一句话不会执行,直接到本句话开始暴力
+        if(i+d[i]-1&gt;r)l=i-d[i]+1,r=i+d[i]-1;//转移盒子
+    }
+}
+</code></pre>
+<p>各部分说明</p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%2014.png" /></p>
+<p>该算法时间复杂度可以证明为<span class="arithmatex">\(O(n)\)</span>，因为你考虑i+d[i]，如果i+d[i]&gt;r，那么才会执行while，然后又会将r修改为i+d[i]，即每次while运行一次，就会让r向右移动一位，r从1往右移动，到n停止，就n次。也就是说到会执行while时，i+d[i]一定是递增的，所以i+d[i] 只会从1递增到n，一共n次。这里描述不当，请仔细体会。</p>
+<p>答案在d[]数组中，经过计算，答案取<span class="arithmatex">\(\max(d[i]-1)\)</span>即可</p>
+<pre><code class="language-C++">/*////////ACACACACACACAC///////////
+       . Code  by  Ntsc .
+       . Earn knowledge .
+/*////////ACACACACACACAC///////////
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+#define db double
+#define rtn return
+using namespace std;
+
+const int N=2e7+2e6+5;//注意两倍空间 
+const int M=1e5;
+const int Mod=1e5;
+const int INF=1e5;
+
+int n,m,p,q,T;
+char s[N];
+int ls,ans,d[N];
+char a[N];
+
+void init(){
+    scanf(&quot;%s&quot;,a+1);
+//  scanf(&quot;%s&quot;,b+1);
+    n=strlen(a+1);
+    s[0]='$';
+    for(int i=1;i&lt;=n;i++){
+        s[++ls]='#',s[++ls]=a[i];
+    }   
+    s[++ls]='#';
+}
+
+void getd(){
+    d[1]=1;
+    int l,r=1;//r只要小于2即可,目的是让下面第一次循环在i&lt;=r不成立
+    for(int i=2;i&lt;=ls;i++){
+        if(i&lt;=r)d[i]=min(d[r-i+l],r-i+1);//转移d[i]且判定是否超出r
+        while(s[i-d[i]]==s[i+d[i]])d[i]++;//如果d[i]没有超出r,那么第一次while判定就不成立,该语句不会执行.如果i本来就在盒子外面,则上面一句话不会执行,直接到本句话开始暴力
+        if(i+d[i]-1&gt;r)l=i-d[i]+1,r=i+d[i]-1;//转移盒子
+    }
+}
+
+signed main(){
+
+    init();
+    getd();
+
+    for(int i=1;i&lt;=ls;i++)ans=max(ans,d[i]-1); 
+    cout&lt;&lt;ans&lt;&lt;endl;
+    return 0;
+}
+
+
+</code></pre>
+<h2 id="_33">例题</h2>
+<p><a href="https://flowus.cn/e10d71e3-dae9-4472-87df-751db5292af0">Codeforces Round 934 (Div. 2) 6/7</a> E</p>
+<h2 id="_34">对比算法</h2>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%93%88%E5%B8%8C%2B%2B%2B%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89%2Bfd6716bb-f405-4698-a9db-2bbd53422388/image%2015.png" /></p>
+<h1 id="_35">哈希</h1>
+<h2 id="_36">字符串哈希</h2>
+<p>应用于字符串匹配的哈希算法。</p>
+<h2 id="_37">双哈希防卡</h2>
+<p><a href="https://flowus.cn/6f0fba60-f356-44a6-b89a-8012f66cb0a9">练习 | 南外20230712链表、哈希、并查集、分块</a> E题</p>
+<h2 id="_38">树哈希</h2>
+<p><a href="https://flowus.cn/6f0fba60-f356-44a6-b89a-8012f66cb0a9">练习 | 南外20230712链表、哈希、并查集、分块</a> F题</p>
+<h3 id="noip2018">[NOIP2018 普及组] 对称二叉树</h3>
+<p>一棵有点权的有根树如果满足以下条件，则被轩轩称为对称二叉树：</p>
+<ol>
+<li>
+<p>二叉树；</p>
+</li>
+<li>
+<p>将这棵树所有节点的左右子树交换，新树和原树对应位置的结构相同且点权相等。</p>
+</li>
+</ol>
+<p>下图中节点内的数字为权值，节点外的 <span class="arithmatex">\(id\)</span> 表示节点编号。</p>
+<p><img alt="https://cdn.luogu.com.cn/upload/image_hosting/nkln7z1l.png" src="https://cdn.luogu.com.cn/upload/image_hosting/nkln7z1l.png" /></p>
+<p>现在给出一棵二叉树，希望你找出它的一棵子树，该子树为对称二叉树，且节点数最多。请输出这棵子树的节点数。</p>
+<p>注意：只有树根的树也是对称二叉树。本题中约定，以节点 <span class="arithmatex">\(T\)</span> 为子树根的一棵“子 树”指的是：节点<span class="arithmatex">\(T\)</span> 和它的全部后代节点构成的二叉树。</p>
+<p>第一行一个正整数 <span class="arithmatex">\(n\)</span>，表示给定的树的节点的数目，规定节点编号 <span class="arithmatex">\(1 \sim n\)</span>，其中节点 <span class="arithmatex">\(1\)</span> 是树根。</p>
+<p>第二行 <span class="arithmatex">\(n\)</span> 个正整数，用一个空格分隔，第 <span class="arithmatex">\(i\)</span> 个正整数 <span class="arithmatex">\(v_i\)</span> 代表节点 <span class="arithmatex">\(i\)</span> 的权值。</p>
+<p>接下来 <span class="arithmatex">\(n\)</span> 行，每行两个正整数 <span class="arithmatex">\(l_i, r_i\)</span>，分别表示节点 <span class="arithmatex">\(i\)</span> 的左右孩子的编号。如果不存在左 / 右孩子，则以 <span class="arithmatex">\(-1\)</span> 表示。两个数之间用一个空格隔开。</p>
+<h3 id="1_5">样例 1 解释</h3>
+<p><img alt="https://cdn.luogu.com.cn/upload/image_hosting/4lfen5aa.png" src="https://cdn.luogu.com.cn/upload/image_hosting/4lfen5aa.png" /></p>
+<h3 id="2">样例 2 解释</h3>
+<p><img alt="https://cdn.luogu.com.cn/upload/image_hosting/vhzzc587.png" src="https://cdn.luogu.com.cn/upload/image_hosting/vhzzc587.png" /></p>
+<p>最大的对称二叉子树为以节点 <span class="arithmatex">\(7\)</span> 为树根的子树，节点数为 <span class="arithmatex">\(3\)</span>。</p>
+<h3 id="_39">数据规模与约定</h3>
+<p>共 <span class="arithmatex">\(25\)</span> 个测试点。</p>
+<p><span class="arithmatex">\(v_i ≤ 1000\)</span>，<span class="arithmatex">\(n ≤ 10^6\)</span>。</p>
+<p>本题约定：</p>
+<p>层次：节点的层次从根开始定义起，根为第一层，根的孩子为第二层。树中任一节 点的层次等于其父亲节点的层次加 <span class="arithmatex">\(1\)</span>。</p>
+<p>树的深度：树中节点的最大层次称为树的深度。</p>
+<p>满二叉树：设二叉树的深度为 <span class="arithmatex">\(h\)</span>，且二叉树有 <span class="arithmatex">\(2^h-1\)</span> 个节点，这就是满二叉树。</p>
+<p><img alt="https://cdn.luogu.com.cn/upload/image_hosting/8tof1fxx.png" src="https://cdn.luogu.com.cn/upload/image_hosting/8tof1fxx.png" /></p>
+<p>完全二叉树：设二叉树的深度为 <span class="arithmatex">\(h\)</span>，除第 <span class="arithmatex">\(h\)</span> 层外，其它各层的结点数都达到最大 个数，第 <span class="arithmatex">\(h\)</span> 层所有的结点都连续集中在最左边，这就是完全二叉树。</p>
+<p><img alt="https://cdn.luogu.com.cn/upload/image_hosting/ibo7js1f.png" src="https://cdn.luogu.com.cn/upload/image_hosting/ibo7js1f.png" /></p>
+<h3 id="code">Code</h3>
+<p>分别维护当前子树作为左子树和右子树的哈希值即可。为了防止卡哈希，我们要以不同的方式双哈希has1,has2</p>
+<pre><code class="language-C++">/*
+CB Ntsc
+*/
+
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+#define int long long
+#define mp make_pair
+
+#define rd read()
+inline int read() {
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9') {
+        if (ch == '-')
+            ff = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9') xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+inline void write(int out) {
+    if (out &lt; 0)
+        putchar('-'), out = -out;
+    if (out &gt; 9)
+        write(out / 10);
+    putchar(out % 10 + '0');
+}
+
+
+
+const int N = 1e6 + 5;
+const int M = 40;
+const int INF = 1e9 + 5;
+const int MOD = 9982353998244357;
+const int MODD = 9982353998244357;
+const int v1 = 998294353;
+const int v2 = 998254357;
+const int v3 = 988234357;
+
+
+int v[N],has1l[N],has2l[N],has1r[N],has2r[N];
+int sum[N],l[N],r[N];
+
+int n,m,ans;
+
+void pushup(int x){
+    has1l[x]=(has1l[l[x]]*v1+v[x]*v2+has1l[r[x]]*v3)%MOD;
+    has2l[x]=(has2l[l[x]]*v1+v[x]*v2+has2l[r[x]]*v3)%MODD;
+
+    has1r[x]=(has1r[r[x]]*v1+v[x]*v2+has1r[l[x]]*v3)%MOD;
+    has2r[x]=(has2r[r[x]]*v1+v[x]*v2+has2r[l[x]]*v3)%MODD;
+
+}
+
+
+void dfs(int x){
+    if(l[x])dfs(l[x]);
+    if(r[x])dfs(r[x]);
+    sum[x]=sum[l[x]]+sum[r[x]]+1;
+    if(sum[l[x]]==sum[r[x]]&amp;&amp;has1l[l[x]]==has1r[r[x]]&amp;&amp;has2l[l[x]]==has2r[r[x]])ans=max(ans,sum[x]);
+
+    pushup(x);
+}
+
+signed main(){
+
+    n=rd;
+    for(int i=1;i&lt;=n;i++){
+        v[i]=rd;
+
+    }
+    for(int i=1;i&lt;=n;i++){
+        l[i]=rd;r[i]=rd;
+        if(l[i]==-1)l[i]=0;
+        if(r[i]==-1)r[i]=0;
+    }
+    dfs(1);
+
+    cout&lt;&lt;ans&lt;&lt;endl;
+    return 0;
+}
+/*
+1
+2 5 1 
+0 0 1 
+0 0 4 
+
+*/
+</code></pre>
+<h1 id="sunday">Sunday 算法</h1>
+<p><a href="https://zhuanlan.zhihu.com/p/142895983">zhuanlan.zhihu.com</a></p>
+<h1 id="_40">子序列自动机</h1>
+<p>和KMP类似，不过KMP处理的是子串，这里是子序列。</p>
+<hr />
+<p>给定一个长度为 <span class="arithmatex">\(n\)</span> 的正整数序列 <span class="arithmatex">\(a\)</span> ，有 <span class="arithmatex">\(q\)</span> 次询问，第 <span class="arithmatex">\(i\)</span> 次询问给定一个长度为 <span class="arithmatex">\(L_i\)</span> 的序列 <span class="arithmatex">\(b_i\)</span>，请你判断 <span class="arithmatex">\(b_i\)</span> 是不是 <span class="arithmatex">\(a\)</span> 的子序列。序列 <span class="arithmatex">\(a\)</span> 和所有 <span class="arithmatex">\(b_i\)</span> 中的元素都不大于一个给定的正整数 <span class="arithmatex">\(m\)</span>。</p>
+<p>对于全部的测试点，保证 <span class="arithmatex">\(1 \leq n, m, q \leq 10^5\)</span>，<span class="arithmatex">\(1 \leq a_i, b_{i, j} \leq m\)</span>，<span class="arithmatex">\(1 \leq l_i \leq 10^6\)</span>，<span class="arithmatex">\(\sum_{i = 1}^{q} l_i \leq 10^6\)</span>。</p>
+<h2 id="_41">序列自动机</h2>
+<h2 id="_42">子序列自动机</h2>
+<p><span class="arithmatex">\(nxt_{i,j}\)</span> 表示 <span class="arithmatex">\(i\)</span> 后面（不包括自己）第一个 <span class="arithmatex">\(j\)</span> 的位置。如果没有，设成 <span class="arithmatex">\(n+1\)</span>。</p>
+<p><span class="arithmatex">\(O(nm)\)</span> 的方法如下</p>
+<pre><code class="language-C++">FOR(j,1,m) nxt[n+1][j]=n+1;
+FOR(i,1,n){
+    FOR(j,1,m) nxt[i][j]=nxt[i+1][j];
+    if(i!=n) nxt[i][a[i+1]]=i+1;
+}
+</code></pre>
+<p>用在判断子序列上的话，发现就是从 <span class="arithmatex">\(0\)</span> 开始跳，每次跳到它后面第一个 <span class="arithmatex">\(a_i\)</span> 的位置。看看最后是否不在 <span class="arithmatex">\(n+1\)</span>。</p>
+<p>这么贪心是因为对于所有相同的数，我们只关心能跳到的数中最前面的那个。肯定不会更劣。</p>
+<p>但是这题中，如果开这么个两维数组，复杂度是 <span class="arithmatex">\(O(nm)\)</span> 的，爆了。</p>
+<p>标算使用的可持久化线段树，因为观察到 <span class="arithmatex">\(nxt_i\)</span> 和 <span class="arithmatex">\(nxt_{i+1}\)</span> 这两个数组只有一个位置不一样。时间复杂度是 <span class="arithmatex">\(O((n+\sum l)\log m)\)</span>，空间复杂度是 <span class="arithmatex">\(O(m+n\log m)\)</span>。</p>
+<p>但是我们不需要真的把数组存下来。</p>
+<p><span class="arithmatex">\(i\)</span> 后面第一个 <span class="arithmatex">\(j\)</span> 的位置，只需要在所有是 <span class="arithmatex">\(j\)</span> 的下标中二分就行了！</p>
+<p>开 <span class="arithmatex">\(m\)</span> 个 vector 存下这些下标，每次二分，时间复杂度是 <span class="arithmatex">\(O(n+(\sum l)\log m)\)</span>，空间复杂度是 <span class="arithmatex">\(O(n+m)\)</span>。</p>
+<h2 id="_43">模板</h2>
+<pre><code class="language-C++">#include &lt;bits/stdc++.h&gt;
+#define rep(l, r, i) for (int i = l, END##i = r; i &lt;= END##i; ++i)
+#define per(r, l, i) for (int i = r, END##i = l; i &gt;= END##i; --i)
+using namespace std;
+#define pb push_back
+// #define mpy make_pair
+#define int long long
+#define pii pair&lt;int, int&gt;
+#define ps b
+#define pf a
+
+#define lc(x) (x &lt;&lt; 1)
+#define rc(x) (x &lt;&lt; 1 | 1)
+
+#define X(j) i[j]
+#define Y(j) (dp[j] + (i[j] + L) * (i[j] + L))
+
+#define rd read()
+int read() {
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9') {
+        if (ch == '-')
+            ff = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+        xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+    if (out &lt; 0)
+        putchar('-'), out = -out;
+    if (out &gt; 9)
+        write(out / 10);
+    putchar(out % 10 + '0');
+}
+
+const int N = 1e5 + 15;
+const int INF = 1e9 + 5;
+const int MOD = 1e9 + 7;
+const int M = N * 21;
+
+int n,m,a[N],f[N];
+int s[N],q;
+
+
+
+vector&lt;int&gt; v[N];
+signed main(){
+    rd;n=rd;q=rd;rd;
+    for(int i=1;i&lt;=n;i++) v[rd].push_back(i);
+    while(q--){
+        int l=rd,at=0;
+        bool f=true;
+        while(l--){
+            int x=rd;
+            if(!f) continue;
+            vector&lt;int&gt;::iterator it=lower_bound(v[x].begin(),v[x].end(),at+1);
+            if(it==v[x].end()) f=false;
+            else at=*it;
+        }
+        puts(f?&quot;Yes&quot;:&quot;No&quot;);
+    }
+}
+
+</code></pre>
+<h2 id="fjoi2016">[FJOI2016] 所有公共子序列问题</h2>
+<p>一个给定序列的子序列是在该序列中删去若干元素后得到的序列。确切地说，若给定序列 <span class="arithmatex">\(X=x_1x_2\ldots x_m\)</span>，则另一序列 <span class="arithmatex">\(Z=z_1z_2\ldots z_k\)</span> 是 <span class="arithmatex">\(X\)</span> 的子序列是指存在一个严格递增下标序列 <span class="arithmatex">\(i_1,i_2, \ldots ,i_k\)</span> 使得对于所有 <span class="arithmatex">\(j=1,2,…,k\)</span> 有 <span class="arithmatex">\(z_j=x_{i_j}\)</span>。</p>
+<p>例如，序列 <span class="arithmatex">\(Z=\)</span><code>GACT</code> 是序列 <span class="arithmatex">\(X=\)</span><code>GCTACT</code> 的子序列，相应的递增下标序列为 <span class="arithmatex">\(1,4,5,6\)</span>。给定两个序列 <span class="arithmatex">\(X\)</span> 和 <span class="arithmatex">\(Y\)</span>，当另一序列 <span class="arithmatex">\(Z\)</span> 既是 <span class="arithmatex">\(X\)</span> 的子序列又是 <span class="arithmatex">\(Y\)</span> 的子序列时，称 <span class="arithmatex">\(Z\)</span> 是序列 <span class="arithmatex">\(X\)</span> 和 <span class="arithmatex">\(Y\)</span> 的公共子序列。例如，若 <span class="arithmatex">\(X=\)</span><code>GCTACT</code>， <span class="arithmatex">\(Y=\)</span><code>GATCCT</code>，序列 <span class="arithmatex">\(T\)</span> 是 <span class="arithmatex">\(X\)</span> 和 <span class="arithmatex">\(Y\)</span> 的一个公共子序列，序列 <code>GACT</code> 也是 <span class="arithmatex">\(X\)</span> 和 <span class="arithmatex">\(Y\)</span> 的一个公共子序列。注意对于任何给定的序列 <span class="arithmatex">\(X\)</span> 和 <span class="arithmatex">\(Y\)</span>，空序列总是它们的一个公共子序列。</p>
+<p>所有公共子序列问题是要求对于给定的 <span class="arithmatex">\(2\)</span> 个序列 <span class="arithmatex">\(X=x_1x_2\ldots x_m\)</span> 和 <span class="arithmatex">\(Y=y_1y_2\ldots y_m\)</span>，找出 <span class="arithmatex">\(X\)</span> 和 <span class="arithmatex">\(Y\)</span> 的所有不同的公共子序列。</p>
+<p>输入格式</p>
+<p>文件的第一行有两个正整数 <span class="arithmatex">\(m\)</span> 和 <span class="arithmatex">\(n\)</span>，分别表示 <span class="arithmatex">\(2\)</span> 个输入序列 <span class="arithmatex">\(X\)</span> 和 <span class="arithmatex">\(Y\)</span> 的长度。</p>
+<p>接下来的两行分别给出输入序列 <span class="arithmatex">\(X=x_1x_2\cdots x_m\)</span> 和 <span class="arithmatex">\(Y=y_1y_2\cdots y_m\)</span>，其中序列中每个元素均为二十六个英文大小写字母。</p>
+<p>文件的最后一行给出一个非负整数 <span class="arithmatex">\(k\)</span>。</p>
+<p><span class="arithmatex">\(k\)</span> 的值为 <span class="arithmatex">\(1\)</span> 时，表示计算结果要输出 <span class="arithmatex">\(X\)</span> 和 <span class="arithmatex">\(Y\)</span> 的所有不同的公共子序列，以及 <span class="arithmatex">\(X\)</span> 和 <span class="arithmatex">\(Y\)</span> 有多少个不同的公共子序列。</p>
+<p><span class="arithmatex">\(k\)</span> 的值为 <span class="arithmatex">\(0\)</span> 时，表示计算结果只要输出 <span class="arithmatex">\(X\)</span> 和 <span class="arithmatex">\(Y\)</span> 有多少个不同的公共子序列。</p>
+<p>输出格式</p>
+<p>将计算出的 <span class="arithmatex">\(X\)</span> 和 <span class="arithmatex">\(Y\)</span> 的所有不同的公共子序列，或 <span class="arithmatex">\(X\)</span> 和 <span class="arithmatex">\(Y\)</span> 有多少个不同的公共子序列输出到文件中。当 <span class="arithmatex">\(k=1\)</span> 时，先输出 <span class="arithmatex">\(X\)</span> 和 <span class="arithmatex">\(Y\)</span> 的所有不同的公共子序列，每行输出一个公共子序列，按字典序从小到大输出。最后输出不同的公共子序列的个数。当 <span class="arithmatex">\(k=0\)</span> 时，只要输出不同的公共子序列的个数。</p>
+<p>答案....很大啦（高精度提示）</p>
+<h1 id="_44">后缀平衡树</h1>
+<p><a href="https://flowus.cn/9fdf7962-0706-4e16-9e5e-250e2f144e09">专题 | 二叉查找树与平衡树</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

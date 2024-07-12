@@ -1,0 +1,2031 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E4%B8%8E%E5%B9%B3%E8%A1%A1%E6%A0%91/">
+      
+      
+        <link rel="next" href="../%E9%AB%98%E7%BA%A7%E3%81%AE%E6%A0%91%E4%B8%8A%E9%97%AE%E9%A2%98/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.28">
+    
+    
+      
+        <title>并查集 扩展 - OI Beats</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="OI Beats" class="md-header__button md-logo" aria-label="OI Beats" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OI Beats
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              并查集 扩展
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="OI Beats" class="md-nav__button md-logo" aria-label="OI Beats" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    OI Beats
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    动态规划
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            动态规划
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20DP%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP DP优化
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E5%85%A5%E9%97%A8%E5%85%B8%E4%BE%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 入门典例
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E6%A0%91%E5%9E%8B%20%E7%8A%B6%E5%8E%8B%20%E5%80%8D%E5%A2%9E/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 树型 状压 倍增
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 背包问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    图论
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            图论
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/tarjan%20%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tarjan 算法相关
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E4%BA%8C%E5%88%86%E5%9B%BE%20%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二分图 二部图问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    图论基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E5%AD%98%E5%9B%BE%20%E6%9C%80%E7%9F%AD%E8%B7%AF%20%E8%B4%9F%E7%8E%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    存图 最短路 负环
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E6%A0%91%E4%B8%8A%E7%A5%96%E5%85%88%20LCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    树上祖先 LCA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E7%94%9F%E6%88%90%E6%A0%91%20%E5%9F%BA%E7%8E%AF%E6%A0%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    生成树 基环树
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E7%BD%91%E7%BB%9C%E6%B5%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    网络流
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E9%AB%98%E7%BA%A7%E7%BA%BF%E6%80%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级线性数据结构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    字符串
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            字符串
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%93%88%E5%B8%8C%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    哈希 字符串匹配（从字典树到KMP再到AC自动机）
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E9%AB%98%E7%B2%BE%E5%BA%A6%20%E5%BF%AB%E8%AF%BB%E5%BF%AB%E8%BE%93/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高精度 快读快输
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E9%AB%98%E7%BA%A7%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级字符串算法
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    数学
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            数学
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E4%BA%8C%E5%88%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二分
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%8D%9A%E5%BC%88%E8%AE%BA%20SG%E5%87%BD%E6%95%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博弈论 SG函数
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%8E%9F%E6%A0%B9%20%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%20%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    原根 拉格朗日插值 莫比乌斯反演
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%BF%AB%E9%80%9F%E5%B9%82%20%E7%9F%A9%E9%98%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    快速幂 矩阵
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%AE%9A%E7%90%86%20%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数学定理 线性代数
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E7%BB%84%E5%90%88%E8%AE%A1%E6%95%B0%20%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83%20%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    组合计数 高斯消元 容斥原理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    计算几何
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E9%80%86%E5%85%83%20%E7%AD%9B%20%E4%B8%8D%E5%AE%9A%E6%96%B9%E7%A8%8B%20%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    逆元 筛 不定方程 扩展欧几里得
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    数据结构
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            数据结构
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ST%E8%A1%A8%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%20%E7%BA%BF%E6%AE%B5%E6%A0%91%20%E5%88%86%E5%9D%97%20%E8%8E%AB%E9%98%9F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ST表 树状数组 线段树 分块 莫队
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E4%B8%8E%E5%B9%B3%E8%A1%A1%E6%A0%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二叉查找树与平衡树
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    并查集 扩展
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E9%AB%98%E7%BA%A7%E3%81%AE%E6%A0%91%E4%B8%8A%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级の树上问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【】专题+++ST表+++树状数组+++线段树+++分块+++莫队+4419f177 d45a 4b1d 96ea 88ca36e3ecda
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            【】专题+++ST表+++树状数组+++线段树+++分块+++莫队+4419f177 d45a 4b1d 96ea 88ca36e3ecda
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2BST%E8%A1%A8%2B%2B%2B%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%2B%2B%2B%E7%BA%BF%E6%AE%B5%E6%A0%91%2B%2B%2B%E5%88%86%E5%9D%97%2B%2B%2B%E8%8E%AB%E9%98%9F%2B4419f177-d45a-4b1d-96ea-88ca36e3ecda/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%BB%B4%E6%8A%A4%E7%9A%84%E5%90%84%E7%A7%8D%E4%BF%A1%E6%81%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    上帝造题的七分钟 2 / 花神游历各国
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    算法基础
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            算法基础
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/C%2B%2B%E5%85%B3%E9%94%AE%E5%AD%97%E4%B8%8E%E7%94%9F%E5%83%BBSTL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C++关键字与生僻STL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/Head%2B%2B%2B%E6%A8%A1%E6%9D%BF%E5%A4%B4%2B%E7%BC%BA%E7%9C%81%E6%BA%90%2B2882b258-98b6-47da-be53-6525b90e8dae/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Head+++模板头+缺省源+2882b258 98b6 47da be53 6525b90e8dae
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%BC%80%E5%92%8C%20%E5%B7%AE%E5%88%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    前缀和 差分
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E6%A6%82%E5%BF%B5%20%E6%A6%82%E5%BF%B5%E6%80%A7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    概念 概念性
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E8%B4%AA%E5%BF%83/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    贪心
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E9%80%92%E5%BD%92%20%E9%80%92%E6%8E%A8%20%E6%B7%B1%E6%90%9C%20%E5%B9%BF%E6%90%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    递归 递推 深搜 广搜
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    算法策略
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            算法策略
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E5%88%86%E6%B2%BB%20%E6%8E%92%E5%BA%8F%20%E5%81%8F%E5%BA%8F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    分治 排序 偏序
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E5%90%AF%E5%8F%91%E5%BC%8FA_%20IDA_/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    启发式A  IDA 
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E6%80%9D%E6%83%B3%20%E7%88%AC%E5%B1%B1%E7%AE%97%E6%B3%95%20%E6%A8%A1%E6%8B%9F%E9%80%80%E7%81%AB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    思想 爬山算法 模拟退火
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<p>专题 | 并查集&amp;扩展</p>
+<h1 id="_1">目录</h1>
+<ul>
+<li>
+<p>并查集</p>
+</li>
+<li>
+<p>扩展域并查集</p>
+</li>
+<li>
+<p>可持久化并查集</p>
+</li>
+</ul>
+<h1 id="_2">并查集</h1>
+<p>输入由两部分组成。</p>
+<p>第一部分以N，M开始。N为问题涉及的人的个数(1≤N≤20000)。这些人的编号为1,2,3,…, N。下面有M行(1≤M≤1000000)，每行有两个数ai,bi，表示已知ai和bi是亲戚。</p>
+<p>第二部分以Q开始。以下Q行有Q个询问(1≤ Q ≤1000000)，每行为ci,di，表示询问ci和di是否为亲戚。</p>
+<p><strong>核心代码</strong></p>
+<p>路径压缩</p>
+<pre><code class="language-C++">int find(x){
+    if(fa[x]==x)return x;
+    return fa[x]=find(fa[x]);
+}
+</code></pre>
+<p>合并</p>
+<pre><code class="language-C++">void merge(int a,int b){
+    a=find(a),b=find(b);
+    fa[a]=b;
+}
+</code></pre>
+<p>按秩合并</p>
+<pre><code class="language-C++">void merge(int a,int b){
+    a=find(a),b=find(b);
+    if(x==y)return ;
+    if(sz[a]&gt;sz[b])swap(a,b);
+    fa[a]=b;
+    sz[b]+=sz[a];//sz[]初始化为1
+}
+</code></pre>
+<h1 id="_3">并查集维护并查集信息</h1>
+<p>维护并查集大小</p>
+<p>不要忘记怎么写！只需要merge时修改即可。</p>
+<pre><code class="language-C++">int find(int a){
+    if(fa[a]==a)return a;
+    return fa[a]=find(fa[a]);
+}
+
+void merge(int faa,int fbb){
+    if(faa!=fbb)fa[faa]=fbb,sz[fbb]+=sz[faa];
+}
+
+//merge(find(e[cur].a),find(e[cur].b));
+
+</code></pre>
+<p><a href="https://www.luogu.com.cn/problem/P1196">www.luogu.com.cn</a></p>
+<p>维护并查集大小，并且以此更新该点到链头的距离</p>
+<pre><code class="language-C++">int find(int x){
+    if(fa[x]==x)return x;
+    int f=fa[x];
+    fa[x]=find(fa[x]);
+    dis[x]+=dis[f];
+    sz[x]+=sz[fa[x]];
+    return fa[x];
+}
+
+void merge(int x,int y){
+    int fx=find(x),fy=find(y);
+    fa[fx]=fy;
+    dis[fx]+=sz[fy];
+    sz[fx]+=sz[fy];//更新集合大小
+    sz[fy]=sz[fx];//记录当前点实在集合的大小
+
+}
+
+</code></pre>
+<h1 id="_4">并查集求最小环</h1>
+<p><a href="https://www.luogu.com.cn/problem/P2661">https://www.luogu.com.cn/problem/P2661</a></p>
+<pre><code class="language-C++">
+/*
+CB Ntsc
+*/
+
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+#define int long long
+
+#define rd read()
+inline int read() {
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9') {
+        if (ch == '-')
+            ff = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9') xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+inline void write(int out) {
+    if (out &lt; 0)
+        putchar('-'), out = -out;
+    if (out &gt; 9)
+        write(out / 10);
+    putchar(out % 10 + '0');
+}
+
+//
+
+const int N = 1e6 + 5;
+const int INF = 1e9 + 5;
+const int MOD = 998244353;
+
+bool f1;
+int t[N], fa[N], d[N], ans, n;
+bool f2;
+int find(int x){
+    if(fa[x]!=x){
+        int l=fa[x];
+        fa[x]=find(fa[x]);
+        d[x]+=d[l];
+    }return fa[x];
+}
+
+signed main() {
+    n=rd;
+    for(int i=1;i&lt;=n;i++){
+        fa[i]=i;t[i]=rd;
+    }
+    ans=INF;
+    for(int i=1;i&lt;=n;i++){
+        int a=find(i),b=find(t[i]);
+        if(a!=b){
+            fa[a]=b;d[i]=d[t[i]]+1;
+        }else{
+            ans=min(ans,d[i]+d[t[i]]+1);
+        }
+    }
+    cout&lt;&lt;ans;
+    return 0;
+}
+</code></pre>
+<h1 id="_5">扩展域并查集</h1>
+<h2 id="noi2001">[NOI2001] 食物链</h2>
+<p>动物王国中有三类动物 <span class="arithmatex">\(A,B,C\)</span>，这三类动物的食物链构成了有趣的环形。<span class="arithmatex">\(A\)</span> 吃 <span class="arithmatex">\(B\)</span>，<span class="arithmatex">\(B\)</span> 吃 <span class="arithmatex">\(C\)</span>，<span class="arithmatex">\(C\)</span> 吃 <span class="arithmatex">\(A\)</span>。</p>
+<p>现有 <span class="arithmatex">\(N\)</span> 个动物，以 <span class="arithmatex">\(1 \sim N\)</span> 编号。每个动物都是 <span class="arithmatex">\(A,B,C\)</span> 中的一种，但是我们并不知道它到底是哪一种。</p>
+<p>有人用两种说法对这 <span class="arithmatex">\(N\)</span> 个动物所构成的食物链关系进行描述：</p>
+<ul>
+<li>
+<p>第一种说法是 <code>1 X Y</code>，表示 <span class="arithmatex">\(X\)</span> 和 <span class="arithmatex">\(Y\)</span> 是同类。</p>
+</li>
+<li>
+<p>第二种说法是<code>2 X Y</code>，表示 <span class="arithmatex">\(X\)</span> 吃 <span class="arithmatex">\(Y\)</span>。</p>
+</li>
+</ul>
+<p>此人对 <span class="arithmatex">\(N\)</span> 个动物，用上述两种说法，一句接一句地说出 <span class="arithmatex">\(K\)</span> 句话，这 <span class="arithmatex">\(K\)</span> 句话有的是真的，有的是假的。当一句话满足下列三条之一时，这句话就是假话，否则就是真话。</p>
+<ul>
+<li>
+<p>当前的话与前面的某些真的话冲突，就是假话；</p>
+</li>
+<li>
+<p>当前的话中 <span class="arithmatex">\(X\)</span> 或 <span class="arithmatex">\(Y\)</span> 比 <span class="arithmatex">\(N\)</span> 大，就是假话；</p>
+</li>
+<li>
+<p>当前的话表示 <span class="arithmatex">\(X\)</span> 吃 <span class="arithmatex">\(X\)</span>，就是假话。</p>
+</li>
+</ul>
+<p>你的任务是根据给定的 <span class="arithmatex">\(N\)</span> 和 <span class="arithmatex">\(K\)</span> 句话，输出假话的总数。</p>
+<p>对于全部数据，<span class="arithmatex">\(1\le N\le 5 \times 10^4\)</span>，<span class="arithmatex">\(1\le K \le 10^5\)</span>。</p>
+<p>知识</p>
+<p>并查集，扩展域并查集</p>
+<p>代码</p>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N=5e4+5;
+int fa[N*3],n,k,ans;
+int find(int x){
+    return (fa[x]!=x)?fa[x]=find(fa[x]):x;
+}
+void uni(int a,int b){
+    fa[find(a)]=find(b);
+}
+int main(){
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;k);
+    for(int i=1;i&lt;=n*3;i++)fa[i]=i;
+    while(k--){
+        int a,b,op;
+        scanf(&quot;%d%d%d&quot;,&amp;op,&amp;a,&amp;b);
+        if(a&gt;n||b&gt;n){
+            ans++;continue;
+        }
+        if(op==1){
+            if(find(a+n)==find(b)||find(a)==find(n+b))ans++;
+            else uni(a,b),uni(a+n,b+n),uni(a+n+n,b+n+n);
+
+        }else {
+            if(find(a)==find(b)||find(a)==find(b+n))ans++;
+            else uni(a+n,b),uni(a+n+n,b+n),uni(a,b+n+n);
+
+        }
+    }
+    printf(&quot;%d\n&quot;,ans);
+}
+
+//////////////GOOD LUCK ,NTSC/////////////
+</code></pre>
+<h2 id="ceoi1999-parity-game">[CEOI1999] Parity Game</h2>
+<p>Alice 和 Bob 在玩一个游戏：他写一个由 <span class="arithmatex">\(0\)</span> 和 <span class="arithmatex">\(1\)</span> 组成的序列。Alice 选其中的一段（比如第 <span class="arithmatex">\(3\)</span> 位到第 <span class="arithmatex">\(5\)</span> 位），问他这段里面有奇数个 <span class="arithmatex">\(1\)</span> 还是偶数个 <span class="arithmatex">\(1\)</span>。Bob 回答你的问题，然后 Alice 继续问。Alice 要检查 Bob 的答案，指出在 Bob 的第几个回答一定有问题。有问题的意思就是存在一个 <span class="arithmatex">\(01\)</span> 序列满足这个回答前的所有回答，而且不存在序列满足这个回答前的所有回答及这个回答。</p>
+<p>第 <span class="arithmatex">\(1\)</span> 行一个整数 <span class="arithmatex">\(n\)</span>，是这个 <span class="arithmatex">\(01\)</span> 序列的长度。</p>
+<p>第 <span class="arithmatex">\(2\)</span> 行一个整数 <span class="arithmatex">\(m\)</span>，是问题和答案的个数。</p>
+<p>第 <span class="arithmatex">\(3\)</span> 行开始是问题和答案，每行先有两个整数，表示你询问的段的开始位置和结束位置。然后是 Bob 的回答。<code>odd</code>表示有奇数个 <span class="arithmatex">\(1\)</span>，<code>even</code> 表示有偶数个 <span class="arithmatex">\(1\)</span>。</p>
+<p>输出一行，一个数 <span class="arithmatex">\(x\)</span>，表示存在一个 <span class="arithmatex">\(01\)</span> 序列满足第 <span class="arithmatex">\(1\)</span> 到第 <span class="arithmatex">\(x\)</span> 个回答，但是不存在序列满足第 <span class="arithmatex">\(1\)</span> 到第 <span class="arithmatex">\(x+1\)</span> 个回答。如果所有回答都没问题，你就输出所有回答的个数。</p>
+<p>对于 <span class="arithmatex">\(100\%\)</span> 的数据，<span class="arithmatex">\(1 \le  n \leq 10^9\)</span>，<span class="arithmatex">\(m \leq 5 \times 10^3\)</span>。</p>
+<hr />
+<p>这里我们考虑前缀和性质。要明确控制欲并查集可以维护什么，才能想到做法。</p>
+<p>转化为并查集，即若[l,r]和为奇数，那么q_r和q_{l-1}（q_i表示[1,i]前缀和）的奇偶性相同，反之不相同。于是我们维护前缀和的奇偶性关系即可。</p>
+<p>开两倍空间为[1,n][n+1,2n]，合并a,b表示q_a,q_{b-1}奇偶性相同，合并a,b+n表示不同。</p>
+<hr />
+<pre><code class="language-C++">
+#include &lt;bits/stdc++.h&gt;
+#include &lt;queue&gt;
+#include &lt;iostream&gt;
+#define rep(l, r, i) for (int i = l, END##i = r; i &lt;= END##i; ++i)
+#define per(r, l, i) for (int i = r, END##i = l; i &gt;= END##i; --i)
+using namespace std;
+// #define pb push_back
+#define mp make_pair
+#define int long long
+#define pii pair&lt;int, int&gt;
+#define ps second
+#define pf first
+
+#define X(j) i[j]
+#define Y(j) (dp[j] + (i[j] + L) * (i[j] + L))
+
+#define rd read()
+int read() {
+  int xx = 0, ff = 1;
+  char ch = getchar();
+  while (ch &lt; '0' || ch &gt; '9') {
+    if (ch == '-')
+      ff = -1;
+    ch = getchar();
+  }
+  while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+    xx = xx * 10 + (ch - '0'), ch = getchar();
+  return xx * ff;
+}
+void write(int out) {
+  if (out &lt; 0)
+    putchar('-'), out = -out;
+  if (out &gt; 9)
+    write(out / 10);
+  putchar(out % 10 + '0');
+}
+
+const int N =2e5 + 5;
+const int INF = 1e18;
+const int MOD = 998244353;
+
+int m,n,a[N],b[N],v[N];
+int fa[N&lt;&lt;1];
+
+int find(int x){
+  if(x==fa[x])return x;
+  return fa[x]=find(fa[x]);
+}
+
+void merge(int a,int b){
+  int faa=find(a),fbb=find(b);
+  if(faa!=fbb) fa[faa]=fbb;
+}
+
+
+
+
+int e[N];
+int cnt;
+signed main(){
+  n=rd,m=rd;
+  for(int i=1;i&lt;=m;i++){
+    a[i]=rd-1,b[i]=rd;
+    // cerr&lt;&lt;a[i]&lt;&lt;' '&lt;&lt;b[i]&lt;&lt;endl;
+    e[++cnt]=a[i];
+    e[++cnt]=b[i];
+    string s;
+    cin&gt;&gt;s;
+    if(s==&quot;odd&quot;)v[i]=1;
+    // cerr&lt;&lt;v[i]&lt;&lt;endl;
+
+  }
+  sort(e+1,e+cnt+1);
+  int l=unique(e+1,e+cnt+1)-e-1;
+  // for(int i=1;i&lt;=l*2;i++)cerr&lt;&lt;e[i]&lt;&lt;' ';
+  // cerr&lt;&lt;endl;
+  for(int i=1;i&lt;=l*2;i++)fa[i]=i;//两倍初始化！
+  for(int i=1;i&lt;=m;i++){
+    // cerr&lt;&lt;i&lt;&lt;' '&lt;&lt;a[i]&lt;&lt;' '&lt;&lt;b[i]&lt;&lt;' '&lt;&lt;endl;
+    a[i]=lower_bound(e+1,e+l+1,a[i])-e;
+    b[i]=lower_bound(e+1,e+l+1,b[i])-e;
+    // cerr&lt;&lt;i&lt;&lt;' '&lt;&lt;a[i]&lt;&lt;' '&lt;&lt;b[i]&lt;&lt;' '&lt;&lt;endl;
+    if(v[i]){
+      if(find(a[i])==find(b[i])){
+        cout&lt;&lt;i-1&lt;&lt;endl;
+        return 0;
+      }else{
+        merge(a[i],b[i]+l);
+        merge(a[i]+l,b[i]);
+      }
+    }else{
+        if(find(a[i])==find(b[i]+l)){
+          cout&lt;&lt;i-1&lt;&lt;endl;
+          return 0;
+        }else{
+          merge(a[i],b[i]);
+          merge(a[i]+l,b[i]+l);
+      }
+    }
+  }
+
+
+
+  cout&lt;&lt;m&lt;&lt;endl;
+
+}
+</code></pre>
+<h1 id="_6">扩展域并查集判定二分图</h1>
+<p><a href="https://www.cnblogs.com/yHan234/p/16473336.html">并查集判断二分图(tourist做法) - yHan234 - 博客园</a></p>
+<p>注意这里的二分图没有规定那些点必须在哪边，因此当且仅当图中出现奇环时二分图不成立，或者说是<strong>不能构成</strong>二分图。</p>
+<p>用扩展域可以判定二分图。我们开两倍空间的并查集，左边为L(1\sim n)，右边为R(n+1\sim 2n)。我们把每个点分裂为两个点为u_1,u_2，编号为u,n+u。在我们连接u,v时，就连接u_1-v_2和u_2-v_1。最后如果某一时刻存在p,p_n在同一个集合内，二分图就不成立了。</p>
+<p>这里的意思就是u_1默认u在左部，u_2默认u在右部。连接u_1,-v_2就表示假设u在左部且v在右部，另一种情况亦然。如果存在某个p满足p_1和p_2间接或直接相连，那么就说明无论假设p在左部还是右部，为了尽可能让与p相连的点满足二分图性质，则会最终得到一个点x相连的p应该在假设的p的另外一部。即p无论放在哪一部都会得到相反的结论。二分图无法成立。</p>
+<h2 id="noip2010">[NOIP2010 提高组] 关押罪犯</h2>
+<p>S 城现有两座监狱，一共关押着 <span class="arithmatex">\(N\)</span> 名罪犯，编号分别为 <span class="arithmatex">\(1\sim N\)</span>。他们之间的关系自然也极不和谐。很多罪犯之间甚至积怨已久，如果客观条件具备则随时可能爆发冲突。我们用“怨气值”（一个正整数值）来表示某两名罪犯之间的仇恨程度，怨气值越大，则这两名罪犯之间的积怨越多。如果两名怨气值为 <span class="arithmatex">\(c\)</span> 的罪犯被关押在同一监狱，他们俩之间会发生摩擦，并造成影响力为 <span class="arithmatex">\(c\)</span> 的冲突事件。</p>
+<p>每年年末，警察局会将本年内监狱中的所有冲突事件按影响力从大到小排成一个列表，然后上报到 S 城 Z 市长那里。公务繁忙的 Z 市长只会去看列表中的第一个事件的影响力，如果影响很坏，他就会考虑撤换警察局长。</p>
+<p>在详细考察了 <span class="arithmatex">\(N\)</span> 名罪犯间的矛盾关系后，警察局长觉得压力巨大。他准备将罪犯们在两座监狱内重新分配，以求产生的冲突事件影响力都较小，从而保住自己的乌纱帽。假设只要处于同一监狱内的某两个罪犯间有仇恨，那么他们一定会在每年的某个时候发生摩擦。</p>
+<p>那么，应如何分配罪犯，才能使 Z 市长看到的那个冲突事件的影响力最小？这个最小值是多少？</p>
+<p>输入格式</p>
+<p>每行中两个数之间用一个空格隔开。第一行为两个正整数 <span class="arithmatex">\(N,M\)</span>，分别表示罪犯的数目以及存在仇恨的罪犯对数。接下来的 <span class="arithmatex">\(M\)</span> 行每行为三个正整数 <span class="arithmatex">\(a_j,b_j,c_j\)</span>，表示 <span class="arithmatex">\(a_j\)</span> 号和 <span class="arithmatex">\(b_j\)</span> 号罪犯之间存在仇恨，其怨气值为 <span class="arithmatex">\(c_j\)</span>。数据保证 <span class="arithmatex">\(1&lt;a_j\leq b_j\leq N, 0 &lt; c_j\leq 10^9\)</span>，且每对罪犯组合只出现一次。</p>
+<p>输出格式</p>
+<p>共一行，为 Z 市长看到的那个冲突事件的影响力。如果本年内监狱中未发生任何冲突事件，请输出 <code>0</code>。</p>
+<p>对于 <span class="arithmatex">\(30\%\)</span> 的数据有 <span class="arithmatex">\(N\leq 15\)</span>。</p>
+<p>对于 <span class="arithmatex">\(70\%\)</span> 的数据有 <span class="arithmatex">\(N\leq 2000,M\leq 50000\)</span>。</p>
+<p>对于 <span class="arithmatex">\(100\%\)</span> 的数据有 <span class="arithmatex">\(N\leq 20000,M\leq 100000\)</span>。</p>
+<h1 id="_7">可持久化并查集</h1>
+<p>给定 <span class="arithmatex">\(n\)</span> 个集合，第 <span class="arithmatex">\(i\)</span> 个集合内初始状态下只有一个数，为 <span class="arithmatex">\(i\)</span>。</p>
+<p>有 <span class="arithmatex">\(m\)</span> 次操作。操作分为 <span class="arithmatex">\(3\)</span> 种：</p>
+<ul>
+<li>
+<p><code>1 a b</code> 合并 <span class="arithmatex">\(a,b\)</span> 所在集合；</p>
+</li>
+<li>
+<p><code>2 k</code> 回到第 <span class="arithmatex">\(k\)</span> 次操作（执行三种操作中的任意一种都记为一次操作）之后的状态；</p>
+</li>
+<li>
+<p><code>3 a b</code> 询问 <span class="arithmatex">\(a,b\)</span> 是否属于同一集合，如果是则输出 <span class="arithmatex">\(1\)</span>，否则输出 <span class="arithmatex">\(0\)</span>。</p>
+</li>
+</ul>
+<p>对于 <span class="arithmatex">\(100\%\)</span> 的数据，<span class="arithmatex">\(1\le n\le 10^5\)</span>，<span class="arithmatex">\(1\le m\le 2\times 10^5\)</span>，<span class="arithmatex">\(1 \le a, b \le n\)</span>。</p>
+<h2 id="_8">代码分析</h2>
+<h3 id="u">迟迟u和</h3>
+<pre><code class="language-C++">struct node{
+    int lc,rc,v,rnk;
+}tr[M];
+</code></pre>
+<h3 id="_9">秩</h3>
+<pre><code class="language-C++">int getrnk(int x,int l,int r,int p){//单点查询秩
+    if(l==r)return tr[x].rnk;
+    int mid=l+r&gt;&gt;1;
+    if(p&lt;=mid)return getrnk(tr[x].lc,l,mid,p);
+    return getrnk(tr[x].rc,mid+1,r,p);
+}
+
+void changernk(int pre,int &amp;now,int l,int r,int p,int v){//修改秩（树的高度）
+    now=++idx;
+    tr[now]=tr[pre];
+    if(l==r){
+        tr[now].rnk=max(tr[now].rnk,v);//要比对取最大值
+        return;
+    }
+    int mid=l+r&gt;&gt;1;
+    if(p&lt;=mid)changernk(tr[pre].lc,tr[now].lc,l,mid,p,v);
+    else changernk(tr[pre].rc,tr[now].rc,mid+1,r,p,v);
+    return ;
+}
+</code></pre>
+<h3 id="_10">查询</h3>
+<pre><code class="language-C++">
+int query(int x,int l,int r,int p){//查询父节点
+    if(l==r){
+        return tr[x].v;
+    }
+    int mid=l+r&gt;&gt;1;
+    if(p&lt;=mid)return query(tr[x].lc,l,mid,p);
+    return query(tr[x].rc,mid+1,r,p);
+}
+
+int find(int x,int p){
+    int fa=query(x,1,n,p);
+    if(p==fa)return fa;
+    return find(x,fa);//x是版本
+}
+</code></pre>
+<h3 id="_11">修改&amp;合并</h3>
+<pre><code class="language-C++">void change(int pre,int now,int l,int r,int p,int fa){//修改父节点 
+    now=++idx;
+    tr[now]=tr[pre];
+    if(l==r){
+        tr[now].v=fa;
+        return;
+    }
+    int mid=l+r&gt;&gt;1;
+    if(p&lt;=mid)change(tr[pre].lc,tr[now].lc,l,mid,p,fa);
+    else change(tr[pre].rc,tr[now].rc,mid+1,r,p,fa);
+}
+
+void merge(int a,int b,int i){
+    a=find(rt[i-1],a),b=find(rt[i-1],b);
+    // cerr&lt;&lt;&quot;OK\n&quot;;
+    if(a==b){rt[i]=rt[i-1];return ;}
+    if(getrnk(rt[i-1],1,n,a)&gt;getrnk(rt[i-1],1,n,b))swap(a,b);
+    // int t;
+    change(rt[i-1],rt[i],1,n,a,b);
+    int t=rt[i];
+    changernk(t,rt[i],1,n,b,getrnk(rt[i-1],1,n,a)+1);//sz[b]+=sz[a];
+
+}
+</code></pre>
+<h2 id="code">COde</h2>
+<p>WA64pts</p>
+<pre><code class="language-C++">/*
+CB Ntsc
+*/
+
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+//#define int long long
+#define mp make_pair
+
+const int N = 2e5 + 5;
+const int M = 1e7 + 5;
+const int INF = 1e9 + 5;
+const int MOD = 1e9 + 7;
+bool f1;
+int rt[N];
+int q, n, m, ans, idx, T;
+vector&lt;int&gt; b;
+bool f2;
+
+
+#define rd read()
+inline int read() {
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9') {
+        if (ch == '-')
+            ff = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9') xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+inline void write(int out) {
+    if (out &lt; 0)
+        putchar('-'), out = -out;
+    if (out &gt; 9)
+        write(out / 10);
+    putchar(out % 10 + '0');
+}
+
+struct node{
+    int lc,rc,v,rnk;
+}tr[N*50];//50倍空间 ,32不够 
+
+
+
+void build(int &amp;x,int l,int r){
+    x=++idx;
+    if(l==r){
+        tr[x].v=l;
+        tr[x].rnk=1;
+        return;
+    }
+    build(tr[x].lc,l,l+r&gt;&gt;1);
+    build(tr[x].rc,(l+r&gt;&gt;1)+1,r);
+}
+
+int getrnk(int x,int l,int r,int p){//单点查询秩
+    if(l==r)return tr[x].rnk;
+    int mid=l+r&gt;&gt;1;
+    if(p&lt;=mid)return getrnk(tr[x].lc,l,mid,p);
+    return getrnk(tr[x].rc,mid+1,r,p);
+}
+
+void changernk(int pre,int &amp;now,int l,int r,int p,int v){//修改秩（树的高度）
+    now=++idx;
+    tr[now]=tr[pre];
+    if(l==r){
+        tr[now].rnk=max(tr[now].rnk,v);//要比对取最大值
+        return;
+    }
+    int mid=l+r&gt;&gt;1;
+    if(p&lt;=mid)changernk(tr[pre].lc,tr[now].lc,l,mid,p,v);
+    else changernk(tr[pre].rc,tr[now].rc,mid+1,r,p,v);
+    return ;
+}
+// void insert(int pre,int &amp;now,int l,int r,int v){
+//  now=++idx;//动态开点.新插入一个点 为了可以方便的用这个now更新上一个函数空间的tr[now].lc(或rc),我们就引用一下
+//  tr[now]=tr[pre];//复制旧点的信息
+//  tr[now].v++;//点权+1,因为插入的树在now的区间内
+//  if(l==r)return;
+//  int mid=l+r&gt;&gt;1;
+//  if(v&lt;=mid)insert(tr[pre].lc,tr[now].lc,l,mid,v);
+//  else insert(tr[pre].rc,tr[now].rc,mid+1,r,v);
+// }
+
+int query(int x,int l,int r,int p){//查询父节点
+    if(l==r){
+        return tr[x].v;
+    }
+    int mid=l+r&gt;&gt;1;
+    if(p&lt;=mid)return query(tr[x].lc,l,mid,p);
+    return query(tr[x].rc,mid+1,r,p);
+}
+
+int find(int x,int p){
+    int fa=query(x,1,n,p);
+    if(p==fa)return fa;
+    return find(x,fa);//x是版本
+}
+
+int change(int pre,int l,int r,int p,int fa){//修改父节点 
+  //这里不能引用&amp;now直接修改，在merge中会出错-&gt;note
+    int now=++idx;
+    tr[now]=tr[pre];
+    if(l==r){
+        tr[now].v=fa;
+        return now;
+    }
+    int mid=l+r&gt;&gt;1;
+    if(p&lt;=mid)tr[now].lc=change(tr[pre].lc,l,mid,p,fa);
+    else tr[now].rc=change(tr[pre].rc,mid+1,r,p,fa);
+    return now;
+}
+
+void merge(int a,int b,int i){
+    a=find(rt[i-1],a),b=find(rt[i-1],b);
+    // cerr&lt;&lt;&quot;OK\n&quot;;
+    if(a==b){rt[i]=rt[i-1];return ;}
+    if(getrnk(rt[i-1],1,n,a)&gt;getrnk(rt[i-1],1,n,b))swap(a,b);
+    // int t;
+//    change(rt[i-1],rt[i],1,n,a,b);
+    int t=change(rt[i-1],1,n,a,b);
+//    int t=rt[i];
+    changernk(t,rt[i],1,n,b,getrnk(rt[i-1],1,n,a)+1);//sz[b]+=sz[a];
+
+}
+
+
+signed main() {
+    // freopen(&quot;chfran.in&quot;, &quot;r&quot;, stdin);
+    // freopen(&quot;chfran.out&quot;, &quot;w&quot;, stdout);
+    n=rd;m=rd;
+
+    build(rt[0],1,n);
+
+    for(int i=1;i&lt;=m;i++) {
+        int op=rd;
+        if(op==1){
+            int a=rd,b=rd;
+            merge(a,b,i);
+        }if(op==2){
+            int k=rd;
+            rt[i]=rt[k];
+        }if(op==3){
+            int a=rd,b=rd;
+            rt[i]=rt[i-1];
+            if(find(rt[i],a)==find(rt[i],b))cout&lt;&lt;1&lt;&lt;endl;
+            else cout&lt;&lt;0&lt;&lt;endl;
+        }
+    }
+
+
+}
+
+/*
+1
+2 5 1 
+0 0 1 
+0 0 4 
+
+*/
+</code></pre>
+<h2 id="hint">Hint</h2>
+<pre><code class="language-C++">int change(int pre,int l,int r,int p,int fa){//修改父节点 
+  //这里不能引用&amp;now直接修改，在merge中会出错-&gt;note
+    ...
+}
+</code></pre>
+<p>原因：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

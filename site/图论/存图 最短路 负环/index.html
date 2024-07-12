@@ -1,0 +1,3257 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80/">
+      
+      
+        <link rel="next" href="../%E6%A0%91%E4%B8%8A%E7%A5%96%E5%85%88%20LCA/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.28">
+    
+    
+      
+        <title>存图 最短路 负环 - OI Beats</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="OI Beats" class="md-header__button md-logo" aria-label="OI Beats" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OI Beats
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              存图 最短路 负环
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="OI Beats" class="md-nav__button md-logo" aria-label="OI Beats" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    OI Beats
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    动态规划
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            动态规划
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20DP%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP DP优化
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E5%85%A5%E9%97%A8%E5%85%B8%E4%BE%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 入门典例
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E6%A0%91%E5%9E%8B%20%E7%8A%B6%E5%8E%8B%20%E5%80%8D%E5%A2%9E/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 树型 状压 倍增
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 背包问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    图论
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            图论
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tarjan%20%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tarjan 算法相关
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BA%8C%E5%88%86%E5%9B%BE%20%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二分图 二部图问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    图论基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    存图 最短路 负环
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%A0%91%E4%B8%8A%E7%A5%96%E5%85%88%20LCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    树上祖先 LCA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%94%9F%E6%88%90%E6%A0%91%20%E5%9F%BA%E7%8E%AF%E6%A0%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    生成树 基环树
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%BD%91%E7%BB%9C%E6%B5%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    网络流
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E9%AB%98%E7%BA%A7%E7%BA%BF%E6%80%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级线性数据结构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    字符串
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            字符串
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%93%88%E5%B8%8C%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    哈希 字符串匹配（从字典树到KMP再到AC自动机）
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E9%AB%98%E7%B2%BE%E5%BA%A6%20%E5%BF%AB%E8%AF%BB%E5%BF%AB%E8%BE%93/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高精度 快读快输
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E9%AB%98%E7%BA%A7%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级字符串算法
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    数学
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            数学
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E4%BA%8C%E5%88%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二分
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%8D%9A%E5%BC%88%E8%AE%BA%20SG%E5%87%BD%E6%95%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博弈论 SG函数
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%8E%9F%E6%A0%B9%20%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%20%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    原根 拉格朗日插值 莫比乌斯反演
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%BF%AB%E9%80%9F%E5%B9%82%20%E7%9F%A9%E9%98%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    快速幂 矩阵
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%AE%9A%E7%90%86%20%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数学定理 线性代数
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E7%BB%84%E5%90%88%E8%AE%A1%E6%95%B0%20%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83%20%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    组合计数 高斯消元 容斥原理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    计算几何
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E9%80%86%E5%85%83%20%E7%AD%9B%20%E4%B8%8D%E5%AE%9A%E6%96%B9%E7%A8%8B%20%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    逆元 筛 不定方程 扩展欧几里得
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    数据结构
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            数据结构
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/ST%E8%A1%A8%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%20%E7%BA%BF%E6%AE%B5%E6%A0%91%20%E5%88%86%E5%9D%97%20%E8%8E%AB%E9%98%9F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ST表 树状数组 线段树 分块 莫队
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E4%B8%8E%E5%B9%B3%E8%A1%A1%E6%A0%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二叉查找树与平衡树
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%B9%B6%E6%9F%A5%E9%9B%86%20%E6%89%A9%E5%B1%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    并查集 扩展
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%AB%98%E7%BA%A7%E3%81%AE%E6%A0%91%E4%B8%8A%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级の树上问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【】专题+++ST表+++树状数组+++线段树+++分块+++莫队+4419f177 d45a 4b1d 96ea 88ca36e3ecda
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            【】专题+++ST表+++树状数组+++线段树+++分块+++莫队+4419f177 d45a 4b1d 96ea 88ca36e3ecda
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2BST%E8%A1%A8%2B%2B%2B%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%2B%2B%2B%E7%BA%BF%E6%AE%B5%E6%A0%91%2B%2B%2B%E5%88%86%E5%9D%97%2B%2B%2B%E8%8E%AB%E9%98%9F%2B4419f177-d45a-4b1d-96ea-88ca36e3ecda/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%BB%B4%E6%8A%A4%E7%9A%84%E5%90%84%E7%A7%8D%E4%BF%A1%E6%81%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    上帝造题的七分钟 2 / 花神游历各国
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    算法基础
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            算法基础
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/C%2B%2B%E5%85%B3%E9%94%AE%E5%AD%97%E4%B8%8E%E7%94%9F%E5%83%BBSTL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C++关键字与生僻STL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/Head%2B%2B%2B%E6%A8%A1%E6%9D%BF%E5%A4%B4%2B%E7%BC%BA%E7%9C%81%E6%BA%90%2B2882b258-98b6-47da-be53-6525b90e8dae/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Head+++模板头+缺省源+2882b258 98b6 47da be53 6525b90e8dae
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%BC%80%E5%92%8C%20%E5%B7%AE%E5%88%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    前缀和 差分
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E6%A6%82%E5%BF%B5%20%E6%A6%82%E5%BF%B5%E6%80%A7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    概念 概念性
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E8%B4%AA%E5%BF%83/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    贪心
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E9%80%92%E5%BD%92%20%E9%80%92%E6%8E%A8%20%E6%B7%B1%E6%90%9C%20%E5%B9%BF%E6%90%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    递归 递推 深搜 广搜
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    算法策略
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            算法策略
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E5%88%86%E6%B2%BB%20%E6%8E%92%E5%BA%8F%20%E5%81%8F%E5%BA%8F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    分治 排序 偏序
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E5%90%AF%E5%8F%91%E5%BC%8FA_%20IDA_/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    启发式A  IDA 
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E6%80%9D%E6%83%B3%20%E7%88%AC%E5%B1%B1%E7%AE%97%E6%B3%95%20%E6%A8%A1%E6%8B%9F%E9%80%80%E7%81%AB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    思想 爬山算法 模拟退火
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<p>专题 | 存图&amp;最短路&amp;负环</p>
+<h1 id="_1">目录</h1>
+<ul>
+<li>
+<p>图的存储方式</p>
+</li>
+<li>
+<p>Dijkstra
+堆优化Dijkstra</p>
+</li>
+<li>
+<p>Bellman-Ford
+求总路径条数不多于K条的最短路径</p>
+</li>
+<li>
+<p>SPFA
+堆优化Dijkstra和SPFA的区别和优缺点</p>
+</li>
+<li>
+<p>SPFA判负环</p>
+</li>
+<li>
+<p>Floyd弗洛伊德</p>
+</li>
+<li>
+<p>Johnson 全源最短路</p>
+</li>
+<li>
+<p>次短路算法/K短路算法</p>
+</li>
+<li>
+<p>其他算法</p>
+</li>
+</ul>
+<h1 id="_2">图的存储方式</h1>
+<h3 id="_3">结构体邻接表（链式前向星）</h3>
+<p>请强记！</p>
+<pre><code class="language-C++">struct edge{
+    int v,c,nxt;
+}e[N];
+int h[N],idx;
+void add(int a,int b,int w){
+    e[++idx]={b,w,h[a]};
+    h[a]=idx;
+}
+</code></pre>
+<h3 id="_4">邻接表（链式前向星）</h3>
+<p>由以下3个数组组成</p>
+<pre><code class="language-C++">int h[],nxt[],to[]; //头,节点i(i为实际编号)的相邻节点在数组里的编号,节点i的相邻节点的实际编号
+int cnt;    //记录节点个数
+</code></pre>
+<p>存储</p>
+<p>模拟一下（不一定准确）</p>
+<table>
+<thead>
+<tr>
+<th>插入前</th>
+<th>插入9后(连接1,9)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>h[1]=3</td>
+<td>h[1]=4</td>
+</tr>
+<tr>
+<td>nxt={0,0,2}</td>
+<td>nxt={0,0,2,3}</td>
+</tr>
+<tr>
+<td>cnt=3</td>
+<td>cnt=4</td>
+</tr>
+</tbody>
+</table>
+<p>当访问<code>1</code>的临边时,让<code>i=h[1]</code>,然后不断<code>v=to[i]</code> ( <code>v</code> 是相邻的点的真实编号), <code>i=nxt[i]</code> ,直到<code>nxt[i]</code>为空停止.</p>
+<pre><code class="language-C++">void add(int a, int b) {
+    to[++cnt] = b;        //新建节点的目标
+    nxt[cnt] = h[a];    //头插法
+    h[a] = cnt;        //接上
+}
+</code></pre>
+<p>遍历</p>
+<p>当我们要访问一个点的出边时,从<code>i=h[i]</code>开始向下<code>i=nxt[i]</code>,直到<code>nxt[i]==0</code></p>
+<pre><code class="language-C++">int u=1;    //u是目前节点的编号
+for(int i=h[u],i;i=nxt[i]){}
+</code></pre>
+<h3 id="_5">邻接矩阵</h3>
+<p>建立矩阵<code>web[a][b]</code>,如果<code>web[a][b]==1</code>,则表示存在 $ a\to b$ 的路径</p>
+<p>可按具体环境改变<code>web[a][b]</code>存的内容</p>
+<h3 id="vector">Vector存图</h3>
+<p>连边（无向图）</p>
+<pre><code class="language-C++">void add(int a,int b){
+    e[a].push_back(b);
+    e[b].push_back(a);
+}
+
+</code></pre>
+<p>访问u的邻点</p>
+<pre><code class="language-C++">for(int i=0;i&lt;e[u].size();i++){
+    int v=e[u][i];
+}
+//或者
+for(int v:e[u]){
+
+}
+</code></pre>
+<p>可以去学习一下<code>:</code>的使用方法。同时了解一下<code>auto</code>类型的使用方法。</p>
+<p>对于有边权的情况，我们要么把vector定义为struct或者pair，要么开第二个vector来同步存其边权。</p>
+<h1 id="_6">最短路（题面）</h1>
+<h2 id="_7">题目描述</h2>
+<p>如题，给出一个有向图，请输出从某一点出发到所有点的最短路径长度。</p>
+<h2 id="_8">输入格式</h2>
+<p>第一行包含三个整数 <span class="arithmatex">\(n,m,s\)</span>，分别表示点的个数、有向边的个数、出发点的编号。</p>
+<p>接下来 <span class="arithmatex">\(m\)</span> 行每行包含三个整数 <span class="arithmatex">\(u,v,w\)</span>，表示一条 <span class="arithmatex">\(u \to v\)</span> 的，长度为 <span class="arithmatex">\(w\)</span> 的边。</p>
+<h2 id="_9">输出格式</h2>
+<p>输出一行 <span class="arithmatex">\(n\)</span> 个整数，第 <span class="arithmatex">\(i\)</span> 个表示 <span class="arithmatex">\(s\)</span> 到第 <span class="arithmatex">\(i\)</span> 个点的最短路径，若不能到达则输出 <span class="arithmatex">\(2^{31}-1\)</span>。</p>
+<p>对于 <span class="arithmatex">\(100\%\)</span> 的数据：<span class="arithmatex">\(1 \le n \le 10^4\)</span>，<span class="arithmatex">\(1\le m \le 5\times 10^5\)</span>，<span class="arithmatex">\(1\le u,v\le n\)</span>，<span class="arithmatex">\(w\ge 0\)</span>，<span class="arithmatex">\(\sum w&lt; 2^{31}\)</span>，保证数据随机。</p>
+<p><strong>两个点之间可能有多条边，敬请注意。</strong></p>
+<p>样例说明：</p>
+<p><img alt="7641.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%AD%98%E5%9B%BE%2B%2B%2B%E6%9C%80%E7%9F%AD%E8%B7%AF%2B%2B%2B%E8%B4%9F%E7%8E%AF%2Bebd313c0-da0e-4a67-83a8-4474cbcfdf9c/7641.png" /></p>
+<p>图片1到3和1到4的文字位置调换</p>
+<h1 id="dijkstra">Dijkstra</h1>
+<p>·通过已得到最短路径的的点去扩展其他的点，设起点为 s</p>
+<p>·设定 <code>dist[s]=0;dist[v]=inf(v!=s)</code></p>
+<ul>
+<li>
+<p>找到最小的 <code>dist [ u ]</code>（且 u 没有被访问过）此时的 <code>dist [ u ]</code>就是起点到该点的最短路（为什么？→之后的dis值一定大于dis_u，不会更新dis_u）</p>
+</li>
+<li>
+<p>更新与 u 相连的点</p>
+</li>
+</ul>
+<p>vector 版本</p>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int N=1e6+5;
+int vis[N],h[N];
+int dis[N],cnt,u,w,n,m,v,s;
+struct node {
+    int nxt,dis;
+};
+
+vector&lt;node&gt; e[N];
+priority_queue&lt;pair&lt;int,int&gt;&gt; pq;
+void add(int a,int b,int dis) {
+    e[a].push_back((node){b,dis});
+}
+
+void djstr(int rt) {
+    pq.push(make_pair(0,rt));
+    int u=rt;   //先从起点开始查
+    for(int i=1; i&lt;=n; i++)dis[i]=2147483647;   //初始化边权
+
+    dis[rt]=0;
+//  vis[rt]=1;//别写错！！
+
+    while(pq.size()) {  //搜完全图
+
+        u=pq.top().second;
+
+        pq.pop();
+        if(vis[u])continue;//记得continue
+        vis[u]=1;
+        for(int i=0;i&lt;e[u].size();i++){
+            int v=e[u][i].nxt,w=e[u][i].dis;
+            if(!vis[v]&amp;&amp;dis[u]+w&lt;dis[v]){
+                dis[v]=dis[u]+w;    //更新
+                pq.push(make_pair(-dis[v],v));
+            }
+        }
+    }
+}
+signed main() {
+
+    cin&gt;&gt;n&gt;&gt;m&gt;&gt;s;
+
+    for(int i=1; i&lt;=m; i++) {
+        cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;
+        if(u!=v)add(u,v,w);
+    }
+    djstr(s);
+    for(int i=1; i&lt;=n; i++) {
+        cout&lt;&lt;dis[i]&lt;&lt;' ';
+    }
+    return 0;
+}
+</code></pre>
+<p>邻接表版本</p>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=1e6+5;
+int vis[MAXN],h[MAXN];
+int dis[MAXN],cnt,u,w,n,m,v,s;
+struct Edge {
+    int next,to,dis;
+} edge[MAXN];
+priority_queue&lt;pair&lt;int,int&gt;&gt; pq;
+void add(int from,int to,int dis) {
+    edge[++cnt].next=h[from];
+    edge[cnt].to=to;
+    edge[cnt].dis=dis;
+    h[from]=cnt;
+}
+
+void djstr(int rt) {
+    pq.push(make_pair(0,rt));
+    int u=rt;   //先从起点开始查
+    for(int i=1; i&lt;=n; i++)dis[i]=2147483647;   //初始化边权
+
+    dis[rt]=0;
+    //for(int i=1; i&lt;=n; i++)
+    while(pq.size()) {  //搜完全图
+
+        u=pq.top().second;
+
+        pq.pop();
+        if(vis[u])continue;
+        vis[u]=1;
+        for(int j=h[u]; j; j=edge[j].next) {
+            if(!vis[edge[j].to]&amp;&amp;dis[u]+edge[j].dis&lt;dis[edge[j].to]){
+                dis[edge[j].to]=dis[u]+edge[j].dis; //更新
+                pq.push(make_pair(-dis[edge[j].to],edge[j].to));
+            }
+
+        }
+
+        /*int min=2147483647;
+        for(int j=1; j&lt;=n; j++) {   //重新查找到i距离最小的点
+            if(!vis[j]&amp;&amp;dis[j]&lt;min) {
+                min=dis[j];
+                u=j;
+            }
+        }*/
+    }
+}
+signed main() {
+
+    cin&gt;&gt;n&gt;&gt;m&gt;&gt;s;
+
+    for(int i=1; i&lt;=m; i++) {
+        cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;
+        if(u!=v)add(u,v,w);
+    }
+    djstr(s);
+    for(int i=1; i&lt;=n; i++) {
+        cout&lt;&lt;dis[i]&lt;&lt;' ';
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="_10">其他问题</h2>
+<blockquote>
+<p>最短路计数·求 1 号点到其他点的最短路有几条？</p>
+</blockquote>
+<p>每次更新的时候如果dis不变，则该点最短路cnt+1，否则cnt变为1</p>
+<h1 id="bellman-ford">Bellman-Ford</h1>
+<p>求总路径条数不多于K条的最短路径</p>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int n,m,ans;
+int dis[5005],road[5005][5005];
+
+void bellman(){
+
+    for(int i=2;i&lt;=n;i++)dis[i]=0x3f3f3f3f;
+    dis[1]=0;
+    for(int i=1;i&lt;=n;i++){
+        int flag=0;
+        for(int j=1;j&lt;=m;j++){
+            if(dis[j]&gt;dis[i]+road[i][j])dis[j]=dis[i]+road[i][j],flag=1;//如果1-&gt;j比1-&gt;i-&gt;j远，则更新它 
+        }
+        if(!flag)break; //如果没有更新则break 
+    }
+}
+int main(){
+    memset(road,0x3f3f3f3f,sizeof road);
+    cin&gt;&gt;n&gt;&gt;m;
+    for(int i=1;i&lt;=m;i++){
+        int u,v,w;
+        cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;
+        road[u][v]=w;
+
+    }
+    bellman();
+
+    for(int i=1;i&lt;=n;i++)cout&lt;&lt;dis[i]&lt;&lt;' ';
+
+    return 0;
+}
+</code></pre>
+<p>另外一种写法</p>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int n,m,ans;
+int d[5005];
+struct node{
+    int u,v,w;
+}e[5050];
+int main(){
+    cin&gt;&gt;n&gt;&gt;m;
+    for(int i=1;i&lt;=m;i++){
+        int c,c2,y;
+        cin&gt;&gt;c&gt;&gt;c2&gt;&gt;y;
+        e[i].u=c2;e[i].v=c;e[i].w=y;
+
+    }
+    for(int i=2;i&lt;=n;i++)d[i]=0x3f3f3f3f;
+    for(int i=1;i&lt;=n-1;i++){
+        for(int j=1;j&lt;=m;j++){
+            d[e[j].v]=min(d[e[j].u]+e[j].w,d[e[j].v]);
+        }
+    }
+    for(int i=1;i&lt;=m;i++){
+        if(d[e[i].v]&gt;d[e[i].u]+e[i].w){
+            printf(&quot;NO&quot;);return 0;  //有负环
+        }
+    }
+    for(int i=1;i&lt;=n;i++)cout&lt;&lt;d[i]&lt;&lt;' ';
+
+    return 0;
+}
+</code></pre>
+<p>因为图的最短路径不包含负环或正环，故显然最多只能包含 n−1 条边，于是进行 n−1 次松弛操作。</p>
+<p>若经过 n−1 轮松弛操作后仍能松弛，说明图存在负权回路。</p>
+<h1 id="spfa">SPFA</h1>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int MAXN=1e4+5;
+int vis[MAXN],h[50*MAXN];
+int dis[MAXN],cnt,u,w,n,m,v,s;
+struct Edge {
+    int next,to,dis;
+} edge[MAXN*50];
+void add(int from,int to,int dis) {
+    edge[++cnt].next=h[from];
+    edge[cnt].to=to;
+    edge[cnt].dis=dis;
+    h[from]=cnt;
+}
+
+queue &lt;int&gt; q;
+
+void spfa(int rt) {
+    dis[rt]=0;
+    vis[rt]=1;
+    q.push(rt);
+    while(q.size()) {   //类似广搜
+        int u=q.front();
+        q.pop();
+        vis[u]=0;
+        for(int i=h[u]; i; i=edge[i].next) {
+            int nxt=edge[i].to;
+            if(dis[nxt]&lt;=dis[u]+edge[i].dis)continue;
+            dis[nxt]=dis[u]+edge[i].dis;
+            if(!vis[nxt]) {
+                vis[nxt]=1;
+                q.push(nxt);
+            }
+        }
+    }
+
+}
+signed main() {
+//  freopen(&quot;P3371_2.in&quot;,&quot;r&quot;,stdin);
+//  freopen(&quot;test.txt&quot;,&quot;w&quot;,stdout);
+    cin&gt;&gt;n&gt;&gt;m&gt;&gt;s;
+
+    for(int i=1; i&lt;=n; i++)dis[i]=2147483647;
+//  memset(dis,0x3f,sizeof(dis));
+    //cout&lt;&lt;dis[1]&lt;&lt;endl;
+    for(int i=1; i&lt;=m; i++) {
+        cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;
+        add(u,v,w);
+    }
+    spfa(s);
+    for(int i=1; i&lt;=n; i++) {
+        cout&lt;&lt;dis[i]&lt;&lt;' ';
+    }
+    return 0;
+}
+</code></pre>
+<p>堆优化Dijkstra和SPFA的区别和优缺点：待补充</p>
+<h1 id="spfa_1">SPFA判负环</h1>
+<h2 id="_11">题目描述</h2>
+<p>给定一个 <span class="arithmatex">\(n\)</span> 个点的有向图，请求出图中是否存在<strong>从顶点 <span class="arithmatex">\(1\)</span> 出发能到达</strong>的负环。</p>
+<p>负环的定义是：一条边权之和为负数的回路。</p>
+<h2 id="_12">输入格式</h2>
+<p><strong>本题单测试点有多组测试数据</strong>。</p>
+<p>输入的第一行是一个整数 <span class="arithmatex">\(T\)</span>，表示测试数据的组数。对于每组数据的格式如下：</p>
+<p>第一行有两个整数，分别表示图的点数 <span class="arithmatex">\(n\)</span> 和接下来给出边信息的条数 <span class="arithmatex">\(m\)</span>。</p>
+<p>接下来 <span class="arithmatex">\(m\)</span> 行，每行三个整数 <span class="arithmatex">\(u, v, w\)</span>。</p>
+<ul>
+<li>
+<p>若 <span class="arithmatex">\(w \geq 0\)</span>，则表示存在一条从 <span class="arithmatex">\(u\)</span> 至 <span class="arithmatex">\(v\)</span> 边权为 <span class="arithmatex">\(w\)</span> 的边，还存在一条从 <span class="arithmatex">\(v\)</span> 至 <span class="arithmatex">\(u\)</span> 边权为 <span class="arithmatex">\(w\)</span> 的边。</p>
+</li>
+<li>
+<p>若 <span class="arithmatex">\(w &lt; 0\)</span>，则只表示存在一条从 <span class="arithmatex">\(u\)</span> 至 <span class="arithmatex">\(v\)</span> 边权为 <span class="arithmatex">\(w\)</span> 的边。</p>
+</li>
+</ul>
+<h2 id="_13">输出格式</h2>
+<p>对于每组数据，输出一行一个字符串，若所求负环存在，则输出 <code>YES</code>，否则输出 <code>NO</code>。</p>
+<h2 id="1">样例 #1</h2>
+<h3 id="1_1">样例输入 #1</h3>
+<pre><code class="language-C++">2
+3 4
+1 2 2
+1 3 4
+2 3 1
+3 1 -3
+3 3
+1 2 3
+2 3 4
+3 1 -8
+</code></pre>
+<h3 id="1_2">样例输出 #1</h3>
+<pre><code class="language-C++">NO
+YES
+</code></pre>
+<h2 id="_14">提示</h2>
+<h4 id="_15">数据规模与约定</h4>
+<p>对于全部的测试点，保证：</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(1 \leq n \leq 2 \times 10^3\)</span>，<span class="arithmatex">\(1 \leq m \leq 3 \times 10^3\)</span>。</p>
+</li>
+<li>
+<p><span class="arithmatex">\(1 \leq u, v \leq n\)</span>，<span class="arithmatex">\(-10^4 \leq w \leq 10^4\)</span>。</p>
+</li>
+<li>
+<p><span class="arithmatex">\(1 \leq T \leq 10\)</span>。</p>
+</li>
+</ul>
+<h4 id="_16">提示</h4>
+<p>请注意，<span class="arithmatex">\(m\)</span> <strong>不是</strong>图的边数。</p>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=2e3+10;
+
+int n,m;
+struct Edge{
+    int to,w,next;
+}edge[MAXN*3];        
+int head[MAXN],tot;
+inline void Init(){    
+    for(int i=0;i&lt;MAXN*3;i++) edge[i].next=0;
+    for(int i=0;i&lt;MAXN;i++) head[i]=0;
+    tot=0;
+}
+inline void addedge(int u,int v,int w){
+    edge[++tot].to=v;
+    edge[tot].w=w;
+    edge[tot].next=head[u];
+    head[u]=tot;
+}
+
+queue&lt;int&gt; Q;
+int dis[MAXN],vis[MAXN],cnt[MAXN];
+bool spfa(){
+    memset(dis,0x3f,sizeof(dis));
+    memset(vis,0,sizeof(vis));
+    memset(cnt,0,sizeof(cnt));
+    dis[1]=0; vis[1]=true;
+    Q.push(1);
+    while(!Q.empty()){
+        int x=Q.front();
+        Q.pop();
+        vis[x]=false;
+        for(int i=head[x];i;i=edge[i].next){
+            int y=edge[i].to,z=edge[i].w;
+            if(dis[y]&gt;dis[x]+z){
+                dis[y]=dis[x]+z; 
+                cnt[y]=cnt[x]+1;  
+                if(cnt[y]&gt;=n) return true;  
+                if(!vis[y]){
+                    Q.push(y);
+                    vis[y]=true;
+                }
+            }
+        }
+    }
+    return false;
+}
+int main(){
+    int T;
+    scanf(&quot;%d&quot;,&amp;T);
+    while(T--){
+        Init();
+        scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+        for(int i=1;i&lt;=m;i++){
+            int u,v,w;
+            scanf(&quot;%d%d%d&quot;,&amp;u,&amp;v,&amp;w);
+            addedge(u,v,w);
+            if(w&gt;=0) addedge(v,u,w);
+        }
+        puts(spfa()?&quot;YES&quot;:&quot;NO&quot;);
+    }
+    return 0;
+}
+</code></pre>
+<h1 id="floyd">Floyd</h1>
+<p>平面上有n个点（n&lt;=100），每个点的坐标均在-10000~10000之间。其中的一些点之间有连线。</p>
+<p>若有连线，则表示可从一个点到达另一个点，即两点间有通路，通路的距离为两点间的直线距离。现在的任务是找出从一点到另一点之间的最短路径。</p>
+<pre><code class="language-C++">#include &lt;bits/stdc++.h&gt;
+const int inf=1e9;
+using namespace std;
+int x[105],y[105],n,m,s,t,a,b;
+double diss[105][105];
+double dis(int i,int j){
+    return sqrt((x[i]-x[j])*(x[i]-x[j])+(y[i]-y[j])*(y[i]-y[j]));
+}
+void flyd(){
+    for(int k=1;k&lt;=n;k++)
+        for(int i=1;i&lt;=n;i++)
+            for(int j=1;j&lt;=n;j++)
+                diss[i][j]=min(diss[i][j],diss[i][k]+diss[k][j]);
+}
+int main() {
+    cin&gt;&gt;n;
+    for(int k=1;k&lt;=n;k++)
+        for(int i=1;i&lt;=n;i++)
+            diss[k][i]=inf;
+    for(int i=1;i&lt;=n;i++){
+        cin&gt;&gt;x[i]&gt;&gt;y[i];
+    }
+
+    cin&gt;&gt;m;
+    for(int i=1;i&lt;=m;i++){
+        cin&gt;&gt;a&gt;&gt;b;
+        diss[a][b]=diss[b][a]=dis(a,b);
+    }
+    cin&gt;&gt;s&gt;&gt;t;
+
+
+    flyd();
+    printf(&quot;%.2lf&quot;,diss[s][t]);
+    return 0;
+}
+</code></pre>
+<p>luogu 模板</p>
+<pre><code class="language-C++">signed main(){
+
+    memset(f,0x3f3f,sizeof f);
+    cin&gt;&gt;n&gt;&gt;m;
+    for(int i=1;i&lt;=m;i++){
+        int u,v,w;
+        cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;
+        f[u][v]=f[v][u]=w;
+    }
+
+    for(int k=1;k&lt;=n;k++){
+        for(int i=1;i&lt;=n;i++){
+            for(int j=1;j&lt;=n;j++){
+                if(i==j)f[i][j]=0;
+                f[j][i]=f[i][j]=min(f[i][j],f[i][k]+f[k][j]);
+            }
+        }
+    }
+
+    for(int i=1;i&lt;=n;i++){
+
+        for(int j=1;j&lt;=n;j++)cout&lt;&lt;f[i][j]&lt;&lt;' ';
+        cout&lt;&lt;endl;
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="_17">判最小环</h2>
+<p><a href="https://www.luogu.com.cn/problem/P6175">无向图的最小环问题 - 洛谷</a></p>
+<h2 id="_18">传递闭包</h2>
+<p>给定一张点数为 <span class="arithmatex">\(n\)</span> 的有向图的邻接矩阵，图中不包含自环，求该有向图的传递闭包。</p>
+<p>一张图的邻接矩阵定义为一个 <span class="arithmatex">\(n\times n\)</span> 的矩阵 <span class="arithmatex">\(A=(a_{ij})_{n\times n}\)</span>，其中</p>
+<p><span class="arithmatex">\(a_{ij}=\left\{
+\begin{aligned}
+1,i\ 到\ j\ 存在直接连边\\
+0,i\ 到\ j\ 没有直接连边 \\
+\end{aligned}
+\right.\)</span></p>
+<p>一张图的传递闭包定义为一个 <span class="arithmatex">\(n\times n\)</span> 的矩阵 <span class="arithmatex">\(B=(b_{ij})_{n\times n}\)</span>，其中</p>
+<p>$ b_{ij}=\left{\begin{aligned}1,i\ 可以直接或间接到达\ j\0,i\ 无法直接或间接到达\ j\\end{aligned}\right.$</p>
+<h3 id="_19">大意</h3>
+<p>判断任意两点之间的连通性</p>
+<h3 id="_20">代码</h3>
+<pre><code class="language-C++">signed main(){
+    cin&gt;&gt;n;
+    for(int i=1;i&lt;=n;i++){
+
+        for(int j=1;j&lt;=n;j++)cin&gt;&gt;f[i][j];
+    }
+    for(int k=1;k&lt;=n;k++){
+        for(int i=1;i&lt;=n;i++){
+            for(int j=1;j&lt;=n;j++){
+                f[i][j]|=f[i][k]&amp;f[k][j];
+              //也可以写f[j][i]=f[i][j]|=f[i][k]&amp;f[k][j];
+              //但是不能写f[j][i]|=f[i][k]&amp;f[k][j];
+            }
+        }
+    }
+
+    for(int i=1;i&lt;=n;i++){
+
+        for(int j=1;j&lt;=n;j++)cout&lt;&lt;f[i][j]&lt;&lt;' ';
+        cout&lt;&lt;endl;
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="kfloyd">k路floyd矩阵乘法优化</h2>
+<p>给定一张 <span class="arithmatex">\(T\)</span> 条边的无向连通图，求从 <span class="arithmatex">\(S\)</span> 到 <span class="arithmatex">\(E\)</span> 经过 <span class="arithmatex">\(N\)</span> 条边的最短路长度。</p>
+<p><strong>思路</strong></p>
+<p>首先，我们有两个矩阵，如果其中一个矩阵代表恰好经过x条边的最短路，另外一个矩阵代表恰好经过y条边的最短路。那么将这两个矩阵合并就代表恰好经过x+y条边的最短路。怎么合并呢？结合下面这个式子理解一下：</p>
+<p>c[i][j]=min(c[i][j],a[i][k]+b[k][j]);</p>
+<p>Std</p>
+<pre><code class="language-C++">/*////////ACACACACACACAC///////////
+       . Code  by  Ntsc .
+       . Earn knowledge .
+/*////////ACACACACACACAC///////////
+
+#include &lt;bits/stdc++.h&gt;
+#define int long long
+#define db double
+#define rtn return
+using namespace std;
+
+const int N = 5e2 + 5;
+const int M = 1e5;
+const int MOD = 1e9+7;
+const int INF = 1e9+5;
+
+int n, t,s,e,m,vis[M],tot;
+
+
+#define rd read()
+inline int read()
+{
+    int xx=0,ff=1;
+    char ch=getchar();
+    while(ch&lt;'0'||ch&gt;'9') {if(ch=='-') ff=-1;ch=getchar();}
+    while(ch&gt;='0'&amp;&amp;ch&lt;='9') xx=xx*10+(ch-'0'),ch=getchar();
+    return xx*ff;
+}
+inline void write(int out)
+{
+    if(out&lt;0) putchar('-'),out=-out;
+    if(out&gt;9) write(out/10);
+    putchar(out%10+'0');
+}
+
+
+
+struct node {
+    int a[N][N];
+    node() {
+        memset(a,0x3f3f,sizeof a); //一定要写！
+    }
+
+    node operator *(const node &amp;x)const{     //重载运算符
+        node z;
+        for(int k=1;k&lt;=tot;++k)
+            for(int i=1;i&lt;=tot;++i)
+                for(int j=1;j&lt;=tot;++j)
+                    z.a[i][j]=min(z.a[i][j],a[i][k]+x.a[k][j]);
+        return z;
+    }
+}dis,ans;
+
+signed main() {
+//    freopen(&quot;tree.in&quot;, &quot;r&quot;, stdin);
+//    freopen(&quot;tree.out&quot;, &quot;w&quot;, stdout);
+    cerr&lt;&lt;&quot;OO&quot;;
+    n=rd;t=rd;s=rd;e=rd;
+
+    for(int i=1;i&lt;=t;i++){
+        int w=rd,u=rd,v=rd;
+        if(!vis[u])vis[u]=++tot;
+        if(!vis[v])vis[v]=++tot;
+        dis.a[vis[u]][vis[v]]=dis.a[vis[v]][vis[u]]=w;
+    }
+
+    cerr&lt;&lt;&quot;OK&quot;;
+
+    n--;
+    ans=dis;
+    while(n){
+        if(n&amp;1)ans=ans*dis;
+        dis=dis*dis;
+        n&gt;&gt;=1;
+    }
+
+    cout&lt;&lt;ans.a[vis[s]][vis[e]];
+    return 0;
+}
+
+</code></pre>
+<h2 id="dijkstra_1">注意伪全源最短路（可用dijkstra跑若干次）</h2>
+<p><a href="https://www.luogu.com.cn/problem/P5764">www.luogu.com.cn</a></p>
+<h1 id="johnson">Johnson 全源最短路</h1>
+<h2 id="_21">题目描述</h2>
+<p>给定一个包含 <span class="arithmatex">\(n\)</span> 个结点和 <span class="arithmatex">\(m\)</span> 条带权边的有向图，求所有点对间的最短路径长度，一条路径的长度定义为这条路径上所有边的权值和。</p>
+<p>注意：</p>
+<ol>
+<li>
+<p>边权<strong>可能</strong>为负，且图中<strong>可能</strong>存在重边和自环；</p>
+</li>
+<li>
+<p>部分数据卡 <span class="arithmatex">\(n\)</span> 轮 SPFA 算法。</p>
+</li>
+</ol>
+<h2 id="_22">输入格式</h2>
+<p>第 <span class="arithmatex">\(1\)</span> 行：<span class="arithmatex">\(2\)</span> 个整数 <span class="arithmatex">\(n,m\)</span>，表示给定有向图的结点数量和有向边数量。</p>
+<p>接下来 <span class="arithmatex">\(m\)</span> 行：每行 <span class="arithmatex">\(3\)</span> 个整数 <span class="arithmatex">\(u,v,w\)</span>，表示有一条权值为 <span class="arithmatex">\(w\)</span> 的有向边从编号为 <span class="arithmatex">\(u\)</span> 的结点连向编号为 <span class="arithmatex">\(v\)</span> 的结点。</p>
+<h2 id="_23">输出格式</h2>
+<p>若图中存在负环，输出仅一行 <span class="arithmatex">\(-1\)</span>。</p>
+<p>若图中不存在负环：</p>
+<p>输出 <span class="arithmatex">\(n\)</span> 行：令 <span class="arithmatex">\(dis_{i,j}\)</span> 为从 <span class="arithmatex">\(i\)</span> 到 <span class="arithmatex">\(j\)</span> 的最短路，在第 <span class="arithmatex">\(i\)</span> 行输出 <span class="arithmatex">\(\sum\limits_{j=1}^n j\times dis_{i,j}\)</span>，注意这个结果可能超过 int 存储范围。</p>
+<p>如果不存在从 <span class="arithmatex">\(i\)</span> 到 <span class="arithmatex">\(j\)</span> 的路径，则 <span class="arithmatex">\(dis_{i,j}=10^9\)</span>；如果 <span class="arithmatex">\(i=j\)</span>，则 <span class="arithmatex">\(dis_{i,j}=0\)</span>。</p>
+<h2 id="1_3">样例 #1</h2>
+<h3 id="1_4">样例输入 #1</h3>
+<pre><code class="language-C++">5 7
+1 2 4
+1 4 10
+2 3 7
+4 5 3
+4 2 -2
+3 4 -3
+5 3 4
+</code></pre>
+<h3 id="1_5">样例输出 #1</h3>
+<pre><code class="language-C++">128
+1000000072
+999999978
+1000000026
+1000000014
+</code></pre>
+<h2 id="2">样例 #2</h2>
+<h3 id="2_1">样例输入 #2</h3>
+<pre><code class="language-C++">5 5
+1 2 4
+3 4 9
+3 4 -3
+4 5 3
+5 3 -2
+</code></pre>
+<h3 id="2_2">样例输出 #2</h3>
+<pre><code class="language-C++">-1
+</code></pre>
+<h2 id="_24">提示</h2>
+<p>【样例解释】</p>
+<p>左图为样例 <span class="arithmatex">\(1\)</span> 给出的有向图，最短路构成的答案矩阵为：</p>
+<pre><code class="language-C++">0 4 11 8 11 
+1000000000 0 7 4 7 
+1000000000 -5 0 -3 0 
+1000000000 -2 5 0 3 
+1000000000 -1 4 1 0 
+</code></pre>
+<p>右图为样例 <span class="arithmatex">\(2\)</span> 给出的有向图，红色标注的边构成了负环，注意给出的图不一定连通。</p>
+<p><img alt="7lb35u4u.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%AD%98%E5%9B%BE%2B%2B%2B%E6%9C%80%E7%9F%AD%E8%B7%AF%2B%2B%2B%E8%B4%9F%E7%8E%AF%2Bebd313c0-da0e-4a67-83a8-4474cbcfdf9c/7lb35u4u.png" /></p>
+<p>【数据范围】</p>
+<p>对于 <span class="arithmatex">\(100\%\)</span> 的数据，<span class="arithmatex">\(1\leq n\leq 3\times 10^3,\ \ 1\leq m\leq 6\times 10^3,\ \ 1\leq u,v\leq n,\ \ -3\times 10^5\leq w\leq 3\times 10^5\)</span>。</p>
+<p>对于 <span class="arithmatex">\(20\%\)</span> 的数据，<span class="arithmatex">\(1\leq n\leq 100\)</span>，不存在负环（可用于验证 Floyd 正确性）</p>
+<p>对于另外 <span class="arithmatex">\(20\%\)</span> 的数据，<span class="arithmatex">\(w\ge 0\)</span>（可用于验证 Dijkstra 正确性）</p>
+<p>upd. 添加一组 Hack 数据：针对 SPFA 的 SLF 优化</p>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define int long long
+const int MAXN=3e3+5,INF=1000000000;
+//spfa定义部分
+int dis[MAXN],cntt[MAXN];
+//djstr定义部分
+int ddis[MAXN];
+
+int n,vis[MAXN],cnt,u,w,m,v;    //注意：cnt-边的数量；cntt[]-记录现在这条路走过了多少节点
+//邻接表定义部分
+int h[MAXN];    //head
+struct edge {
+    int from,next,to,dis;
+} edge[MAXN&lt;&lt;2];
+
+void add(int from,int to,int dis) { //邻接表
+
+    edge[++cnt].next=h[from];
+    edge[cnt].from=from;
+    edge[cnt].to=to;
+    edge[cnt].dis=dis;
+    h[from]=cnt;
+}
+
+
+//求距离
+void djstr(int rt) {
+    priority_queue&lt;pair&lt;int,int&gt;&gt; pq;
+    for(int i=1; i&lt;=n; i++)ddis[i]=INF; //初始化边权
+    memset(vis,0,sizeof(vis));  //记得初始化，因为djstl要循环n次
+    pq.push(make_pair(0,rt));   //先从起点开始
+    ddis[rt]=0;
+
+    while(pq.size()) {  //搜完全图
+        u=pq.top().second;  //取点,并且是当前队列里最小的
+        pq.pop();   //记得弹出哦!
+        if(vis[u])
+            continue;
+        vis[u]=1;
+
+        for(int j=h[u]; j; j=edge[j].next) {
+            if(ddis[u]+edge[j].dis&lt;ddis[edge[j].to]) {
+                ddis[edge[j].to]=ddis[u]+edge[j].dis;   //更新
+                if(!vis[edge[j].to])
+                    pq.push(make_pair(-ddis[edge[j].to],edge[j].to));   //默认是大根堆,于是距离要存负数,起到小根堆的作用.距离要存在pair的first
+            }
+        }
+    }
+}
+
+
+//SPFA用来判断负环！！！
+
+bool spfa() {
+
+    queue &lt;int&gt; q;  //队列存点
+    for(int i=1; i&lt;=n; i++)dis[i]=INF;  //记得初始化
+    q.push(0);  //首先把起点放进去
+    dis[0]=0;
+    vis[0]=1;
+
+    while(q.size()) {   //循环,一直到没有点可以访问
+        int u=q.front();
+        q.pop();
+        vis[u]=0;
+        for(int i=h[u]; i; i=edge[i].next) {    //遍历出边
+            int nxt=edge[i].to;
+            if(dis[nxt]&lt;=dis[u]+edge[i].dis)continue;   //如果原来的更优,跳过
+            dis[nxt]=dis[u]+edge[i].dis;    //更新距离
+            if(!vis[nxt]) {     //如果没有访问过
+                q.push(nxt);
+                vis[nxt]=1;
+
+                if(++cntt[nxt]&gt;n) // n+1结点，随便更新现在这条路走过了多少节点，如果大于总节点数，则有负环
+                    return 0;
+            }
+        }
+    }
+    return 1;
+}
+signed main() {
+    cin&gt;&gt;n&gt;&gt;m;
+    for(int i=1; i&lt;=n; i++)dis[i]=INF;
+    for(int i=1; i&lt;=m; i++) {   //邻接表建边
+        cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;
+        add(u,v,w);
+    }
+    for(int i=1; i&lt;=n; i++) //不理解？？？
+        add(0,i,0);
+    if(!spfa()) {   //存在负环
+        cout&lt;&lt;-1;
+        return 0;
+    }
+    //不存在负环
+    for(int i=1; i&lt;cnt; i++)
+        edge[i].dis+=dis[edge[i].from]-dis[edge[i].to];
+    for(int i=1; i&lt;=n; i++) {   //每个点开始一遍djstr
+        djstr(i);
+        int ans=0;
+        for(int j=1; j&lt;=n; j++) {
+            if(ddis[j]==INF)
+                ans+=j*INF;     //i到不了j
+            else
+                ans+=j*(ddis[j]-(dis[i]-dis[j]));   //按题目要求求和
+        }
+        cout&lt;&lt;ans&lt;&lt;endl;
+    }
+    return 0;
+}
+</code></pre>
+<h1 id="k">次短路算法/K短路算法</h1>
+<p>每次更新时，优先更新最短路，若能更新最短路，就令次短路等于之前的最短路，再更新最短路</p>
+<h2 id="_25">次短路 | 集合位置</h2>
+<p>题目描述</p>
+<p>每次有大的活动，大家都要在一起“聚一聚”，不管是去好乐迪，还是避风塘，或者汤姆熊，大家都要玩的痛快。还记得心语和花儿在跳舞机上的激情与释放，还记得草草的投篮技艺是如此的高超，还记得狗狗的枪法永远是'S'……还有不能忘了，胖子的歌声永远是让我们惊叫的！！</p>
+<p>今天是野猫的生日，所以想到这些也正常，只是因为是上学日，没法一起去玩了。但回忆一下那时的甜蜜总是一种幸福嘛。。。</p>
+<p>但是每次集合的时候都会出现问题！野猫是公认的“路盲”，野猫自己心里也很清楚，每次都提前出门，但还是经常迟到，这点让大家很是无奈。后来，野猫在每次出门前，都会向花儿咨询一下路径，根据已知的路径中，总算能按时到了。</p>
+<p>现在提出这样的一个问题：给出 <span class="arithmatex">\(n\)</span> 个点的坐标，其中第一个为野猫的出发位置，最后一个为大家的集合位置，并给出哪些位置点是相连的。野猫从出发点到达集合点，总会挑一条最近的路走，如果野猫没找到最近的路，他就会走第二近的路。请帮野猫求一下这条第二最短路径长度。</p>
+<p>输入格式</p>
+<p>第一行是两个整数 <span class="arithmatex">\(n(1 \le n \le 200)\)</span> 和 <span class="arithmatex">\(m\)</span>，表示一共有 <span class="arithmatex">\(n\)</span> 个点和 <span class="arithmatex">\(m\)</span> 条路，以下 <span class="arithmatex">\(n\)</span> 行每行两个数 <span class="arithmatex">\(x_i\)</span>，<span class="arithmatex">\(y_i\)</span>，<span class="arithmatex">\((-500 \le x_i,y_i \le 500),\)</span> 代表第 <span class="arithmatex">\(i\)</span> 个点的坐标，再往下的 <span class="arithmatex">\(m\)</span> 行每行两个整数 <span class="arithmatex">\(p_j\)</span>，<span class="arithmatex">\(q_j,(1 \le p_j,q_j \le n)\)</span>，表示两个点相通。</p>
+<h3 id="_26">正确算法</h3>
+<p>我们采用删边的思想，先跑一遍最短路，记录路径。</p>
+<p>然后依次删去最短路径上每一条边，分别跑一遍最短路，取所有答案中的最小值即可。</p>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int N=1e6+5;
+const int INF=1e9+5;
+int vis[N],h[N],used[N],lst[N];
+int cnt,u,w,n,m,v,s;
+#define pdi pair&lt;double,int&gt;
+using namespace std;
+struct node{
+    double x,y;
+    int head;
+    double dis;
+    int pre;
+}node[205];
+struct edge{
+    int nxt,to; 
+    double dis;
+}edge[50005];
+double ans=INF&lt;&lt;1;
+double calc(double a,double b,double c,double d){
+    return (double)sqrt(double(a-c)*double(a-c)+double(b-d)*double(b-d));
+}
+//距离公式，注意数据类型
+void addEdge(int u,int v,double w){
+    edge[++cnt].dis=w;
+    edge[cnt].to=v;
+    edge[cnt].nxt=node[u].head;
+    node[u].head=cnt;
+}
+priority_queue&lt;pdi,vector&lt;pdi&gt;,greater&lt;pdi&gt; &gt;pq;
+void djkstr(int x,int y){
+    for(int i=1;i&lt;=n;i++){
+        node[i].dis=INF;
+    }
+    node[1].dis=0;
+    pq.push({0,1});
+    while(pq.size()){
+        pdi tmp=pq.top();
+        pq.pop();
+        double d=tmp.first;
+        int u=tmp.second;
+        if(node[u].dis!=d)continue;
+        for(int e=node[u].head;e;e=edge[e].nxt) {
+            int v=edge[e].to;
+            if((u==x&amp;&amp;v==y)||(u==y&amp;&amp;v==x))continue;
+            if(node[v].dis&lt;=d+edge[e].dis) continue;
+            if(x==-1&amp;&amp;y==-1)node[v].pre=u;
+            node[v].dis=d+edge[e].dis;
+            pq.push({node[v].dis,v});
+        }
+    }
+}
+signed main(){
+    scanf(&quot;%lld%lld&quot;,&amp;n,&amp;m);
+    for(int i=1;i&lt;=n;i++){
+        scanf(&quot;%lf%lf&quot;,&amp;node[i].x,&amp;node[i].y);
+    }
+
+    for(int i=1,u,v;i&lt;=m;i++){
+        scanf(&quot;%lld%lld&quot;,&amp;u,&amp;v);
+        double w=calc(node[u].x,node[u].y,node[v].x,node[v].y);
+        addEdge(u,v,w);
+        addEdge(v,u,w);
+    }
+
+    djkstr(-1,-1);
+
+    for(int i=n;i!=1;i=node[i].pre) {
+        djkstr(i,node[i].pre);
+        ans=min(ans,node[n].dis);
+    }
+    if(ans&gt;=INF)puts(&quot;-1&quot;);
+    else printf(&quot;%.2lf\n&quot;,ans);
+    return 0;
+}
+</code></pre>
+<hr />
+<p>以下是未验证的其他算法</p>
+<h3 id="1_6">写法1</h3>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int N=1e6+5;
+const int INF=1e9+5;
+int vis[N],h[N],used[N],lst[N];
+int cnt,u,w,n,m,v,s;
+
+double ans=INF,dis[3][N];
+struct node {
+    int nxt;
+    double dis;
+};
+
+struct point {
+    double x,y;
+}p[N];
+
+double getdis(int a,int b){
+    return sqrt((p[a].x-p[b].x)*(p[a].x-p[b].x)+(p[a].y-p[b].y)*(p[a].y-p[b].y));
+}
+
+vector&lt;node&gt; e[N];
+priority_queue&lt;pair&lt;double,int&gt;&gt; pq;
+void add(int a,int b,double dis) {
+
+//  cerr&lt;&lt;dis&lt;&lt;endl;
+    e[a].push_back((node){b,dis});
+    e[b].push_back((node){a,dis});
+}
+
+void djstr(int rt,int k) {
+    pq.push(make_pair(0.00,rt));
+    int u=rt;   //先从起点开始查
+    for(int i=1; i&lt;=n; i++)dis[k][i]=INF;   //初始化边权
+
+    dis[k][rt]=0.0;
+//  vis[rt]=1;//别写错！！
+
+    while(pq.size()) {  //搜完全图
+
+        u=pq.top().second;
+
+        pq.pop();
+        if(vis[u])continue;//记得continue
+        vis[u]=1;
+        for(int i=0;i&lt;e[u].size();i++){
+            int v=e[u][i].nxt;
+            double w=e[u][i].dis;
+            if(!vis[v]&amp;&amp;dis[k][u]+w&lt;dis[k][v]){
+                dis[k][v]=dis[k][u]+w;  //更新
+//              cerr&lt;&lt;dis[k][v]&lt;&lt;endl;
+                pq.push(make_pair(-dis[k][v],v));
+                if(k==0)lst[v]=u;
+            }
+        }
+    }
+}
+signed main() {
+
+    cin&gt;&gt;n&gt;&gt;m;
+
+    for(int i=1;i&lt;=n;i++){
+        cin&gt;&gt;p[i].x&gt;&gt;p[i].y;
+    }
+    for(int i=1;i&lt;=m;i++){
+        int a,b;
+        cin&gt;&gt;a&gt;&gt;b;
+        add(a,b,getdis(a,b));
+    }
+    djstr(1,0);
+//  cerr&lt;&lt;&quot;OK&quot;;
+    memset(vis,0,sizeof vis);
+
+    djstr(n,1);
+
+//  for(int i=1;i&lt;=n;i++){
+//      cerr&lt;&lt;lst[i]&lt;&lt;' ';
+//  }
+//  
+    for(int i=n;i;i=lst[i]){
+        used[i]=1;
+    }
+//  cerr&lt;&lt;&quot;YES&quot;;
+    for(int i=1;i&lt;=n;i++){
+        if(used[i])continue;
+//      cerr&lt;&lt;i&lt;&lt;&quot;has ans=&quot;&lt;&lt;dis[0][i]+dis[1][i]&lt;&lt;endl;
+        ans=min(ans,dis[0][i]+dis[1][i]);
+    }
+    double mx=INF;
+    if(mx==ans)cout&lt;&lt;-1;
+    else printf(&quot;%.2lf&quot;,ans);
+    return 0;
+}
+</code></pre>
+<h3 id="2_3">写法2</h3>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+#define int long long
+using namespace std;
+const int N=1e6+5;
+const int INF=1e9+5;
+int vis[N],h[N],used[N],lst[N];
+int cnt,u,w,n,m,v,s;
+
+double ans=INF,dis[N],sdis[N];
+struct node {
+    int nxt;
+    double dis;
+};
+
+struct point {
+    double x,y;
+}p[N];
+
+double getdis(int a,int b){
+    return sqrt((p[a].x-p[b].x)*(p[a].x-p[b].x)+(p[a].y-p[b].y)*(p[a].y-p[b].y));
+}
+
+vector&lt;node&gt; e[N];
+priority_queue&lt;pair&lt;double,int&gt;&gt; pq;
+void add(int a,int b,double dis) {
+
+//  cerr&lt;&lt;dis&lt;&lt;endl;
+    e[a].push_back((node){b,dis});
+    e[b].push_back((node){a,dis});
+}
+
+void merge(int x,double d){
+    // cerr&lt;&lt;&quot;mer p:&quot;&lt;&lt;x&lt;&lt;&quot; d=&quot;&lt;&lt;d&lt;&lt;endl;
+    if(dis[x]&gt;d){
+        sdis[x]=min(sdis[x],dis[x]);
+        dis[x]=d;
+    }else if(sdis[x]&gt;d)sdis[x]=d;
+}
+
+void djstr(int rt) {
+    pq.push(make_pair(0.00,rt));
+    int u=rt;   //先从起点开始查
+    for(int i=1; i&lt;=n; i++)dis[i]=INF;  //初始化边权
+    for(int i=1; i&lt;=n; i++)sdis[i]=INF; //初始化边权
+
+    dis[rt]=0.0;
+//  vis[rt]=1;//别写错！！
+
+    while(pq.size()) {  //搜完全图
+
+        u=pq.top().second;
+
+        pq.pop();
+        if(vis[u])continue;//记得continue
+        vis[u]=1;
+        for(int i=0;i&lt;e[u].size();i++){
+            int v=e[u][i].nxt;
+            double w=e[u][i].dis;
+            if(!vis[v]&amp;&amp;dis[u]+w&lt;sdis[v]){
+                // dis[v]=dis[u]+w; //更新
+                merge(v,dis[u]+w);
+//              cerr&lt;&lt;dis[v]&lt;&lt;endl;
+                pq.push(make_pair(-dis[v],v));
+            }
+        }
+    }
+}
+signed main() {
+
+    cin&gt;&gt;n&gt;&gt;m;
+
+    for(int i=1;i&lt;=n;i++){
+        cin&gt;&gt;p[i].x&gt;&gt;p[i].y;
+    }
+    for(int i=1;i&lt;=m;i++){
+        int a,b;
+        cin&gt;&gt;a&gt;&gt;b;
+        add(a,b,getdis(a,b));
+    }
+    djstr(1);
+    double mx=INF;
+    ans=sdis[n];
+    // cerr&lt;&lt;dis[n]&lt;&lt;' '&lt;&lt;sdis[n]&lt;&lt;endl;
+    if(mx==ans)cout&lt;&lt;-1;
+    else printf(&quot;%.2lf&quot;,ans);
+    return 0;
+}
+</code></pre>
+<h2 id="k-scoi2007-k">K短路 | [SCOI2007] k短路</h2>
+<p>有 <span class="arithmatex">\(n\)</span> 个城市和 <span class="arithmatex">\(m\)</span> 条单向道路，城市编号为 <span class="arithmatex">\(1\)</span> 到 <span class="arithmatex">\(n\)</span>。每条道路连接两个不同的城市，且任意两条道路要么起点不同要么终点不同，因此 <span class="arithmatex">\(n\)</span> 和 <span class="arithmatex">\(m\)</span> 满足<span class="arithmatex">\(m \le n(n-1)\)</span>。</p>
+<p>给定两个城市 <span class="arithmatex">\(a\)</span> 和 <span class="arithmatex">\(b\)</span>，可以给 <span class="arithmatex">\(a\)</span> 到 <span class="arithmatex">\(b\)</span> 的所有简单路（所有城市最多经过一次，包括起点和终点）排序：先按长度从小到大排序，长度相同时按照字典序从小到大排序。你的任务是求出 <span class="arithmatex">\(a\)</span> 到 <span class="arithmatex">\(b\)</span> 的第 <span class="arithmatex">\(k\)</span> 短路。</p>
+<p>输入格式</p>
+<p>输入第一行包含五个正整数 <span class="arithmatex">\(n,m,k,a,b\)</span>。</p>
+<p>以下 <span class="arithmatex">\(m\)</span> 行每行三个整数 <span class="arithmatex">\(u,v,l\)</span>，表示从城市 <span class="arithmatex">\(u\)</span> 到城市 <span class="arithmatex">\(v\)</span> 有一条长度为 <span class="arithmatex">\(l\)</span> 的单向道路。</p>
+<p>输出格式</p>
+<p>如果 <span class="arithmatex">\(a\)</span> 到 <span class="arithmatex">\(b\)</span> 的简单路不足 <span class="arithmatex">\(k\)</span> 条，输出 <code>No</code>，否则输出第 <span class="arithmatex">\(k\)</span> 短路：从城市 <span class="arithmatex">\(a\)</span> 开始依次输出每个到达的城市，直到城市 <span class="arithmatex">\(b\)</span>，中间用减号 <code>-</code> 分割。</p>
+<ul>
+<li><span class="arithmatex">\(100\%\)</span> 的数据满足：<span class="arithmatex">\(2\leq n\leq 50\)</span>，<span class="arithmatex">\(1\leq k\leq 200\)</span>，<span class="arithmatex">\(1\le l\le 10^4\)</span>。</li>
+</ul>
+<h1 id="hack">各种最短路算法的Hack与区别</h1>
+<p>我们给出以下题目来探讨这个问题。</p>
+<h2 id="apio2013">[APIO2013] 出题人</h2>
+<p>题目描述</p>
+<p>当今世界上各类程序设计竞赛层出不穷。而设计一场好比赛绝非易事，比如给题目设计测试数据就是一项挑战。一组好的测试数据需要对不同的程序有区分度：满足所有要求的程序自然应该得到满分，而那些貌似正确的程序则会在某些特殊数据上出错。</p>
+<p>在本题中，你在比赛中的角色反转啦！作为一名久经百战的程序员，你将帮助 Happy Programmer Contest 的命题委员会设计这次比赛的测试数据。本次比赛命题委员会选择了两个图论问题，分为 <span class="arithmatex">\(8\)</span> 个子任务。委员会写了一些貌似可以解决这些子任务的代码。在给任务设计数据的时候，命题委员会期望其中的一些源程序能够得到满分，而另外的一些则只能得到 <span class="arithmatex">\(0\)</span> 分或者少许的部分分。现在你将会获得这些源程序（C, C++, Pascal 版本）。对于每个子任务，你需要去产生一组数据 <span class="arithmatex">\(X\)</span> 使得它能将该任务给定的 <span class="arithmatex">\(2\)</span> 种源程序 <span class="arithmatex">\(A\)</span> 和 <span class="arithmatex">\(B\)</span> 区分开来。更具体地说，生成的数据必须满足如下两个条件:</p>
+<p>输入 <span class="arithmatex">\(X\)</span> 对于源程序 <span class="arithmatex">\(A\)</span> 一定不会出现超出时间限制（TLE）的问题。</p>
+<p>输入 <span class="arithmatex">\(X\)</span> 一定会导致源程序 <span class="arithmatex">\(B\)</span> 产生超出时间限制的问题。</p>
+<p>此外,命题委员喜欢较小规模的测试数据，希望测试数据最好能够包含不超过 <span class="arithmatex">\(T\)</span> 个整数。</p>
+<p>本题中只关心源程序 <span class="arithmatex">\(A\)</span> 和 <span class="arithmatex">\(B\)</span> 是否超时，不关心是否结果正确。</p>
+<p>命题委员会选择了单源最短路（SSSP）以及一个被称之为神秘问题（Mystery）的两个图论问题来作为比赛的题目。我们将命题委员会完成的伪代码列在了附录中，而具体的 C、C++ 和 Pascal 源程序被我们放在了下发的文件当中。</p>
+<h3 id="_27">子任务</h3>
+<p>参见下表。表中每一行描述了一个子任务。其中前六个子任务与单源最短路相关，子任务 7,8 与神秘问题相关。每个任务所占分数见下表。</p>
+<p><img alt="https://cdn.luogu.com.cn/upload/pic/4428.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%AD%98%E5%9B%BE%2B%2B%2B%E6%9C%80%E7%9F%AD%E8%B7%AF%2B%2B%2B%E8%B4%9F%E7%8E%AF%2Bebd313c0-da0e-4a67-83a8-4474cbcfdf9c/4428.png" /></p>
+<h3 id="_28">思路</h3>
+<p>我们要让A通过且B出现TLE。</p>
+<h2 id="dijkstrafloyd">Dijkstra和Floyd</h2>
+<p>卡Floyd，最好的方法就是从复杂度入手。这里我们可以构造一个含有101个点的输入，就可以卡掉了</p>
+<h2 id="bellman-ford_1">干Bellman-ford：</h2>
+<p>复杂度Θ(QVE)，来个负权，再来一堆自环/重边，人肉二分保证数据不超过T，且让Bellman-ford刚刚超过一丁点，就可以了，</p>
+<p>第2个点要Floyd过，V=100即可。</p>
+<p>第5个点要Dijkstra过，那么就让0号点到299号点连正权边，其它点搞一堆负环+自环+重边，Bellman-ford轻松干掉。</p>
+<h2 id="dijkstra_2">干Dijkstra：</h2>
+<p>说了Dijkstra看到负权就GG，所以构造一堆0边诱惑他，然后再让他从右边的点进去，举个栗子：</p>
+<p>V=0,1,2,3,4  D,E=(0,1,2),(1,2,-4),(2,3,1),(3,4,-2),(0,2,0),(2,4,0)</p>
+<p>那么就先把它拐到4，发现路长为0，然后走2~3是最短的，拐到3，开始觉醒后，发现0~1再到2，路长为-2，再走2~3，傻傻地Dijkstra就被坑了，</p>
+<h2 id="_29">干染色图算法</h2>
+<h1 id="_30">相关算法浅谈</h1>
+<h2 id="_31">差分约束算法</h2>
+<p>对于$ xj​−xi​≤k$，我们会发现它类似最短路网络中的三角不等式 <span class="arithmatex">\(dv​−du​≤w_{&lt;u,v&gt;}\)</span>​，那是否可以通过最短路的形式解决呢？</p>
+<p>显然是可以的，跑一遍最短路，此时最短路的答案 <span class="arithmatex">\(d_i​\)</span> 也正是原不等式组的一个解 <span class="arithmatex">\(x_i​\)</span>。</p>
+<p><strong>题目描述</strong></p>
+<p>给出一组包含 <span class="arithmatex">\(m\)</span> 个不等式，有 <span class="arithmatex">\(n\)</span> 个未知数的形如：</p>
+<p>$ \begin{cases} x_{c_1}-x_{c'<em>1}\leq y_1 \x</em>{c_2}-x_{c'<em>2} \leq y_2 \ \cdots\ x</em>{c_m} - x_{c'_m}\leq y_m\end{cases}$</p>
+<p>的不等式组，求任意一组满足这个不等式组的解。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行为两个正整数 <span class="arithmatex">\(n,m\)</span>，代表未知数的数量和不等式的数量。</p>
+<p>接下来 <span class="arithmatex">\(m\)</span> 行，每行包含三个整数 <span class="arithmatex">\(c,c',y\)</span>，代表一个不等式 <span class="arithmatex">\(x_c-x_{c'}\leq y\)</span>。</p>
+<p><strong>输出格式</strong></p>
+<p>一行，<span class="arithmatex">\(n\)</span> 个数，表示 <span class="arithmatex">\(x_1 , x_2 \cdots x_n\)</span> 的一组可行解，如果有多组解，请输出任意一组，无解请输出 <code>NO</code>。</p>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int n,m,ans;
+int d[5005];
+struct node{
+    int u,v,w;
+}e[5050];
+int main(){
+    cin&gt;&gt;n&gt;&gt;m;
+    for(int i=1;i&lt;=m;i++){
+        int c,c2,y;
+        cin&gt;&gt;c&gt;&gt;c2&gt;&gt;y;
+        e[i].u=c2;e[i].v=c;e[i].w=y;
+
+    }
+    for(int i=2;i&lt;=n;i++)d[i]=0x3f3f3f3f;
+    for(int i=1;i&lt;=n-1;i++){
+        for(int j=1;j&lt;=m;j++){
+            d[e[j].v]=min(d[e[j].u]+e[j].w,d[e[j].v]);
+        }
+    }
+    for(int i=1;i&lt;=m;i++){
+        if(d[e[i].v]&gt;d[e[i].u]+e[i].w){
+            printf(&quot;NO&quot;);return 0;
+        }
+    }
+    for(int i=1;i&lt;=n;i++)cout&lt;&lt;d[i]&lt;&lt;' ';
+
+    return 0;
+}
+</code></pre>
+<p><strong>练习</strong></p>
+<p><a href="https://www.luogu.com.cn/problem/P3275">www.luogu.com.cn</a></p>
+<h1 id="_32">一些题目</h1>
+<h2 id="_33">分层图思想</h2>
+<p><a href="https://www.luogu.com.cn/problem/P5663">www.luogu.com.cn</a></p>
+<p>P5663 [CSP-J2019] 加工零件</p>
+<p><strong>思路</strong></p>
+<p>我们该如何解决问题？</p>
+<blockquote>
+<p>问题：a做k阶段的零件b要不要做呢？</p>
+</blockquote>
+<p>其实，实质就是看a到b有没有长度为k的路径。</p>
+<p>同时我们会发现，<strong>如果a到b有长度为k的路径，那么a到b一定有长度为k+2的路径，但并不一定有长度为k+1的路径。</strong>（因为我们可以来回走一条边）</p>
+<p>所以，我们要对每个点求一遍奇数路径，和偶数路径（这里求最短路就行）。</p>
+<pre><code class="language-C++">/*
+CB Ntsc
+*/
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define int long long
+#define mp make_pair
+
+const int N=2e5+5;
+const int INF=1e9+5;
+const int MOD=1e9+7;
+bool f1;
+int dis1[N],dis2[N];
+int l[N],r[N];
+int q,n,m,ans,T,k;
+vector&lt;int&gt;e[N];
+bool f2;
+#define rd read()
+inline int read()
+{
+    int xx=0,ff=1;
+    char ch=getchar();
+    while(ch&lt;'0'||ch&gt;'9') {if(ch=='-') ff=-1;ch=getchar();}
+    while(ch&gt;='0'&amp;&amp;ch&lt;='9') xx=xx*10+(ch-'0'),ch=getchar();
+    return xx*ff;
+}
+inline void write(int out)
+{
+    if(out&lt;0) putchar('-'),out=-out;
+    if(out&gt;9) write(out/10);
+    putchar(out%10+'0');
+}
+
+void add(int a,int b){
+    e[a].push_back(b);
+    e[b].push_back(a);
+}
+priority_queue&lt;pair&lt;int,int&gt; &gt;pq;
+void djstr() {
+    for(int i=1; i&lt;=n; i++)dis1[i]=INF; //初始化边权
+    for(int i=1; i&lt;=n; i++)dis2[i]=INF; //初始化边权
+
+    for(auto v:e[1]){
+        dis1[v]=1;
+        pq.push(make_pair(-1,v));
+    }
+    while(pq.size()) {  //搜完全图
+
+        int u=pq.top().second;
+        int w=-pq.top().first;
+
+        pq.pop();
+        // if(vis[u])continue;//记得continue
+        // vis[u]=1;
+        for(int i=0;i&lt;e[u].size();i++){
+            int v=e[u][i];
+            if(w%2){
+                if(dis2[v]&gt;1+w){
+                    dis2[v]=w+1;    //更新
+                    pq.push(make_pair(-dis2[v],v));
+                }
+            }else{
+                if(dis1[v]&gt;1+w){
+                    dis1[v]=w+1;    //更新
+                    pq.push(make_pair(-dis1[v],v));
+                }
+            }
+
+        }
+    }
+}
+
+signed main(){
+
+    n=rd;m=rd;q=rd;
+    for(int i=1;i&lt;=m;i++){
+        int u=rd,v=rd;
+        add(u,v);
+    }
+
+    djstr();
+    for(int i=1;i&lt;=q;i++){
+        int a=rd;l[a]=rd;
+        if(l[a]%2){
+            if(dis1[a]&gt;l[a])cout&lt;&lt;&quot;No\n&quot;;
+            else cout&lt;&lt;&quot;Yes\n&quot;;
+        }else{
+            if(dis2[a]&gt;l[a])cout&lt;&lt;&quot;No\n&quot;;
+            else cout&lt;&lt;&quot;Yes\n&quot;;
+        }
+    }
+
+    return 0;
+}
+</code></pre>
+<p><a href="https://www.luogu.com.cn/problem/P4568">www.luogu.com.cn</a></p>
+<p>P4568 [JLOI2011] 飞行路线</p>
+<p><strong>思路</strong></p>
+<p>套路题，分层图。</p>
+<p>以样例为例（使用 @EternalAlexander 这位dalao的OI Painter绘制）：</p>
+<p><img alt="https://cdn.luogu.com.cn/upload/pic/19106.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%AD%98%E5%9B%BE%2B%2B%2B%E6%9C%80%E7%9F%AD%E8%B7%AF%2B%2B%2B%E8%B4%9F%E7%8E%AF%2Bebd313c0-da0e-4a67-83a8-4474cbcfdf9c/19106.png" /></p>
+<p>各层内部正常连边，各层之间从上到下连权值为0的边。每向下跑一层，就相当于免费搭一次飞机。跑一遍从<span class="arithmatex">\(s\)</span>到<span class="arithmatex">\(t+n\times k\)</span>的最短路即可。</p>
+<blockquote>
+<p>引用自<a href="https://www.luogu.com.cn/user/53374">SuperJvRuo</a></p>
+</blockquote>
+<p>我们要考虑枚举每一层的t，因为可能我们用不到k次免费机会。</p>
+<pre><code class="language-C++">/*
+CB Ntsc
+*/
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define int long long
+#define mp make_pair
+#define pii pair&lt;int,int&gt; 
+
+const int N=5e3+5;
+const int INF=1e9+5;
+const int MOD=998244353;
+bool f1;
+struct node{
+    int nxt,dis;
+};
+vector&lt;node&gt;e[N];
+priority_queue&lt;pair&lt;int,int&gt; &gt;pq;
+int n,vis[N],dis[N],m,k,s,t;
+bool f2;
+#define rd read()
+inline int read()
+{
+    int xx=0,ff=1;
+    char ch=getchar();
+    while(ch&lt;'0'||ch&gt;'9') {if(ch=='-') ff=-1;ch=getchar();}
+    while(ch&gt;='0'&amp;&amp;ch&lt;='9') xx=xx*10+(ch-'0'),ch=getchar();
+    return xx*ff;
+}
+inline void write(int out)
+{
+    if(out&lt;0) putchar('-'),out=-out;
+    if(out&gt;9) write(out/10);
+    putchar(out%10+'0');
+}
+
+void add(int a,int b,int c){
+    e[a].push_back({b,c});
+}
+
+
+void djstr(int rt) {
+    pq.push(make_pair(0,rt));
+    int u=rt;   //先从起点开始查
+    memset(dis,0x3f3f,sizeof dis);  //初始化边权
+
+    dis[rt]=0;
+
+    while(pq.size()) {  //搜完全图
+
+        u=pq.top().second;
+
+        pq.pop();
+        if(vis[u])continue;//记得continue
+        vis[u]=1;
+        for(int i=0;i&lt;e[u].size();i++){
+            int v=e[u][i].nxt,w=e[u][i].dis;
+            if(!vis[v]&amp;&amp;dis[u]+w&lt;dis[v]){
+                dis[v]=dis[u]+w;    //更新
+                pq.push(make_pair(-dis[v],v));
+            }
+        }
+    }
+}
+
+signed main(){
+
+    // freopen(&quot;school.in&quot;, &quot;r&quot;, stdin);
+    // freopen(&quot;school.out&quot;, &quot;w&quot;, stdout);
+
+    n=rd;m=rd;k=rd;
+    s=rd;t=rd;
+    for(int i=1;i&lt;=m;i++){
+        int a=rd,b=rd,c=rd;
+        add(a,b,c);
+        add(b,a,c);
+
+        for(int j=1;j&lt;=k;j++){//建k层图
+            add(a+(j-1)*n,b+(j*n),0);
+            add(b+(j-1)*n,a+(j)*n,0);
+            add(a+j*n,b+j*n,c);
+            add(b+j*n,a+j*n,c);
+        }
+    }
+
+    djstr(s);
+    int ans=INF;
+    for(int i=0;i&lt;=k;i++)ans=min(ans,dis[t+i*n]);
+
+    cout&lt;&lt;ans;//dis[t+k*n];
+
+
+    return 0;
+}
+
+/*
+5 3 3
+2 3 4 7 6
+*/
+</code></pre>
+<p>更多例题</p>
+<p><a href="https://www.luogu.com.cn/problem/P2939">www.luogu.com.cn</a></p>
+<p><a href="https://www.luogu.com.cn/problem/P4822">www.luogu.com.cn</a></p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E5%AD%98%E5%9B%BE%2B%2B%2B%E6%9C%80%E7%9F%AD%E8%B7%AF%2B%2B%2B%E8%B4%9F%E7%8E%AF%2Bebd313c0-da0e-4a67-83a8-4474cbcfdf9c/image.png" /></p>
+<h2 id="p2371"><strong>同余最短路 |</strong> P2371 [国家集训队] 墨墨的等式</h2>
+<p><a href="https://www.luogu.com.cn/problem/P2371">www.luogu.com.cn</a></p>
+<p><strong>思路</strong></p>
+<p>首先我们应该想到的是完全背包吧……但b过大，我们不能这样做。</p>
+<p><a href="https://www.luogu.com.cn/blog/xuxing/solution-p2371">www.luogu.com.cn</a></p>
+<p>Std</p>
+<pre><code class="language-C++">/*
+CB Ntsc
+*/
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define int long long
+#define mp make_pair
+#define pii pair&lt;int,int&gt; 
+
+const int N=5e5+5;
+const int INF=1e9+5;
+const int MOD=998244353;
+bool f1;
+struct node{
+    int nxt,dis;
+};
+vector&lt;node&gt;e[N];
+priority_queue&lt;pair&lt;int,int&gt; &gt;pq;
+int n,vis[N],dis[N],m,k,s,t;
+int mn=INF,l,r,a[N];
+bool f2;
+#define rd read()
+inline int read()
+{
+    int xx=0,ff=1;
+    char ch=getchar();
+    while(ch&lt;'0'||ch&gt;'9') {if(ch=='-') ff=-1;ch=getchar();}
+    while(ch&gt;='0'&amp;&amp;ch&lt;='9') xx=xx*10+(ch-'0'),ch=getchar();
+    return xx*ff;
+}
+inline void write(int out)
+{
+    if(out&lt;0) putchar('-'),out=-out;
+    if(out&gt;9) write(out/10);
+    putchar(out%10+'0');
+}
+
+void add(int a,int b,int c){
+    e[a].push_back({b,c});
+}
+
+
+void djstr(int rt) {
+    pq.push(make_pair(0,rt));
+    int u=rt;   //先从起点开始查
+    memset(dis,0x3f3f,sizeof dis);  //初始化边权
+
+    dis[rt]=0;
+
+    while(pq.size()) {  //搜完全图
+
+        u=pq.top().second;
+
+        pq.pop();
+        if(vis[u])continue;//记得continue
+        vis[u]=1;
+        for(int i=0;i&lt;e[u].size();i++){
+            int v=e[u][i].nxt,w=e[u][i].dis;
+            if(!vis[v]&amp;&amp;dis[u]+w&lt;dis[v]){
+                dis[v]=dis[u]+w;    //更新
+                pq.push(make_pair(-dis[v],v));
+            }
+        }
+    }
+}
+
+int query(int x){
+    int res=0;
+    for(int i=0;i&lt;mn;i++){
+        if(dis[i]&lt;=x)res+=(x-dis[i])/mn+1;
+    }
+    return res;
+}
+signed main(){
+
+    // freopen(&quot;school.in&quot;, &quot;r&quot;, stdin);
+    // freopen(&quot;school.out&quot;, &quot;w&quot;, stdout);
+
+    n=rd;l=rd;r=rd;
+    for(int i=1;i&lt;=n;i++){
+        int x=rd;
+        if(x){//跳过a[i]=0
+            a[++m]=x;
+            mn=min(mn,x);
+        }
+    }
+
+
+
+    for(int i=0;i&lt;mn;i++){
+        for(int j=1;j&lt;=m;j++){
+            if(a[j]!=mn)add(i,(i+a[j])%mn,a[j]);
+        }
+    }
+//  cerr&lt;&lt;mn&lt;&lt;endl;
+    djstr(0);
+//  cerr&lt;&lt;&quot;ok\n&quot;;
+    cout&lt;&lt;query(r)-query(l-1);
+
+
+    return 0;
+}
+
+/*
+5 3 3
+2 3 4 7 6
+*/
+</code></pre>
+<h3 id="_34">扩展练习</h3>
+<p><a href="https://www.luogu.com.cn/problem/P3403">www.luogu.com.cn</a></p>
+<h1 id="_35">乱七八糟的代码</h1>
+<p>这是Dijkstra</p>
+<p>```</p>
+<h1 id="include">include<bits/stdc++.h></h1>
+<p>using namespace std;</p>
+<p>const int N = 507 , M = 100005;</p>
+<p>int n , m;</p>
+<p>int g[N][N];</p>
+<p>int dis[N];</p>
+<p>bool st[N];</p>
+<p>int Dijkstra(){</p>
+<p>memset(dis , 0x3f , sizeof(dis));//距离初始化</p>
+<p>dis[1] = 0;</p>
+<p>for(int i = 0 ; i &lt; n ; i++)</p>
+<p>{</p>
+<p>int t = -1;//求最小值</p>
+<p>for(int j = 1 ; j &lt;= n ; j++)</p>
+<p>{</p>
+<p>if(!st[j] &amp;&amp; (t == -1 || dis[t] &gt; dis[j]))//j点需要保证还没有确定最短路</p>
+<p>{//注意，这个t == -1非常的精髓（小特判）</p>
+<p>t = j;//更新最小值的点</p>
+<p>}</p>
+<p>}</p>
+<p>st[t] = true;//最小值点确定</p>
+<p>for(int j = 1 ; j &lt;= n ; j++)</p>
+<p>{//假如两点之间没有边，g[t][j]就是无穷大，一定取不到min所以不必判断t，j之间是否有边</p>
+<p>dis[j] = min(dis[j] , dis[t] + g[t][j]);//更新每一个点的值</p>
+<p>}</p>
+<p>}</p>
+<p>if(dis[n] == 0x3f3f3f3f)</p>
+<p>{</p>
+<p>return -1;</p>
+<p>}</p>
+<p>else</p>
+<p>{</p>
+<p>return dis[n];</p>
+<p>}</p>
+<p>}</p>
+<p>int main(){</p>
+<p>ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</p>
+<p>cin &gt;&gt; n &gt;&gt; m;</p>
+<p>memset(g , 0x3f , sizeof(g));//图初始化</p>
+<p>int a , b , c;</p>
+<p>for(int i = 1 ; i &lt;= m ; i++)</p>
+<p>{</p>
+<p>cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;</p>
+<p>g[a][b] = min(g[a][b] , c);//保留短的边</p>
+<p>}</p>
+<p>cout &lt;&lt; Dijkstra();</p>
+<p>return 0;</p>
+<p>}</p>
+<p>```</p>
+<p>优化版Dijkstra</p>
+<h1 id="include_1">include<bits/stdc++.h></h1>
+<p>using namespace std;</p>
+<p>typedef pair<int , int> PII;</p>
+<p>const int N = 200010;</p>
+<p>int n , m;</p>
+<p>int head[N] , e[N] , ne[N] , w[N] , idx;</p>
+<p>int dis[N];</p>
+<p>bool st[N];</p>
+<p>int Dijkstra_plus(){</p>
+<p>memset(dis , 0x3f , sizeof(dis));//距离初始化</p>
+<p>dis[1] = 0;</p>
+<p>priority_queue<PII , vector\<PII> , greater\<PII>> heap;//第一个放距离，第二个放编号</p>
+<p>heap.push({0 , 1});//第一个点初始化</p>
+<p>while(heap.size())</p>
+<p>{</p>
+<p>auto t = heap.top();//取出最小值</p>
+<p>heap.pop();//去掉最小值</p>
+<p>int num = t.second , dist = t.first;</p>
+<p>if(st[num])//这个玩意儿已经被遍历过了</p>
+<p>{</p>
+<p>continue;</p>
+<p>}</p>
+<p>st[num] = true;//开搜</p>
+<p>for(int i = head[num] ; i != -1 ; i = ne[i])</p>
+<p>{</p>
+<p>int j = e[i];</p>
+<p>if(dis[j] &gt; dist + w[i])//距离可以更新，还可以顺便将没有联通的边不进行更新</p>
+<p>{</p>
+<p>dis[j] = dist + w[i];</p>
+<p>heap.push({dis[j] , j});//将更新后的点放进堆</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>if(dis[n] == 0x3f3f3f3f)</p>
+<p>{</p>
+<p>return -1;</p>
+<p>}</p>
+<p>else</p>
+<p>{</p>
+<p>return dis[n];</p>
+<p>}</p>
+<p>}</p>
+<p>void add(int x , int y , int z){</p>
+<p>e[idx] = y;</p>
+<p>ne[idx] = head[x];</p>
+<p>head[x] = idx;</p>
+<p>w[idx] = z;//存储权重</p>
+<p>idx++;</p>
+<p>}</p>
+<p>int main(){</p>
+<p>ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</p>
+<p>cin &gt;&gt; n &gt;&gt; m;</p>
+<p>memset(head , -1 , sizeof(head));</p>
+<p>memset(w , 0x3f , sizeof(w));</p>
+<p>int a , b , c;</p>
+<p>for(int i = 1 ; i &lt;= m ; i++)</p>
+<p>{</p>
+<p>cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;</p>
+<p>add(a , b , c);//保留短的边</p>
+<p>}</p>
+<p>cout &lt;&lt; Dijkstra_plus();</p>
+<p>return 0;}~</p>
+<p>Bellman-Ford算法</p>
+<h1 id="include_2">include<bits/stdc++.h></h1>
+<p>using namespace std;</p>
+<p>const int N = 507 , M = 10007;</p>
+<p>int n , m , k;</p>
+<p>int dis[N] , backup[N];</p>
+<p>//备份数组的作用在于，在每一次更新中，为保证不会串联（j-1不会影响j）</p>
+<p>//我们需要在下一次迭代中只使用上一次迭代的图的状态</p>
+<p>struct edge</p>
+<p>{</p>
+<p>int a , b , w;</p>
+<p>}edges[M];//简易对图进行存储</p>
+<p>int bellman_ford(){</p>
+<p>memset(dis , 0x3f , sizeof(dis));</p>
+<p>dis[1] = 0;</p>
+<p>for(int i = 1 ; i &lt;= k ; i++)</p>
+<p>{</p>
+<p>memcpy(backup , dis , sizeof(dis));//备份</p>
+<p>for(int j = 1 ; j &lt;= m ; j++)//每次深入一条边</p>
+<p>{</p>
+<p>// cerr &lt;&lt; edges[j].a &lt;&lt;" " &lt;&lt;edges[j].b &lt;&lt;" " &lt;&lt;edges[j].w &lt;&lt; endl;</p>
+<p>dis[edges[j].b] = min(dis[edges[j].b] , backup[edges[j].a] + edges[j].w);//只用上一次更新</p>
+<p>// cerr &lt;&lt; "the point " &lt;&lt;edges[j].b &lt;&lt;" the new "&lt;&lt;dis[edges[j].b]&lt;&lt;endl;</p>
+<p>}</p>
+<p>// cerr &lt;&lt; "end" &lt;&lt; endl;</p>
+<p>}</p>
+<p>if(dis[n] &gt; 0x3f3f3f3f - 10000000)</p>
+<p>{</p>
+<p>return -114514;</p>
+<p>}</p>
+<p>else</p>
+<p>{</p>
+<p>return dis[n];</p>
+<p>}</p>
+<p>}</p>
+<p>int main(){</p>
+<p>ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</p>
+<p>cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;</p>
+<p>for(int i = 1 ; i &lt;= m ; i++)</p>
+<p>{</p>
+<p>cin &gt;&gt; edges[i].a &gt;&gt; edges[i].b &gt;&gt; edges[i].w;</p>
+<p>//cerr &lt;&lt; edges[i].a&lt;&lt; " " &lt;&lt; edges[i].b &lt;&lt; " " &lt;&lt;edges[i].w &lt;&lt; endl;</p>
+<p>}</p>
+<p>int flag = bellman_ford();</p>
+<p>if(flag == -114514)</p>
+<p>{</p>
+<p>cout &lt;&lt; "impossible" &lt;&lt; endl;</p>
+<p>}</p>
+<p>else</p>
+<p>{</p>
+<p>cout &lt;&lt; flag &lt;&lt; endl;</p>
+<p>}</p>
+<p>return 0;</p>
+<p>}</p>
+<p>SPFA算法</p>
+<h1 id="include_3">include<bits/stdc++.h></h1>
+<p>using namespace std;</p>
+<p>const int N = 100007;</p>
+<p>int n , m;</p>
+<p>int e[N] , ne[N] , w[N] , head[N] , idx;</p>
+<p>int dis[N];</p>
+<p>bool st[N];</p>
+<p>void add(int x , int y , int z){</p>
+<p>e[idx] = y;</p>
+<p>ne[idx] = head[x];</p>
+<p>head[x] = idx;</p>
+<p>w[idx] = z;</p>
+<p>idx ++;</p>
+<p>}</p>
+<p>int SPFA(){</p>
+<p>memset(dis , 0x3f , sizeof(dis));//初始化</p>
+<p>dis[1] = 0;</p>
+<p>queue<int> qu;</p>
+<p>qu.push(1);</p>
+<p>st[1] = true;//不必重复,没有必要重复入队</p>
+<p>while(qu.size())//经典广搜操作</p>
+<p>{</p>
+<p>int now = qu.front();</p>
+<p>//cerr &lt;&lt; "top of queue " &lt;&lt; qu.front() &lt;&lt; endl;</p>
+<p>qu.pop();</p>
+<p>st[now] = false;</p>
+<p>for(int i = head[now] ; i != -1 ; i = ne[i])</p>
+<p>{</p>
+<p>int j = e[i];//取出某个出点</p>
+<p>if(dis[j] &gt; dis[now] + w[i])//具备更新条件</p>
+<p>{</p>
+<p>//cerr &lt;&lt; "now:" &lt;&lt; now &lt;&lt; endl;</p>
+<p>//cerr &lt;&lt; "dis[j]" &lt;&lt; dis[j] &lt;&lt; endl;</p>
+<p>//cerr &lt;&lt; "update "&lt;&lt; j &lt;&lt; endl;</p>
+<p>dis[j] = dis[now] + w[i];</p>
+<p>//cerr &lt;&lt; "already updated " &lt;&lt; dis[j] &lt;&lt; endl;</p>
+<p>if(!st[j])//把这个点加入更新其他点的序列中</p>
+<p>{</p>
+<p>//cerr &lt;&lt; "pushed point " &lt;&lt; j &lt;&lt; endl;</p>
+<p>qu.push(j);</p>
+<p>st[j] = true;</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>if(dis[n] == 0x3f3f3f3f)</p>
+<p>{</p>
+<p>return -114514;</p>
+<p>}</p>
+<p>else</p>
+<p>{</p>
+<p>return dis[n];</p>
+<p>}</p>
+<p>}</p>
+<p>int main(){</p>
+<p>ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);</p>
+<p>memset(head , -1 , sizeof(head));</p>
+<p>cin &gt;&gt; n &gt;&gt; m;</p>
+<p>int a , b , c;</p>
+<p>for(int i = 0 ; i &lt; m ; i++)</p>
+<p>{</p>
+<p>cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;</p>
+<p>add(a , b , c);</p>
+<p>//cerr &lt;&lt; " " &lt;&lt; a&lt;&lt; " " &lt;&lt; b&lt;&lt; " " &lt;&lt; c&lt;&lt;endl;</p>
+<p>}</p>
+<p>int ans = SPFA();//！！！血的教训：一定要这样写，要不然时间就是两倍</p>
+<p>if(ans == -114514)</p>
+<p>{</p>
+<p>cout &lt;&lt; "impossible" &lt;&lt; endl;</p>
+<p>}</p>
+<p>else</p>
+<p>{</p>
+<p>cout &lt;&lt; ans &lt;&lt; endl;</p>
+<p>}</p>
+<p>return 0;</p>
+<p>}</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

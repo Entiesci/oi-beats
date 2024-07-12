@@ -1,0 +1,2397 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">
+      
+      
+        <link rel="next" href="../%E4%BA%8C%E5%88%86%E5%9B%BE%20%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.28">
+    
+    
+      
+        <title>Tarjan 算法相关 - OI Beats</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="OI Beats" class="md-header__button md-logo" aria-label="OI Beats" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OI Beats
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tarjan 算法相关
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="OI Beats" class="md-nav__button md-logo" aria-label="OI Beats" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    OI Beats
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    动态规划
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            动态规划
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20DP%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP DP优化
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E5%85%A5%E9%97%A8%E5%85%B8%E4%BE%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 入门典例
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E6%A0%91%E5%9E%8B%20%E7%8A%B6%E5%8E%8B%20%E5%80%8D%E5%A2%9E/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 树型 状压 倍增
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 背包问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    图论
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            图论
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Tarjan 算法相关
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E4%BA%8C%E5%88%86%E5%9B%BE%20%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二分图 二部图问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    图论基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%AD%98%E5%9B%BE%20%E6%9C%80%E7%9F%AD%E8%B7%AF%20%E8%B4%9F%E7%8E%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    存图 最短路 负环
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%A0%91%E4%B8%8A%E7%A5%96%E5%85%88%20LCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    树上祖先 LCA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%94%9F%E6%88%90%E6%A0%91%20%E5%9F%BA%E7%8E%AF%E6%A0%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    生成树 基环树
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%BD%91%E7%BB%9C%E6%B5%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    网络流
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E9%AB%98%E7%BA%A7%E7%BA%BF%E6%80%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级线性数据结构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    字符串
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            字符串
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%93%88%E5%B8%8C%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    哈希 字符串匹配（从字典树到KMP再到AC自动机）
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E9%AB%98%E7%B2%BE%E5%BA%A6%20%E5%BF%AB%E8%AF%BB%E5%BF%AB%E8%BE%93/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高精度 快读快输
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E9%AB%98%E7%BA%A7%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级字符串算法
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    数学
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            数学
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E4%BA%8C%E5%88%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二分
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%8D%9A%E5%BC%88%E8%AE%BA%20SG%E5%87%BD%E6%95%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博弈论 SG函数
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%8E%9F%E6%A0%B9%20%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%20%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    原根 拉格朗日插值 莫比乌斯反演
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%BF%AB%E9%80%9F%E5%B9%82%20%E7%9F%A9%E9%98%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    快速幂 矩阵
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%AE%9A%E7%90%86%20%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数学定理 线性代数
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E7%BB%84%E5%90%88%E8%AE%A1%E6%95%B0%20%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83%20%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    组合计数 高斯消元 容斥原理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    计算几何
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E9%80%86%E5%85%83%20%E7%AD%9B%20%E4%B8%8D%E5%AE%9A%E6%96%B9%E7%A8%8B%20%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    逆元 筛 不定方程 扩展欧几里得
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    数据结构
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            数据结构
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/ST%E8%A1%A8%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%20%E7%BA%BF%E6%AE%B5%E6%A0%91%20%E5%88%86%E5%9D%97%20%E8%8E%AB%E9%98%9F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ST表 树状数组 线段树 分块 莫队
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E4%B8%8E%E5%B9%B3%E8%A1%A1%E6%A0%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二叉查找树与平衡树
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%B9%B6%E6%9F%A5%E9%9B%86%20%E6%89%A9%E5%B1%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    并查集 扩展
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%AB%98%E7%BA%A7%E3%81%AE%E6%A0%91%E4%B8%8A%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级の树上问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【】专题+++ST表+++树状数组+++线段树+++分块+++莫队+4419f177 d45a 4b1d 96ea 88ca36e3ecda
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            【】专题+++ST表+++树状数组+++线段树+++分块+++莫队+4419f177 d45a 4b1d 96ea 88ca36e3ecda
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2BST%E8%A1%A8%2B%2B%2B%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%2B%2B%2B%E7%BA%BF%E6%AE%B5%E6%A0%91%2B%2B%2B%E5%88%86%E5%9D%97%2B%2B%2B%E8%8E%AB%E9%98%9F%2B4419f177-d45a-4b1d-96ea-88ca36e3ecda/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%BB%B4%E6%8A%A4%E7%9A%84%E5%90%84%E7%A7%8D%E4%BF%A1%E6%81%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    上帝造题的七分钟 2 / 花神游历各国
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    算法基础
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            算法基础
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/C%2B%2B%E5%85%B3%E9%94%AE%E5%AD%97%E4%B8%8E%E7%94%9F%E5%83%BBSTL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C++关键字与生僻STL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/Head%2B%2B%2B%E6%A8%A1%E6%9D%BF%E5%A4%B4%2B%E7%BC%BA%E7%9C%81%E6%BA%90%2B2882b258-98b6-47da-be53-6525b90e8dae/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Head+++模板头+缺省源+2882b258 98b6 47da be53 6525b90e8dae
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%BC%80%E5%92%8C%20%E5%B7%AE%E5%88%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    前缀和 差分
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E6%A6%82%E5%BF%B5%20%E6%A6%82%E5%BF%B5%E6%80%A7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    概念 概念性
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E8%B4%AA%E5%BF%83/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    贪心
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E9%80%92%E5%BD%92%20%E9%80%92%E6%8E%A8%20%E6%B7%B1%E6%90%9C%20%E5%B9%BF%E6%90%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    递归 递推 深搜 广搜
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    算法策略
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            算法策略
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E5%88%86%E6%B2%BB%20%E6%8E%92%E5%BA%8F%20%E5%81%8F%E5%BA%8F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    分治 排序 偏序
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E5%90%AF%E5%8F%91%E5%BC%8FA_%20IDA_/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    启发式A  IDA 
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E6%80%9D%E6%83%B3%20%E7%88%AC%E5%B1%B1%E7%AE%97%E6%B3%95%20%E6%A8%A1%E6%8B%9F%E9%80%80%E7%81%AB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    思想 爬山算法 模拟退火
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<p>【】专题 | tarjan 算法相关</p>
+<h1 id="_1">二叉搜索树</h1>
+<p>二叉查找树（Binary Search Tree），（又：二叉搜索树，二叉排序树）它或者是一棵空树，或者是具有下列性质的二叉树： 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值； 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值； 它的左、右子树也分别为二叉排序树。二叉搜索树作为一种经典的数据结构，它既有链表的快速插入与删除操作的特点，又有数组快速查找的优势。</p>
+<h1 id="tarjan">tarjan 算法</h1>
+<p><strong>算法目的:</strong></p>
+<blockquote>
+<p>Tarjan 算法是基于<strong><em><a href="https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/Depth-first_search">深度优先搜索</a></em></strong>的算法，用于求解图的连通性问题。Tarjan 算法可以在线性时间内求出无向图的割点与桥，进一步地可以求解无向图的双连通分量；同时，也可以求解有向图的强连通分量、必经点与必经边。</p>
+<p>如果你对上面的一些术语不是很了解，没关系，我们只要知道 <strong>Tarjan 算法是基于深度优先搜索的，用于求解图的连通性问题的算法</strong> 就好了。</p>
+</blockquote>
+<p><a href="https://zhuanlan.zhihu.com/p/101923309">zhuanlan.zhihu.com</a></p>
+<p><strong>算法</strong></p>
+<h1 id="_2">割点（割顶）</h1>
+<h2 id="_3">讲解</h2>
+<p><strong>割点</strong></p>
+<p>在无向联通图$ G=(V,E)<span class="arithmatex">\(中: 若对于\)</span>x∈V<span class="arithmatex">\(， 从图中删去节点\)</span>x<span class="arithmatex">\(以及所有与\)</span>x<span class="arithmatex">\(关联的边之后， <span class="arithmatex">\(G\)</span>分裂成两个或两个以上不相连的子图， 则称\)</span>x<span class="arithmatex">\(为\)</span>G$的割点。</p>
+<p><strong>扩展:割边</strong></p>
+<p>假设有连通图<span class="arithmatex">\(G\)</span>，<span class="arithmatex">\(e\)</span>是其中一条边，如果<span class="arithmatex">\(G-e\)</span> (在图<span class="arithmatex">\(G\)</span>中去掉边<span class="arithmatex">\(e\)</span>) 是不连通的，则边<span class="arithmatex">\(e\)</span>是图<span class="arithmatex">\(G\)</span>的一条割边。此情形下，<span class="arithmatex">\(G-e\)</span>必包含两个连通分支。</p>
+<p><strong>推荐资料</strong></p>
+<p><a href="https://www.cnblogs.com/ljy-endl/p/11595161.html">图的割点与割边（超详细！！！） - endl\n - 博客园</a></p>
+<h2 id="1">例题 #1</h2>
+<p>给出一个 <span class="arithmatex">\(n\)</span> 个点，<span class="arithmatex">\(m\)</span> 条边的无向图，求图的割点。</p>
+<p>对于全部数据，<span class="arithmatex">\(1\leq n \le 2\times 10^4\)</span>，<span class="arithmatex">\(1\leq m \le 1 \times 10^5\)</span>。</p>
+<p>点的编号均大于 <span class="arithmatex">\(0\)</span> 小于等于 <span class="arithmatex">\(n\)</span>。</p>
+<p><strong>tarjan图不一定联通。</strong></p>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt; 
+using namespace std;
+#define ll long long
+const int N=2e5+5;
+
+
+int cnt,num,br[N],nxt[N],h[N], n,m,to[N],ans,low[N],dfn[N];
+void add(int x,int y){
+    to[++cnt]=y,nxt[cnt]=h[x],h[x]=cnt;
+}
+
+void tarjan(int x,int e){
+    dfn[x]=low[x]=++num;
+    int child=0;    //局部变量 
+    for(int i=h[x];i;i=nxt[i]){
+        int y=to[i];
+        if(!dfn[y]){
+            tarjan(y,e);
+            low[x]=min(low[x],low[y]);
+            if(low[y]&gt;=dfn[x]&amp;&amp;x!=e){//&gt;=而不是&gt;  !!! 
+                br[x]=1;
+            }
+            if(x==e)child++;
+        }
+        low[x]=min(low[x],dfn[y]);
+
+    }
+    if(child&gt;1&amp;&amp;x==e)br[x]=1;
+} 
+signed main(){
+    memset (dfn,0,sizeof (dfn));
+    memset (h,0,sizeof (h));
+    cin&gt;&gt;n&gt;&gt;m;
+    for(int i=1;i&lt;=m;i++){
+        int x,y;
+        cin&gt;&gt;x&gt;&gt;y;
+        add(x,y);
+        add(y,x);
+    }
+     for (int i=1;i&lt;=n;i++)
+        if (dfn[i]==0)
+            tarjan (i,i);
+
+
+    for (int i=1;i&lt;=n;i++)
+        if (br[i])
+            ans++;
+    printf (&quot;%d\n&quot;,ans);
+    for (int i=1;i&lt;=n;i++)
+        if (br[i])
+            printf (&quot;%d &quot;,i);
+
+    return 0;
+}
+</code></pre>
+<h1 id="_4">点双连通分量</h1>
+<h2 id="1_1">例题 #1</h2>
+<p>对于一个 <span class="arithmatex">\(n\)</span> 个节点 <span class="arithmatex">\(m\)</span> 条无向边的图，请输出其点双连通分量的个数，并且输出每个点双连通分量。</p>
+<h3 id="_5">提示&amp;代码</h3>
+<pre><code>注意一个点可能属于多个vdcc，所以不可用`belong[]`存储，而应该直接推入`(vector) vdcc[cnt]`中
+</code></pre>
+<p>完整代码</p>
+<pre><code class="language-C++">/*////////ACACACACACACAC///////////
+       . Code  by  Ntsc .
+       . Earn knowledge .
+/*////////ACACACACACACAC///////////
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+#define db double
+#define rtn return
+using namespace std;
+
+const int N=5e5+5;
+const int M=5e6;
+const int Mod=1e5;
+const int INF=1e5;
+
+int n,m,p,T;
+
+
+
+int dfn[N],low[N],indx;//时间戳，追溯值，给时间戳编号的计数器 
+int stk[N],tp;//栈，指针 
+bool instk[N]; //是否在栈中
+int belong[N],siz[N],vdcc; //记录每个点在那个边双连通分量里, 每个点所在的边双连通分量的大小,边双连通分量的数量 
+vector&lt;int&gt; ans[N];
+
+int vis[N];
+
+struct edge{
+    int to,nxt;
+}e[M];
+int h[N],idx=-1;
+void add(int a,int b){
+    e[++idx]={b,h[a]};
+    h[a]=idx;
+    e[++idx]={a,h[b]};
+    h[b]=idx;
+}
+
+void tarjan(int u,int fa) {//当前节点,入边的节点编号
+    int son=0;//判孤立点用 
+    vis[u]=1;
+    dfn[u]=low[u]=++indx;
+    stk[++tp]=u;
+    for(int i=h[u]; ~i; i=e[i].nxt) {
+
+        int v=e[i].to;
+        if(dfn[v]==0) {
+            son++;
+            tarjan(v,u);//not tarjan(v,i);
+            low[u]=min(low[u],low[v]);
+            ///new
+            if(low[v]&gt;=dfn[u]){
+                vdcc++;
+                int x;
+                do {
+                    x=stk[tp--];
+                    ans[vdcc].push_back(x);//注意！一个点可能属于多个vdcc! 
+                } while(x!=v);
+                ans[vdcc].push_back(u);
+            }
+        }
+        else if(v!=fa) low[u]=min(low[u],dfn[v]);//判断点是否相同，而边双中是判断边是否和来时的边的反向边相同，都是为了防止回头 
+    }
+    if(!(fa||son))ans[++vdcc].push_back(u);//特判孤立点 
+}
+signed main(){
+    int m,n;
+    cin&gt;&gt;n&gt;&gt;m;
+
+    for(int i=1;i&lt;=N;i++)e[i].nxt=-1,h[i]=-1;
+    for(int i=1;i&lt;=m;i++){
+        int a,b;
+        cin&gt;&gt;a&gt;&gt;b;
+        add(a,b);
+    }
+    for(int i=1;i&lt;=n;i++)if(!vis[i])tp=0,tarjan(i,0);//图可能不连通！切勿重复访问！
+
+    cout&lt;&lt;vdcc&lt;&lt;endl; 
+    for(int i=1;i&lt;=vdcc;i++){
+        cout&lt;&lt;ans[i].size()&lt;&lt;' ';
+        for(auto v:ans[i])cout&lt;&lt;v&lt;&lt;' ';
+        cout&lt;&lt;endl;
+    }
+    return 0;
+}
+
+</code></pre>
+<h1 id="_6">边双连通分量</h1>
+<h2 id="_7">题目描述</h2>
+<p>对于一个 <span class="arithmatex">\(n\)</span> 个节点 <span class="arithmatex">\(m\)</span> 条无向边的图，请输出其边双连通分量的个数，并且输出每个边双连通分量。</p>
+<h2 id="_8">提示&amp;代码</h2>
+<pre><code class="language-C++">void tarjan(int u,int eid) {//当前节点,入边编号
+    dfn[u]=low[u]=++indx;
+    stk[++tp]=u;
+    for(int i=head[u]; ~i; i=edge[i].nxt) {
+        int v=edge[i].to;
+        if(dfn[v]==0) {
+            tarjan(v,i);
+            low[u]=min(low[u],low[v]);
+        }
+        if(i!=(eid^1)) low[u]=min(low[u],dfn[v]);
+    }
+    if(dfn[u]==low[u]) {
+        edcc++;
+        int x;
+        do {
+            x=stk[tp--];
+            belong[x]=edcc;
+        } while(x!=u);
+    }
+}
+</code></pre>
+<p>完整代码</p>
+<pre><code class="language-C++">/*////////ACACACACACACAC///////////
+       . Code  by  Ntsc .
+       . Earn knowledge .
+/*////////ACACACACACACAC///////////
+
+#include&lt;bits/stdc++.h&gt;
+#define int long long
+#define db double
+#define rtn return
+using namespace std;
+
+const int N=5e5+5;
+const int M=5e6;
+const int Mod=1e5;
+const int INF=1e5;
+
+int n,m,p,T;
+
+
+
+int dfn[N],low[N],indx;//时间戳，追溯值，给时间戳编号的计数器 
+int stk[N],tp;//栈，指针 
+bool instk[N]; //是否在栈中
+int belong[N],siz[N],edcc; //记录每个点在那个边双连通分量里, 每个点所在的边双连通分量的大小,边双连通分量的数量 
+vector&lt;int&gt; ans[N];
+
+int vis[N];
+
+struct edge{
+    int to,nxt;
+}e[M];
+int h[N],idx=-1;
+void add(int a,int b){
+    e[++idx]={b,h[a]};
+    h[a]=idx;
+    e[++idx]={a,h[b]};
+    h[b]=idx;
+}
+
+void tarjan(int u,int eid) {//当前节点,入边编号
+    vis[u]=1;
+    dfn[u]=low[u]=++indx;
+    stk[++tp]=u;
+    for(int i=h[u]; ~i; i=e[i].nxt) {
+        int v=e[i].to;
+        if(dfn[v]==0) {
+            tarjan(v,i);
+            low[u]=min(low[u],low[v]);
+        }
+        if(i!=(eid^1)) low[u]=min(low[u],dfn[v]);
+    }
+    if(dfn[u]==low[u]) {
+        edcc++;
+        int x;
+        do {
+            x=stk[tp--];
+            belong[x]=edcc;
+        } while(x!=u);
+    }
+}
+signed main(){
+    int m,n;
+    cin&gt;&gt;n&gt;&gt;m;
+
+    for(int i=1;i&lt;=N;i++)e[i].nxt=-1,h[i]=-1;
+    for(int i=1;i&lt;=m;i++){
+        int a,b;
+        cin&gt;&gt;a&gt;&gt;b;
+        add(a,b);
+    }
+    for(int i=1;i&lt;=n;i++)if(!vis[i])tarjan(i,0);//图可能不连通！切勿重复访问！
+    for(int i=1;i&lt;=n;i++)ans[belong[i]].push_back(i);
+
+    cout&lt;&lt;edcc&lt;&lt;endl; 
+    for(int i=1;i&lt;=edcc;i++){
+        cout&lt;&lt;ans[i].size()&lt;&lt;' ';
+        for(auto v:ans[i])cout&lt;&lt;v&lt;&lt;' ';
+        cout&lt;&lt;endl;
+
+    return 0;
+}
+
+</code></pre>
+<h1 id="_9">缩点（强连通分量）</h1>
+<h2 id="_10">题目描述</h2>
+<p>给定一个 <span class="arithmatex">\(n\)</span> 个点 <span class="arithmatex">\(m\)</span> 条边有向图，每个点有一个权值，求一条路径，使路径经过的点权值之和最大。你只需要求出这个权值和。</p>
+<p>允许多次经过一条边或者一个点，但是，重复经过的点，权值只计算一次。</p>
+<p><strong>大意</strong></p>
+<p>子问题1：把同一个强连通分量里的所有点压缩成一个点即可。处理完后图中无环。</p>
+<p>子问题2：在新的有向无环图中找最大路径。记忆化dfs搜索即可。</p>
+<pre><code class="language-C++">/*////////ACACACACACACAC///////////
+       . Coding by Ntsc .
+       . ToFind Chargcy .
+       . Prove Yourself .
+/*////////ACACACACACACAC///////////
+
+#include&lt;bits/stdc++.h&gt;
+#define ll long long
+#define db double
+#define rtn return
+#define i1n int i=1;i&lt;=n;i++
+#define in1 int i=n;i&gt;=1;i--
+using namespace std;
+
+const int N=5e5+5;
+const int M=1e5;
+const int Mod=1e5;
+const int INF=1e5;
+
+int dfn[N],low[N],stk[N],tot,top,cnt,scc[N],siz[N],sccw[N],w[N],dis[N],vis[N],n,m,way[N][2],instk[N],s,np,p[N],ans;
+vector &lt;int&gt; e[N];
+int f[N];
+
+
+vector&lt;int&gt;e2[N];
+
+void add(int a,int b){
+    e[a].push_back(b);
+}
+void add2(int a,int b){
+    e2[a].push_back(b);
+}
+
+void tarjan(int x){//强连通分量缩点
+    //入x时,时间戳追溯值更新,入栈
+    dfn[x]=low[x]=++tot;
+    stk[++top]=x;instk[x]=1; 
+
+    for(int i=0;i&lt;e[x].size();i++){//枚举x的邻点y 
+        int y=e[x][i];
+        if(!dfn[y]){//如果y还没有访问过 
+            tarjan(y);//向下走 
+            low[x]=min(low[x],low[y]);//返回时更新 
+        }else if(dfn[y]&amp;&amp;instk[y]){//说明 y被访问过 -&gt;要么y是祖先(在x出通过返祖边访问到了),要么是左子树的点(在x通过横插边访问到了) 
+            low[x]=min(low[x],dfn[y]); 
+        }
+    }
+    if(dfn[x]==low[x]){//说明x是这个强连通分量的根 
+        int y;++cnt;
+        int flag=0;
+        do{
+            flag++;
+            y=stk[top--];instk[y]=0;
+            scc[y]=cnt;
+            ++siz[cnt];
+            sccw[cnt]+=w[y];//记录缩点后强连通分量点的点权
+        } while(y!=x); 
+    }
+}
+
+void dfs(int x){
+    if(f[x])return ;
+    f[x]=sccw[x];
+    int mx=0;
+    for(auto v:e2[x]){
+        if(!f[v])dfs(v);//搜过就不用再搜，直接调用 
+        mx=max(mx,f[v]);
+    }
+    f[x]+=mx;
+}
+
+signed main(){
+    cin&gt;&gt;n&gt;&gt;m;
+    for(int i=1;i&lt;=n;i++)cin&gt;&gt;w[i];
+    for(int i=1;i&lt;=m;i++){
+        cin&gt;&gt;way[i][0]&gt;&gt;way[i][1];
+    }
+
+    for(int i=1;i&lt;=m;i++){
+        add(way[i][0],way[i][1]);
+    }
+
+
+    for(int i=1;i&lt;=n;i++)//题目不保证图连续!
+        if(!dfn[i]) tarjan(i);
+
+    //建新图 
+    for(int i=1;i&lt;=n;i++){
+        for(int j=0;j&lt;e[i].size();j++){
+            int v=e[i][j];
+            if(scc[i]==scc[v])continue;//注意continue
+            add2(scc[i],scc[v]);//注意不是scc[j]
+        }
+    }
+
+    //求DAG中最大路径
+    for(int i=1;i&lt;=cnt;i++){
+        if(f[i])continue;
+        dfs(i);
+        ans=max(ans,f[i]);
+    } 
+
+    cout&lt;&lt;ans&lt;&lt;endl;
+    return 0;
+}
+
+</code></pre>
+<h1 id="_11">强连通分量</h1>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image.png" /></p>
+<p>一个环是强连通分量。一个没有出边的点也是强连通分量。</p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%201.png" /></p>
+<p>如果一个子图可以构成多个连通分量，则只有包含节点最多的才是强连通分量。（如下图4，包含3个节点的环不是强连通分量，4个的才是 ）一个图中的强连通分量可以有多个，并且他们所包含的节点数可能不同（如上图1,2,3,4,9和5,6,8和7）</p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%202.png" /></p>
+<p>分类之后，就可以通过不同的边寻找环，从而找到强连通分量</p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%203.png" /></p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%204.png" /></p>
+<h2 id="tarjan_1">Tarjan算法</h2>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%205.png" /></p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%206.png" /></p>
+<h3 id="1x">1.入x</h3>
+<pre><code class="language-C++">//入x时,时间戳追溯值更新,入栈
+    dfn[x]=low[x]=++tot;
+    stk[++top]=x;instk[x]=1; 
+
+</code></pre>
+<h3 id="2x">2.找x</h3>
+<p>枚举x的邻点y，可能会有3种情况</p>
+<pre><code class="language-C++">for(int i=0;i&lt;e[x].size();i++){//枚举x的邻点y 
+        int y=e[x][i];
+        if(!dfn[y]){//如果y还没有访问过 
+            tarjan(y);//向下走 
+            low[x]=min(low[x],low[y]);//返回时更新 
+
+        }
+    }
+</code></pre>
+<p><strong>1.没有访问过y</strong></p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%207.png" /></p>
+<p>考察以下走法</p>
+<p>1→2→3→1</p>
+<p>节点3可以访问到dfn最小的节点为1，dfn为1.并且节点3是从1，2走过来的，说明1，2也可以通过节点3访问到dfn最小的节点为1，因此在返回时要更新low为自己的和邻点的low的最小值</p>
+<p>向下继续走</p>
+<pre><code class="language-C++">if(!dfn[y]){//如果y还没有访问过 
+            tarjan(y);//向下走 
+            low[x]=mid(low[x],low[y]);//返回时更新 
+        }
+</code></pre>
+<p><strong>2.y被访问过</strong></p>
+<p>考察点3.它可以走到点1（一个<strong>被访问过的点</strong>）</p>
+<p>考察点9.它可以走到点3（一个被访问过的点）也是同理</p>
+<p>不用往回走（即不需要<code>tarjan(y);</code>）</p>
+<pre><code class="language-C++">else if(dfn[y]&amp;&amp;instk[y]){//说明 y被访问过 -&gt;要么y是祖先(在x出通过返祖边访问到了),要么是左子树的点(在x通过横插边访问到了) 
+            low[x]=min(low[x],dfn[y]); 
+        }
+</code></pre>
+<p><strong>3.y被访问过并且已经弹出栈</strong></p>
+<p>只有当一个强连通分量全部扫描完，才会将节点弹出。如果y已经被弹出了，说明y所在的强连通分量已经被扫描完了。又因为一个点所在的强连通分量<strong>有且只有一个</strong>，所以y一定不是目前正在扫描的强连通分量里的一个点，直接忽略它</p>
+<h3 id="x">离x</h3>
+<pre><code class="language-C++">if(dfn[x]==low[x]){//说明x是这个强连通分量的根 
+        int y;++cnt;
+        do{
+            y=stk[top--];instk[y]=0;
+            scc[y]=cnt;
+            ++siz[cnt];
+        } while(y!=x);
+    }
+</code></pre>
+<p>考察以下图</p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%208.png" /></p>
+<p>当访问了5→6→8，访问到5（通过返祖边），此时属于<strong>2.y被访问过情况，执行</strong><code>low[x]=min(low[x],dfn[y]);</code></p>
+<p>并且从8不能继续走到5，也没有其他出边（7属于<strong>3.y被访问过并且已经弹出栈情况，忽略</strong>）</p>
+<p>开始回溯</p>
+<p>将点8，6，5的low更新为<code>min(low[8],dfn[5])</code>即<code>dfn[5]</code>。当回溯到5时，把<code>low[5]</code>也更新为了<code>dfn[5]</code>，并且5的所有邻点都访问完了（7忽略，理由同上）。此时节点5的<strong>for循环</strong>结束，运行到判定环节（<strong>离x</strong>）。也恰好满足<code>(dfn[x]==low[x])</code>说明x是这个强连通分量的根</p>
+<p>此时栈里有...,5,6,8</p>
+<p>执行循环，不断出栈，直到把5的scc更新后，发现x=y（y就是目前的栈顶，5），就说明这个强连通分量走完了</p>
+<h3 id="_12">代码</h3>
+<pre><code class="language-C++">/*////////ACACACACACACAC///////////
+Code By Ntsc
+/*////////ACACACACACACAC///////////
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define ll long long
+const int N=1e5;
+
+vector&lt;int&gt; e[N];//邻接矩阵 
+int dfn[N],low[N],tot;//时间戳，追溯值，给时间戳编号的计数器 
+int stk[N],top;//栈，指针 
+bool instk[N]; //是否在栈中
+int scc[N],siz[N],cnt; //记录每个点在那个强连通分量里, 每个点所在的强连通分量的大小,强连通分量的数量 
+int ans;
+
+void tarjan(int x){//从节点x进入 
+    if(scc[x])return;//如果已经是某个强连通分量里的点,停止函数
+    //入x时,时间戳追溯值更新,入栈
+    dfn[x]=low[x]=++tot;
+    stk[++top]=x;instk[x]=1; 
+
+    for(int i=0;i&lt;e[x].size();i++){//枚举x的邻点y 
+        int y=e[x][i];
+        if(!dfn[y]){//如果y还没有访问过 
+            tarjan(y);//向下走 
+            low[x]=min(low[x],low[y]);//返回时更新 
+        }else if(dfn[y]&amp;&amp;instk[y]){//说明 y被访问过 -&gt;要么y是祖先(在x出通过返祖边访问到了),要么是左子树的点(在x通过横插边访问到了) 
+            low[x]=min(low[x],dfn[y]); 
+        }
+    }
+    if(dfn[x]==low[x]){//说明x是这个强连通分量的根 
+        int y;++cnt;
+        int flag=0;//记录当前强连通分量点的个数
+        do{
+            flag++;
+            y=stk[top--];instk[y]=0;
+//          ans-=e[y].size();
+            scc[y]=cnt;
+            ++siz[cnt];
+        } while(y!=x); 
+        if(flag&gt;1)ans++;
+    }
+}
+signed main(){
+    int m,n;
+    cin&gt;&gt;n&gt;&gt;m;
+    for(int i=1;i&lt;=m;i++){
+        int a,b;
+        cin&gt;&gt;a&gt;&gt;b;
+        e[a].push_back(b);
+    }
+//  ans=m;
+    for(int i=1;i&lt;=n;i++)tarjan(i);//图可能不连通！
+//  for(int i=1;i&lt;=n;i++)cout&lt;&lt;scc[i]&lt;&lt;' ';
+    cout&lt;&lt;ans;
+    return 0;
+}
+
+</code></pre>
+<p>注意本代码与下面例题代码有一点不同，下面的代码不能计算点数为1的强连通分量，但本代码可以，只需要修改<code>if(flag&gt;1)ans++;</code>即可。</p>
+<h2 id="1-usaco06janthe-cow-prom-s">例题 #1 [USACO06JAN]The Cow Prom S</h2>
+<p>有一个 <span class="arithmatex">\(n\)</span> 个点，<span class="arithmatex">\(m\)</span> 条边的有向图，请求出这个图点数大于 <span class="arithmatex">\(1\)</span> 的强联通分量个数。</p>
+<p>对于全部的测试点，保证 <span class="arithmatex">\(2\le n \le 10^4\)</span>，<span class="arithmatex">\(2\le m\le 5\times 10^4\)</span>，<span class="arithmatex">\(1 \leq a, b \leq n\)</span>。</p>
+<h3 id="_13">完整代码</h3>
+<pre><code class="language-C++">/*////////ACACACACACACAC///////////
+Code By Ntsc
+/*////////ACACACACACACAC///////////
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define ll long long
+const int N=1e5;
+
+vector&lt;int&gt; e[N];//邻接矩阵 
+int dfn[N],low[N],tot;//时间戳，追溯值，给时间戳编号的计数器 
+int stk[N],top;//栈，指针 
+bool instk[N]; //是否在栈中
+int scc[N],siz[N],cnt; //记录每个点在那个强连通分量里, 每个点所在的强连通分量的大小,强连通分量的数量 
+int ans;
+
+void tarjan(int x){//从节点x进入 
+    //入x时,时间戳追溯值更新,入栈
+    dfn[x]=low[x]=++tot;
+    stk[++top]=x;instk[x]=1; 
+
+    for(int i=0;i&lt;e[x].size();i++){//枚举x的邻点y 
+        int y=e[x][i];
+        if(!dfn[y]){//如果y还没有访问过 
+            tarjan(y);//向下走 
+            low[x]=min(low[x],low[y]);//返回时更新 
+        }else if(dfn[y]&amp;&amp;instk[y]){//说明 y被访问过 -&gt;要么y是祖先(在x出通过返祖边访问到了),要么是左子树的点(在x通过横插边访问到了) 
+            low[x]=min(low[x],dfn[y]); 
+        }
+    }
+    if(dfn[x]==low[x]){//说明x是这个强连通分量的根 
+        int y;++cnt;
+        int flag=0;
+        do{
+            flag++;
+            y=stk[top--];instk[y]=0;
+            scc[y]=cnt;
+            ++siz[cnt];
+        } while(y!=x); 
+        if(flag&gt;1)ans++;
+    }
+}
+signed main(){
+    int m,n;
+    cin&gt;&gt;n&gt;&gt;m;
+    for(int i=1;i&lt;=m;i++){
+        int a,b;
+        cin&gt;&gt;a&gt;&gt;b;
+        e[a].push_back(b);
+    }
+    for(int i=1;i&lt;=n;i++)tarjan(i);//图可能不连通！
+    cout&lt;&lt;ans;
+    return 0;
+}
+
+</code></pre>
+<p>我们也可以tarjan完了之后统一统计，去掉flag</p>
+<p>在输出答案前统计答案，在输出答案前插入以下代码</p>
+<pre><code class="language-C++">for(int i=1;i&lt;=cnt;i++)
+     if(siz[i]&gt;1) ans++;
+</code></pre>
+<h1 id="dfnlow">融会贯通：dfn与low替换</h1>
+<p>在边双连通分量和强连通分量中，我们发现下面两种写法是等效的。</p>
+<pre><code class="language-C++">if(i!=(eid^1)) low[u]=min(low[u],dfn[v]);
+//等于
+if(i!=(eid^1)) low[u]=min(low[u],low[v]);
+</code></pre>
+<p>但是在点双连通分量中，这样写是错误的，这是为什么呢？</p>
+<p>因为在点双连通分量中，一个点可能在两个点双连通分量中，我们在更新点<span class="arithmatex">\(u\)</span>的<span class="arithmatex">\(low_v\)</span>时，用到的<span class="arithmatex">\(v\)</span>是与<span class="arithmatex">\(u\)</span>属于同一个点双连通分量里的，但可能在前面的某个也包含点v的点双连通分量中已经更新过其<span class="arithmatex">\(low_v\)</span>了，这样的话就可能跨不同的点双连通分量访问<span class="arithmatex">\(low_v\)</span>了，这样的话就错了。</p>
+<p>而在边双连通分量中，该边要么不属于任何边双连通分量，要么一定只属于一个边双连通分量（因为如果该边属于若干个边双连通分量，首先保证其为广义双向边，但如果两个边双连通分量有一个公共的广义双向边，那么这两个边双连通分量其实是一个整体（即它们就是一个边双连通分量））</p>
+<h1 id="_14">圆方树&amp;仙人掌</h1>
+<p><a href="https://www.luogu.com.cn/training/8174">www.luogu.com.cn</a></p>
+<h2 id="1_2">例题 #1</h2>
+<p>小L将取下一段永恒之树的树枝。</p>
+<p>这里，我们将一段树枝抽象成一张N个点，M条边的无向图，满足每条边都只在<strong>至多一个简单环</strong>中出现。</p>
+<p>小L 将对取下的树枝使用分解魔法，此后，树枝的每一个节点都会在一个时辰内随机的一个时刻，连同其连出去的边一起被分解。</p>
+<p>在被分解的瞬间，每个节点会释放出等同于当时还与其连通的节点数量的能量，将这些能量求和就是X国的气运。</p>
+<p>现在，小L想要知道，X国的气运期望会是多少。请求出X国气运的期望对998244353取模的结果。</p>
+<h2 id="_15">仙人掌</h2>
+<p><strong>定义</strong></p>
+<p>一张N个点，M条边的无向图，满足每条边都只在<strong>至多一个简单环</strong>中出现。</p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%209.png" /></p>
+<p>一定要保证环之间没有公共边</p>
+<h2 id="2">例题 #2</h2>
+<p>给你一个有 <span class="arithmatex">\(n\)</span> 个点和 <span class="arithmatex">\(m\)</span> 条边的仙人掌图，和 <span class="arithmatex">\(q\)</span> 组询问
+每次询问两个点 <span class="arithmatex">\(u,v\)</span>，求两点之间的最短路。</p>
+<p><strong>数据范围：</strong>
+$1\le n,q \le 10000
+$$1\le m \le 20000
+$<span class="arithmatex">\(1\le w \le 10^5\)</span></p>
+<p>请注意时限为 <span class="arithmatex">\(300\text{ms}\)</span></p>
+<p><strong>注意：</strong></p>
+<p>本题n很大，不能用普通最短路做法！</p>
+<p>由于仙人掌既有树的性质，但由于基环树有区别。如果是基环树的话，我们可以考虑断边，然后通过求出每个点的深度和lca(u,v)来快速求出u,v之间的距离。</p>
+<p>但是仙人掌上有不止一个环，所以我们用不了这种方法。所以我们考虑将图用某种方法变成一棵树（我们可以好好利用环与环之间互相独立这个性质！）</p>
+<h2 id="_16">圆方树</h2>
+<p><strong>定义</strong></p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%2010.png" /></p>
+<p>割点：图中的点5,3,8是割点。</p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%2011.png" /></p>
+<p>我们来仔细考虑怎么将环变成菊花图</p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%2012.png" /></p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%2013.png" /></p>
+<p>红色点作为割点，其它边我们省略，只留下一个环。那么其作为圆方树就应该是右边这样。方点到其他点的距离代表着红色割点在环上到其他点的最短距离。如果一个环有不止一个割点，那么我们只选择第一个，即从1号点开始访问时访问到这个环的第一个割点。</p>
+<p>注意，仙人掌是无向带环图，转化为圆方树后变成了一幅 DAG。</p>
+<p><strong>构建</strong></p>
+<p>我们可以使用 Tarjan 算法。</p>
+<p><strong>问题解决</strong></p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%2014.png" /></p>
+<p>我们重点考虑情况(2)，在上上图中，我们假如要求dis(6,9)，那么在原图上很容易发现是9→8→5→7→6，dis=2+2+2+1=7。但是在圆方图上，5→6,9→8路径都没有问题，但是lca(6,9)在圆方图上变成了一个方点，即其lca在一个环树。感性来想，一个环上所有点的深度可以认为是一样的，所以6,9有2个lca，分别为5,8。所以我们应该求出5→8之间的距离。但是在同一个环内求距离，我们就不能在圆方图上做了，只能在原图上做，否则会出错。</p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%2015.png" /></p>
+<p>具体做法是，我们发现方点到5,8的距离实际上代表了割点（样例中为3）到两个点的最短距离。那么我们就可以借助环长信息来求出距离了。具体实现请思考。</p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%2016.png" /></p>
+<p>实际上就是我们从割点开始<strong>有向地</strong>访问每一个环上的点，如同中<span class="arithmatex">\(s_a=a,s_b=a+b\)</span>，那么点a,b之间的距离可能是b或者a+c，我们求出<span class="arithmatex">\(len1=abs(s_a-s_b)\)</span>，<span class="arithmatex">\(len2=\)</span>环长<span class="arithmatex">\(-len1\)</span>，然后取<span class="arithmatex">\(\min(len1,len2)\)</span> 即可</p>
+<p><strong>代码实现</strong></p>
+<p>注意这里我们需要建2幅图，一幅为原图，用来跑tarjan求出第2幅图，即圆方图。注意tarjan要建反向边，要用邻接表。并且lca应该在圆方图上跑而不是在原图上跑。</p>
+<p>建立菊花图</p>
+<p><img alt="image.png" src="../%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2Btarjan%2B%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3%2B2a94f699-a013-4747-8b02-b871d6fafd4d/image%2017.png" /></p>
+<pre><code class="language-C++">void build(int u,int v,int w){
+    int sum=w;
+    for(int k=v;k!=u;k=fa[k]){//遍历环上每一个点更新环的大小
+        sum+=fw[k];
+    }
+    s[u]=sz[u]=sum;
+    add2(u,++cnt2,0);//建方点
+    for(int k=v;k!=u;k=fa[k]){//遍历环上每一个点更新 点上记录的 环的大小
+        sc[k]=sum;
+        add2(cnt2,k,min(s[k],sum-s[k]));//建菊花点
+    }
+}
+</code></pre>
+<p>Tarjan部分【难点】</p>
+<pre><code class="language-C++">
+void tarjan(int u,int ine){//ine为入边编号
+    dfn[u]=low[u]=++tim;
+    for(int i=h1[u];i;i=e[i].nxt){
+        int v=e[i].to,w=e[i].w;
+        if(dfs[v]){//访问过
+            if(i!=(ine^1))low[u]=min(low[u],dfn[v]);//成环
+            continue;
+        }
+        fa[v]=u;
+        fw[v]=w;
+        fe[v]=i;
+        tarjan(v,i);
+        low[u]=min(low[u],low[v]);
+        if(dfn[u]&lt;low[v])add2(u,v,w);//非环边
+    }
+    for(int i=h1[u];i;i=e[i].nxt){
+        int v=e[i].to,w=e[i].w;
+        if(dfn[u]&lt;dfn[v]&amp;&amp;fe[v]!=i)build(u,v,w);//建菊花图
+    }
+}
+
+</code></pre>
+<p>Complete Code is here <code>AC</code></p>
+<pre><code class="language-C++">/*////////ACACACACACACAC///////////
+       . Coding by Ntsc .
+       . FancyKnowledge .
+       . Prove Yourself .
+/*////////ACACACACACACAC///////////
+
+//头文件
+#include&lt;bits/stdc++.h&gt;
+
+//数据类型
+#define int long long
+#define ull unsigned long long
+#define db double
+#define endl '\n'
+#define pr pair&lt;int,int&gt;
+#define pf first
+#define ps second
+#define pb push_back
+//命名空间
+using namespace std;
+//常量
+const int N=2e5+5;
+const int M=1e3;
+const int MOD=1e9+1;
+const int INF=1e9;
+const int IINF=1e18;
+const db eps=1e-9;
+//变量
+int n,m,deg[N],b,c,p[N][22];
+int fa[N],fw[N],s[N],fe[N];
+int dep[N],d[N];
+int tot,nt[N];
+int dfn[N],low[N],tim;
+int cn;
+
+
+int A,B;//记录环上的两个lca
+
+int sz[N];//记录每个点对应环的大小
+
+int cnt=1,cnt2,h1[N],h2[N];
+
+struct node{
+    int nxt,to,w;
+}e[N],e2[N];
+
+void add2(int u,int v,int w){
+    e2[++cnt2].to=v;
+    e2[cnt2].nxt=h2[u];
+    e2[cnt2].w=w;
+    h2[u]=cnt2;
+}       
+
+void add(int u, int v,int w) { 
+    e[++cnt].to=v;
+    e[cnt].w=w;
+    e[cnt].nxt=h1[u];
+    h1[u]=cnt;
+
+}
+
+void dfs(int u,int fa){
+    dep[u]=dep[fa]+1;
+    p[u][0]=fa;
+    for(int i=1;(1&lt;&lt;i)&lt;=dep[u];i++)//二叉树，点i的深度即i/2
+        p[u][i]=p[p[u][i-1]][i-1];//第u个点向上2^i层的祖先就是第u个点的fa的上2^(i-1)层祖先
+    for(int i=h2[u];i;i=e2[i].nxt){//扫描出边
+        int v=e2[i].to;
+        if(v==fa)continue;//排除fa
+        d[v]=d[u]+e2[i].w;
+        dfs(v,u);
+    }
+}                              
+int lca(int a,int b){
+    if(dep[a]&gt;dep[b])//统一切换为b比a深
+        swap(a,b);          
+    for(int i=20;i&gt;=0;i--)//b向上走到与a同层
+        if(dep[a]&lt;=dep[b]-(1&lt;&lt;i))
+            b=p[b][i];             
+    if(a==b)
+        return a;                 
+    for(int i=20;i&gt;=0;i--){
+        if(p[a][i]==p[b][i])continue;//过头了
+        else a=p[a][i],b=p[b][i];          
+    }
+    A=a,B=b;//假如是环，记录环上两个lca
+    return p[a][0];//最后a停在了lca的更深一层       
+}
+
+void build(int u,int v,int w){
+    int sum=w;
+    for(int k=v;k!=u;k=fa[k]){//遍历环上每一个点更新环的大小
+        s[k]=sum;
+        sum+=fw[k];
+    }
+//  s[u]=sz[u]=sum;
+    add2(u,++cn,0);//建方点,cn初始值为n,故方点的编号&gt;n,后面根据这个来判断lca是否为方点.不要写成cnt2
+    for(int k=v;k!=u;k=fa[k]){//遍历环上每一个点更新 点上记录的 环的大小
+        sz[k]=sum;
+        add2(cn,k,min(s[k],sum-s[k]));//建菊花点
+    }
+}
+
+void tarjan(int u,int ine){//ine为入边编号
+    dfn[u]=low[u]=++tim;
+    for(int i=h1[u];i;i=e[i].nxt){
+        int v=e[i].to,w=e[i].w;
+        if(dfn[v]){//访问过
+            if(i!=(ine^1))low[u]=min(low[u],dfn[v]);//成环
+            continue;
+        }
+        fa[v]=u;
+        fw[v]=w;
+        fe[v]=i;
+        tarjan(v,i);
+        low[u]=min(low[u],low[v]);
+        if(dfn[u]&lt;low[v])add2(u,v,w);//非环边
+    }
+    for(int i=h1[u];i;i=e[i].nxt){
+        int v=e[i].to,w=e[i].w;
+        if(dfn[u]&lt;dfn[v]&amp;&amp;fe[v]!=i){
+//      cerr&lt;&lt;&quot;build at u=&quot;&lt;&lt;u&lt;&lt;endl;
+        build(u,v,w);//建菊花图
+        }
+
+    }
+}
+
+int ask(int u,int v){
+    int p=lca(u,v);
+//  cerr&lt;&lt;&quot;lca(&quot;&lt;&lt;u&lt;&lt;','&lt;&lt;v&lt;&lt;&quot;) is p=&quot;&lt;&lt;p&lt;&lt;endl;
+    if(p&lt;=n)return d[u]+d[v]-2*d[p];//是圆点,注意这里d不是深度!
+    int l=abs(s[A]-s[B]);//A,B为两个lca
+    int dAB=min(l,sz[A]-l);
+    return dAB+d[u]+d[v]-d[A]-d[B];
+}
+
+signed main(){
+    int q;
+    cin&gt;&gt;n&gt;&gt;m&gt;&gt;q;
+    cn=n;
+    for(int i=1;i&lt;=m;i++){
+        int u,v,w;
+        cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;
+        add(u,v,w);
+        add(v,u,w);
+    }
+
+
+    tarjan(1,-1);
+    dfs(1,0);
+
+
+    while(q--){
+        int u,v;
+        cin&gt;&gt;u&gt;&gt;v;
+        cout&lt;&lt;ask(u,v)&lt;&lt;endl;
+    }
+
+    return 0;
+}
+</code></pre>
+<h1 id="kosaraju"><strong>Kosaraju 算法</strong></h1>
+<p>一个不如Tarjan的下位算法。不学。</p>
+<h1 id="_17">练习</h1>
+<h2 id="usaco03fall-haoi2006-g">[USACO03FALL / HAOI2006] 受欢迎的牛 G</h2>
+<p>每头奶牛都梦想成为牛棚里的明星。被所有奶牛喜欢的奶牛就是一头明星奶牛。所有奶牛都是自恋狂，每头奶牛总是喜欢自己的。奶牛之间的“喜欢”是可以传递的——如果 <span class="arithmatex">\(A\)</span> 喜欢 <span class="arithmatex">\(B\)</span>，<span class="arithmatex">\(B\)</span> 喜欢 <span class="arithmatex">\(C\)</span>，那么 <span class="arithmatex">\(A\)</span> 也喜欢 <span class="arithmatex">\(C\)</span>。牛栏里共有 <span class="arithmatex">\(N\)</span> 头奶牛，给定一些奶牛之间的爱慕关系，请你算出有多少头奶牛可以当明星。</p>
+<p>输入格式</p>
+<p>第一行：两个用空格分开的整数：<span class="arithmatex">\(N\)</span> 和 <span class="arithmatex">\(M\)</span>。</p>
+<p>接下来 <span class="arithmatex">\(M\)</span> 行：每行两个用空格分开的整数：<span class="arithmatex">\(A\)</span> 和 <span class="arithmatex">\(B\)</span>，表示 <span class="arithmatex">\(A\)</span> 喜欢 <span class="arithmatex">\(B\)</span>。</p>
+<hr />
+<p>缩点后会变成一棵树。找到没有出度的那个点u，u中包含是所有奶牛都是明星。如果有多个点没有出度，则答案为0，即奶牛分成了若干个阵营，相互不连通。</p>
+<pre><code class="language-C++">/*////////ACACACACACACAC///////////
+       . Coding by Ntsc .
+       . Prove Yourself .
+/*////////ACACACACACACAC///////////
+
+#include&lt;bits/stdc++.h&gt;
+#define ll long long
+#define db double
+#define rtn return
+#define i1n int i=1;i&lt;=n;i++
+#define in1 int i=n;i&gt;=1;i--
+using namespace std;
+
+const int N=5e5+5;
+const int M=1e5;
+const int Mod=1e5;
+const int INF=1e5;
+
+int dfn[N],low[N],stk[N],tot,top,cnt,scc[N],siz[N],sccw[N],w[N],dis[N],vis[N],n,m,way[N][2],instk[N],s,np,p[N],ans;
+vector &lt;int&gt; e[N];
+int du[N];
+int f[N];
+
+
+vector&lt;int&gt;e2[N];
+
+void add(int a,int b){
+    e[a].push_back(b);
+}
+void add2(int a,int b){
+    e2[a].push_back(b);
+    du[a]++;
+}
+
+void tarjan(int x){//强连通分量缩点
+    //入x时,时间戳追溯值更新,入栈
+    dfn[x]=low[x]=++tot;
+    stk[++top]=x;instk[x]=1; 
+
+    for(int i=0;i&lt;e[x].size();i++){//枚举x的邻点y 
+        int y=e[x][i];
+        if(!dfn[y]){//如果y还没有访问过 
+            tarjan(y);//向下走 
+            low[x]=min(low[x],low[y]);//返回时更新 
+        }else if(dfn[y]&amp;&amp;instk[y]){//说明 y被访问过 -&gt;要么y是祖先(在x出通过返祖边访问到了),要么是左子树的点(在x通过横插边访问到了) 
+            low[x]=min(low[x],dfn[y]); 
+        }
+    }
+    if(dfn[x]==low[x]){//说明x是这个强连通分量的根 
+        int y;++cnt;
+        int flag=0;
+        do{
+            flag++;
+            y=stk[top--];instk[y]=0;
+            scc[y]=cnt;
+            ++siz[cnt];
+            sccw[cnt]+=w[y];//记录缩点后强连通分量点的点权
+        } while(y!=x); 
+    }
+}
+
+void dfs(int x){
+    if(f[x])return ;
+    f[x]=sccw[x];
+    int mx=0;
+    for(auto v:e2[x]){
+        if(!f[v])dfs(v);//搜过就不用再搜，直接调用 
+        mx=max(mx,f[v]);
+    }
+    f[x]+=mx;
+}
+
+signed main(){
+    cin&gt;&gt;n&gt;&gt;m;
+    for(int i=1;i&lt;=m;i++){
+        cin&gt;&gt;way[i][0]&gt;&gt;way[i][1];
+    }
+
+    for(int i=1;i&lt;=m;i++){
+        add(way[i][0],way[i][1]);
+    }
+
+
+    for(int i=1;i&lt;=n;i++)//题目不保证图连续!
+        if(!dfn[i]) tarjan(i);
+
+    //建新图 
+    for(int i=1;i&lt;=n;i++){
+        for(int j=0;j&lt;e[i].size();j++){
+            int v=e[i][j];
+            if(scc[i]==scc[v])continue;//注意continue
+            add2(scc[i],scc[v]);//注意不是scc[j]
+        }
+    }
+    int res=0;
+    for(int i=1;i&lt;=cnt;i++){
+        if(!du[i])res++,ans=siz[i];
+        if(res&gt;1){
+            ans=0;break;
+        }
+    } 
+
+    cout&lt;&lt;ans&lt;&lt;endl;
+    return 0;
+}
+
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1763 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../tarjan%20%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3/">
+      
+      
+        <link rel="next" href="../%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.28">
+    
+    
+      
+        <title>二分图 二部图问题 - OI Beats</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="OI Beats" class="md-header__button md-logo" aria-label="OI Beats" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OI Beats
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              二分图 二部图问题
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="OI Beats" class="md-nav__button md-logo" aria-label="OI Beats" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    OI Beats
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    动态规划
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            动态规划
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20DP%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP DP优化
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E5%85%A5%E9%97%A8%E5%85%B8%E4%BE%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 入门典例
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E6%A0%91%E5%9E%8B%20%E7%8A%B6%E5%8E%8B%20%E5%80%8D%E5%A2%9E/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 树型 状压 倍增
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/DP%20%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 背包问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    图论
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            图论
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tarjan%20%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tarjan 算法相关
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    二分图 二部图问题
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    图论基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%AD%98%E5%9B%BE%20%E6%9C%80%E7%9F%AD%E8%B7%AF%20%E8%B4%9F%E7%8E%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    存图 最短路 负环
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E6%A0%91%E4%B8%8A%E7%A5%96%E5%85%88%20LCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    树上祖先 LCA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%94%9F%E6%88%90%E6%A0%91%20%E5%9F%BA%E7%8E%AF%E6%A0%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    生成树 基环树
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%BD%91%E7%BB%9C%E6%B5%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    网络流
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E9%AB%98%E7%BA%A7%E7%BA%BF%E6%80%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级线性数据结构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    字符串
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            字符串
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%93%88%E5%B8%8C%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    哈希 字符串匹配（从字典树到KMP再到AC自动机）
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E9%AB%98%E7%B2%BE%E5%BA%A6%20%E5%BF%AB%E8%AF%BB%E5%BF%AB%E8%BE%93/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高精度 快读快输
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E9%AB%98%E7%BA%A7%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级字符串算法
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    数学
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            数学
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E4%BA%8C%E5%88%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二分
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%8D%9A%E5%BC%88%E8%AE%BA%20SG%E5%87%BD%E6%95%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博弈论 SG函数
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%8E%9F%E6%A0%B9%20%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%20%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    原根 拉格朗日插值 莫比乌斯反演
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%BF%AB%E9%80%9F%E5%B9%82%20%E7%9F%A9%E9%98%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    快速幂 矩阵
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%AE%9A%E7%90%86%20%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数学定理 线性代数
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E7%BB%84%E5%90%88%E8%AE%A1%E6%95%B0%20%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83%20%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    组合计数 高斯消元 容斥原理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    计算几何
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E9%80%86%E5%85%83%20%E7%AD%9B%20%E4%B8%8D%E5%AE%9A%E6%96%B9%E7%A8%8B%20%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    逆元 筛 不定方程 扩展欧几里得
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    数据结构
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            数据结构
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/ST%E8%A1%A8%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%20%E7%BA%BF%E6%AE%B5%E6%A0%91%20%E5%88%86%E5%9D%97%20%E8%8E%AB%E9%98%9F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ST表 树状数组 线段树 分块 莫队
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E4%B8%8E%E5%B9%B3%E8%A1%A1%E6%A0%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二叉查找树与平衡树
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%B9%B6%E6%9F%A5%E9%9B%86%20%E6%89%A9%E5%B1%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    并查集 扩展
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%AB%98%E7%BA%A7%E3%81%AE%E6%A0%91%E4%B8%8A%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级の树上问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【】专题+++ST表+++树状数组+++线段树+++分块+++莫队+4419f177 d45a 4b1d 96ea 88ca36e3ecda
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            【】专题+++ST表+++树状数组+++线段树+++分块+++莫队+4419f177 d45a 4b1d 96ea 88ca36e3ecda
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2BST%E8%A1%A8%2B%2B%2B%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%2B%2B%2B%E7%BA%BF%E6%AE%B5%E6%A0%91%2B%2B%2B%E5%88%86%E5%9D%97%2B%2B%2B%E8%8E%AB%E9%98%9F%2B4419f177-d45a-4b1d-96ea-88ca36e3ecda/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%BB%B4%E6%8A%A4%E7%9A%84%E5%90%84%E7%A7%8D%E4%BF%A1%E6%81%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    上帝造题的七分钟 2 / 花神游历各国
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    算法基础
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            算法基础
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/C%2B%2B%E5%85%B3%E9%94%AE%E5%AD%97%E4%B8%8E%E7%94%9F%E5%83%BBSTL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C++关键字与生僻STL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/Head%2B%2B%2B%E6%A8%A1%E6%9D%BF%E5%A4%B4%2B%E7%BC%BA%E7%9C%81%E6%BA%90%2B2882b258-98b6-47da-be53-6525b90e8dae/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Head+++模板头+缺省源+2882b258 98b6 47da be53 6525b90e8dae
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%BC%80%E5%92%8C%20%E5%B7%AE%E5%88%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    前缀和 差分
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E6%A6%82%E5%BF%B5%20%E6%A6%82%E5%BF%B5%E6%80%A7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    概念 概念性
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E8%B4%AA%E5%BF%83/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    贪心
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E9%80%92%E5%BD%92%20%E9%80%92%E6%8E%A8%20%E6%B7%B1%E6%90%9C%20%E5%B9%BF%E6%90%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    递归 递推 深搜 广搜
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    算法策略
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            算法策略
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E5%88%86%E6%B2%BB%20%E6%8E%92%E5%BA%8F%20%E5%81%8F%E5%BA%8F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    分治 排序 偏序
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E5%90%AF%E5%8F%91%E5%BC%8FA_%20IDA_/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    启发式A  IDA 
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E6%80%9D%E6%83%B3%20%E7%88%AC%E5%B1%B1%E7%AE%97%E6%B3%95%20%E6%A8%A1%E6%8B%9F%E9%80%80%E7%81%AB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    思想 爬山算法 模拟退火
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<p>专题 | 二分图/二部图问题</p>
+<h1 id="_1">目录</h1>
+<ul>
+<li>
+<p>最大匹配 匈牙利算法</p>
+</li>
+<li>
+<p>网络流初步：费用流（带权最大匹配）Edmonds-Karp 增广路算法</p>
+</li>
+</ul>
+<h1 id="_2">参考资料</h1>
+<p><a href="https://b23.tv/wEJ5Ozv">b23.tv</a>
+匈牙利算法</p>
+<p><a href="https://b23.tv/v4GAHA0">b23.tv</a>
+费用流</p>
+<h1 id="_3">概念</h1>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E4%BA%8C%E5%88%86%E5%9B%BE%2B%2B%2B%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98%2Bd0a592ec-90fb-41ef-b721-a9cdb64d5068/image.png" /></p>
+<p>二分图（二部图）的最大匹配：</p>
+<p>设 <span class="arithmatex">\(G\)</span> 为二分图 ， 若在 $G $ 的子图 $M $ 中 ， 任意两条边都没有公共节点 ， 那么称 $M $ 为二分图 $G $ 的一组匹配 。 在二分图中 ，包含边数最多的一组匹配称为二分图的最大匹配。</p>
+<p>如在下图中，1-4，5-3就是一组匹配。1-4，5-3，2-7就是下图的最大匹配</p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E4%BA%8C%E5%88%86%E5%9B%BE%2B%2B%2B%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98%2Bd0a592ec-90fb-41ef-b721-a9cdb64d5068/image%201.png" /></p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E4%BA%8C%E5%88%86%E5%9B%BE%2B%2B%2B%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98%2Bd0a592ec-90fb-41ef-b721-a9cdb64d5068/image%202.png" /></p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E4%BA%8C%E5%88%86%E5%9B%BE%2B%2B%2B%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98%2Bd0a592ec-90fb-41ef-b721-a9cdb64d5068/image%203.png" /></p>
+<h1 id="_4">匈牙利算法</h1>
+<p>匈牙利算法通过不停地找增广路来增加配边找不到增广路时 ， 达到最大匹配 。 可以用 DFS 或 BFS 来实现 。</p>
+<p>算法简单，下面结合代码和例题</p>
+<h2 id="_5">题目描述</h2>
+<p>给定一个二分图，其左部点的个数为 <span class="arithmatex">\(n\)</span>，右部点的个数为 <span class="arithmatex">\(m\)</span>，边数为 <span class="arithmatex">\(e\)</span>，求其最大匹配的边数。</p>
+<p>左部点从 <span class="arithmatex">\(1\)</span> 至 <span class="arithmatex">\(n\)</span> 编号，右部点从 <span class="arithmatex">\(1\)</span> 至 <span class="arithmatex">\(m\)</span> 编号。</p>
+<p>输出一行一个整数，代表二分图最大匹配的边数。</p>
+<p>对于全部的测试点，保证：</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(1 \leq n, m \leq 500\)</span>。</p>
+</li>
+<li>
+<p><span class="arithmatex">\(1 \leq e \leq 5 \times 10^4\)</span>。</p>
+</li>
+<li>
+<p><span class="arithmatex">\(1 \leq u \leq n\)</span>，<span class="arithmatex">\(1 \leq v \leq m\)</span>。</p>
+</li>
+</ul>
+<p><strong>不保证给出的图没有重边</strong>。</p>
+<h2 id="solu">solu</h2>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N=5e4+5;
+int n,m,E,ans;
+//int h[N],e[N];
+vector &lt;int&gt; e[N];
+int vis[N],match[N];
+void add(int a,int b){
+    e[a].push_back(b);
+}
+bool dfs(int u){
+    for(int i=0;i&lt;e[u].size();i++){//扫描所有可能成为配对的右点（即有连边的点）
+        int v=e[u][i];
+        if(vis[v])continue;//即（在上一层函数中）已经被访问过
+        vis[v]=1;//不是上一层函数中想要的点，那么这一层就可能可以匹配成功
+        if(!match[v]||dfs(match[v])){//如果 点v没有任何已有匹配，那么匹配它和u！ 或者它有匹配了(与match[v]),但match[v]可以找到另外一个右点和它匹配,那么就可以把点v让给u (这样可以保证已经有的匹配数不减少,可能会变更,但不减少)(贪心)
+            match[v]=u;
+            return 1;
+        }
+    }
+    return 0;//扫描全部结束,没有一个匹配成功
+}
+signed main(){
+    cin&gt;&gt;n&gt;&gt;m&gt;&gt;E;
+    for(int i=1;i&lt;=E;i++){
+        int a,b;
+        cin&gt;&gt;a&gt;&gt;b;
+        add(a,b);//我们只通过左边找右边，因此只需要单向边
+    }
+    for(int i=1;i&lt;=n;i++){//遍历每个左边的点给它找配对
+        memset(vis,0,sizeof vis);
+        if(dfs(i))ans++;//如果找到了配对
+    }
+    cout&lt;&lt;ans;
+    return 0;
+}
+
+</code></pre>
+<p>详细解释以下片段</p>
+<pre><code class="language-C++">if(vis[v])continue;//即（在上一层函数中）已经被访问过
+        vis[v]=1;//不是上一层函数中想要的点，那么这一层就可能可以匹配成功
+        if(!match[v]||dfs(match[v])){//如果 点v没有任何已有匹配，那么匹配它和u！ 或者它有匹配了(与match[v]),但match[v]可以找到另外一个右点和它匹配,那么就可以把点v让给u (这样可以保证已经有的匹配数不减少,可能会变更,但不减少)(贪心)
+</code></pre>
+<p>先忽略vis[]，当走到判定处，发现match[v]≠0，那么就要去dfs(match[v])，此时从dfs(u)的函数空间走到了dfs(match[v])的函数空间，这时才会出现vis[v]≠0的情况</p>
+<p>如果vis[v]≠1了，就说明在dfs(u)函数空间内这个点已经被预定了，match[v]这个点只能另寻他人</p>
+<p><strong>时间复杂度 理论上限O(nm)</strong></p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E4%BA%8C%E5%88%86%E5%9B%BE%2B%2B%2B%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98%2Bd0a592ec-90fb-41ef-b721-a9cdb64d5068/image%204.png" /></p>
+<h2 id="_6">题目描述</h2>
+<p>给定一个二分图，其点的个数为 <span class="arithmatex">\(n\)</span>，边数为 <span class="arithmatex">\(e\)</span>，求其最大匹配的边数。</p>
+<p>输入 <span class="arithmatex">\(e\)</span> 条边，保证连成的图为二分图</p>
+<p>输出一行一个整数，代表二分图最大匹配的边数。</p>
+<h2 id="solu_1">solu(未验证的)</h2>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+const int N=5e4+5;
+int pleft[N];//0未发现,1为左点，2为右点 
+int n,ln,E,ans;
+//int h[N],e[N];
+vector &lt;int&gt; e[N];
+int vis[N],match[N];
+void add(int a,int b){
+    e[a].push_back(b);
+}
+bool dfs(int u){
+    for(int i=0;i&lt;e[u].size();i++){
+        int v=e[u][i];
+        if(vis[v])continue;
+        vis[v]=1;
+        if(!match[v]||dfs(match[v])){
+            match[v]=u;
+            return 1;
+        }
+    }
+    return 0;
+}
+signed main(){
+    cin&gt;&gt;n&gt;&gt;E;
+    for(int i=1;i&lt;=E;i++){
+        int a,b;
+        cin&gt;&gt;a&gt;&gt;b;
+
+        if(&amp;&amp;!pletf[b])add(a,b),pletf[b]=2,pletf[a]=1,ln++;
+
+        if(pletf[a]==1||pletf[b]==2)
+        if(!pletf[a])ln++;
+        add(a,b),pletf[a]=1,pletf[b]=2;
+
+        if(pletf[a]==2||pletf[b]==1)
+        if(!pletf[b])ln++;
+        add(b,a),pletf[a]=2,pletf[b]=1;
+
+    }
+//  cout&lt;&lt;&quot;OK&quot;&lt;&lt;endl;
+    for(int i=1;i&lt;=ln;i++){
+        memset(vis,0,sizeof vis);
+        if(dfs(i))ans++;
+    }
+    cout&lt;&lt;ans;
+    return 0;
+}
+
+</code></pre>
+<h1 id="_7">费用流</h1>
+<p>请先复习<strong>网络流</strong>的内容</p>
+<h2 id="ek">EK算法</h2>
+<p><a href="https://flowus.cn/db56502e-9cbd-4978-a11c-91bfeee6b4b6">专题 | 网络流</a></p>
+<p><a href="https://www.bilibili.com/video/BV1SU4y1D77p/?spm_id_from=333.999.0.0&amp;vd_source=f45ea4e1e4b3b73d5f07c57b46c43aba">364 网络流 费用流 EK 算法_哔哩哔哩_bilibili</a></p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E4%BA%8C%E5%88%86%E5%9B%BE%2B%2B%2B%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98%2Bd0a592ec-90fb-41ef-b721-a9cdb64d5068/image%205.png" /></p>
+<p>其中最大流指的是<strong>总流量</strong>最大，不是单独的一条路径</p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E4%BA%8C%E5%88%86%E5%9B%BE%2B%2B%2B%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98%2Bd0a592ec-90fb-41ef-b721-a9cdb64d5068/image%206.png" /></p>
+<p>上图 最大费用最大流</p>
+<p>下图 最小费用最大流</p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E4%BA%8C%E5%88%86%E5%9B%BE%2B%2B%2B%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98%2Bd0a592ec-90fb-41ef-b721-a9cdb64d5068/image%207.png" /></p>
+<p><strong>与EK模板的区别</strong></p>
+<p><img alt="image.png" src="../%E4%B8%93%E9%A2%98%2B%2B%2B%E4%BA%8C%E5%88%86%E5%9B%BE%2B%2B%2B%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98%2Bd0a592ec-90fb-41ef-b721-a9cdb64d5068/image%208.png" /></p>
+<p><strong>关于cost的修改</strong></p>
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define int long long
+const int N=1e4+5;
+int mf[N];//最大流量maxflow 
+int s,t,pre[N],n,m;
+int cst,dis[N],vis[N];
+struct edge{
+    int v,c,nxt,w;
+}e[20*N];
+int h[N],idx=1;//边的id从2开始存,因为边与残留边对应,使用i^1可以迅速在n与n+1之间相互转换(n为偶数),不用特判 
+void add(int a,int b,int c,int dd){
+    e[++idx]={b,c,h[a],dd};
+    h[a]=idx;
+}
+//***重要 
+bool spfa(){//找一条可以从s到t的有效路径 
+    memset(dis,0x3f,sizeof dis);//最短路常规操作 
+    dis[s]=0,vis[s]=1;//vis标记其是否在队内 
+    memset(mf,0,sizeof mf);//将每个点能到达的流量上限变成0
+    queue&lt;int&gt; q;
+    q.push(s);mf[s]=1e9;//源点的流量上限为无穷大,即源点能为后面提供无限大的流量 
+    while(q.size()){
+        int u=q.front();q.pop();vis[u]=0;       
+        for(int i=h[u];i;i=e[i].nxt){//扫描出边 
+            int v=e[i].v,w=e[i].w;
+            if(dis[v]&gt;dis[u]+w&amp;&amp;e[i].c){//如果 目前这条路到v比之前到v的路更短 并且存在这条边/这条边在之前走过但还有空余容量(容量&gt;0) 
+                dis[v]=dis[u]+w;                
+                mf[v]=min(mf[u],e[i].c);//更新流量上限为之前更新过的可以到达u的流量(即点u能提供的最大流量)与u-v见之间的容量的min 
+                pre[v]=i; //存目前路径上点v的前驱边                
+                if(!vis[v])//防止重复入队 
+                    q.push(v),vis[v]=1;
+                 //找增广路相当于找到一条新的流量到t,回顾二分图的增光路,之前已经找到的增光路的路径可以调整,但流量不会变化(即不会使之前已经有的流量减小) 
+            }
+        }
+    }
+    if(mf[t])return 1;//如果有流量到达t,说明找到了一条增广路 
+    else return 0;//一定要返回0!没有返回值会当作true处理! 
+}
+//***
+int EK(){
+    int nf=0;//当前总流量nowflow 
+    while(spfa()){//新找到一条增广路,路的流量为mf[t] (流量是从s开始在到达t途中受到限制逐渐减小的,因此到达t的流量才是这条路的流量)
+        //cout&lt;&lt;'K';
+        int v=t;
+        while(v!=s){//从t往回在更新残留网 
+            int i=pre[v];
+            e[i].c-=mf[t];//主边,空余的容量减少了 
+            e[i^1].c+=mf[t];//残留边(反向边) 
+            //此消彼长          
+            v=e[i^1].v; 
+        }
+        nf+=mf[t];//汇入一股新的流量
+        //***重要
+        cst+=mf[t]*dis[t]; 
+        //***
+    }
+    return nf; 
+}
+signed main(){
+    cin&gt;&gt;n&gt;&gt;m&gt;&gt;s&gt;&gt;t;
+    for(int i=1;i&lt;=m;i++){
+        int u,v,w,dd;
+        cin&gt;&gt;u&gt;&gt;v&gt;&gt;w&gt;&gt;dd;
+        add(u,v,w,dd);add(v,u,0,-dd);
+
+    }
+    cout&lt;&lt;EK()&lt;&lt;' '&lt;&lt;cst&lt;&lt;endl; 
+}
+</code></pre>
+<p>仅仅以下更改</p>
+<ul>
+<li>
+<p>对于cost的统计与相关代码</p>
+</li>
+<li>
+<p>将bfs找增光路变成spfa求最短路</p>
+</li>
+</ul>
+<p>为什么这个判定不能用了？</p>
+<pre><code class="language-C++">// use this at spfa最后
+    if(mf[t])return 1;//如果有流量到达t,说明找到了一条增广路 
+    else return 0;//一定要返回0!没有返回值会当作true处理!
+//instead of
+    if(v==t)return 1;//说明找到了一条增广路 
+</code></pre>
+<p>那是因为之前bfs只是要求找到，于是只有一到达汇点就可以判定找到<code>if(v==t)return 1;</code>，而现在是要求找到最小的。因此只有完整的运行了一次spfa，才能判定有没有到汇点的新增流量</p>
+<h2 id="dinic">Dinic算法</h2>
+<p>同EK，将bfs改为spfa即可。</p>
+<p>未修改的代码</p>
+<pre><code class="language-C++">/*////////ACACACACACACAC///////////
+Code By Ntsc
+/*////////ACACACACACACAC///////////
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define int long long
+const int N=1e5;
+
+struct edge{
+    int v,c,nxt;
+}e[N];
+int n,m,h[N],ans,idx=1,d[N],s,t,cur[N];
+void add(int x,int y,int b){
+    e[++idx]={y,b,h[x]};
+    h[x]=idx;
+}
+bool bfs(){//对每个点进行分层 ,为dfs找增光路做准备 
+    memset(d,0,sizeof d);
+    queue&lt;int&gt;q;
+    q.push(s);d[s]=1;//源点是第一层 
+    while(q.size()){
+        int u=q.front();q.pop();
+        for(int i=h[u];i;i=e[i].nxt){
+            int v=e[i].v;
+            if(!d[v]&amp;&amp;e[i].c){//如果没有访问过v并且这条边有剩余容量 
+                d[v]=d[u]+1;//v点位于u的下一层 
+                q.push(v) ;
+                if(v==t)return 1;
+            }
+        }
+    }
+    return 0;
+} 
+int dfs(int u,int mf){//当前点u,(这条路径上)走到u时的剩余流量 
+    //入33 下37 回42 离50 
+     if(u==t)return mf;//如果已经到达汇点,直接返回
+     int sum=0;//计算u点可以流出的流量之和 (e.g.当u=2时,最后sum=3+3+4+2+3)
+
+     for(int i=cur[u];i;i=e[i].nxt){
+        cur[u]=i;//记录从哪一条边走出去了 ,后面有用 
+        int v=e[i].v;
+
+        if(d[v]==d[u]+1&amp;&amp;e[i].c){//如果v在u的下一层 并且有剩余容量 
+            int f=dfs(v,min(mf,e[i].c));//正如EK中的'mf[v]=min(mf[u],e[i].c);' 
+            //回
+            e[i].c-=f;
+            e[i^1].c+=f;//更新残留网,对照EK 
+            sum+=f;
+            mf-=f;//类似八皇后,请思考! 
+            if(!mf)break;//优化.当在u的前几条分支已经流光了u的可用流量时,就不用考虑剩下的分支了 
+         }
+     } 
+     if(!sum)d[u]=0;//残枝优化.目前这条路没有可行流了 
+     return sum;
+}
+int dinic(){//累加答案 
+    int ans=0;
+    while(bfs()){//可以找到增光路 
+        memcpy(cur,h,sizeof h);//请思考! 
+        ans+=dfs(s,1e9);//还是那句话'//源点的流量上限为无穷大,即源点能为后面提供无限大的流量' 
+    }
+    return ans;
+} 
+signed main(){
+    cin&gt;&gt;n&gt;&gt;m&gt;&gt;s&gt;&gt;t;
+    for(int i=1;i&lt;=m;i++){
+        int u,v,w;
+        cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;
+        add(u,v,w);add(v,u,0);
+
+    } 
+    cout&lt;&lt;dinic()&lt;&lt;endl;
+    return 0;
+}
+
+</code></pre>
+<h2 id="_8">最小费用可行流</h2>
+<p>最小费用可行流指的是在费用流基础上给每条边的流量设置不仅有上限，还有下限。</p>
+<p>见<a href="https://flowus.cn/e6cc57e3-3431-4413-8119-dd11aefcc3c0">练习 | 这人怎么天天刷题啊'</a>支线剧情</p>
+<p><a href="https://zhuanlan.zhihu.com/p/324507636">zhuanlan.zhihu.com</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

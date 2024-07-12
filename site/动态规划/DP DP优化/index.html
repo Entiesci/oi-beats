@@ -1,0 +1,3483 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../DP%20%E5%85%A5%E9%97%A8%E5%85%B8%E4%BE%8B/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.28">
+    
+    
+      
+        <title>DP DP优化 - OI Beats</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="OI Beats" class="md-header__button md-logo" aria-label="OI Beats" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OI Beats
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              DP DP优化
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="OI Beats" class="md-nav__button md-logo" aria-label="OI Beats" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    OI Beats
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    动态规划
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            动态规划
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    DP DP优化
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    DP DP优化
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usaco16open-262144-p" class="md-nav__link">
+    <span class="md-ellipsis">
+      [USACO16OPEN] 262144 P
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[USACO16OPEN] 262144 P">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      思路
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      跑路
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="跑路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      思路
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#noip2012" class="md-nav__link">
+    <span class="md-ellipsis">
+      ??|[NOIP2012 提高组] 开车旅行
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="??|[NOIP2012 提高组] 开车旅行">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      思路
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DP%20%E5%85%A5%E9%97%A8%E5%85%B8%E4%BE%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 入门典例
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DP%20%E6%A0%91%E5%9E%8B%20%E7%8A%B6%E5%8E%8B%20%E5%80%8D%E5%A2%9E/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 树型 状压 倍增
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DP%20%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DP 背包问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    图论
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            图论
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/tarjan%20%E7%AE%97%E6%B3%95%E7%9B%B8%E5%85%B3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tarjan 算法相关
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E4%BA%8C%E5%88%86%E5%9B%BE%20%E4%BA%8C%E9%83%A8%E5%9B%BE%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二分图 二部图问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    图论基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E5%AD%98%E5%9B%BE%20%E6%9C%80%E7%9F%AD%E8%B7%AF%20%E8%B4%9F%E7%8E%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    存图 最短路 负环
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E6%A0%91%E4%B8%8A%E7%A5%96%E5%85%88%20LCA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    树上祖先 LCA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E7%94%9F%E6%88%90%E6%A0%91%20%E5%9F%BA%E7%8E%AF%E6%A0%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    生成树 基环树
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E7%BD%91%E7%BB%9C%E6%B5%81/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    网络流
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%9B%BE%E8%AE%BA/%E9%AB%98%E7%BA%A7%E7%BA%BF%E6%80%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级线性数据结构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    字符串
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            字符串
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%93%88%E5%B8%8C%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%EF%BC%88%E4%BB%8E%E5%AD%97%E5%85%B8%E6%A0%91%E5%88%B0KMP%E5%86%8D%E5%88%B0AC%E8%87%AA%E5%8A%A8%E6%9C%BA%EF%BC%89/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    哈希 字符串匹配（从字典树到KMP再到AC自动机）
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E9%AB%98%E7%B2%BE%E5%BA%A6%20%E5%BF%AB%E8%AF%BB%E5%BF%AB%E8%BE%93/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高精度 快读快输
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E5%AD%97%E7%AC%A6%E4%B8%B2/%E9%AB%98%E7%BA%A7%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级字符串算法
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    数学
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            数学
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E4%BA%8C%E5%88%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二分
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%8D%9A%E5%BC%88%E8%AE%BA%20SG%E5%87%BD%E6%95%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    博弈论 SG函数
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%8E%9F%E6%A0%B9%20%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%20%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    原根 拉格朗日插值 莫比乌斯反演
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E5%BF%AB%E9%80%9F%E5%B9%82%20%E7%9F%A9%E9%98%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    快速幂 矩阵
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%AE%9A%E7%90%86%20%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数学定理 线性代数
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E7%BB%84%E5%90%88%E8%AE%A1%E6%95%B0%20%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83%20%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    组合计数 高斯消元 容斥原理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    计算几何
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E5%AD%A6/%E9%80%86%E5%85%83%20%E7%AD%9B%20%E4%B8%8D%E5%AE%9A%E6%96%B9%E7%A8%8B%20%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    逆元 筛 不定方程 扩展欧几里得
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    数据结构
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            数据结构
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/ST%E8%A1%A8%20%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%20%E7%BA%BF%E6%AE%B5%E6%A0%91%20%E5%88%86%E5%9D%97%20%E8%8E%AB%E9%98%9F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ST表 树状数组 线段树 分块 莫队
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E4%B8%8E%E5%B9%B3%E8%A1%A1%E6%A0%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二叉查找树与平衡树
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%B9%B6%E6%9F%A5%E9%9B%86%20%E6%89%A9%E5%B1%95/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    并查集 扩展
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%AB%98%E7%BA%A7%E3%81%AE%E6%A0%91%E4%B8%8A%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高级の树上问题
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    【】专题+++ST表+++树状数组+++线段树+++分块+++莫队+4419f177 d45a 4b1d 96ea 88ca36e3ecda
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            【】专题+++ST表+++树状数组+++线段树+++分块+++莫队+4419f177 d45a 4b1d 96ea 88ca36e3ecda
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E3%80%90%E3%80%91%E4%B8%93%E9%A2%98%2B%2B%2BST%E8%A1%A8%2B%2B%2B%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%2B%2B%2B%E7%BA%BF%E6%AE%B5%E6%A0%91%2B%2B%2B%E5%88%86%E5%9D%97%2B%2B%2B%E8%8E%AB%E9%98%9F%2B4419f177-d45a-4b1d-96ea-88ca36e3ecda/%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%BB%B4%E6%8A%A4%E7%9A%84%E5%90%84%E7%A7%8D%E4%BF%A1%E6%81%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    上帝造题的七分钟 2 / 花神游历各国
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    算法基础
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            算法基础
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/C%2B%2B%E5%85%B3%E9%94%AE%E5%AD%97%E4%B8%8E%E7%94%9F%E5%83%BBSTL/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C++关键字与生僻STL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/Head%2B%2B%2B%E6%A8%A1%E6%9D%BF%E5%A4%B4%2B%E7%BC%BA%E7%9C%81%E6%BA%90%2B2882b258-98b6-47da-be53-6525b90e8dae/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Head+++模板头+缺省源+2882b258 98b6 47da be53 6525b90e8dae
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E5%89%8D%E7%BC%80%E5%92%8C%20%E5%B7%AE%E5%88%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    前缀和 差分
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E6%A6%82%E5%BF%B5%20%E6%A6%82%E5%BF%B5%E6%80%A7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    概念 概念性
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E8%B4%AA%E5%BF%83/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    贪心
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/%E9%80%92%E5%BD%92%20%E9%80%92%E6%8E%A8%20%E6%B7%B1%E6%90%9C%20%E5%B9%BF%E6%90%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    递归 递推 深搜 广搜
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    算法策略
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            算法策略
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E5%88%86%E6%B2%BB%20%E6%8E%92%E5%BA%8F%20%E5%81%8F%E5%BA%8F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    分治 排序 偏序
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E5%90%AF%E5%8F%91%E5%BC%8FA_%20IDA_/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    启发式A  IDA 
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5/%E6%80%9D%E6%83%B3%20%E7%88%AC%E5%B1%B1%E7%AE%97%E6%B3%95%20%E6%A8%A1%E6%8B%9F%E9%80%80%E7%81%AB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    思想 爬山算法 模拟退火
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usaco16open-262144-p" class="md-nav__link">
+    <span class="md-ellipsis">
+      [USACO16OPEN] 262144 P
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[USACO16OPEN] 262144 P">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      思路
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      跑路
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="跑路">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      思路
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#noip2012" class="md-nav__link">
+    <span class="md-ellipsis">
+      ??|[NOIP2012 提高组] 开车旅行
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="??|[NOIP2012 提高组] 开车旅行">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      思路
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<p>DP | DP优化</p>
+<h1 id="_1">倍增优化</h1>
+<p>除了多重背包的二进制拆分优化，还有什么？</p>
+<h2 id="usaco16open-262144-p">[USACO16OPEN] 262144 P</h2>
+<p>Bessie likes downloading games to play on her cell phone, even though she  doesfind the small touch screen rather cumbersome to use with her large hooves.</p>
+<p>She is particularly intrigued by the current game she is playing.The game starts with a sequence of <span class="arithmatex">\(N\)</span> positive integers (<span class="arithmatex">\(2 \leq N\leq 262,144\)</span>), each in the range <span class="arithmatex">\(1 \ldots 40\)</span>.  In one move, Bessiecan take two adjacent numbers with equal values and replace them asingle number of value one greater (e.g., she might replace twoadjacent 7s with an 8). The goal is to maximize the value of thelargest number present in the sequence at the end of the game.  Pleasehelp Bessie score as highly as possible!</p>
+<p>Bessie喜欢在手机上下游戏玩（……），然而她蹄子太大，很难在小小的手机屏幕上面操作。</p>
+<p>她被她最近玩的一款游戏迷住了，游戏一开始有n个正整数，(2&lt;=n&lt;=262144)，范围在1-40。在一步中，贝西可以选相邻的两个相同的数，然后合并成一个比原来的大一的数（例如两个7合并成一个8)，目标是使得最大的数最大，请帮助Bessie来求最大值。</p>
+<p>The first line of input contains <span class="arithmatex">\(N\)</span>, and the next <span class="arithmatex">\(N\)</span> lines give the sequence</p>
+<p>of <span class="arithmatex">\(N\)</span> numbers at the start of the game.</p>
+<h3 id="_2">思路</h3>
+<p>乍一看我们觉得应该是一道区间dp的题目，但是当我看到数据范围时，就否定了传统的区间dp思想。那除了使用区间dp，还能怎么做呢？</p>
+<p>我们考虑倍增。定义f_{i,j}为以i为左端点合成数字j的区间右端点。那么我们有转移式</p>
+<p><span class="arithmatex">\(f_{i,j}=f_{f_{i,j-1}+1,j-1}\)</span></p>
+<p>为什么我们会想到使用倍增呢？因为我们发现，两个数字合成一个数，像极了两个2^i相加合成2^{i+1}，并且恰好就是其指数的关系，所以我们会考虑使用倍增俩记录区间长度。</p>
+<p>这里我们还可以i计算出我们最大可以合成的数字为58，所以j的上界就是58.注意我们在转移时要用到j-1的信息，所以也该把j放在最外面。</p>
+<hr />
+<p>注意不要从不存在方案的地方转移过来。</p>
+<pre><code class="language-C++">/*                                                                                
+                      Keyblinds Guide
+                    ###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+
+*/
+#include &lt;bits/stdc++.h&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i &lt;= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i &gt;= END##i; --i)
+#define pb push_back
+#define mp make_pair
+// #define int long long
+#define pii pair&lt;int, int&gt;
+#define ps second
+#define pf first
+
+// #define innt int
+// #define inr int
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9') {
+        if (ch == '-')
+            ff = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+    if (out &lt; 0)
+        putchar('-'), out = -out;
+    if (out &gt; 9)
+        write(out / 10);
+    putchar(out % 10 + '0');
+}
+
+#define nl dbg('\n')
+const char el='\n';
+const bool enable_dbg = 0;
+template &lt;typename T,typename... Args&gt;
+void dbg(T s,Args... args) {
+    if constexpr (enable_dbg){
+    cerr &lt;&lt; s &lt;&lt; ' ';
+        if constexpr (sizeof...(Args))
+            dbg(args...);
+    }
+}
+
+const int N = 1e6 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+int a[N],ans,f[N][66];
+
+void solve(){
+    int n=rd;
+    rep(i,1,n){
+        a[i]=rd;
+        f[i][a[i]]=i;
+    }
+    rep(j,1,58){
+        rep(i,1,n){
+            if(f[i][j-1])f[i][j]=max(f[i][j],f[f[i][j-1]+1][j-1]);
+            dbg(f[i][j]);
+            if(f[i][j]&lt;=n+1&amp;&amp;f[i][j]&gt;0)ans=j;
+        }
+    nl;
+    }
+    cout&lt;&lt;ans&lt;&lt;endl;
+}
+
+signed main() {
+    int T=1;
+    while(T--){
+        solve();
+    }
+    return 0;
+}
+</code></pre>
+<pre><code class="language-C++">/*                                                                                
+                      Keyblinds Guide
+                    ###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+
+*/
+#include &lt;bits/stdc++.h&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i &lt;= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i &gt;= END##i; --i)
+#define pb push_back
+#define mp make_pair
+// #define int long long
+#define pii pair&lt;int, int&gt;
+#define ps second
+#define pf first
+
+// #define innt int
+// #define inr int
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9') {
+        if (ch == '-')
+            ff = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+    if (out &lt; 0)
+        putchar('-'), out = -out;
+    if (out &gt; 9)
+        write(out / 10);
+    putchar(out % 10 + '0');
+}
+
+#define nl dbg('\n')
+const char el='\n';
+const bool enable_dbg = 1;
+template &lt;typename T,typename... Args&gt;
+void dbg(T s,Args... args) {
+    if constexpr (enable_dbg){
+    cerr &lt;&lt; s &lt;&lt; ' ';
+        if constexpr (sizeof...(Args))
+            dbg(args...);
+    }
+}
+
+const int N = 1e6 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+int a[N],ans,f[N][66];
+
+void solve(){
+    int n=rd;
+    rep(i,1,n){
+        a[i]=rd;
+        f[i][a[i]]=i+1;
+    }
+    rep(j,1,58){
+        rep(i,1,n){
+            f[i][j]=max(f[i][j],f[f[i][j-1]][j-1]);
+            if(f[i][j]&lt;=n+1&amp;&amp;f[i][j]&gt;0)ans=j;
+        }
+
+    }
+    cout&lt;&lt;ans&lt;&lt;endl;
+}
+
+signed main() {
+    int T=1;
+    while(T--){
+        solve();
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="_3">跑路</h2>
+<p>题目描述</p>
+<p>小 A 的工作不仅繁琐，更有苛刻的规定，要求小 A 每天早上在 <span class="arithmatex">\(6:00\)</span> 之前到达公司，否则这个月工资清零。可是小 A 偏偏又有赖床的坏毛病。于是为了保住自己的工资，小 A 买了一个空间跑路器，每秒钟可以跑 <span class="arithmatex">\(2^k\)</span> 千米（<span class="arithmatex">\(k\)</span> 是任意自然数）。当然，这个机器是用 <code>longint</code> 存的，所以总跑路长度不能超过 <code>maxlongint</code> 千米。小 A 的家到公司的路可以看做一个有向图，小 A 家为点 <span class="arithmatex">\(1\)</span>，公司为点 <span class="arithmatex">\(n\)</span>，每条边长度均为一千米。小 A 想每天能醒地尽量晚，所以让你帮他算算，他最少需要几秒才能到公司。数据保证 <span class="arithmatex">\(1\)</span> 到 <span class="arithmatex">\(n\)</span> 至少有一条路径。</p>
+<p>输入格式</p>
+<p>第一行两个整数 <span class="arithmatex">\(n,m\)</span>，表示点的个数和边的个数。</p>
+<p>接下来 <span class="arithmatex">\(m\)</span> 行每行两个数字 <span class="arithmatex">\(u,v\)</span>，表示一条 <span class="arithmatex">\(u\)</span> 到 <span class="arithmatex">\(v\)</span> 的边。</p>
+<p>输出格式</p>
+<p>一行一个数字，表示到公司的最少秒数。</p>
+<p>提示</p>
+<p><strong>【样例解释】</strong></p>
+<p><span class="arithmatex">\(1 \to 1 \to 2 \to 3 \to 4\)</span>，总路径长度为 <span class="arithmatex">\(4\)</span> 千米，直接使用一次跑路器即可。</p>
+<p><strong>【数据范围】</strong></p>
+<p><span class="arithmatex">\(50\%\)</span> 的数据满足最优解路径长度 <span class="arithmatex">\(\leq 1000\)</span>；</p>
+<p><span class="arithmatex">\(100\%\)</span> 的数据满足 <span class="arithmatex">\(2\leq n \leq 50\)</span>，<span class="arithmatex">\(m \leq 10 ^ 4\)</span>，最优解路径长度 <span class="arithmatex">\(\leq\)</span> <code>maxlongint</code>。</p>
+<h3 id="_4">思路</h3>
+<p>这道题目求的是从1号点到n号点最少要几秒到达。我们可以看到这个跑路器，每秒跑2^k条边（每条边1km），所以呢，这道题目明显就和“倍增”扯上了关系。回忆倍增，我们总是用一个参数k表示2^k，这道题目也一样，我们需要用一个bool类型G数组，G[i][j][k]代表从i到j是否存在一条长度为2^k的路径。再用dis数组来记录两点之间需要用多久到达。这样我们可以用G来保存所有的边，并且进行预处理，把所有一秒能到的两个点之间都连上边，并把距离相应调整为1。那么我们就把所有一秒能到的点之间都铺上了边，接下来我们就要求出两点之间的最短路啦，那么，大家都明白了，对于50的数据，Floyd绝对是最简单可行的办法了。</p>
+<p>为了处理G数组，我们跑一次类似flyd的算法。枚举三个点 i,j,t，如果i到t存在一条2^k-1长度的路径，并且t到j存在一条2^k-1长度的路径，就说明i到t，t到j都可以一秒到达， 路程*2刚好是2的幂，也可以一秒到达</p>
+<hr />
+<pre><code class="language-C++">#include &lt;bits/stdc++.h&gt;
+#define rep(l, r, i) for (int i = l, END##i = r; i &lt;= END##i; ++i)
+#define per(r, l, i) for (int i = r, END##i = l; i &gt;= END##i; --i)
+using namespace std;
+#define int long long
+#define pii pair&lt;int, int&gt;
+
+#define lc(x) (x &lt;&lt; 1)
+#define rc(x) (x &lt;&lt; 1 | 1)
+
+#define rd read()
+int read() {
+  int xx = 0, ff = 1;
+  char ch = getchar();
+  while (ch &lt; '0' || ch &gt; '9') {
+    if (ch == '-')
+      ff = -1;
+    ch = getchar();
+  }
+  while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+    xx = xx * 10 + (ch - '0'), ch = getchar();
+  return xx * ff;
+}
+void write(int out) {
+  if (out &lt; 0)
+    putchar('-'), out = -out;
+  if (out &gt; 9)
+    write(out / 10);
+  putchar(out % 10 + '0');
+}
+
+const int N = 2e5 + 15;
+const int INF = 1e9 + 5;
+const int MOD = 998244353;
+
+int dis[60][60], n, m;
+bool G[60][60][65];
+
+void init() {
+  memset(G, false, sizeof(G));
+  memset(dis, 10, sizeof(dis));
+  scanf(&quot;%lld%lld&quot;, &amp;n, &amp;m);
+  for (int i = 1; i &lt;= m; i++) {
+    int x, y;
+    scanf(&quot;%lld%lld&quot;, &amp;x, &amp;y);
+    dis[x][y] = 1;
+    G[x][y][0] = true;
+  }
+}
+void work() {
+  for (int k = 1; k &lt;= 64; k++)
+    for (int i = 1; i &lt;= n; i++)
+      for (int t = 1; t &lt;= n; t++)
+        for (int j = 1; j &lt;= n; j++)
+          if (G[i][t][k - 1] &amp;&amp; G[t][j][k - 1]) {
+            G[i][j][k] = true;
+            dis[i][j] = 1;
+          }
+}
+void floyd() {
+  for (int k = 1; k &lt;= n; k++)
+    for (int i = 1; i &lt;= n; i++)
+      for (int j = 1; j &lt;= n; j++)
+        dis[i][j] = min(dis[i][j], dis[i][k] + dis[k][j]);
+}
+
+signed main() {
+  init();
+  work();
+  floyd();
+  printf(&quot;%lld&quot;, dis[1][n]);
+  return 0;
+}
+
+</code></pre>
+<h2 id="noip2012">??|[NOIP2012 提高组] 开车旅行</h2>
+<p>题目描述</p>
+<p>小 <span class="arithmatex">\(\text{A}\)</span> 和小 <span class="arithmatex">\(\text{B}\)</span> 决定利用假期外出旅行，他们将想去的城市从 $1 $ 到 <span class="arithmatex">\(n\)</span> 编号，且编号较小的城市在编号较大的城市的西边，已知各个城市的海拔高度互不相同，记城市 <span class="arithmatex">\(i\)</span> 的海拔高度为<span class="arithmatex">\(h_i\)</span>，城市 <span class="arithmatex">\(i\)</span> 和城市 <span class="arithmatex">\(j\)</span> 之间的距离 <span class="arithmatex">\(d_{i,j}\)</span> 恰好是这两个城市海拔高度之差的绝对值，即 <span class="arithmatex">\(d_{i,j}=|h_i-h_j|\)</span>。</p>
+<p>旅行过程中，小 <span class="arithmatex">\(\text{A}\)</span> 和小 <span class="arithmatex">\(\text{B}\)</span> 轮流开车，第一天小 <span class="arithmatex">\(\text{A}\)</span> 开车，之后每天轮换一次。他们计划选择一个城市 <span class="arithmatex">\(s\)</span> 作为起点，一直向东行驶，并且最多行驶 <span class="arithmatex">\(x\)</span> 公里就结束旅行。</p>
+<p>小 <span class="arithmatex">\(\text{A}\)</span> 和小 <span class="arithmatex">\(\text{B}\)</span> 的驾驶风格不同，小 <span class="arithmatex">\(\text{B}\)</span> 总是沿着前进方向选择一个最近的城市作为目的地，而小 <span class="arithmatex">\(\text{A}\)</span> 总是沿着前进方向选择第二近的城市作为目的地（注意：本题中如果当前城市到两个城市的距离相同，则认为离海拔低的那个城市更近）。如果其中任何一人无法按照自己的原则选择目的城市，或者到达目的地会使行驶的总距离超出 <span class="arithmatex">\(x\)</span> 公里，他们就会结束旅行。</p>
+<p>在启程之前，小 <span class="arithmatex">\(\text{A}\)</span> 想知道两个问题：</p>
+<p>1、 对于一个给定的 <span class="arithmatex">\(x=x_0\)</span>，从哪一个城市出发，小 <span class="arithmatex">\(\text{A}\)</span> 开车行驶的路程总数与小 <span class="arithmatex">\(\text{B}\)</span> 行驶的路程总数的比值最小（如果小 <span class="arithmatex">\(\text{B}\)</span> 的行驶路程为 <span class="arithmatex">\(0\)</span>，此时的比值可视为无穷大，且两个无穷大视为相等）。如果从多个城市出发，小 <span class="arithmatex">\(\text{A}\)</span> 开车行驶的路程总数与小 <span class="arithmatex">\(\text{B}\)</span> 行驶的路程总数的比值都最小，则输出海拔最高的那个城市。</p>
+<p>2、对任意给定的 <span class="arithmatex">\(x=x_i\)</span> 和出发城市 <span class="arithmatex">\(s_i\)</span>，小 <span class="arithmatex">\(\text{A}\)</span> 开车行驶的路程总数以及小 <span class="arithmatex">\(\text B\)</span> 行驶的路程总数。</p>
+<p>输入格式</p>
+<p>第一行包含一个整数 <span class="arithmatex">\(n\)</span>，表示城市的数目。</p>
+<p>第二行有 <span class="arithmatex">\(n\)</span> 个整数，每两个整数之间用一个空格隔开，依次表示城市 <span class="arithmatex">\(1\)</span> 到城市 <span class="arithmatex">\(n\)</span> 的海拔高度，即 <span class="arithmatex">\(h_1,h_2 ... h_n\)</span>，且每个 <span class="arithmatex">\(h_i\)</span> 都是互不相同的。</p>
+<p>第三行包含一个整数 <span class="arithmatex">\(x_0\)</span>。</p>
+<p>第四行为一个整数 <span class="arithmatex">\(m\)</span>，表示给定 <span class="arithmatex">\(m\)</span> 组 <span class="arithmatex">\(s_i\)</span> 和 <span class="arithmatex">\(x_i\)</span>。</p>
+<p>接下来的 <span class="arithmatex">\(m\)</span> 行，每行包含 <span class="arithmatex">\(2\)</span> 个整数 <span class="arithmatex">\(s_i\)</span> 和 <span class="arithmatex">\(x_i\)</span>，表示从城市<span class="arithmatex">\(s_i\)</span> 出发，最多行驶 <span class="arithmatex">\(x_i\)</span> 公里。</p>
+<p>输出格式</p>
+<p>输出共 <span class="arithmatex">\(m+1\)</span> 行。</p>
+<p>第一行包含一个整数 <span class="arithmatex">\(s_0\)</span>，表示对于给定的 <span class="arithmatex">\(x_0\)</span>，从编号为 <span class="arithmatex">\(s_0\)</span> 的城市出发，小 <span class="arithmatex">\(\text A\)</span> 开车行驶的路程总数与小 <span class="arithmatex">\(\text B\)</span> 行驶的路程总数的比值最小。</p>
+<p>接下来的 <span class="arithmatex">\(m\)</span> 行，每行包含 <span class="arithmatex">\(2\)</span> 个整数，之间用一个空格隔开，依次表示在给定的 <span class="arithmatex">\(s_i\)</span> 和 <span class="arithmatex">\(x_i\)</span> 下小 <span class="arithmatex">\(\text A\)</span> 行驶的里程总数和小 <span class="arithmatex">\(\text B\)</span> 行驶的里程总数。</p>
+<p>提示</p>
+<p>【样例1说明】</p>
+<p><img alt="https://cdn.luogu.com.cn/upload/image_hosting/zgms0k7y.png" src="../DP%2B%2B%2BDP%E4%BC%98%E5%8C%96%2Bbb4d534b-c218-4ef3-bf0e-cd1133654a4a/zgms0k7y.png" /></p>
+<p>各个城市的海拔高度以及两个城市间的距离如上图所示。</p>
+<p>如果从城市 <span class="arithmatex">\(1\)</span> 出发，可以到达的城市为 <span class="arithmatex">\(2,3,4\)</span>，这几个城市与城市 <span class="arithmatex">\(1\)</span> 的距离分别为 <span class="arithmatex">\(1,1,2\)</span>，但是由于城市 <span class="arithmatex">\(3\)</span> 的海拔高度低于城市 <span class="arithmatex">\(2\)</span>，所以我们认为城市 <span class="arithmatex">\(3\)</span> 离城市 <span class="arithmatex">\(1\)</span> 最近，城市 <span class="arithmatex">\(2\)</span> 离城市 <span class="arithmatex">\(1\)</span> 第二近，所以小A会走到城市 <span class="arithmatex">\(2\)</span>。到达城市 <span class="arithmatex">\(2\)</span> 后，前面可以到达的城市为 <span class="arithmatex">\(3,4\)</span>，这两个城市与城市 <span class="arithmatex">\(2\)</span>  的距离分别为 <span class="arithmatex">\(2,1\)</span>，所以城市 <span class="arithmatex">\(4\)</span> 离城市 <span class="arithmatex">\(2\)</span> 最近，因此小B会走到城市<span class="arithmatex">\(4\)</span>。到达城市 <span class="arithmatex">\(4\)</span> 后，前面已没有可到达的城市，所以旅行结束。</p>
+<p>如果从城市 <span class="arithmatex">\(2\)</span> 出发，可以到达的城市为 <span class="arithmatex">\(3,4\)</span>，这两个城市与城市 <span class="arithmatex">\(2\)</span> 的距离分别为 <span class="arithmatex">\(2,1\)</span>，由于城市 <span class="arithmatex">\(3\)</span> 离城市 <span class="arithmatex">\(2\)</span> 第二近，所以小 <span class="arithmatex">\(\text A\)</span> 会走到城市 <span class="arithmatex">\(3\)</span>。到达城市 <span class="arithmatex">\(3\)</span> 后，前面尚未旅行的城市为 <span class="arithmatex">\(4\)</span>，所以城市 <span class="arithmatex">\(4\)</span> 离城市 <span class="arithmatex">\(3\)</span> 最近，但是如果要到达城市 <span class="arithmatex">\(4\)</span>，则总路程为 <span class="arithmatex">\(2+3=5&gt;3\)</span>，所以小 <span class="arithmatex">\(\text B\)</span> 会直接在城市 <span class="arithmatex">\(3\)</span> 结束旅行。</p>
+<p>如果从城市 <span class="arithmatex">\(3\)</span> 出发，可以到达的城市为 <span class="arithmatex">\(4\)</span>，由于没有离城市 <span class="arithmatex">\(3\)</span> 第二近的城市，因此旅行还未开始就结束了。</p>
+<p>如果从城市 <span class="arithmatex">\(4\)</span> 出发，没有可以到达的城市，因此旅行还未开始就结束了。</p>
+<p>【样例2说明】</p>
+<p>当 <span class="arithmatex">\(x=7\)</span> 时，如果从城市 <span class="arithmatex">\(1\)</span> 出发，则路线为 <span class="arithmatex">\(1 \to 2 \to 3 \to 8 \to 9\)</span>，小 <span class="arithmatex">\(\text A\)</span> 走的距离为 <span class="arithmatex">\(1+2=3\)</span>，小 <span class="arithmatex">\(\text B\)</span> 走的距离为 <span class="arithmatex">\(1+1=2\)</span>。（在城市 <span class="arithmatex">\(1\)</span> 时，距离小 <span class="arithmatex">\(\text A\)</span> 最近的城市是 <span class="arithmatex">\(2\)</span> 和 <span class="arithmatex">\(6\)</span>，但是城市 <span class="arithmatex">\(2\)</span> 的海拔更高，视为与城市 <span class="arithmatex">\(1\)</span> 第二近的城市，所以小 <span class="arithmatex">\(\text A\)</span> 最终选择城市 <span class="arithmatex">\(2\)</span>；走到<span class="arithmatex">\(9\)</span> 后，小 <span class="arithmatex">\(\text A\)</span> 只有城市 <span class="arithmatex">\(10\)</span> 可以走，没有第二选择可以选，所以没法做出选择，结束旅行）</p>
+<p>如果从城市 <span class="arithmatex">\(2\)</span> 出发，则路线为 <span class="arithmatex">\(2 \to 6 \to 7\)</span>，小 <span class="arithmatex">\(\text A\)</span> 和小 <span class="arithmatex">\(\text B\)</span> 走的距离分别为 <span class="arithmatex">\(2,4\)</span>。</p>
+<p>如果从城市 <span class="arithmatex">\(3\)</span> 出发，则路线为 <span class="arithmatex">\(3 \to 8 \to 9\)</span>，小 <span class="arithmatex">\(\text A\)</span> 和小 <span class="arithmatex">\(\text B\)</span> 走的距离分别为<span class="arithmatex">\(2,1\)</span>。</p>
+<p>如果从城市 <span class="arithmatex">\(4\)</span> 出发，则路线为 <span class="arithmatex">\(4 \to 6 \to 7\)</span>，小 <span class="arithmatex">\(\text A\)</span> 和小 <span class="arithmatex">\(\text B\)</span> 走的距离分别为 <span class="arithmatex">\(2,4\)</span>。</p>
+<p>如果从城市 <span class="arithmatex">\(5\)</span> 出发，则路线为 <span class="arithmatex">\(5 \to 7 \to 8\)</span>，小 <span class="arithmatex">\(\text A\)</span> 和小 <span class="arithmatex">\(\text B\)</span> 走的距离分别为 <span class="arithmatex">\(5,1\)</span>。</p>
+<p>如果从城市 <span class="arithmatex">\(6\)</span> 出发，则路线为 <span class="arithmatex">\(6 \to 8 \to 9\)</span>，小 <span class="arithmatex">\(\text A\)</span> 和小 <span class="arithmatex">\(\text B\)</span> 走的距离分别为<span class="arithmatex">\(5,1\)</span>。</p>
+<p>如果从城市 <span class="arithmatex">\(7\)</span> 出发，则路线为 <span class="arithmatex">\(7 \to 9 \to 10\)</span>，小 <span class="arithmatex">\(\text A\)</span> 和小 <span class="arithmatex">\(\text B\)</span> 走的距离分别为<span class="arithmatex">\(2,1\)</span>。</p>
+<p>如果从城市 <span class="arithmatex">\(8\)</span> 出发，则路线为 <span class="arithmatex">\(8 \to 10\)</span>，小 <span class="arithmatex">\(\text A\)</span> 和小 <span class="arithmatex">\(\text B\)</span> 走的距离分别为<span class="arithmatex">\(2,0\)</span>。</p>
+<p>如果从城市 <span class="arithmatex">\(9\)</span> 出发，则路线为 <span class="arithmatex">\(9\)</span>，小 <span class="arithmatex">\(\text A\)</span> 和小 <span class="arithmatex">\(\text B\)</span> 走的距离分别为 <span class="arithmatex">\(0,0\)</span>（旅行一开始就结束了）。</p>
+<p>如果从城市 <span class="arithmatex">\(10\)</span> 出发，则路线为 <span class="arithmatex">\(10\)</span>，小 <span class="arithmatex">\(\text A\)</span> 和小 <span class="arithmatex">\(\text B\)</span> 走的距离分别为<span class="arithmatex">\(0,0\)</span>。</p>
+<p>从城市 <span class="arithmatex">\(2\)</span> 或者城市 <span class="arithmatex">\(4\)</span> 出发小 <span class="arithmatex">\(\text A\)</span> 行驶的路程总数与小 <span class="arithmatex">\(\text B\)</span> 行驶的路程总数的比值都最小，但是城市 <span class="arithmatex">\(2\)</span> 的海拔更高，所以输出第一行为 <span class="arithmatex">\(2\)</span>。</p>
+<p>【数据范围与约定】</p>
+<p>对于 <span class="arithmatex">\(30\%\)</span> 的数据，有<span class="arithmatex">\(1\le n \le 20,1\le m\le 20\)</span>；
+对于<span class="arithmatex">\(40\%\)</span> 的数据，有<span class="arithmatex">\(1\le n \le 100,1\le m\le 100\)</span>；
+对于 <span class="arithmatex">\(50\%\)</span> 的数据，有<span class="arithmatex">\(1\le n \le 100,1\le m\le 1000\)</span>；
+对于 <span class="arithmatex">\(70\%\)</span> 的数据，有<span class="arithmatex">\(1\le n \le 1000,1\le m\le 10^4\)</span>；
+对于 <span class="arithmatex">\(100\%\)</span> 的数据：<span class="arithmatex">\(1\le n,m \le 10^5\)</span>，<span class="arithmatex">\(-10^9 \le h_i≤10^9\)</span>，<span class="arithmatex">\(1 \le s_i \le n\)</span>，$0 \le x_i \le 10^9
+$数据保证 <span class="arithmatex">\(h_i\)</span> 互不相同。</p>
+<h3 id="_5">思路</h3>
+<p>首先这里每个点所对应的第一和第二近的城市都是确定的，因此我们需要预处理出来。接下来我们考虑问题1</p>
+<p>问题1</p>
+<p>如果我们要枚举起点，那么我们只能用O(\log n)的复杂度完成每一次模拟开车了。那么这样的话其实我们如果可以用O(\log n)时间完成每一个问题2，那么问题1也就迎刃而解了。所以下面我们能来讨论问题2</p>
+<p>问题2</p>
+<p>我们要在O(\log n)复杂度内完成一次模拟开车，那么我们想到的是倍增。可是怎么样倍增呢？</p>
+<hr />
+<p>std</p>
+<p>INF开大</p>
+<pre><code class="language-C++">#include &lt;bits/stdc++.h&gt;
+#define rep(l, r, i) for (int i = l, END##i = r; i &lt;= END##i; ++i)
+#define per(r, l, i) for (int i = r, END##i = l; i &gt;= END##i; --i)
+using namespace std;
+// #define int long long
+#define pii pair&lt;int, int&gt;
+#define LL __int128
+
+#define lc(x) (x &lt;&lt; 1)
+#define rc(x) (x &lt;&lt; 1 | 1)
+
+#define rd read()
+int read() {
+  int xx = 0, ff = 1;
+  char ch = getchar();
+  while (ch &lt; '0' || ch &gt; '9') {
+    if (ch == '-')
+      ff = -1;
+    ch = getchar();
+  }
+  while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+    xx = xx * 10 + (ch - '0'), ch = getchar();
+  return xx * ff;
+}
+void write(LL out) {
+  if (out &lt; 0)
+    putchar('-'), out = -out;
+  if (out &gt; 9)
+    write(out / 10);
+  putchar(out % 10 + '0');
+}
+
+const int N = 1e5 + 15;
+const int INF = 1e18 + 5;
+// const int MOD = 1 &lt;&lt; 30;
+
+struct node {
+  long long h;
+  int id;
+} h[N], ga[N], gb[N];
+struct point {
+  long long la, lb;
+};
+bool operator&lt;(node as, node bs) {
+  if (as.h != bs.h)
+    return as.h &lt; bs.h;
+  else
+    return as.id &lt; bs.id;
+}
+set&lt;node&gt; q;
+double ans = INF;
+int n, f[20][N][3];
+long long da[20][N][3], db[20][N][3];
+bool cmp(node as, node bs) { 
+    return as.h &lt; bs.h; 
+}
+point Calc(int p, int x) {
+  long long la = 0, lb = 0;
+  for (int i = 18; i &gt;= 0; i--) {
+    if (f[i][p][0] &amp;&amp; la + lb + da[i][p][0] + db[i][p][0] &lt;= x) {
+      la += da[i][p][0];
+      lb += db[i][p][0];
+      p = f[i][p][0];
+    }
+  }
+  return {la, lb};
+}
+signed main() {
+  n = rd;
+  q.insert({INF, 0});
+  q.insert({INF - 1, 0});
+  q.insert({-INF, 0});
+  q.insert({-INF + 1, 0});
+  for (int i = 1; i &lt;= n; i++) {
+    h[i].h = rd;
+    h[i].id = i;
+  }
+
+  for (int i = n; i &gt;= 1; i--) {
+    q.insert(h[i]);
+    node t[5];
+    t[1] = *--q.lower_bound(h[i]);
+    t[2] = *--q.lower_bound(t[1]);
+    t[3] = *q.upper_bound(h[i]);
+    t[4] = *q.upper_bound(t[3]);
+    for (int j = 1; j &lt;= 4; j++)
+      t[j].h = abs(t[j].h - h[i].h);
+    sort(t + 1, t + 5, cmp);
+    ga[i] = t[2];
+    gb[i] = t[1];
+  }
+  for (int i = 1; i &lt; n; i++) {
+    f[0][i][0] = ga[i].id;
+    f[0][i][1] = gb[i].id;
+  }
+  for (int i = 1; i &lt;= 18; i++)
+    for (int j = 1; j &lt;= n; j++)
+      if (j + (1 &lt;&lt; i) &lt;= n)
+        for (int k = 0; k &lt;= 1; k++) {
+          if (i == 1)
+            f[1][j][k] = f[0][f[0][j][k]][1 - k];
+          else
+            f[i][j][k] = f[i - 1][f[i - 1][j][k]][k];
+        }
+  memset(da, 127 / 3, sizeof(da));
+  memset(db, 127 / 3, sizeof(db));
+  for (int i = 1; i &lt;= n; i++) {
+    da[0][i][0] = ga[i].h;
+    da[0][i][1] = 0;
+  }
+  for (int i = 1; i &lt;= 18; i++)
+    for (int j = 1; j &lt;= n; j++)
+      if (j + (1 &lt;&lt; i) &lt;= n)
+        for (int k = 0; k &lt;= 1; k++) {
+          if (i == 1) {
+            da[1][j][k] = da[0][j][k] + da[0][f[0][j][k]][1 - k];
+          } else
+            da[i][j][k] = da[i - 1][j][k] + da[i - 1][f[i - 1][j][k]][k];
+        }
+  for (int i = 1; i &lt;= n; i++) {
+    db[0][i][0] = 0;
+    db[0][i][1] = gb[i].h;
+  }
+  for (int i = 1; i &lt;= 18; i++)
+    for (int j = 1; j &lt;= n; j++)
+      if (j + (1 &lt;&lt; i) &lt;= n)
+        for (int k = 0; k &lt;= 1; k++) {
+          if (i == 1) {
+            db[1][j][k] = db[0][j][k] + db[0][f[0][j][k]][k ^ 1];
+          } else
+            db[i][j][k] = db[i - 1][j][k] + db[i - 1][f[i - 1][j][k]][k];
+        }
+  int x0 = rd, m;
+  int t = 0;
+  for (int i = 1; i &lt;= n; i++) {
+    point tmp = Calc(i, x0);
+    if (tmp.lb == 0)
+      continue;
+    double ccf = (long double)tmp.la / (long double)tmp.lb;
+    if (ccf &lt; ans)
+      ans = ccf, t = i;
+  }
+  printf(&quot;%lld\n&quot;, t);
+
+  m = rd;
+  for (int i = 1; i &lt;= m; i++) {
+    int si = rd, xi = rd;
+    point tmp = Calc(si, xi);
+    printf(&quot;%lld %lld\n&quot;, tmp.la, tmp.lb);
+  }
+}
+</code></pre>
+<h1 id="_6">决策单调性之 优先队列优化</h1>
+<h2 id="_7">基础最优化练习题</h2>
+<p>YSGH 有一个数 <span class="arithmatex">\(x\)</span>，初值为 <span class="arithmatex">\(0\)</span>。接下来 <span class="arithmatex">\(n\)</span> 分钟，每分钟 YSGH 可以给 <span class="arithmatex">\(x\)</span> 加上整数 <span class="arithmatex">\(y\)</span>，其中 <span class="arithmatex">\(y \in [-k, k]\)</span>，同时 YSGH 需要保证第 <span class="arithmatex">\(i\)</span> 分钟结束时 <span class="arithmatex">\(x \le a_i\)</span>。</p>
+<p>设 <span class="arithmatex">\(b_i\)</span> 为第 <span class="arithmatex">\(i\)</span> 分钟结束时 <span class="arithmatex">\(x\)</span> 的值，现在 YSGH 给你一个 <span class="arithmatex">\(n\)</span> 个数的序列 <span class="arithmatex">\(w\)</span>，你需要最大化 <span class="arithmatex">\(\displaystyle \sum_{i = 1}^{n} b_i w_i\)</span>。</p>
+<p>你只需要输出最大值即可。</p>
+<p>输入格式</p>
+<p>第一行两个正整数 <span class="arithmatex">\(n, k\)</span>，意义同题面描述。</p>
+<p>第二行共 <span class="arithmatex">\(n\)</span> 个整数，第 <span class="arithmatex">\(i\)</span> 个表示 <span class="arithmatex">\(a_i\)</span>，意义同题面描述。</p>
+<p>第三行共 <span class="arithmatex">\(n\)</span> 个整数，第 <span class="arithmatex">\(i\)</span> 个表示 <span class="arithmatex">\(w_i\)</span>，意义同题面描述。</p>
+<p>保证输入数据使得至少存在一个序列 <span class="arithmatex">\(b\)</span> 满足条件。</p>
+<p>对于 <span class="arithmatex">\(10\%\)</span> 的数据，<span class="arithmatex">\(n \le 10\)</span>，<span class="arithmatex">\(k \le 1\)</span>。
+对于 <span class="arithmatex">\(20\%\)</span> 的数据，<span class="arithmatex">\(n \le 100\)</span>。
+对于 <span class="arithmatex">\(30\%\)</span> 的数据，<span class="arithmatex">\(n \le {10}^3\)</span>。
+对于 <span class="arithmatex">\(50\%\)</span> 的数据，<span class="arithmatex">\(n \le {10}^4\)</span>。
+另有 <span class="arithmatex">\(10\%\)</span> 的数据，<span class="arithmatex">\(w_i \ge 0\)</span>。
+对于 <span class="arithmatex">\(100\%\)</span> 的数据，<span class="arithmatex">\(1 \le n \le {10}^6\)</span>，<span class="arithmatex">\(-{10}^6 \le w_i \le {10}^6\)</span>，<span class="arithmatex">\(0 \le a_i \le {10}^8\)</span>，<span class="arithmatex">\(1 \le k \le 100\)</span>。</p>
+<hr />
+<h3 id="_8">思路</h3>
+<h3 id="_9">代码</h3>
+<pre><code class="language-C++">/*                                                                                
+                      Keyblinds Guide
+                    ###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+
+*/
+#include &lt;bits/stdc++.h&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i &lt;= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i &gt;= END##i; --i)
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define pii pair&lt;int, int&gt;
+#define ps second
+#define pf first
+
+// #define innt int
+// #define inr int
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch &lt; '0' || ch &gt; '9') {
+        if (ch == '-')
+            ff = -1;
+        ch = getchar();
+    }
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+    if (out &lt; 0)
+        putchar('-'), out = -out;
+    if (out &gt; 9)
+        write(out / 10);
+    putchar(out % 10 + '0');
+}
+
+#define nl dbg('\n')
+const char el='\n';
+const bool enable_dbg = 1;
+template &lt;typename T,typename... Args&gt;
+void dbg(T s,Args... args) {
+    if constexpr (enable_dbg){
+    cerr &lt;&lt; s &lt;&lt; ' ';
+        if constexpr (sizeof...(Args))
+            dbg(args...);
+    }
+}
+
+const int N = 3e5 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+struct node{
+    int w,k;
+    node(){}
+    node (int w,int k):w(w),k(k){};
+    friend bool operator &lt; (node a, node b) { return a.w &gt; b.w; }//rev
+    friend bool operator &gt; (node a, node b) { return a.w &lt; b.w; }
+};
+
+priority_queue&lt;node&gt; pq;
+int n,K,a[N],w[N];
+
+void solve(){
+    n=rd;K=rd;
+    rep(i,1,n)a[i]=rd;
+    rep(i,1,n)w[i]=rd;
+    per(i,n,1)w[i]+=w[i+1];
+    int x=0,res=0;
+    rep(i,1,n){
+        if(w[i]&gt;0)
+        {
+            res += K * w[i];
+            pq.push(node(w[i],K&lt;&lt;1));
+            x+=K;
+        }else{
+            res-=K*w[i];
+            x-=K;
+        }
+        int c=x-a[i];
+        x=min(x,a[i]);
+        while(pq.size()&amp;&amp;c&gt;0){
+            node x=pq.top();pq.pop();
+            int t=min(c,x.k);
+            res-=t*x.w;
+            c-=t;
+            x.k-=t;
+            if(x.k)pq.push(x);
+        }
+
+    }
+    cout&lt;&lt;res&lt;&lt;endl;
+}
+
+signed main() {
+    int T=1;
+    while(T--){
+        solve();
+    }
+    return 0;
+}
+</code></pre>
+<h1 id="_10">决策单调性之 单调队列优化</h1>
+<h2 id="usaco10nov-buying-feed-g">[USACO10NOV] Buying Feed G</h2>
+<p>题目描述</p>
+<p>约翰开车来到镇上，他要带<span class="arithmatex">\(K\)</span>吨饲料回家。运送饲料是需要花钱的，如果他的车上有<span class="arithmatex">\(X\)</span>吨饲料，每公里就要花费<span class="arithmatex">\(X^2\)</span>元，开车D公里就需要<span class="arithmatex">\(D\times  X^2\)</span>元。约翰可以从<span class="arithmatex">\(N\)</span>家商店购买饲料，所有商店都在一个坐标轴上，第<span class="arithmatex">\(i\)</span>家店的位置是<span class="arithmatex">\(X_i\)</span>，饲料的售价为每吨<span class="arithmatex">\(C_i\)</span>元，库存为<span class="arithmatex">\(F_i\)</span>。</p>
+<p>约翰从坐标<span class="arithmatex">\(X=0\)</span>开始沿坐标轴正方向前进，他家在坐标<span class="arithmatex">\(X=E\)</span>上。为了带<span class="arithmatex">\(K\)</span>吨饲料回家，约翰最少的花费是多少呢？假设所有商店的库存之和不会少于<span class="arithmatex">\(K\)</span>。</p>
+<p>举个例子，假设有三家商店，情况如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>坐标</th>
+<th><span class="arithmatex">\(X=1\)</span></th>
+<th><span class="arithmatex">\(X=3\)</span></th>
+<th><span class="arithmatex">\(X=4\)</span></th>
+<th><span class="arithmatex">\(E=5\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>库存</td>
+<td><span class="arithmatex">\(1\)</span></td>
+<td><span class="arithmatex">\(1\)</span></td>
+<td><span class="arithmatex">\(1\)</span></td>
+<td></td>
+</tr>
+<tr>
+<td>售价</td>
+<td><span class="arithmatex">\(1\)</span></td>
+<td><span class="arithmatex">\(2\)</span></td>
+<td><span class="arithmatex">\(2\)</span></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>如果<span class="arithmatex">\(K=2\)</span>，约翰的最优选择是在离家较近的两家商店购买饲料，则花在路上的钱是<span class="arithmatex">\(1+4=5\)</span>，花在商店的钱是<span class="arithmatex">\(2+2=4\)</span>，共需要<span class="arithmatex">\(9\)</span>元。</p>
+<p>输入格式</p>
+<p>第<span class="arithmatex">\(1\)</span>行:三个整数<span class="arithmatex">\(K,E,N\)</span> 第<span class="arithmatex">\(2..N+1\)</span>行:第<span class="arithmatex">\(i+1\)</span>行的三个整数代表,<span class="arithmatex">\(X_i,F_i,C_i\)</span>.</p>
+<p>输出格式</p>
+<p>一个整数,代表最小花费</p>
+<p><span class="arithmatex">\(1 \leq K \leq 10000 , 1 \leq E \leq 500 , 1 \leq N \leq 500\)</span></p>
+<p><span class="arithmatex">\(0 &lt; Xi &lt; E, 1 \leq Fi \leq 10000, 1 \leq C_i \leq 10^7\)</span></p>
+<hr />
+<h3 id="_11">思路</h3>
+<p>理解不难。</p>
+<p><a href="https://rsdbk-husky.blog.luogu.org/luogu-p4544-usaco10novbuying-feed-g">Luogu P4544 [USACO10NOV]Buying Feed G - 燃烧的冰块_husky 的博客 - 洛谷博客</a></p>
+<p>std</p>
+<pre><code class="language-C++">/*
+CB Ntsc
+*/
+
+#include &lt;algorithm&gt;
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define int long long
+#define ull unsigned long long
+#define pii pair&lt;int, int&gt;
+#define pf first
+#define ps second
+
+#define err cerr&lt;&lt;&quot;Error&quot;
+#define rd read()
+// #define nl putc('\n')
+#define ot write
+#define nl putchar('\n')
+inline int rd
+{
+    int xx=0,ff=1;
+    char ch=getchar();
+    while(ch&lt;'0'||ch&gt;'9') {if(ch=='-') ff=-1;ch=getchar();}
+    while(ch&gt;='0'&amp;&amp;ch&lt;='9') xx=xx*10+(ch-'0'),ch=getchar();
+    return xx*ff;
+}
+inline void write(int out)
+{
+    if(out&lt;0) putchar('-'),out=-out;
+    if(out&gt;9) write(out/10);
+    putchar(out%10+'0');
+}
+
+const int INF = 1e13;
+
+const int S=1e6+5;
+const int maxlog = 10;
+
+const int N = 510;
+const int M = 10010;
+
+template &lt;class T&gt;
+inline T min(T a, T b) {
+    return a &lt; b ? a : b;
+}
+
+struct node {
+    int x;
+    int w;
+    int v;
+
+    node(): x(0), w(0), v(0){}
+    node(int x_, int w_, int v_): x(x_), w(w_), v(v_) {}
+    inline bool operator &lt; (node &amp;a) {
+        return this-&gt;x &lt; a.x;
+    }
+};
+
+node s[N];
+int W, n, d[N][M];
+int  que[M];
+
+inline int calc(int i, int k) {
+    return d[i - 1][k] + (s[i].x - s[i - 1].x) * k * k - s[i].v * k;
+}
+
+signed main() {
+    int E;
+    W=rd,E=rd,n=rd;
+    s[0] = node(0, 0, 0);   
+    for (int i = 1, x, w, v; i &lt;= n; ++i) {
+        x=rd,w=rd,v=rd;
+        s[i] = node(x, w, v);
+    }
+    s[n + 1] = node(E, 0, 0);  
+    sort(s, s + n + 2);
+    memset(d, 0x3f, sizeof(d));
+    d[0][0] = 0;
+    for (int i = 1; i &lt;= n + 1; ++i) {   
+        int l = 1, r = 0;
+        for (int j = 0; j &lt;= W; ++j) {   
+            while (calc(i, que[r]) &gt; calc(i, j) &amp;&amp; l &lt;= r)
+                --r;
+            if (j - que[l] &gt; s[i].w &amp;&amp; l &lt;= r)
+                ++l;
+            que[++r] = j;
+            d[i][j] = calc(i, que[l]) + s[i].v * j;           
+        }
+    }
+    printf(&quot;%lld&quot;, d[n + 1][W]);
+}
+
+/*
+2 5
+0 1 1 1 1
+0 1 1 2 4
+0 2 1 2 1
+0 2 1 1 4
+*/
+</code></pre>
+<h2 id="csp-s2019">[CSP-S2019] 划分</h2>
+<p>题目描述</p>
+<p>2048 年，第三十届 CSP 认证的考场上，作为选手的小明打开了第一题。这个题的样例有 <span class="arithmatex">\(n\)</span> 组数据，数据从 <span class="arithmatex">\(1 \sim n\)</span> 编号，<span class="arithmatex">\(i\)</span> 号数据的规模为 <span class="arithmatex">\(a_i\)</span>。</p>
+<p>小明对该题设计出了一个暴力程序，对于一组规模为 <span class="arithmatex">\(u\)</span> 的数据，该程序的<strong>运行时间</strong>为 <span class="arithmatex">\(u^2\)</span>。然而这个程序运行完一组规模为 <span class="arithmatex">\(u\)</span> 的数据之后，它将在任何一组规模<strong>小于</strong> <span class="arithmatex">\(u\)</span> 的数据上运行错误。样例中的 <span class="arithmatex">\(a_i\)</span> 不一定递增，但小明又想在不修改程序的情况下正确运行样例，于是小明决定使用一种非常原始的解决方案：将所有数据划分成若干个数据段，段内数据编号<strong>连续</strong>，接着将同一段内的数据合并成新数据，其规模等于段内原数据的<strong>规模之和</strong>，小明将让新数据的规模能够递增。</p>
+<p>也就是说，小明需要找到一些分界点 <span class="arithmatex">\(1 \leq k_1 \lt k_2 \lt \cdots \lt k_p \lt n\)</span>，使得</p>
+<p><span class="arithmatex">\(\sum_{i=1}^{k_1} a_i \leq \sum_{i=k_1+1}^{k_2} a_i \leq \cdots \leq \sum_{i=k_p+1}^{n} a_i\)</span></p>
+<p>注意 <span class="arithmatex">\(p\)</span> 可以为 <span class="arithmatex">\(0\)</span> 且此时 <span class="arithmatex">\(k_0 = 0\)</span>，也就是小明可以将所有数据合并在一起运行。</p>
+<p>小明希望他的程序在正确运行样例情况下，运行时间也能尽量小，也就是<strong>最小化</strong></p>
+<p><span class="arithmatex">\((\sum_{i=1}^{k_1} a_i)^2 + (\sum_{i=k_1+1}^{k_2} a_i)^2 + \cdots + (\sum_{i=k_p+1}^{n} a_i)^2\)</span></p>
+<p>小明觉得这个问题非常有趣，并向你请教：给定 <span class="arithmatex">\(n\)</span> 和 <span class="arithmatex">\(a_i\)</span>，请你求出最优划分方案下，小明的程序的最小运行时间。</p>
+<p>输入格式</p>
+<p><strong>由于本题的数据范围较大，部分测试点的 <span class="arithmatex">\(a_i\)</span> 将在程序内生成。</strong></p>
+<p>第一行两个整数 <span class="arithmatex">\(n, type\)</span>。<span class="arithmatex">\(n\)</span> 的意义见题目描述，<span class="arithmatex">\(type\)</span> 表示输入方式。</p>
+<ol>
+<li>
+<p>若 <span class="arithmatex">\(type = 0\)</span>，则该测试点的 <span class="arithmatex">\(a_i\)</span> <strong>直接给出</strong>。输入文件接下来：第二行 <span class="arithmatex">\(n\)</span> 个以空格分隔的整数 <span class="arithmatex">\(a_i\)</span>，表示每组数据的规模。</p>
+</li>
+<li>
+<p>若 <span class="arithmatex">\(type = 1\)</span>，则该测试点的 <span class="arithmatex">\(a_i\)</span> 将<strong>特殊生成</strong>，生成方式见后文。输入文件接下来：第二行六个以空格分隔的整数 <span class="arithmatex">\(x, y, z, b_1, b_2, m\)</span>。接下来 <span class="arithmatex">\(m\)</span> 行中，第 <span class="arithmatex">\(i (1 \leq i \leq m)\)</span> 行包含三个以空格分隔的正整数 <span class="arithmatex">\(p_i, l_i, r_i\)</span>。</p>
+</li>
+</ol>
+<p>对于 <span class="arithmatex">\(type = 1\)</span> 的 23~25 号测试点，<span class="arithmatex">\(a_i\)</span> 的生成方式如下：</p>
+<p>给定整数 <span class="arithmatex">\(x, y, z, b_1, b_2, m\)</span>，以及 <span class="arithmatex">\(m\)</span> 个三元组 <span class="arithmatex">\((p_i, l_i, r_i)\)</span>。</p>
+<p>保证 <span class="arithmatex">\(n \geq 2\)</span>。若 <span class="arithmatex">\(n \gt 2\)</span>，则 <span class="arithmatex">\(\forall 3 \leq i \leq n, b_i = (x \times b_{i−1} + y \times b_{i−2} + z) \mod 2^{30}\)</span>。</p>
+<p>保证 <span class="arithmatex">\(1 \leq p_i \leq n, p_m = n\)</span>。令 <span class="arithmatex">\(p_0 = 0\)</span>，则 <span class="arithmatex">\(p_i\)</span> 还满足 <span class="arithmatex">\(\forall 0 \leq i \lt m\)</span> 有 <span class="arithmatex">\(p_i \lt p_{i+1}\)</span>。</p>
+<p>对于所有 <span class="arithmatex">\(1 \leq j \leq m\)</span>，若下标值 <span class="arithmatex">\(i (1 \leq i \leq n)\)</span>满足 <span class="arithmatex">\(p_{j−1} \lt i \leq p_j\)</span>，则有</p>
+<p><span class="arithmatex">\(a_i = \left(b_i \mod \left( r_j − l_j + 1 \right) \right) + l_j\)</span></p>
+<p><strong>上述数据生成方式仅是为了减少输入量大小，标准算法不依赖于该生成方式。</strong></p>
+<p>输出格式</p>
+<p>输出一行一个整数，表示答案。</p>
+<p>【数据范围】</p>
+<table>
+<thead>
+<tr>
+<th>测试点编号</th>
+<th><span class="arithmatex">\(n \leq\)</span></th>
+<th><span class="arithmatex">\(a_i \leq\)</span></th>
+<th><span class="arithmatex">\(type =\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(1 \sim 3\)</span></td>
+<td><span class="arithmatex">\(10\)</span></td>
+<td><span class="arithmatex">\(10\)</span></td>
+<td>0</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(4 \sim 6\)</span></td>
+<td><span class="arithmatex">\(50\)</span></td>
+<td><span class="arithmatex">\(10^3\)</span></td>
+<td>0</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(7 \sim 9\)</span></td>
+<td><span class="arithmatex">\(400\)</span></td>
+<td><span class="arithmatex">\(10^4\)</span></td>
+<td>0</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(10 \sim 16\)</span></td>
+<td><span class="arithmatex">\(5000\)</span></td>
+<td><span class="arithmatex">\(10^5\)</span></td>
+<td>0</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(17 \sim 22\)</span></td>
+<td><span class="arithmatex">\(5 \times 10^5\)</span></td>
+<td><span class="arithmatex">\(10^6\)</span></td>
+<td>0</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(23 \sim 25\)</span></td>
+<td><span class="arithmatex">\(4 \times 10^7\)</span></td>
+<td><span class="arithmatex">\(10^9\)</span></td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>对于<span class="arithmatex">\(type=0\)</span>的所有测试点,保证最后输出的答案<span class="arithmatex">\(\leq 4 \times 10^{18}\)</span></p>
+<p>所有测试点满足：<span class="arithmatex">\(type \in \{0,1\}\)</span>，<span class="arithmatex">\(2 \leq n \leq 4 \times 10^7\)</span>，<span class="arithmatex">\(1 \leq a_i \leq 10^9\)</span>，<span class="arithmatex">\(1 \leq m \leq 10^5\)</span>，<span class="arithmatex">\(1 \leq l_i \leq r_i \leq 10^9\)</span>，<span class="arithmatex">\(0 \leq x,y,z,b_1,b_2 \lt 2^{30}\)</span>。</p>
+<h3 id="_12">思路</h3>
+<p><a href="https://flowus.cn/c0c07e2e-266f-47bc-814b-1417a1954cac">csps19~22</a></p>
+<h1 id="_13">数据结构优化</h1>
+<h2 id="noi2020">[NOI2020] 命运</h2>
+<p>题目描述</p>
+<p><strong>提示</strong>：我们在题目描述的最后一段提供了一份简要的、形式化描述的题面。</p>
+<p>在遥远的未来，物理学家终于发现了时间和因果的自然规律。即使在一个人出生前，我们也可以通过理论分析知晓他或她人生的一些信息，换言之，物理学允许我们从一定程度上“预言”一个人的“命运”。</p>
+<p>简单来说，一个人的命运是一棵由时间点构成的有根树 <span class="arithmatex">\(T\)</span>：树的根结点代表着出生，而叶结点代表着死亡。每个非叶结点 <span class="arithmatex">\(u\)</span> 都有一个或多个孩子 <span class="arithmatex">\(v_1, v_2,\dots , v_{c_u}\)</span>，表示这个人在 <span class="arithmatex">\(u\)</span> 所代表的时间点做出的 <span class="arithmatex">\(c_u\)</span> 个不同的选择可以导向的不同的可能性。形式化的，一个选择就是树上的一条边 <span class="arithmatex">\((u, v_i)\)</span>，其中 <span class="arithmatex">\(u\)</span> 是 <span class="arithmatex">\(v_i\)</span> 的父结点。</p>
+<p>一个人的一生是从出生（即根结点）到死亡（即某一个叶子结点）的一条不经过重复结点的路径，这条路径上任何一个包含至少一条边的子路径都是这个人的一段<strong>人生经历</strong>，而他或她以所有可能的方式度过一生，从而拥有的所有人生经历，都被称为<strong>潜在的人生经历</strong>。换言之，所有潜在的人生经历就是所有 <span class="arithmatex">\(u\)</span> 到 <span class="arithmatex">\(v\)</span> 的路径，满足 <span class="arithmatex">\(u, v \in T\)</span>，<span class="arithmatex">\(u \neq v\)</span>，并且 <span class="arithmatex">\(u\)</span> 是 <span class="arithmatex">\(v\)</span> 的祖先。在数学上，这样一个潜在的人生经历被记作有序对 <span class="arithmatex">\((u, v)\)</span>，树 <span class="arithmatex">\(T\)</span> 所有潜在的人生经历的集合记作 <span class="arithmatex">\(\mathcal P_T\)</span>。</p>
+<p>物理理论不仅允许我们观测代表命运的树，还能让我们分析一些潜在的人生经历是否是“重要”的。一个人所作出的每一个选择——即树上的每一条边——都可能是<strong>重要</strong>或<strong>不重要</strong>的。一段潜在的人生经历被称为重要的，当且仅当其对应的路径上存在一条边是重要的。我们可以观测到一些潜在的人生经历是重要的：换言之，我们可以观测得到一个集合 <span class="arithmatex">\(\mathcal Q \subseteq \mathcal P_T\)</span>，满足其中的所有潜在的人生经历 <span class="arithmatex">\((u, v) \in \mathcal Q\)</span> 都是重要的。</p>
+<p>树 <span class="arithmatex">\(T\)</span> 的形态早已被计算确定，集合 <span class="arithmatex">\(\mathcal Q\)</span> 也早已被观测得到，一个人命运的不确定性已经大大降低了。但不确定性仍然是巨大的——来计算一下吧，对于给定的树 <span class="arithmatex">\(T\)</span> 和集合 <span class="arithmatex">\(\mathcal Q\)</span>，存在多少种不同的方案确定每条边是否是重要的，使之满足所观测到的 <span class="arithmatex">\(\mathcal Q\)</span> 所对应的限制：即对于任意 <span class="arithmatex">\((u, v) \in \mathcal Q\)</span>，都存在一条 <span class="arithmatex">\(u\)</span> 到 <span class="arithmatex">\(v\)</span> 路径上的边被确定为重要的。</p>
+<p><strong>形式化的</strong>：给定一棵树 <span class="arithmatex">\(T = (V, E)\)</span> 和点对集合 <span class="arithmatex">\(\mathcal Q \subseteq V \times V\)</span> ，满足对于所有 <span class="arithmatex">\((u, v) \in \mathcal Q\)</span>，都有 <span class="arithmatex">\(u \neq v\)</span>，并且 <span class="arithmatex">\(u\)</span> 是 <span class="arithmatex">\(v\)</span> 在树 <span class="arithmatex">\(T\)</span> 上的祖先。其中 <span class="arithmatex">\(V\)</span> 和 <span class="arithmatex">\(E\)</span> 分别代表树 <span class="arithmatex">\(T\)</span> 的结点集和边集。求有多少个不同的函数 <span class="arithmatex">\(f\)</span> : <span class="arithmatex">\(E \to \{0, 1\}\)</span>（将每条边 <span class="arithmatex">\(e \in E\)</span> 的 <span class="arithmatex">\(f(e)\)</span> 值置为 <span class="arithmatex">\(0\)</span> 或 <span class="arithmatex">\(1\)</span>），满足对于任何 <span class="arithmatex">\((u, v) \in \mathcal Q\)</span>，都存在 <span class="arithmatex">\(u\)</span> 到 <span class="arithmatex">\(v\)</span> 路径上的一条边 <span class="arithmatex">\(e\)</span> 使得 <span class="arithmatex">\(f(e) = 1\)</span>。由于答案可能非常大，你只需要输出结果对 <span class="arithmatex">\(998,244,353\)</span>（一个素数）取模的结果。</p>
+<p>输入格式</p>
+<p>从文件 destiny.in 中读入数据。</p>
+<p>第一行包含一个正整数 <span class="arithmatex">\(n\)</span>，表示树 <span class="arithmatex">\(T\)</span> 的大小，树上结点从 <span class="arithmatex">\(1\)</span> 到 <span class="arithmatex">\(n\)</span> 编号，<span class="arithmatex">\(1\)</span> 号结点为根结点；</p>
+<p>接下来 <span class="arithmatex">\(n - 1\)</span> 行每行包含空格隔开的两个数 <span class="arithmatex">\(x_i, y_i\)</span>，满足 <span class="arithmatex">\(1 \leq x_i, y_i \leq n\)</span>，表示树上的结点 <span class="arithmatex">\(x_i\)</span> 和 <span class="arithmatex">\(y_i\)</span> 之间存在一条边，但并不保证这条边的方向；</p>
+<p>接下来一行包含一个非负整数 <span class="arithmatex">\(m\)</span>，表示所观测得到信息的条数。</p>
+<p>接下来 <span class="arithmatex">\(m\)</span> 行每行包含空格隔开的两个数 <span class="arithmatex">\(u_i, v_i\)</span>，表示 <span class="arithmatex">\((u_i, v_i) \in \mathcal Q\)</span>。<strong>请注意</strong>：输入数据可能包含重复的信息，换言之可能存在 <span class="arithmatex">\(i \neq j\)</span>，满足 <span class="arithmatex">\(u_i = u_j\)</span> 且 <span class="arithmatex">\(v_i = v_j\)</span>。</p>
+<p>输入数据规模和限制参见本题末尾的表格。</p>
+<p>输出格式</p>
+<p>输出到文件 destiny.out 中。</p>
+<p>输出仅一行一个整数，表示方案数对 <span class="arithmatex">\(998, 244, 353\)</span> 取模的结果。</p>
+<h4 id="1">样例 1 解释</h4>
+<p>共有 <span class="arithmatex">\(16\)</span> 种方案，其中不满足题意的方案有以下 <span class="arithmatex">\(6\)</span> 种：</p>
+<ul>
+<li>
+<p><span class="arithmatex">\((1, 2),(2, 3),(3, 5)\)</span> 确定为不重要，<span class="arithmatex">\((3, 4)\)</span> 确定为重要：集合 <span class="arithmatex">\(\mathcal Q\)</span> 中没有限制被满足。</p>
+</li>
+<li>
+<p><span class="arithmatex">\((1, 2),(2, 3),(3, 4),(3, 5)\)</span> 确定为不重要：集合 <span class="arithmatex">\(\mathcal Q\)</span> 中没有限制被满足。</p>
+</li>
+<li>
+<p><span class="arithmatex">\((1, 2),(2, 3)\)</span> 确定为不重要，<span class="arithmatex">\((3, 4),(3, 5)\)</span> 确定为重要：集合 <span class="arithmatex">\(\mathcal Q\)</span> 中 <span class="arithmatex">\((1, 3)\)</span> 没被满足。</p>
+</li>
+<li>
+<p><span class="arithmatex">\((1, 2),(2, 3),(3, 4)\)</span> 确定为不重要，<span class="arithmatex">\((3, 5)\)</span> 确定为重要：集合 <span class="arithmatex">\(\mathcal Q\)</span> 中 <span class="arithmatex">\((1, 3)\)</span> 没被满足。</p>
+</li>
+<li>
+<p><span class="arithmatex">\((2, 3),(3, 5)\)</span> 确定为不重要，<span class="arithmatex">\((1, 2),(3, 4)\)</span> 确定为重要：集合 <span class="arithmatex">\(\mathcal Q\)</span> 中 <span class="arithmatex">\((2, 5)\)</span> 没被满足。</p>
+</li>
+<li>
+<p><span class="arithmatex">\((2, 3),(3, 4),(3, 5)\)</span> 确定为不重要，<span class="arithmatex">\((1, 2)\)</span> 确定为重要：集合 <span class="arithmatex">\(\mathcal Q\)</span> 中 <span class="arithmatex">\((2, 5)\)</span> 没被满足。</p>
+</li>
+<li>
+<p>其他方案下，集合 <span class="arithmatex">\(\mathcal Q\)</span> 中的限制都被满足了。</p>
+</li>
+</ul>
+<h4 id="3">样例 3</h4>
+<p>见选手目录下的 destiny/destiny3.in 与 destiny/destiny3.ans。</p>
+<h4 id="4">样例 4</h4>
+<p>见选手目录下的 destiny/destiny4.in 与 destiny/destiny4.ans。</p>
+<table>
+<thead>
+<tr>
+<th>测试点编号</th>
+<th><span class="arithmatex">\(n\)</span></th>
+<th><span class="arithmatex">\(m\)</span></th>
+<th><span class="arithmatex">\(T\)</span> 为完全二叉树</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(1\sim 4\)</span></td>
+<td><span class="arithmatex">\(\le 10\)</span></td>
+<td><span class="arithmatex">\(\le 10\)</span></td>
+<td>否</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(5\)</span></td>
+<td><span class="arithmatex">\(\le 500\)</span></td>
+<td><span class="arithmatex">\(\le 15\)</span></td>
+<td>否</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(6\)</span></td>
+<td><span class="arithmatex">\(\le 10^4\)</span></td>
+<td><span class="arithmatex">\(\le 10\)</span></td>
+<td>否</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(7\)</span></td>
+<td><span class="arithmatex">\(\le 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 16\)</span></td>
+<td>否</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(8\)</span></td>
+<td><span class="arithmatex">\(\le 5\times 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 16\)</span></td>
+<td>否</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(9\)</span></td>
+<td><span class="arithmatex">\(\le 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 22\)</span></td>
+<td>否</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(10\)</span></td>
+<td><span class="arithmatex">\(\le 5\times 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 22\)</span></td>
+<td>否</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(11\)</span></td>
+<td><span class="arithmatex">\(\le 600\)</span></td>
+<td><span class="arithmatex">\(\le 600\)</span></td>
+<td>否</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(12\)</span></td>
+<td><span class="arithmatex">\(\le 10^3\)</span></td>
+<td><span class="arithmatex">\(\le 10^3\)</span></td>
+<td>否</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(13\sim 14\)</span></td>
+<td><span class="arithmatex">\(\le 2\times 10^3\)</span></td>
+<td><span class="arithmatex">\(\le 5\times 10^5\)</span></td>
+<td>否</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(15\sim 16\)</span></td>
+<td><span class="arithmatex">\(\le 5\times 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 2\times 10^3\)</span></td>
+<td>否</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(17\sim 18\)</span></td>
+<td><span class="arithmatex">\(\le 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 10^5\)</span></td>
+<td>是</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(19\)</span></td>
+<td><span class="arithmatex">\(\le 5\times 10^4\)</span></td>
+<td><span class="arithmatex">\(\le 10^5\)</span></td>
+<td>否</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(20\)</span></td>
+<td><span class="arithmatex">\(\le 8\times 10^4\)</span></td>
+<td><span class="arithmatex">\(\le 10^5\)</span></td>
+<td>否</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(21\sim 22\)</span></td>
+<td><span class="arithmatex">\(\le 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 5\times 10^5\)</span></td>
+<td>否</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(23\sim 25\)</span></td>
+<td><span class="arithmatex">\(\le 5\times 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 5\times 10^5\)</span></td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_14">测试点约束</h3>
+<p><strong>全部数据满足</strong>：<span class="arithmatex">\(n \leq 5 \times 10^5\)</span>，<span class="arithmatex">\(m \leq 5 \times 10^5\)</span>。输入构成一棵树，并且对于 <span class="arithmatex">\(1 \leq i \leq m\)</span>，<span class="arithmatex">\(u_i\)</span> 始终为 <span class="arithmatex">\(v_i\)</span> 的祖先结点。</p>
+<p><strong>完全二叉树</strong>：在本题中，每个非叶结点都有左右子结点，且所有叶子结点深度相同的树称为满二叉树；将满二叉树中的结点按照从上到下、从左向右的顺序编号，编号最小的若干个结点形成的树称为完全二叉树。</p>
+<h2 id="noi1998">??|[NOI1998] 免费的馅饼</h2>
+<p>题目描述</p>
+<p>SERKOI 最新推出了一种叫做“免费馅饼”的游戏：游戏在一个舞台上进行。舞台的宽度为 <span class="arithmatex">\(w\)</span> 格（从左到右依次用 <span class="arithmatex">\(1\)</span> 到 <span class="arithmatex">\(w\)</span> 编号），游戏者占一格。开始时游戏者可以站在舞台的任意位置，手里拿着一个托盘。下图为天幕的高度为 <span class="arithmatex">\(4\)</span> 格时某一个时刻游戏者接馅饼的情景。</p>
+<p><img alt="https://cdn.luogu.com.cn/upload/image_hosting/1gcg9awi.png" src="../DP%2B%2B%2BDP%E4%BC%98%E5%8C%96%2Bbb4d534b-c218-4ef3-bf0e-cd1133654a4a/1gcg9awi.png" /></p>
+<p>游戏开始后，从舞台天幕顶端的格子中不断出现馅饼并垂直下落。游戏者左右移动去接馅饼。游戏者每秒可以向左或向右移动一格或两格，也可以站在原地不动。</p>
+<p>当馅饼在某一时刻恰好到达游戏者所在的格子中，游戏者就收集到了这块馅饼。当馅饼落在一个游戏者不在的格子里时该馅饼就消失。</p>
+<p>写一个程序，帮助我们的游戏者收集馅饼，使得所收集馅饼的分数之和最大。</p>
+<p>输入格式</p>
+<p>第一行是用空格隔开的两个正整数，分别给出了舞台的宽度 <span class="arithmatex">\(w\)</span> 和馅饼的个数 <span class="arithmatex">\(n\)</span>。</p>
+<p>接下来 <span class="arithmatex">\(n\)</span> 行，每一行给出了一块馅饼的信息。</p>
+<p>由三个正整数组成，分别表示了每个馅饼落到舞台上的时刻 <span class="arithmatex">\(t_i\)</span>，掉到舞台上的格子的编号 <span class="arithmatex">\(p_i\)</span>，以及分值 <span class="arithmatex">\(v_i\)</span>。</p>
+<p>游戏开始时刻为 <span class="arithmatex">\(0\)</span>。</p>
+<p>输入文件中同一行相邻两项之间用一个空格隔开。</p>
+<p>输入数据中可能存在两个馅饼的 <span class="arithmatex">\(t_i\)</span> 和 <span class="arithmatex">\(p_i\)</span> 都一样。</p>
+<p>输出格式</p>
+<p>一个数，表示游戏者获得的最大总得分。</p>
+<p>对于 <span class="arithmatex">\(100\%\)</span> 的数据，<span class="arithmatex">\(1 \leq w \leq 10^8\)</span>，<span class="arithmatex">\(1 \leq n \leq 10^5\)</span>，<span class="arithmatex">\(1\leq t_i \leq 10^8\)</span>，<span class="arithmatex">\(1\leq p_i \leq w\)</span>，<span class="arithmatex">\(1\leq v_i \leq 1000\)</span>。</p>
+<h3 id="_15">思路</h3>
+<p>好经典的玩法</p>
+<p>咳咳，我们来看题目。简化题意，你有一个指针，每一秒可以向左向右移动一个单位。给定n个条件，当在t_i时刻指针处于p_i，就可以得1分。求最高得分。</p>
+<p>那么我们设定f_i为表示拿到了第i个得分条件时最大得分。</p>
+<p>那么考虑转移。很显然，我们可以从特点的某些f_j处转移。形式化地，有<span class="arithmatex">\(f_i=\max(f_i,v_i+f_j),|p_i-p_j|≤2t_i-2t_j\)</span></p>
+<p>那么我们就需要一个可以维护最小值的数据结构来维护符合条件的最小值。我们可以想到的是线段树，但是显然我们需要对条件进行一些变形。很显然我们需要把上面的不等式按下标移项，那么我们就需要讨论那烦人的绝对值了。</p>
+<ul>
+<li>
+<p>若p_i&gt;p_j，则变形为p_i-p_j≤2t_i-2t_j，即<span class="arithmatex">\(2t_j-p_j≤2t_i-p_i\)</span></p>
+</li>
+<li>
+<p>若p_i&lt;p_j，则变形为-p_i+p_j≤2t_i-2t_j，即<span class="arithmatex">\(p_j+2t_j≤2t_i+p_i\)</span></p>
+</li>
+</ul>
+<p>那这咋办呢？二维线段树是不可敲的。</p>
+<p>我们需要查询p_j满足<span class="arithmatex">\(p_i-t_i+t_j≤p_j≤p_i+t_i-t_j\)</span>。我们发现，当t_i-t_j&gt;0大前提成立时，若p_i-p_j≤2t_i-2t_j成立，则必有p_i&gt;p_j。另外一个同理。因此，我们只需要满足下面即可</p>
+<p><span class="arithmatex">\(2t_j-p_j≤2t_i-p_i\)</span>且<span class="arithmatex">\(p_j+2t_j≤2t_i+p_i\)</span>。因此是一个二维偏序问题。</p>
+<p>为什么是“且”？</p>
+<hr />
+<pre><code class="language-C++">#include&lt;bits/stdc++.h&gt;
+#define rep(l,r,i) for(int i=l,END##i=r;i&lt;=END##i;++i)
+#define per(r,l,i) for(int i=r,END##i=l;i&gt;=END##i;--i)
+using namespace std;
+#define int long long
+#define pii pair&lt;int,int&gt;
+
+#define lc(x) (x&lt;&lt;1)
+#define rc(x) (x&lt;&lt;1|1)
+
+#define rd read()
+int read(){
+    int xx=0,ff=1;
+    char ch=getchar();
+    while(ch&lt;'0'||ch&gt;'9') {if(ch=='-') ff=-1;ch=getchar();}
+    while(ch&gt;='0'&amp;&amp;ch&lt;='9') xx=xx*10+(ch-'0'),ch=getchar();
+    return xx*ff;
+}
+void write(int out){
+    if(out&lt;0) putchar('-'),out=-out;
+    if(out&gt;9) write(out/10);
+    putchar(out%10+'0');
+}
+
+const int N=2e5+15;
+const int INF=1e9+5;
+const int MOD=998244353;
+
+
+int b[N],w,n,k,c[N];
+
+struct node{
+    int t,p,v,l,r;
+}a[N];
+bool cmpl(node x,node y){
+    return x.l&gt;y.l;
+}
+bool cmpr(node x,node y){
+    return x.r&lt;y.r;
+}
+
+void update(int x,int val){
+    while(x&lt;=k){
+        c[x]=max(c[x],val);
+        x+=x&amp;-x;
+    }
+}
+
+int query(int x){
+    int res=0;
+    while(x){
+        res=max(res,c[x]);
+        x-=x&amp;-x;
+    }
+    return res;
+}
+
+signed main(){
+    w=rd,n=rd;
+    for(int i=1;i&lt;=n;i++){
+        a[i].t=rd,a[i].p=rd,a[i].v=rd;
+        a[i].l=a[i].p-2*a[i].t;
+        a[i].r=b[i]=a[i].p+2*a[i].t;
+    }
+
+    sort(a+1,a+n+1,cmpr);
+    sort(b+1,b+n+1);
+    k=unique(b+1,b+n+1)-b;
+    for(int i=1;i&lt;=n;i++)
+        a[i].r=lower_bound(b+1,b+n+1,a[i].r)-b;
+
+    sort(a+1,a+n+1,cmpl);
+    for(int i=1;i&lt;=n;i++){
+        int tmp=query(a[i].r);
+        update(a[i].r,tmp+a[i].v);//对于刚转移得到的dp值tmp，加入到树状数组里
+    }
+    cout&lt;&lt;query(k);
+    return 0;
+}
+
+
+</code></pre>
+<h1 id="_16">决策单调性之 斜率优化</h1>
+<p>斜率优化需要整理的目标式子
+- x是与j相关的定量
+- y是仅包含以与j相关的量，且包含f_j
+- k是和i相关的定值
+- b是仅包含以与i相关的量，且包含f_i</p>
+<p><img alt="image.png" src="../DP%2B%2B%2BDP%E4%BC%98%E5%8C%96%2Bbb4d534b-c218-4ef3-bf0e-cd1133654a4a/image.png" /></p>
+<p><a href="https://www.luogu.com.cn/blog/ChenXingLing/post-xue-xi-bi-ji-dong-tai-gui-hua-xie-shuai-you-hua-dp-chao-yang-x">www.luogu.com.cn</a></p>
+<h2 id="noi2014">[NOI2014] 购票</h2>
+<p>题目描述</p>
+<p>今年夏天，NOI 在 SZ 市迎来了她三十周岁的生日。来自全国 <span class="arithmatex">\(n\)</span> 个城市的 OIer 们都会从各地出发，到 SZ 市参加这次盛会。</p>
+<p>全国的城市构成了一棵以 SZ 市为根的有根树，每个城市与它的父亲用道路连接。为了方便起见，我们将全国的 <span class="arithmatex">\(n\)</span> 个城市用 <span class="arithmatex">\(1\sim n\)</span> 的整数编号。其中 SZ 市的编号为 <span class="arithmatex">\(1\)</span>。对于除 SZ 市之外的任意一个城市 <span class="arithmatex">\(v\)</span>，我们给出了它在这棵树上的父亲城市 <span class="arithmatex">\(f_v\)</span>  以及到父亲城市道路的长度 <span class="arithmatex">\(s_v\)</span>。</p>
+<p>从城市 <span class="arithmatex">\(v\)</span> 前往 SZ 市的方法为：选择城市 <span class="arithmatex">\(v\)</span> 的一个祖先 <span class="arithmatex">\(a\)</span>，支付购票的费用，乘坐交通工具到达 <span class="arithmatex">\(a\)</span>。再选择城市 <span class="arithmatex">\(a\)</span> 的一个祖先 <span class="arithmatex">\(b\)</span>，支付费用并到达 <span class="arithmatex">\(b\)</span>。以此类推，直至到达 SZ 市。</p>
+<p>对于任意一个城市 <span class="arithmatex">\(v\)</span>，我们会给出一个交通工具的距离限制 <span class="arithmatex">\(l_v\)</span>。对于城市 <span class="arithmatex">\(v\)</span> 的祖先 A，只有当它们之间所有道路的总长度不超过 <span class="arithmatex">\(l_v\)</span>  时，从城市 <span class="arithmatex">\(v\)</span> 才可以通过一次购票到达城市 A，否则不能通过一次购票到达。</p>
+<p>对于每个城市 <span class="arithmatex">\(v\)</span>，我们还会给出两个非负整数 <span class="arithmatex">\(p_v,q_v\)</span>  作为票价参数。若城市 <span class="arithmatex">\(v\)</span> 到城市 A 所有道路的总长度为 <span class="arithmatex">\(d\)</span>，那么从城市 <span class="arithmatex">\(v\)</span> 到城市 A 购买的票价为 <span class="arithmatex">\(dp_v+q_v\)</span>。</p>
+<p>每个城市的 OIer 都希望自己到达 SZ 市时，用于购票的总资金最少。你的任务就是，告诉每个城市的 OIer 他们所花的最少资金是多少。</p>
+<p>输入格式</p>
+<p>第一行包含两个非负整数 <span class="arithmatex">\(n,t\)</span>，分别表示城市的个数和数据类型（其意义将在「提示与说明」中提到）。</p>
+<p>接下来 <span class="arithmatex">\(2 \sim n\)</span> 行，每行描述一个除 SZ 之外的城市。其中第 <span class="arithmatex">\(v\)</span> 行包含五个非负整数 <span class="arithmatex">\(f_v,s_v,p_v,q_v,l_v\)</span>，分别表示城市 <span class="arithmatex">\(v\)</span> 的父亲城市，它到父亲城市道路的长度，票价的两个参数和距离限制。</p>
+<p>请注意：输入不包含编号为 1 的 SZ 市，第 <span class="arithmatex">\(2\sim n\)</span> 行分别描述的是城市 <span class="arithmatex">\(2\)</span> 到城市 <span class="arithmatex">\(n\)</span>。</p>
+<p>输出格式</p>
+<p>输出包含 <span class="arithmatex">\(n-1\)</span> 行，每行包含一个整数。</p>
+<p>其中第 <span class="arithmatex">\(v\)</span> 行表示从城市 <span class="arithmatex">\(v+1\)</span> 出发，到达 SZ 市最少的购票费用。</p>
+<p>同样请注意：输出不包含编号为 1 的 SZ 市。</p>
+<p><img alt="https://cdn.luogu.com.cn/upload/pic/2591.png" src="../DP%2B%2B%2BDP%E4%BC%98%E5%8C%96%2Bbb4d534b-c218-4ef3-bf0e-cd1133654a4a/2591.png" /></p>
+<p>对于所有数据，<span class="arithmatex">\(n\leq 2 \times 10^5, 0 \leq p_v \leq 10^6,\ 0 \leq q_v \leq 10^{12},\ 1\leq f_v&lt;v,\ 0&lt;s_v\leq lv \leq 2 \times 10^{11}\)</span>，且任意城市到 SZ 市的总路程长度不超过 <span class="arithmatex">\(2 \times 10^{11}\)</span>。</p>
+<p>输入的 <span class="arithmatex">\(t\)</span> 表示数据类型，<span class="arithmatex">\(0\leq t&lt;4\)</span>，其中：</p>
+<ul>
+<li>
+<p>当 <span class="arithmatex">\(t=0\)</span> 或 <span class="arithmatex">\(2\)</span> 时，对输入的所有城市 <span class="arithmatex">\(v\)</span>，都有 <span class="arithmatex">\(f_v=v-1\)</span>，即所有城市构成一个以 SZ 市为终点的链；</p>
+</li>
+<li>
+<p>当 <span class="arithmatex">\(t=0\)</span> 或 <span class="arithmatex">\(1\)</span> 时，对输入的所有城市 <span class="arithmatex">\(v\)</span>，都有 <span class="arithmatex">\(l_v=2 \times 10^{11}\)</span>，即没有移动的距离限制，每个城市都能到达它的所有祖先；</p>
+</li>
+<li>
+<p>当 <span class="arithmatex">\(t=3\)</span> 时，数据没有特殊性质。</p>
+</li>
+</ul>
+<h2 id="noi2007">[NOI2007] 货币兑换</h2>
+<p>题目描述</p>
+<p>小 Y 最近在一家金券交易所工作。该金券交易所只发行交易两种金券：A 纪念券（以下简称 A 券）和 B 纪念券（以下简称 B 券）。每个持有金券的顾客都有一个自己的帐户。金券的数目可以是一个实数。</p>
+<p>每天随着市场的起伏波动，两种金券都有自己当时的价值，即每一单位金券当天可以兑换的人民币数目。我们记录第 <span class="arithmatex">\(K\)</span> 天中 A 券和 B 券的价值分别为 <span class="arithmatex">\(A_K\)</span> 和 <span class="arithmatex">\(B_K\)</span>（元/单位金券）。</p>
+<p>为了方便顾客，金券交易所提供了一种非常方便的交易方式：比例交易法。</p>
+<p>比例交易法分为两个方面：</p>
+<p>a)  卖出金券：顾客提供一个 <span class="arithmatex">\([0, 100]\)</span> 内的实数 <span class="arithmatex">\(OP\)</span> 作为卖出比例，其意义为：将 <span class="arithmatex">\(OP\%\)</span> 的 A 券和 <span class="arithmatex">\(OP\%\)</span> 的 B 券以当时的价值兑换为人民币；</p>
+<p>b)  买入金券：顾客支付 <span class="arithmatex">\(IP\)</span> 元人民币，交易所将会兑换给用户总价值为 <span class="arithmatex">\(IP\)</span> 的金券，并且，满足提供给顾客的 A 券和 B 券的比例在第 <span class="arithmatex">\(K\)</span> 天恰好为 <span class="arithmatex">\(\mathrm{Rate}_ K\)</span>；</p>
+<p>例如，假定接下来 <span class="arithmatex">\(3\)</span> 天内的 <span class="arithmatex">\(A_K,B_K,\mathrm{Rate}_ K\)</span> 的变化分别为：</p>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th><span class="arithmatex">\(A_K\)</span></th>
+<th><span class="arithmatex">\(B_K\)</span></th>
+<th><span class="arithmatex">\(\mathrm{Rate}_ K\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一天</td>
+<td><span class="arithmatex">\(1\)</span></td>
+<td><span class="arithmatex">\(1\)</span></td>
+<td><span class="arithmatex">\(1\)</span></td>
+</tr>
+<tr>
+<td>第二天</td>
+<td><span class="arithmatex">\(1\)</span></td>
+<td><span class="arithmatex">\(2\)</span></td>
+<td><span class="arithmatex">\(2\)</span></td>
+</tr>
+<tr>
+<td>第三天</td>
+<td><span class="arithmatex">\(2\)</span></td>
+<td><span class="arithmatex">\(2\)</span></td>
+<td><span class="arithmatex">\(3\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>假定在第一天时，用户手中有 <span class="arithmatex">\(100\)</span> 元人民币但是没有任何金券。</p>
+<p>用户可以执行以下的操作：</p>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>用户操作</th>
+<th>人民币(元)</th>
+<th>A 券的数量</th>
+<th>B 券的数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开户</td>
+<td>无</td>
+<td><span class="arithmatex">\(100\)</span></td>
+<td><span class="arithmatex">\(0\)</span></td>
+<td><span class="arithmatex">\(0\)</span></td>
+</tr>
+<tr>
+<td>第一天</td>
+<td>买入 <span class="arithmatex">\(100\)</span> 元</td>
+<td><span class="arithmatex">\(0\)</span></td>
+<td><span class="arithmatex">\(50\)</span></td>
+<td><span class="arithmatex">\(50\)</span></td>
+</tr>
+<tr>
+<td>第二天</td>
+<td>卖出 <span class="arithmatex">\(50\%\)</span></td>
+<td><span class="arithmatex">\(75\)</span></td>
+<td><span class="arithmatex">\(25\)</span></td>
+<td><span class="arithmatex">\(25\)</span></td>
+</tr>
+<tr>
+<td>第二天</td>
+<td>买入 <span class="arithmatex">\(60\)</span> 元</td>
+<td><span class="arithmatex">\(15\)</span></td>
+<td><span class="arithmatex">\(55\)</span></td>
+<td><span class="arithmatex">\(40\)</span></td>
+</tr>
+<tr>
+<td>第三天</td>
+<td>卖出 <span class="arithmatex">\(100\%\)</span></td>
+<td><span class="arithmatex">\(205\)</span></td>
+<td><span class="arithmatex">\(0\)</span></td>
+<td><span class="arithmatex">\(0\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>注意到，同一天内可以进行多次操作。</p>
+<p>小 Y 是一个很有经济头脑的员工，通过较长时间的运作和行情测算，他已经知道了未来 <span class="arithmatex">\(N\)</span> 天内的 A 券和 B 券的价值以及 <span class="arithmatex">\(\mathrm{Rate}\)</span>。他还希望能够计算出来，如果开始时拥有 <span class="arithmatex">\(S\)</span> 元钱，那么 <span class="arithmatex">\(N\)</span> 天后最多能够获得多少元钱。</p>
+<p>输入格式</p>
+<p>第一行两个正整数 <span class="arithmatex">\(N,S\)</span>，分别表示小 Y 能预知的天数以及初始时拥有的钱数。</p>
+<p>接下来 <span class="arithmatex">\(N\)</span> 行，第 <span class="arithmatex">\(K\)</span> 行三个实数 <span class="arithmatex">\(A_K,B_K,\mathrm{Rate} _ K\)</span> ，意义如题目中所述。</p>
+<p>输出格式</p>
+<p>只有一个实数 <span class="arithmatex">\(\mathrm{MaxProfit}\)</span>，表示第 <span class="arithmatex">\(N\)</span> 天的操作结束时能够获得的最大的金钱数目。答案保留 <span class="arithmatex">\(3\)</span> 位小数。</p>
+<p>对于 <span class="arithmatex">\(100\%\)</span> 的测试数据，满足：</p>
+<p><span class="arithmatex">\(0 &lt; A_K \leq 10\)</span>，<span class="arithmatex">\(0 &lt; B_K\le 10\)</span>，<span class="arithmatex">\(0 &lt; \mathrm{Rate}_K \le 100\)</span>，<span class="arithmatex">\(\mathrm{MaxProfit}  \leq 10^9\)</span>。</p>
+<p>输入文件可能很大，请采用快速的读入方式。</p>
+<p>必然存在一种最优的买卖方案满足：</p>
+<p>每次买进操作使用完所有的人民币，每次卖出操作卖出所有的金券。</p>
+<hr />
+<h3 id="_17">思路</h3>
+<p>最重要的往往在最后头理！</p>
+<p><strong>必然存在一种最优的买卖方案满足：</strong></p>
+<p><strong>每次买进操作使用完所有的人民币，每次卖出操作卖出所有的金券。</strong></p>
+<p>那么这就有利于我们设计本题的dp了，并且本题就和股票买卖（<a href="https://www.acwing.com/problem/content/1057/">https://www.acwing.com/problem/content/1057/</a>）差不多了。设f_i表示第i天最多的人民币数，那么有两种转移</p>
+<ul>
+<li>
+<p>买入金券，那么到这里我们会不会想到怎么样记录当前状态还剩下多少金券呢？其实是不用的，我们只需要记录对于每个f_i可以买多少金券即可。并且买入金券对f是负贡献，我们没必要转移</p>
+</li>
+<li>
+<p>卖出金券，那么我们要枚举当前的金券是在那一天j买入的，那么转移<span class="arithmatex">\(f_{i}=\max(f_i,A_ix_j+B_iy_j)\)</span>，x_j,y_j表示使用f_j全额购买金券可得A,B券数量。其中x_j=\frac{}{}。变形得<span class="arithmatex">\(f_{i}=\max(f_i,A_i(x_j+\frac{B_i}{A_i}y_j))=\max(f_i,A_i(b+kx))\)</span>，其中b=x_j,k=y_i,x是恒定值frac{B_i}{A_i}。那么我们就可以使用李超树优化。</p>
+</li>
+<li>
+<p>不做事，f_i=\max(f_i,f_{i-1})</p>
+</li>
+</ul>
+<h2 id="ceoi2017-building-bridges">[CEOI2017] Building Bridges</h2>
+<p>题目描述</p>
+<p>有 <span class="arithmatex">\(n\)</span> 根柱子依次排列，每根柱子都有一个高度。第 <span class="arithmatex">\(i\)</span> 根柱子的高度为 <span class="arithmatex">\(h_i\)</span>。</p>
+<p>现在想要建造若干座桥，如果一座桥架在第 <span class="arithmatex">\(i\)</span> 根柱子和第 <span class="arithmatex">\(j\)</span> 根柱子之间，那么需要 <span class="arithmatex">\((h_i-h_j)^2\)</span>​​ 的代价。</p>
+<p>在造桥前，所有用不到的柱子都会被拆除，因为他们会干扰造桥进程。第 <span class="arithmatex">\(i\)</span> 根柱子被拆除的代价为 <span class="arithmatex">\(w_i\)</span>，注意 <span class="arithmatex">\(w_i\)</span> 不一定非负，因为可能政府希望拆除某些柱子。</p>
+<p>现在政府想要知道，通过桥梁把第 <span class="arithmatex">\(1\)</span> 根柱子和第 <span class="arithmatex">\(n\)</span> 根柱子连接的最小代价。注意桥梁不能在端点以外的任何地方相交。</p>
+<p>输入格式</p>
+<p>第一行一个正整数 <span class="arithmatex">\(n\)</span>。</p>
+<p>第二行 <span class="arithmatex">\(n\)</span> 个空格隔开的整数，依次表示 <span class="arithmatex">\(h_1,h_2,\cdots,h_n\)</span>​​。</p>
+<p>第三行 <span class="arithmatex">\(n\)</span> 个空格隔开的整数，依次表示 <span class="arithmatex">\(w_1,w_2,\cdots,w_n\)</span>​​。</p>
+<p>输出格式</p>
+<p>输出一行一个整数表示最小代价，注意最小代价不一定是正数。</p>
+<p>对于 <span class="arithmatex">\(100\%\)</span> 的数据，有 <span class="arithmatex">\(2\le n\le 10^5;0\le h_i,\vert w_i\vert\le 10^6\)</span>。</p>
+<hr />
+<h3 id="_18">思路</h3>
+<p>首先， <span class="arithmatex">\(O(n^2)\)</span> 的 dp 转移方程极其显然：</p>
+<p><span class="arithmatex">\(f_i=\min\{f_j+h_i^2-2h_ih_j+h_j^2+s_{i-1}-s_j\}\)</span></p>
+<p>其中， <span class="arithmatex">\(s\)</span> 是拆除代价 <span class="arithmatex">\(w\)</span> 的前缀和。</p>
+<p>将式子化简，得到：</p>
+<p><span class="arithmatex">\(f_i=h_i^2+s_{i-1}+\min\{f_j-2h_ih_j+h_j^2-s_j\}\)</span></p>
+<p>令 <span class="arithmatex">\(a_j=-2h_j\)</span> ， <span class="arithmatex">\(b_j=f_j+h_j^2-s_j\)</span> ，则：</p>
+<p><span class="arithmatex">\(f_i=h_i^2+s_{i-1}+\min\{a_jh_i+b_j\}\)</span></p>
+<p>问题转化为，插入直线 <span class="arithmatex">\(y_j=a_jx+b_j\)</span> ，求 <span class="arithmatex">\(x=h_i\)</span> 时 <span class="arithmatex">\(y_j\)</span> 的最小值。</p>
+<p>很明显，可以用李超线段树优化，时间复杂度 <span class="arithmatex">\(O(n\log n)\)</span> 。</p>
+<hr />
+<pre><code class="language-C++">/*
+CB Ntsc
+*/
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+#define int long long
+#define ull unsigned long long
+#define pii pair&lt;int, int&gt;
+#define pf first
+#define ps second
+
+#define err cerr&lt;&lt;&quot;Error&quot;
+#define rd read()
+// #define nl putc('\n')
+#define ot write
+#define nl putchar('\n')
+inline int rd
+{
+    int xx=0,ff=1;
+    char ch=getchar();
+    while(ch&lt;'0'||ch&gt;'9') {if(ch=='-') ff=-1;ch=getchar();}
+    while(ch&gt;='0'&amp;&amp;ch&lt;='9') xx=xx*10+(ch-'0'),ch=getchar();
+    return xx*ff;
+}
+inline void write(int out)
+{
+    if(out&lt;0) putchar('-'),out=-out;
+    if(out&gt;9) write(out/10);
+    putchar(out%10+'0');
+}
+
+const int INF = 1e13;
+const int N = 2e5+5;
+const int M = 1e6+5;
+const int S=1e6+5;
+const int maxlog = 10;
+
+int a[N],b[N],h[N],w[N],f[N];
+int s[M&lt;&lt;2],u;
+inline int g(int x,int k){
+    return b[k]+a[k]*x;}
+
+
+
+void change(int k,int l,int r,int t){
+    if(l==r){
+        if(g(l,t)&lt;g(l,s[k]))s[k]=t;
+        return;
+    }
+    int m=l+r&gt;&gt;1;
+    if(g(m,t)&lt;g(m,s[k]))swap(t,s[k]);
+    if(g(l,t)&lt;g(l,s[k]))change(k&lt;&lt;1,l,m,t);
+    else if(g(r,t)&lt;g(r,s[k]))change(k&lt;&lt;1|1,m+1,r,t);
+}
+
+int query(int k,int l,int r){
+    if(l==r)return g(u,s[k]);
+    int m=l+r&gt;&gt;1;
+    return min(g(u,s[k]),u&lt;=m?query(k&lt;&lt;1,l,m):query(k&lt;&lt;1|1,m+1,r));
+}
+signed main(){
+    int n=rd;
+    b[0]=INF;
+    for(int i=1;i&lt;=n;++i)scanf(&quot;%lld&quot;,h+i);
+    for(int i=1;i&lt;=n;++i)scanf(&quot;%lld&quot;,w+i),w[i]+=w[i-1];
+    a[1]=-2*h[1],b[1]=h[1]*h[1]-w[1],change(1,0,M,1);
+    for(int i=2;i&lt;=n;++i){
+        u=h[i],f[i]=h[i]*h[i]+w[i-1]+query(1,0,M);
+        a[i]=-2*h[i],b[i]=f[i]+h[i]*h[i]-w[i],change(1,0,M,i);
+    }
+    printf(&quot;%lld&quot;,f[n]);
+    return 0;
+}
+
+
+/*
+2 5
+0 1 1 1 1
+0 1 1 2 4
+0 2 1 2 1
+0 2 1 1 4
+*/
+</code></pre>
+<h2 id="apio2014">[APIO2014] 序列分割</h2>
+<p>你正在玩一个关于长度为 <span class="arithmatex">\(n\)</span> 的非负整数序列的游戏。这个游戏中你需要把序列分成 <span class="arithmatex">\(k + 1\)</span> 个非空的块。为了得到 <span class="arithmatex">\(k + 1\)</span> 块，你需要重复下面的操作 <span class="arithmatex">\(k\)</span> 次：</p>
+<p>选择一个有超过一个元素的块（初始时你只有一块，即整个序列）</p>
+<p>选择两个相邻元素把这个块从中间分开，得到两个非空的块。</p>
+<p>每次操作后你将获得那两个新产生的块的元素和的乘积的分数。你想要最大化最后的总得分。</p>
+<p>输入格式</p>
+<p>第一行包含两个整数 <span class="arithmatex">\(n\)</span> 和 <span class="arithmatex">\(k\)</span>。保证 <span class="arithmatex">\(k + 1 \leq n\)</span>。</p>
+<p>第二行包含 <span class="arithmatex">\(n\)</span> 个非负整数 <span class="arithmatex">\(a_1, a_2, \cdots, a_n\)</span> <span class="arithmatex">\((0 \leq a_i \leq 10^4)\)</span>，表示前文所述的序列。</p>
+<p>输出格式</p>
+<p>第一行输出你能获得的最大总得分。</p>
+<p>第二行输出 <span class="arithmatex">\(k\)</span> 个介于 <span class="arithmatex">\(1\)</span> 到 <span class="arithmatex">\(n - 1\)</span> 之间的整数，表示为了使得总得分最大，你每次操作中分开两个块的位置。第 <span class="arithmatex">\(i\)</span> 个整数 <span class="arithmatex">\(s_i\)</span> 表示第 <span class="arithmatex">\(i\)</span> 次操作将在 <span class="arithmatex">\(s_i\)</span> 和 <span class="arithmatex">\(s_{i + 1}\)</span> 之间把块分开。</p>
+<p>如果有多种方案使得总得分最大，输出任意一种方案即可。</p>
+<p>提示</p>
+<p>你可以通过下面这些操作获得 <span class="arithmatex">\(108\)</span> 分：</p>
+<p>初始时你有一块 <span class="arithmatex">\((4, 1, 3, 4, 0, 2, 3)\)</span>。在第 <span class="arithmatex">\(1\)</span> 个元素后面分开，获得 <span class="arithmatex">\(4 \times (1 + 3 + 4 + 0 + 2 + 3) = 52\)</span> 分。</p>
+<p>你现在有两块 <span class="arithmatex">\((4), (1, 3, 4, 0, 2, 3)\)</span>。在第 <span class="arithmatex">\(3\)</span> 个元素后面分开，获得 <span class="arithmatex">\((1 + 3) \times (4 + 0 + 2 + 3) = 36\)</span> 分。</p>
+<p>你现在有三块 <span class="arithmatex">\((4), (1, 3), (4, 0, 2, 3)\)</span>。在第 <span class="arithmatex">\(5\)</span> 个元素后面分开，获得 <span class="arithmatex">\((4 + 0) \times (2 + 3) = 20\)</span> 分。</p>
+<p>所以，经过这些操作后你可以获得四块 <span class="arithmatex">\((4), (1, 3), (4, 0), (2, 3)\)</span> 并获得 <span class="arithmatex">\(52 + 36 + 20 = 108\)</span> 分。</p>
+<p>限制与约定</p>
+<p>第一个子任务共 11 分，满足 <span class="arithmatex">\(1 \leq k &lt; n \leq 10\)</span>。</p>
+<p>第二个子任务共 11 分，满足 <span class="arithmatex">\(1 \leq k &lt; n \leq 50\)</span>。</p>
+<p>第三个子任务共 11 分，满足 <span class="arithmatex">\(1 \leq k &lt; n \leq 200\)</span>。</p>
+<p>第四个子任务共 17 分，满足 <span class="arithmatex">\(2 \leq n \leq 1000, 1 \leq k \leq \min\{n - 1, 200\}\)</span>。</p>
+<p>第五个子任务共 21 分，满足 <span class="arithmatex">\(2 \leq n \leq 10000, 1 \leq k \leq \min\{n - 1, 200\}\)</span>。</p>
+<p>第六个子任务共 29 分，满足 <span class="arithmatex">\(2 \leq n \leq 100000, 1 \leq k \leq \min\{n - 1, 200\}\)</span>。</p>
+<p>感谢@larryzhong  提供的加强数据</p>
+<h3 id="_19">思路​</h3>
+<p>首先，这题<strong>答案与切的顺序无关</strong></p>
+<p>我们考虑先写出转移式</p>
+<p>定义f i,j为前i个数划分出j个区间，且倒数第二个区间的有端点为i的最大价值。此时我们默认最后一个区间还没有被划分，即存在在一个区间为[j,n]</p>
+<p>那么有<span class="arithmatex">\(f_{i,j}=\max(f_{k,j-1}+(s_n-s_{i})(s_{i}-s_{k}))\)</span>。</p>
+<p>整理一下——我们需要提取的因变量和自变量分别为和k有关的变量、和i有关的变量。暂时先省略j维度。</p>
+<p><span class="arithmatex">\(f_i=f_k+(s_n-s_{i})(s_{i}-s_{k})\)</span></p>
+<p>其中s_n,s_i为常量，那么整理为y=kx+b得到</p>
+<p>斜率优化需要整理的目标式子
+- x是与j相关的定量
+- y是仅包含以与j相关的量，且包含f_j
+- k是和i相关的定值
+- b是仅包含以与i相关的量，且包含f_i</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(f_i=f_k+s_i(s_n-s_i)-s_k(s_n-s_i)=f_k+s_i(s_n-s_i)-s_ks_n+s_ks_i\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(f_k-s_ks_n=-s_ks_i+f_i-s_i(s_n-s_i)\)</span></p>
+</li>
+</ul>
+<p>我们发现我们需要f_i尽可能大，即截距要尽可能大。我们把所有可转移点以<span class="arithmatex">\((-s_k,f_k-s_ks_n)\)</span>的形式在坐标系中标出，并且我们使用斜率k=s_i的直线去从上往下截所有点，第一个点就是最佳决策点。</p>
+<p>分析得我们应该维护一个上凸函数。类比分析如下：</p>
+<p><img alt="image.png" src="../DP%2B%2B%2BDP%E4%BC%98%E5%8C%96%2Bbb4d534b-c218-4ef3-bf0e-cd1133654a4a/image%201.png" /></p>
+<h2 id="_20">代码</h2>
+<pre><code class="language-C++">
+</code></pre>
+<h1 id="dp">决策单调性之 四边形不等式优化（决策单调性优化 dp）</h1>
+<p>通常是用来证明dp的一些特殊性质，会和其它dp优化方法结合，如斜率优化。</p>
+<p>四边形不等式优化和斜率优化本质上都是利用了<strong>单调性</strong>，所以有一些时候可以通用。</p>
+<p>关于决策单调性优化 dp，下面的博客讲的很清楚</p>
+<p><a href="https://www.luogu.com.cn/blog/1000suns/solution-p1912">www.luogu.com.cn</a></p>
+<p>下面是一些摘录</p>
+<hr />
+<p><strong>什么是决策单调性优化 dp？</strong></p>
+<p>形如 <span class="arithmatex">\(dp_i=\min/\max(dp_j+f(j,i))\)</span> 这类的式子，令 <span class="arithmatex">\(t_i\)</span> 为使得 <span class="arithmatex">\(dp_i\)</span> 取到 <span class="arithmatex">\(\min/\max\)</span> 的 <span class="arithmatex">\(j\)</span>，（其实 <span class="arithmatex">\(t_i\)</span> 就叫最优决策）若 <span class="arithmatex">\(t_i\)</span> 具有单调性，则这个 dp 式子就满足决策单调性。</p>
+<p><strong>具体如何判断？</strong></p>
+<p>令 <span class="arithmatex">\(f_j(i)\)</span> 为用 <span class="arithmatex">\(j\)</span> 转移时 <span class="arithmatex">\(dp_i\)</span> 的值（即 <span class="arithmatex">\(dp_j+f(j,i)\)</span>）。</p>
+<p>若对于任意 <span class="arithmatex">\(j_1&lt;j_2\)</span>，<span class="arithmatex">\(f_{j_1}(i)\)</span> 和 <span class="arithmatex">\(f_{j_2}(i)\)</span> 的函数图像至多有一个交点，在这个交点之前是 <span class="arithmatex">\(f_{j_1}(i)\)</span> 更小，在这个交点后是 <span class="arithmatex">\(f_{j_2}(i)\)</span> 更小，那么这个问题就满足决策单调性。</p>
+<p>因为交点之前的 <span class="arithmatex">\(i\)</span> 的决策都是 <span class="arithmatex">\(j_1\)</span>，交点后的决策都是 <span class="arithmatex">\(j_2\)</span>。正好满足决策单调性。</p>
+<p>（其实如果反之，在交点前都是 <span class="arithmatex">\(j_2\)</span> 更优而交点后都是 <span class="arithmatex">\(j_1\)</span> 更优，是一种不同的决策单调性问题，因与本题无关此处略去。）</p>
+<p>决策单调性的优化方法大致有决策栈，决策队列和分治。下面说明决策队列优化。</p>
+<p><strong>决策队列具体是这样做的：</strong></p>
+<p>队列维护决策三元组 <span class="arithmatex">\((p,l,r)\)</span> 表示目前看来 <span class="arithmatex">\(t_l,t_{l+1}\dots t_r\)</span> 都是 <span class="arithmatex">\(p\)</span>。一般来说一开始队列里只有三元组 <span class="arithmatex">\((0,1,n)\)</span>。</p>
+<p>每次计算 <span class="arithmatex">\(dp_i\)</span> 时，就先把队列中无用的三元组弹出（<span class="arithmatex">\(r&lt;i\)</span>），并把新的队首的 <span class="arithmatex">\(l\)</span> 设为 <span class="arithmatex">\(i\)</span>。此时 <span class="arithmatex">\(i\)</span> 在队首，所以 <span class="arithmatex">\(i\)</span> 的决策就是队首的 <span class="arithmatex">\(p\)</span>。用 <span class="arithmatex">\(dp_p\)</span> 更新 <span class="arithmatex">\(dp_i\)</span>。</p>
+<p>接下来从队尾开始扫，如果用 <span class="arithmatex">\(i\)</span> 来更新队尾的 <span class="arithmatex">\(l\)</span> 比队尾的 <span class="arithmatex">\(p\)</span> 更新队尾的 <span class="arithmatex">\(l\)</span> 更优，说明队尾的决策应该比 <span class="arithmatex">\(p\)</span> 更大（因为我们从小到大枚举 <span class="arithmatex">\(i\)</span>），那么根据决策单调性，整个三元组中的决策都比 <span class="arithmatex">\(p\)</span> 大。于是便可以弹出队尾。</p>
+<p>到最后用 <span class="arithmatex">\(i\)</span> 来更新队尾的 <span class="arithmatex">\(l\)</span> 没有队尾的 <span class="arithmatex">\(p\)</span> 更新队尾的 <span class="arithmatex">\(l\)</span> 优。那么我们就要找出决策变为 <span class="arithmatex">\(i\)</span> 的分界点。由于决策具有单调性，我们可以二分。二分边界就是队尾三元组的 <span class="arithmatex">\(l\)</span> 和 <span class="arithmatex">\(n\)</span>（为什么不是 <span class="arithmatex">\(r\)</span>？因为可能这整个三元组都满足原来的决策，此时二分却会把最后一个元素拆走）。</p>
+<p>二分出分界点 <span class="arithmatex">\(x\)</span> 后，队尾三元组的 <span class="arithmatex">\(r\)</span> 应改为 <span class="arithmatex">\(x-1\)</span>（之后的决策都要变）。队尾再新加入一个三元组 <span class="arithmatex">\((i,x,n)\)</span>，表示 <span class="arithmatex">\(x\)</span> 到 <span class="arithmatex">\(n\)</span> 的决策都可以改为更优的 <span class="arithmatex">\(i\)</span>。</p>
+<p>至此算法结束。</p>
+<p>因为每一个 <span class="arithmatex">\(i\)</span> 都会至多添加一个三元组，对一个三元组进行二分，又因为一个三元组至多被删除一次，所以复杂度为 <span class="arithmatex">\(O(n\log n)\)</span>。</p>
+<h2 id="noi2009-g">[NOI2009] 诗人小G</h2>
+<p>题目描述</p>
+<p>小 G 是一个出色的诗人，经常作诗自娱自乐。但是，他一直被一件事情所困扰，那就是诗的排版问题。</p>
+<p>一首诗包含了若干个句子，对于一些连续的短句，可以将它们用空格隔开并放在一行中，注意一行中可以放的句子数目是没有限制的。小 G 给每首诗定义了一个行标准长度（行的长度为一行中符号的总个数），他希望排版后每行的长度都和行标准长度相差不远。显然排版时，不应改变原有的句子顺序，并且小 G 不允许把一个句子分在两行或者更多的行内。在满足上面两个条件的情况下，小 G 对于排版中的每行定义了一个不协调度, 为这行的实际长度与行标准长度差值绝对值的 <span class="arithmatex">\(P\)</span> 次方，而一个排版的不协调度为所有行不协调度的总和。</p>
+<p>小 G 最近又作了几首诗，现在请你对这首诗进行排版，使得排版后的诗尽量协调（即不协调度尽量小），并把排版的结果告诉他。</p>
+<p>输入格式</p>
+<p>输入文件中的第一行为一个整数 <span class="arithmatex">\(T\)</span>，表示诗的数量。</p>
+<p>接下来为 <span class="arithmatex">\(T\)</span> 首诗，这里一首诗即为一组测试数据。每组测试数据中的第一行为三个由空格分隔的正整数 <span class="arithmatex">\(N,L,P\)</span>，其中：<span class="arithmatex">\(N\)</span> 表示这首诗句子的数目，<span class="arithmatex">\(L\)</span> 表示这首诗的行标准长度，<span class="arithmatex">\(P\)</span> 的含义见问题描述。</p>
+<p>从第二行开始，每行为一个句子，句子由英文字母、数字、标点符号等符号组成（ASCII 码 <span class="arithmatex">\(33 \sim 127\)</span>，但不包含 <code>-</code>）。</p>
+<p>输出格式</p>
+<p>于每组测试数据，若最小的不协调度不超过 <span class="arithmatex">\(10^{18}\)</span>，则第一行为一个数，表示不协调度。接下来若干行，表示你排版之后的诗。注意：在同一行的相邻两个句子之间需要用一个空格分开。</p>
+<p>如果有多个可行解，它们的不协调度都是最小值，则输出任意一个解均可。若最小的不协调度超过 <span class="arithmatex">\(10^{18}\)</span>，则输出 <code>Too hard to arrange</code>。每组测试数据结束后输出 <code>--------------------</code>，共 20 个 <code>-</code>，<code>-</code> 的 ASCII 码为 45，请勿输出多余的空行或者空格。</p>
+<p>前两组输入数据中每行的实际长度均为 <span class="arithmatex">\(6\)</span>，后两组输入数据每行的实际长度均为 <span class="arithmatex">\(4\)</span>。一个排版方案中每行相邻两个句子之间的空格也算在这行的长度中（可参见样例中第二组数据）。每行末尾没有空格。</p>
+<h3 id="_21">思路</h3>
+<p>很显然的 dp 方程：</p>
+<p><span class="arithmatex">\(f_i=\min(f_j+|\text{sum}_i-\text{sum}_j+i-j-1-L|^P)\)</span></p>
+<p>其中<span class="arithmatex">\(\text{sum}_x=\sum_{i=1}^xa_i\)</span>，即这里使用前缀和优化。a_i为第i个句子的长度。那么怎么优化呢？因为有一个P次方，数据结构优化是没办法了。</p>
+<p>我们可以发现|\text{sum}_i-\text{sum}_j+i-j-1-L|^P是存在决策单调性的。下面考虑证明：</p>
+<p>对于(i,j)(k,m)，设i&lt;j,k&lt;m，且i<k。那么我们之前做出的决策是用i的信息更新j，后面我们做出的决策是用k的信息更新m。若有k>i，则满足决策单调性。</p>
+<p>证明如下</p>
+<p><a href="https://www.luogu.com.cn/blog/wohaocaia/solution-p1912">www.luogu.com.cn</a></p>
+<p>以下是节选</p>
+<p>我们只需证明函数<span class="arithmatex">\(G_j(i)=|\text{sum}_i+i-(\text{sum}_j+j)-(1+L)|^P\)</span>满足四边形不等式。</p>
+<p><span class="arithmatex">\(\Leftrightarrow\ G_j(i+1)+G_{j+1}(i)\geq G_{j}(i)+G_{j+1}(i+1)\)</span></p>
+<hr />
+<pre><code class="language-C++">#include &lt;bits/stdc++.h&gt;
+#define rep(l, r, i) for (int i = l, END##i = r; i &lt;= END##i; ++i)
+#define per(r, l, i) for (int i = r, END##i = l; i &gt;= END##i; --i)
+using namespace std;
+#define int long long
+#define pii pair&lt;int, int&gt;
+
+#define lc(x) (x &lt;&lt; 1)
+#define rc(x) (x &lt;&lt; 1 | 1)
+#define ld long double
+
+#define rd read()
+int read() {
+  int xx = 0, ff = 1;
+  char ch = getchar();
+  while (ch &lt; '0' || ch &gt; '9') {
+    if (ch == '-')
+      ff = -1;
+    ch = getchar();
+  }
+  while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+    xx = xx * 10 + (ch - '0'), ch = getchar();
+  return xx * ff;
+}
+void write(int out) {
+  if (out &lt; 0)
+    putchar('-'), out = -out;
+  if (out &gt; 9)
+    write(out / 10);
+  putchar(out % 10 + '0');
+}
+
+const int N = 2e5 + 15;
+const int INF = 1e9 + 5;
+const int MOD = 998244353;
+
+int n,L,P,s[N],q[N],k[N],pr[N];
+ld f[N];
+char str[N][33];
+
+ld ksm(ld b){
+    ld a=1;
+    for(int k=P;k;k&gt;&gt;=1,b*=b)
+        if(k&amp;1)a*=b;
+    return a;
+}
+ld Calc(int i,int j){return f[j]+ksm(abs(s[i]-s[j]-L));}
+int bound(int x,int y){
+    int l=x,r=n+1,m;
+    while(l&lt;r){
+        m=(l+r)&gt;&gt;1;
+        Calc(m,x)&gt;=Calc(m,y)?r=m:l=m+1;
+    }
+    return l;
+}
+signed main(){
+    int T=rd,i,h,t;
+    while(T--){
+        n=rd;L=rd+1;P=rd;
+        for(i=1;i&lt;=n;++i){
+            if(scanf(&quot;%s&quot;,str[i]));
+            s[i]=s[i-1]+strlen(str[i])+1;
+        }
+        for(q[i=h=t=1]=0;i&lt;=n;++i){
+            while(h&lt;t&amp;&amp;k[h]&lt;=i)++h;
+            f[i]=Calc(i,q[h]);pr[i]=q[h];
+            while(h&lt;t&amp;&amp;k[t-1]&gt;=bound(q[t],i))--t;
+            k[t]=bound(q[t],i);q[++t]=i;
+        }
+        if(f[n]&gt;1e18)puts(&quot;Too hard to arrange&quot;);
+        else{
+            printf(&quot;%.0Lf\n&quot;,f[n]);
+            for(q[t=0]=i=n;i;q[++t]=i=pr[i]);
+            for(;t;--t){
+                for(i=q[t]+1;i&lt;q[t-1];++i)
+                    printf(&quot;%s &quot;,str[i]);
+                puts(str[i]);
+            }
+        }
+        puts(&quot;--------------------&quot;);
+    }
+    return 0;
+}
+
+</code></pre>
+<hr />
+<p>数据规模与约定</p>
+<table>
+<thead>
+<tr>
+<th>测试点</th>
+<th><span class="arithmatex">\(T\)</span></th>
+<th><span class="arithmatex">\(N\)</span></th>
+<th><span class="arithmatex">\(L\)</span></th>
+<th><span class="arithmatex">\(P\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(1\)</span></td>
+<td><span class="arithmatex">\(\le 10\)</span></td>
+<td><span class="arithmatex">\(\le18\)</span></td>
+<td><span class="arithmatex">\(\le 100\)</span></td>
+<td><span class="arithmatex">\(\le5\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(2\)</span></td>
+<td><span class="arithmatex">\(\le 10\)</span></td>
+<td><span class="arithmatex">\(\le 2\times 10^3\)</span></td>
+<td><span class="arithmatex">\(\le 6\times 10^4\)</span></td>
+<td><span class="arithmatex">\(\le10\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(3\)</span></td>
+<td><span class="arithmatex">\(\le 10\)</span></td>
+<td><span class="arithmatex">\(\le 2\times 10^3\)</span></td>
+<td><span class="arithmatex">\(\le 6\times 10^4\)</span></td>
+<td><span class="arithmatex">\(\le10\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(4\)</span></td>
+<td><span class="arithmatex">\(\le 5\)</span></td>
+<td><span class="arithmatex">\(\le 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 200\)</span></td>
+<td><span class="arithmatex">\(\le10\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(5\)</span></td>
+<td><span class="arithmatex">\(\le 5\)</span></td>
+<td><span class="arithmatex">\(\le 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 200\)</span></td>
+<td><span class="arithmatex">\(\le10\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(6\)</span></td>
+<td><span class="arithmatex">\(\le 5\)</span></td>
+<td><span class="arithmatex">\(\le 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 3\times 10^6\)</span></td>
+<td><span class="arithmatex">\(2\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(7\)</span></td>
+<td><span class="arithmatex">\(\le 5\)</span></td>
+<td><span class="arithmatex">\(\le 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 3\times 10^6\)</span></td>
+<td><span class="arithmatex">\(2\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(8\)</span></td>
+<td><span class="arithmatex">\(\le 5\)</span></td>
+<td><span class="arithmatex">\(\le 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 3\times 10^6\)</span></td>
+<td><span class="arithmatex">\(\le10\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(9\)</span></td>
+<td><span class="arithmatex">\(\le 5\)</span></td>
+<td><span class="arithmatex">\(\le 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 3\times 10^6\)</span></td>
+<td><span class="arithmatex">\(\le10\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(10\)</span></td>
+<td><span class="arithmatex">\(\le 5\)</span></td>
+<td><span class="arithmatex">\(\le 10^5\)</span></td>
+<td><span class="arithmatex">\(\le 3\times 10^6\)</span></td>
+<td><span class="arithmatex">\(\le10\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>所有句子的长度不超过 <span class="arithmatex">\(30\)</span> 。</p>
+<h2 id="hnoi2008">[HNOI2008] 玩具装箱</h2>
+<p>题目描述</p>
+<p>P 教授要去看奥运，但是他舍不下他的玩具，于是他决定把所有的玩具运到北京。他使用自己的压缩器进行压缩，其可以将任意物品变成一堆，再放到一种特殊的一维容器中。</p>
+<p>P 教授有编号为 <span class="arithmatex">\(1 \cdots n\)</span> 的 <span class="arithmatex">\(n\)</span> 件玩具，第 <span class="arithmatex">\(i\)</span> 件玩具经过压缩后的一维长度为 <span class="arithmatex">\(C_i\)</span>。</p>
+<p>为了方便整理，P教授要求：</p>
+<ul>
+<li>
+<p>在一个一维容器中的玩具编号是连续的。</p>
+</li>
+<li>
+<p>同时如果一个一维容器中有多个玩具，那么两件玩具之间要加入一个单位长度的填充物。形式地说，如果将第 <span class="arithmatex">\(i\)</span> 件玩具到第 <span class="arithmatex">\(j\)</span> 个玩具放到一个容器中，那么容器的长度将为 <span class="arithmatex">\(x=j-i+\sum\limits_{k=i}^{j}C_k\)</span>。</p>
+</li>
+</ul>
+<p>制作容器的费用与容器的长度有关，根据教授研究，如果容器长度为 <span class="arithmatex">\(x\)</span>，其制作费用为 <span class="arithmatex">\((x-L)^2\)</span>。其中 <span class="arithmatex">\(L\)</span> 是一个常量。P 教授不关心容器的数目，他可以制作出任意长度的容器，甚至超过 <span class="arithmatex">\(L\)</span>。但他希望所有容器的总费用最小。</p>
+<p>输入格式</p>
+<p>第一行有两个整数，用一个空格隔开，分别代表 <span class="arithmatex">\(n\)</span> 和 <span class="arithmatex">\(L\)</span>。</p>
+<p>第 <span class="arithmatex">\(2\)</span> 到 第 <span class="arithmatex">\((n + 1)\)</span> 行，每行一个整数，第 <span class="arithmatex">\((i + 1)\)</span> 行的整数代表第 <span class="arithmatex">\(i\)</span> 件玩具的长度 <span class="arithmatex">\(C_i\)</span>。</p>
+<p>输出格式</p>
+<p>输出一行一个整数，代表所有容器的总费用最小是多少。</p>
+<p>对于全部的测试点，<span class="arithmatex">\(1 \leq n \leq 5 \times 10^4\)</span>，<span class="arithmatex">\(1 \leq L \leq 10^7\)</span>，<span class="arithmatex">\(1 \leq C_i \leq 10^7\)</span>。</p>
+<hr />
+<p>std</p>
+<pre><code class="language-C++">#include &lt;bits/stdc++.h&gt;
+#define rep(l, r, i) for (int i = l, END##i = r; i &lt;= END##i; ++i)
+#define per(r, l, i) for (int i = r, END##i = l; i &gt;= END##i; --i)
+using namespace std;
+#define int long long
+#define pii pair&lt;int, int&gt;
+
+#define lc(x) (x &lt;&lt; 1)
+#define rc(x) (x &lt;&lt; 1 | 1)
+
+#define X(j) S[j]
+#define Y(j) (dp[j]+(S[j]+L)*(S[j]+L))
+
+#define rd read()
+int read() {
+  int xx = 0, ff = 1;
+  char ch = getchar();
+  while (ch &lt; '0' || ch &gt; '9') {
+    if (ch == '-')
+      ff = -1;
+    ch = getchar();
+  }
+  while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+    xx = xx * 10 + (ch - '0'), ch = getchar();
+  return xx * ff;
+}
+void write(int out) {
+  if (out &lt; 0)
+    putchar('-'), out = -out;
+  if (out &gt; 9)
+    write(out / 10);
+  putchar(out % 10 + '0');
+}
+
+const int N = 2e5 + 15;
+const int INF = 1e9 + 5;
+const int MOD = 1 &lt;&lt; 30;
+
+int i,j,n,L,h=1,t=0,Q[N],S[N],dp[N];
+
+inline int min(int a,int b){return a&lt;b?a:b;}
+inline long double slope(int i,int j){return (long double)(Y(j)-Y(i))/(X(j)-X(i));}
+signed main(){
+    scanf(&quot;%lld%lld&quot;,&amp;n,&amp;L);++L; 
+    for(i=1;i&lt;=n;S[i]+=S[i-1]+1,++i)scanf(&quot;%lld&quot;,&amp;S[i]);
+    Q[++t]=0;
+    for(i=1;i&lt;=n;++i){
+        while(h&lt;t&amp;&amp;slope(Q[h],Q[h+1])&lt;=2*S[i])++h;
+        dp[i]=dp[j=Q[h]]+(S[i]-S[j]-L)*(S[i]-S[j]-L);
+        while(h&lt;t&amp;&amp;slope(Q[t-1],Q[t])&gt;=slope(Q[t-1],i))--t;
+        Q[++t]=i;
+    }
+    printf(&quot;%lld&quot;,dp[n]);
+}
+</code></pre>
+<h2 id="ioi2000">[IOI2000] 邮局</h2>
+<p>题目描述</p>
+<p>高速公路旁边有一些村庄。高速公路表示为整数轴，每个村庄的位置用单个整数坐标标识。没有两个在同样地方的村庄。两个位置之间的距离是其整数坐标差的绝对值。</p>
+<p>邮局将建在一些，但不一定是所有的村庄中。为了建立邮局，应选择他们建造的位置，使每个村庄与其最近的邮局之间的距离总和最小。</p>
+<p>你要编写一个程序，已知村庄的位置和邮局的数量，计算每个村庄和最近的邮局之间所有距离的最小可能的总和。</p>
+<p>输入格式</p>
+<p>第一行包含两个整数：第一个是村庄 <span class="arithmatex">\(V\)</span> 的数量，第二个是邮局的数量 <span class="arithmatex">\(P\)</span>。</p>
+<p>第二行包含 <span class="arithmatex">\(V\)</span> 个整数。这些整数是村庄的位置。</p>
+<p>输出格式</p>
+<p>第一行包含一个整数<span class="arithmatex">\(S\)</span>，它是每个村庄与其最近的邮局之间的所有距离的总和。</p>
+<p>对于 <span class="arithmatex">\(40\%\)</span> 的数据，<span class="arithmatex">\(V \leq 300\)</span>。</p>
+<p>对于 <span class="arithmatex">\(100\%\)</span> 的数据，<span class="arithmatex">\(1 \leq P \leq 300\)</span>，<span class="arithmatex">\(P \leq V  \leq 3000\)</span>，$1 \leq $ 村庄位置 <span class="arithmatex">\(\leq 10000\)</span>。</p>
+<h3 id="_22">思路</h3>
+<p>提前预处理出w，w是可以O(V2)递推出来的，根据放置一个邮局，邮局位置总是在中位数处，便可推得。</p>
+<p>然后因为dp满足四边形不等式，所以对于dp[i][j]的最优决策d[i][j]，d[i][j−1]≤d[i][j]≤d[i+1][j]</p>
+<p>于是状态转移dp[i][j]时，从[d[i][j−1],d[i+1][j]]中找最优决策。</p>
+<hr />
+<pre><code class="language-C++">/*
+CB Ntsc111
+*/
+
+#include&lt;bits/stdc++.h&gt;
+using namespace std;
+// #define int long long
+#define ull unsigned long long
+#define pii pair&lt;int, int&gt;
+#define pf first
+#define ps second
+
+#define err cerr&lt;&lt;&quot;Error&quot;
+#define rd read()
+// #define nl putc('\n')
+#define ot write
+#define nl putchar('\n')
+inline int rd
+{
+    int xx=0,ff=1;
+    char ch=getchar();
+    while(ch&lt;'0'||ch&gt;'9') {if(ch=='-') ff=-1;ch=getchar();}
+    while(ch&gt;='0'&amp;&amp;ch&lt;='9') xx=xx*10+(ch-'0'),ch=getchar();
+    return xx*ff;
+}
+inline void write(int out)
+{
+    if(out&lt;0) putchar('-'),out=-out;
+    if(out&gt;9) write(out/10);
+    putchar(out%10+'0');
+}
+
+const int INF = 1e9;
+const int N = 3e3+5;
+const int M = 1e6+5;
+const int S=1e6+5;
+const int maxlog = 10;
+
+int v,p,pos[N],dp[N][N],w[N][N],d[N][N];
+
+void init() {
+    for(int l=1;l&lt;=v;l++) {
+        w[l][l]=0;
+        for(int r=l+1;r&lt;=v;r++) {
+            w[l][r]=w[l][r-1]+pos[r]-pos[l+r&gt;&gt;1];
+        }
+    }
+}
+
+int main() {
+  v=rd,p=rd;
+    for(int i=1;i&lt;=v;i++) pos[i]=rd;
+
+    init();
+    sort(pos+1,pos+v+1);
+    memset(dp,0x3f,sizeof(dp));
+    dp[0][0]=0;
+    for(int j=1;j&lt;=p;j++) {
+        d[v+1][j]=v;
+        for(int i=v;i&gt;=1;i--) {
+            int minn=INF,minid;
+            for(int k=d[i][j-1];k&lt;=d[i+1][j];k++) {
+                if(dp[k][j-1]+w[k+1][i]&lt;minn) {
+                    minn=dp[k][j-1]+w[k+1][i];
+                    minid=k;
+                }
+            }
+            dp[i][j]=minn;
+            d[i][j]=minid;
+        }
+    }
+
+    cout&lt;&lt;dp[v][p]&lt;&lt;endl;
+
+    return 0;
+}
+
+/*
+4
+()()
+1 -1 5 11
+
+4
+()()
+1 6 5 11
+*/
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
