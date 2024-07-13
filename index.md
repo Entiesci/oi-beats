@@ -1,4 +1,9 @@
-# Welcome to MkDocs
+# Welcome to OI-Beats
+
+Build by NtscYrx(Github).
+
+
+## Powered by MkDocs
 
 For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
@@ -16,10 +21,15 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
         index.md  # The documentation homepage.
         ...       # Other markdown pages, images and other files.
 
+## 正则表达式
 
 如果你想要匹配字符串中加号 “+” 后面的所有内容，可以使用以下正则表达式：
 
+```
 \+(.*)
+```
 
+## 重命名原则：
 
-文件名末尾不能出现空格
+- 文件名末尾不能出现空格
+- 主文件夹需要clear，子文件夹不得修改名称
