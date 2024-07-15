@@ -1,12 +1,12 @@
 专题 | 高级の树上问题
 
-# 动态树（LCT）
-
-请先学习**Splay**  [平衡树](https://flowus.cn/9fdf7962-0706-4e16-9e5e-250e2f144e09)
-
 [【详解】动态树 LCT_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV18v4y1r7pd/?spm_id_from=333.337.search-card.all.click&vd_source=f45ea4e1e4b3b73d5f07c57b46c43aba)
 
 [165 动态树 Link Cut Tree_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV14S4y1x7rr/?spm_id_from=333.999.0.0)
+
+# 动态树（LCT）
+
+请先学习**Splay**  [其它平衡树](https://flowus.cn/9fdf7962-0706-4e16-9e5e-250e2f144e09)
 
 给定 $n$ 个点以及每个点的权值，要你处理接下来的 $m$ 个操作。
 操作有四种，操作从 $0$ 到 $3$ 编号。点从 $1$ 到 $n$ 编号。
