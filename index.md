@@ -2,6 +2,8 @@
 
 Build by NtscYrx(Github).
 
+[Visit OI-Beats / 访问网站](https://ntsc-yrx.github.io/oi-beats/site/)
+
 
 ## Powered by MkDocs
 
