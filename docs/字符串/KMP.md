@@ -82,7 +82,7 @@ KMP算法是一种改进的字符串匹配算法,其关键是利用匹配失败�
 
 [www.luogu.com.cn](https://www.luogu.com.cn/problem/P4391)
 
-# 扩展KMP（exkmp）
+## 扩展KMP（exkmp）
 
 [183 扩展 KMP(Z 函数)_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1Y54y1o7Ca/?spm_id_from=333.999.0.0)
 
@@ -158,7 +158,7 @@ signed main(){
 
 注意求的是b的z函数
 
-## Z函数
+### Z函数
 
 z 函数
 对于一个长度为 n 的字符串 s 。$ z_i$表示 $s $与其后缀 $s[ i , n ] $的最长公共前缀 （ LCP ） 的长度
@@ -167,7 +167,7 @@ z 函数
 
 暴力计算自然是O(n^2)
 
-## Z-box
+### Z-box
 
 手扶着铁窗~~我望~~外边~~~
 
@@ -205,7 +205,7 @@ z 函数
 
 很明显，以左图为例，红色box区间已经没有用处了，而现在我们知道蓝色区间对应相等，那么我们就可以把box转移到[l',r']
 
-## 代码
+### 代码
 
 ```C++
 void get_z(char s[],int n){
@@ -223,7 +223,11 @@ void get_z(char s[],int n){
 
 时间复杂度完全取决于while，而我们知道，只有当前z[i]对应字符的右边界伸出了box，伸出多少就跑几遍while。而在伸出后我们又会更新box，所以我们的while次数$=r$从$1\sim n=n$次
 
-## P函数
+### P函数
+
+$b$ 与 $a$ 的每一个后缀的 LCP 长度数组 $p$。
+
+
 
 ```C++
 void get_p(char s[],char p[],int n,int m){

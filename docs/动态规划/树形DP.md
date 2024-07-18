@@ -508,3 +508,179 @@ signed main(){
 
 对于全部的测试点，保证 $1 \leq n \leq 1500$。
 
+## 换根DP
+
+有些时候，题目要求最优化一个值，但是它和选择哪个节点作为根节点，或者是从那个节点开始扩散有关，时间复杂度有要求我们不能采用n次dfs（树形dp），这时我们就需要使用换根dp了。
+
+换根dp是树形dp的一种，它通过第一遍dfs得到的数据（入将1作为根节点跑出的各个节点的dp值），在第二次dfs中加以利用，通过转移式快速根据已有信息求出将邻接点作为根节点时的答案。
+
+### 例题 #1深度之和最大
+
+#### 题目描述
+
+给出一个N个点的树,找出一个点来,以这个点为根的树时,所有点的深度之和最大
+
+#### 输入格式
+
+给出一个数字N,代表有N个点.N<=1000000 下面N-1条边.
+
+#### 输出格式
+
+输出你所找到的点,如果具有多个解,请输出任意一个
+
+---
+
+换根dp
+
+```C++
+/*                                                                                
+                      Keyblinds Guide
+     				###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt+la/ra : move mouse to pre/nxt pos'
+	  
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+
+// #define innt int
+#define itn int
+// #define inr intw
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9') {
+		if (ch == '-')
+			ff = -1;
+		ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+	if (out < 0)
+		putchar('-'), out = -out;
+	if (out > 9)
+		write(out / 10);
+	putchar(out % 10 + '0');
+}
+
+#define ell dbg('\n')
+const char el='\n';
+const bool enable_dbg = 1;
+template <typename T,typename... Args>
+void dbg(T s,Args... args) {
+	if constexpr (enable_dbg){
+    cerr << s;
+    if(1)cerr<<' ';
+		if constexpr (sizeof...(Args))
+			dbg(args...);
+	}
+}
+
+#define zerol = 1
+#ifdef zerol
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() { cerr << endl; }
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) { for (auto v: a) cerr << v << ' '; err(x...); }
+template<typename T, typename... A>
+void err(T a, A... x) { cerr << a << ' '; err(x...); }
+#else
+#define dbg(...)
+#endif
+
+
+const int N = 3e6 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+vector<int>e[N];
+
+void add(int a,int b){
+    e[a].push_back(b);
+    e[b].push_back(a);
+}
+
+
+int sz[N];
+int sum[N];
+int n;
+
+void dfs(int x,int fa){
+    sz[x]=1;
+    for(auto v:e[x]){
+        if(v==fa)continue;
+        dfs(v,x);
+        sz[x]+=sz[v];
+    }
+
+}
+
+// 换根dp
+void dfs2(int x,int fa){
+    for(auto v:e[x]){
+        if(v==fa)continue;
+        sum[v]=sum[x]+n-sz[v]*2;
+        dfs2(v,x);
+    }
+}
+
+void solve(){
+    n=rd;
+    for(itn i=1;i<n;i++){
+        add(rd,rd);
+    }
+
+
+    dfs(1,0);
+    dfs2(1,0);
+    int ans=-INF;
+    int ansid=1;
+
+    for(int i=1;i<=n;i++){
+        if(sum[i]>ans){
+            ans=sum[i];
+            ansid=i;
+        }
+    }
+
+    cout<<ansid<<endl;
+}
+
+
+
+signed main() {
+    // freopen(".in","r",stdin);
+    // freopen(".in","w",stdout);
+
+    int T=1;
+    while(T--){
+    	solve();
+    }
+    return 0;
+}
+```
+

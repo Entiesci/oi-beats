@@ -1,14 +1,14 @@
 # Dijkstra
 
-·通过已得到最短路径的的点去扩展其他的点，设起点为 s
+通过已得到最短路径的的点去扩展其他的点，设起点为 s
 
-·设定 `dist[s]=0;dist[v]=inf(v!=s)`
+设定 `dist[s]=0;dist[v]=inf(v!=s)`
 
 - 找到最小的 `dist [ u ]`（且 u 没有被访问过）此时的 `dist [ u ]`就是起点到该点的最短路（为什么？→之后的dis值一定大于dis_u，不会更新dis_u）
 
 - 更新与 u 相连的点
 
-vector 版本
+vector 写法
 
 ```C++
 #include<bits/stdc++.h>

@@ -157,3 +157,31 @@ signed main(){
 [www.luogu.com.cn](https://www.luogu.com.cn/problem/P1441)
 
 
+## union
+
+以下代码
+
+```C++
+union node{
+	int a;
+	char b;
+}s;
+
+signed main(){
+	cin>>s.a>>s.b;
+	cout<<s.b<<endl<<s.a;
+	
+	return 0;
+}
+
+```
+
+```Plain Text
+in: 456 c
+out: c 99
+```
+
+即改变要求，会把其他的都变成改值对应类型的值。
+
+
+

@@ -456,11 +456,6 @@ signed main() {
 
 ```
 
-# Sunday 算法
-
-[zhuanlan.zhihu.com](https://zhuanlan.zhihu.com/p/142895983)
-
-
 # 后缀平衡树
 
 [其它平衡树](https://flowus.cn/9fdf7962-0706-4e16-9e5e-250e2f144e09)
