@@ -41,7 +41,7 @@
       - ctrl+D : choose this and dump to the next
       - ctrl+Shift+L : choose all like this
       - ctrl+K then ctrl+W: close all
-      - Alt+la/ra : move mouse to pre/nxt pos'
+      - Alt/nxt pos'
 	  
 */
 #include <bits/stdc++.h>
@@ -210,7 +210,7 @@ signed main(){
 			tmp=tmp*sum%MOD;
 			sum--;
 		}
-		ans=(ans+1-inv*tmp%MOD+MOD)%MOD;//1为总方案的概率，inv*tmp为不合法的概率
+		ans=(ans/1为总方案的概率，inv*tmp为不合法的概率
 	}
 	cout<<ans<<endl;               
 }

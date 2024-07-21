@@ -30,7 +30,7 @@
 
 
 
-![image.png](数位DP+556d536f-56bd-4832-9621-a9bc52899570/image.png)
+![image.png](数位DP/image.png)
 
 
 
@@ -89,7 +89,7 @@ void init(){
 	for(int i=0;i<N;i++){
 		for(int j=0;j<=i;j++){
 			if(!j)f[i][j]=1;
-			else f[i][j]=f[i-1][j]+f[i-1][j-1];//从i位中挑选j位为1的方案数
+			else f[i][j]=f[i-1][j]/从i位中挑选j位为1的方案数
 		}
 	}
 }
@@ -347,7 +347,7 @@ int C(int x, int y) {
 //         j<<=1;
 //     }
 //     int emt=x-i;
-//     int res=(i-j-1)/2+min(j/2,j-emt);
+//     int res=(i-j-1)/2/2,j-emt);
 //     // cerr<<x<<' '<<res<<endl;
 //     return res;
 // }
@@ -402,11 +402,11 @@ signed main (){
 
 参考题解
 
-![image.png](数位DP+556d536f-56bd-4832-9621-a9bc52899570/image 1.png)
+![image.png](数位DP/image 1.png)
 
-![image.png](数位DP+556d536f-56bd-4832-9621-a9bc52899570/image 2.png)
+![image.png](数位DP/image 2.png)
 
-![image.png](数位DP+556d536f-56bd-4832-9621-a9bc52899570/image 3.png)
+![image.png](数位DP/image 3.png)
 
 ```C++
 /*

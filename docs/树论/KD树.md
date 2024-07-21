@@ -7,7 +7,7 @@
 
 ## **定义**
 
-![image.png](KD树+b2692636-3475-4e22-ae42-26159fd7137f/image.png)
+![image.png](KD树/image.png)
 
 节点信息如下。
 
@@ -22,7 +22,7 @@ struct node{
 
 ## 建树
 
-![image.png](KD树+b2692636-3475-4e22-ae42-26159fd7137f/image 1.png)
+![image.png](KD树/image 1.png)
 
 在kd树的第一层，我们按照x值的大小来排序，选择x为中位数的那个点(x',y')作为当前节点，并且把树分为x<x',x>x'两个部分。在第2层，我们则按照y值大小来排序，选择y为中位数的那个点(x',y')作为当前节点，并且把树分为y<y',y>y'两个部分。如此递归下去直到区间不可划分为止。
 
@@ -54,11 +54,11 @@ int build(int l,int r,int k){
 
 
 
-![image.png](KD树+b2692636-3475-4e22-ae42-26159fd7137f/image 2.png)
+![image.png](KD树/image 2.png)
 
 
 
-![image.png](KD树+b2692636-3475-4e22-ae42-26159fd7137f/image 3.png)
+![image.png](KD树/image 3.png)
 
 更新节点的区间信息
 
@@ -92,7 +92,7 @@ void pushup(int x){
 
 我们考虑以下流程：
 
-![image.png](KD树+b2692636-3475-4e22-ae42-26159fd7137f/image 4.png)
+![image.png](KD树/image 4.png)
 
 对于给定点cur=(3,4)，我们先从根节点进入。计算处(3,4)到两个节点的子树代表的区间的距离。这个样例里很明显，到左边区间的距离为0，到右边区间的距离为4（垂线），这个消息我们可以通过左右子树的ul,ur来计算。
 
@@ -147,7 +147,7 @@ db dis2(int x){
 
 [题解 | 平面最近点对](https://flowus.cn/cba00ceb-b309-4e66-9416-2405d85ac6e2)
 
-![image.png](KD树+b2692636-3475-4e22-ae42-26159fd7137f/image 5.png)
+![image.png](KD树/image 5.png)
 
 ## 插入
 
@@ -179,7 +179,7 @@ void insert(int &x,int k){
 
 我们再考虑一下，如果我们按照某种规律不断插入一个点，这样我们就可能使得这棵树退化为一条链。所以我们要在这棵树的左右儿子不均衡时对这棵树继续重构。
 
-![image.png](KD树+b2692636-3475-4e22-ae42-26159fd7137f/image 6.png)
+![image.png](KD树/image 6.png)
 
 如图，左边的树不均衡，我们将其重构后变成了右边的样子。
 
@@ -206,7 +206,7 @@ int rebuild(int l,int r,int k){
 	if(l>r)return 0;
 	int mid=l+r>>1;
 	K=k;
-	nth_element(g+l,g+mid,g+r+1,cmp);//按照re[g[i]].loc[k]大小排序
+	nth_element(g/按照re[g[i]].loc[k]大小排序
 	tr[g[mid]].l=build(l,mid-1,k^1);
 	tr[g[mid]].r=build(mid+1,r,k^1);
 	pushup(g[mid]);
@@ -216,7 +216,7 @@ int rebuild(int l,int r,int k){
 
 补充知识
 
-![image.png](KD树+b2692636-3475-4e22-ae42-26159fd7137f/image 7.png)
+![image.png](KD树/image 7.png)
 
 
 

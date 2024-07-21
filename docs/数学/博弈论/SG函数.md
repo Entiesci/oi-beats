@@ -8,15 +8,15 @@
 
 
 
-![image.png](SG函数+bbee77b4-8ceb-4133-ac59-5672c7eed329/image.png)
+![image.png](SG函数/image.png)
 
 ### 运算定义
 
-![image.png](SG函数+bbee77b4-8ceb-4133-ac59-5672c7eed329/image 1.png)
+![image.png](SG函数/image 1.png)
 
 ### 函数定义
 
-![image.png](SG函数+bbee77b4-8ceb-4133-ac59-5672c7eed329/image 2.png)
+![image.png](SG函数/image 2.png)
 
 对于某个节点,若其SG为0,则该点的玩家必败.反正必胜
 
@@ -24,13 +24,13 @@
 
 我们来进行以下对SG函数的求解练习
 
-![image.png](SG函数+bbee77b4-8ceb-4133-ac59-5672c7eed329/image 3.png)
+![image.png](SG函数/image 3.png)
 
 图中绿色数字即该点的SG值，请注意，图2的根节点1的SG值为0.请结合定义思考。
 
 ### 状态
 
-![image.png](SG函数+bbee77b4-8ceb-4133-ac59-5672c7eed329/image 4.png)
+![image.png](SG函数/image 4.png)
 
 让我们结合图2进行具体分析：
 
@@ -48,11 +48,11 @@
 
 对于多个有向图组成的组合游戏,如图,根据定理得先手必胜.因为先手一定可以找到一个走法,让场上3颗棋子的所在位置的SG异或和=0,给对手一个必败态.接下来无论对手怎么走,都会留下一个必胜态给先手
 
-![image.png](SG函数+bbee77b4-8ceb-4133-ac59-5672c7eed329/image 5.png)
+![image.png](SG函数/image 5.png)
 
 ### 整理总结
 
-![image.png](SG函数+bbee77b4-8ceb-4133-ac59-5672c7eed329/image 6.png)
+![image.png](SG函数/image 6.png)
 
 ### 实现方法 STL_Set
 
@@ -87,27 +87,27 @@ list<int> a(n, n + 5); // 将数组n的前5个元素作为集合a的初值
 
 ### 例题 #1
 
-![image.png](SG函数+bbee77b4-8ceb-4133-ac59-5672c7eed329/image 7.png)
+![image.png](SG函数/image 7.png)
 
 例题简单,直接快照
 
-![image.png](SG函数+bbee77b4-8ceb-4133-ac59-5672c7eed329/image 8.png)
+![image.png](SG函数/image 8.png)
 
 注:每个节点的子节点都是这个节点取了 $a_i$ 个石子后剩下的石子数量
 
-![image.png](SG函数+bbee77b4-8ceb-4133-ac59-5672c7eed329/image 9.png)
+![image.png](SG函数/image 9.png)
 
 回顾下普通Nim游戏
 
-![image.png](SG函数+bbee77b4-8ceb-4133-ac59-5672c7eed329/image 10.png)
+![image.png](SG函数/image 10.png)
 
 ### 例题 #2
 
-![image.png](SG函数+bbee77b4-8ceb-4133-ac59-5672c7eed329/image 11.png)
+![image.png](SG函数/image 11.png)
 
 算法
 
-![image.png](SG函数+bbee77b4-8ceb-4133-ac59-5672c7eed329/image 12.png)
+![image.png](SG函数/image 12.png)
 
 $mex$的第一个部分即按行剪的结果,第2部分即按列剪的结果
 
@@ -115,7 +115,7 @@ $mex$的第一个部分即按行剪的结果,第2部分即按列剪的结果
 
 因为最终的叶子节点的剩余纸片长宽 $≥2$ ,因此$mex$中 $2≤i$ 
 
-![image.png](SG函数+bbee77b4-8ceb-4133-ac59-5672c7eed329/image 13.png)
+![image.png](SG函数/image 13.png)
 
 有2个$2,4$?
 

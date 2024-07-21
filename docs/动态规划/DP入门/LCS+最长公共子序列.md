@@ -40,7 +40,7 @@ int main(){
 		if(web[p2[i]]>dp[ans])dp[++ans]=web[p2[i]];
 		else{
 			while(l<r){
-				mid=(l+r)/2;
+				mid=(l/2;
 				if(dp[mid]>web[p2[i]])r=mid;
 				else l=mid+1;
 			}

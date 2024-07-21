@@ -17,7 +17,7 @@ memcpy(cur,h,sizeof h);
 以下代码可以一步将b插入到a的后面，当然你手写也行，只不过效率低下
 
 ```C++
-memcpy(a+len_a, b, len_b);//a,b为数组,len_a,len_b为变量，存的是a,b数组的大小
+memcpy(a/a,b为数组,len_a,len_b为变量，存的是a,b数组的大小
 ```
 
 **注意**
@@ -62,7 +62,7 @@ Dinic算法一次可以累加多条增广路的流量。
 
 以上会在bfs时处理出来
 
-![image.png](Dinic算法+80e63b27-6f6a-4738-8153-371e507252d8/image.png)
+![image.png](Dinic算法/image.png)
 
 ## 代码
 
@@ -92,7 +92,7 @@ bool bfs(){//对每个点进行分层 ,为dfs找增广路做准备
 		for(int i=h[u];i;i=e[i].nxt){
 			int v=e[i].v;
 			if(!d[v]&&e[i].c){//如果没有访问过v并且这条边有剩余容量 
-				d[v]=d[u]+1;//v点位于u的下一层 
+				d[v]=d[u]/v点位于u的下一层 
 				q.push(v) ;
 				if(v==t)return 1;
 			}
@@ -109,7 +109,7 @@ int dfs(int u,int mf){//当前点u,(这条路径上)走到u时的剩余流量
 	 	cur[u]=i;//记录从哪一条边走出去了，当前弧优化
 	 	int v=e[i].v;
 	 	
-	 	if(d[v]==d[u]+1&&e[i].c){//如果v在u的下一层 并且有剩余容量 
+	 	if(d[v]==d[u]/如果v在u的下一层 并且有剩余容量 
 	 		int f=dfs(v,min(mf,e[i].c));//正如EK中的'mf[v]=min(mf[u],e[i].c);' 
 		 	//回
 			e[i].c-=f;

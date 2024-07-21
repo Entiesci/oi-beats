@@ -60,7 +60,7 @@ XOR 的运算真值表如下。
 
 
 
-![image.png](动态树（LCT）+4077b622-00bd-4d7d-b2a6-0ca0e0d73b87/image.png)
+![image.png](动态树（LCT）/image.png)
 
 
 
@@ -126,7 +126,7 @@ void rotate(int x){
 
 
 
-![image.png](动态树（LCT）+4077b622-00bd-4d7d-b2a6-0ca0e0d73b87/image 1.png)
+![image.png](动态树（LCT）/image 1.png)
 
 
 
@@ -686,7 +686,7 @@ signed main() {
 
 输出一行一个整数：如果小 E 可以成功拜访到隐士，输出小 E 最少需要携 带的守护精灵的总个数；如果无论如何小 E 都无法拜访到隐士，输出 `-1`。
 
-![https://cdn.luogu.com.cn/upload/pic/2593.png](动态树（LCT）+4077b622-00bd-4d7d-b2a6-0ca0e0d73b87/2593.png)
+![https://cdn.luogu.com.cn/upload/pic/2593.png](动态树（LCT）/2593.png)
 
 ```C++
 // 维护边权（维护生成树）的LCT实现
@@ -853,7 +853,7 @@ signed main() {
 
 在某个时刻，一条边的负载就是它所在的当前能够联通的树上路过它的简单路径的数量。
 
-![https://cdn.luogu.com.cn/upload/pic/13969.png](动态树（LCT）+4077b622-00bd-4d7d-b2a6-0ca0e0d73b87/13969.png)
+![https://cdn.luogu.com.cn/upload/pic/13969.png](动态树（LCT）/13969.png)
 
 例如，在上图中，现在一共有了 $5$ 条边。其中，$(3,8)$ 这条边的负载是 $6$，因为有六条简单路径 $2-3-8$,$2-3-8-7$,$3-8,3-8-7$,$4-3-8$,$4-3-8-7$ 路过了 $(3,8)$。
 

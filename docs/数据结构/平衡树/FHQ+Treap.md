@@ -2,11 +2,11 @@
 
 [163 普通平衡树 FHQ Treap_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1kY4y1j7LC/?spm_id_from=333.337.search-card.all.click&vd_source=f45ea4e1e4b3b73d5f07c57b46c43aba)
 
-![image.png](FHQ+Treap+6b13862c-c8d9-46dc-b4ca-8110ad402d3b/image.png)
+![image.png](FHQ/image.png)
 
 ## 重要操作 split
 
-![image.png](FHQ+Treap+6b13862c-c8d9-46dc-b4ca-8110ad402d3b/image 1.png)
+![image.png](FHQ/image 1.png)
 
 ```C++
 //分裂 根据v将树划分为2个子树 
@@ -27,7 +27,7 @@ void split(int i,int v,int &x,int &y){//i当前节点，v划分数值， 返回�
 
 ## 重要操作 merge
 
-![image.png](FHQ+Treap+6b13862c-c8d9-46dc-b4ca-8110ad402d3b/image 2.png)
+![image.png](FHQ/image 2.png)
 
 ```C++
 //合并 分裂的逆过程.递归缝合2个分裂的treap 
@@ -78,7 +78,7 @@ void insert(int v){
 ```C++
 int getk(int i,int k){//获取中序排序第k个值的编号 
 	if(k<=tr[tr[i].l].size)return getk(tr[i].l,k);//说明要找到点在左子树,那么去左子树找第k个 
-	if(k==tr[tr[i].l].size+1)return i;//找到了 
+	if(k==tr[tr[i].l].size/找到了 
 	return getk(tr[i].r,k-tr[tr[i].l].size-1);//否则 说明要找到点在右子树,那么去左子树找第(k-size左子树)个(左子树已经有size个了,那么要找整个的第k个,只要找右子树的第(k-size左子树)个即可) 
 }
 ```
@@ -122,7 +122,7 @@ void getsuc(int v){//找到v的后驱 (即>v的最小的那个点)
 void getrank(int v){//查询val=v的点的排名(从小到大) 如果有重复的val=v的节点只计第一个,排序不去重 
 	int x,y;
 	split(root,v-1,x,y);//劈开,变成<v(x)和>=v(y) 2个树 
-	cout<<tr[x].size+1<<endl;//子树x的大小就是val=v的点前面有几个点 
+	cout<<tr[x].size/子树x的大小就是val=v的点前面有几个点 
 	root=merge(x,y);
 }
 ```
@@ -241,7 +241,7 @@ void del(int v){
 } 
 int getk(int i,int k){//获取中序排序第k个值的编号 
 	if(k<=tr[tr[i].l].size)return getk(tr[i].l,k);//说明要找到点在左子树,那么去左子树找第k个 
-	if(k==tr[tr[i].l].size+1)return i;//找到了 
+	if(k==tr[tr[i].l].size/找到了 
 	return getk(tr[i].r,k-tr[tr[i].l].size-1);//否则 说明要找到点在右子树,那么去左子树找第(k-size左子树)个(左子树已经有size个了,那么要找整个的第k个,只要找右子树的第(k-size左子树)个即可) 
 } 
 int getpre(int v){//找到v的前驱 (即<v的最大的那个点)
@@ -261,7 +261,7 @@ int getsuc(int v){//找到v的后驱 (即>v的最小的那个点)
 void getrank(int v){//查询val=v的点的排名(从小到大) 如果有重复的val=v的节点只计第一个,排序不去重 
 	int x,y;
 	split(root,v-1,x,y);//劈开,变成<v(x)和>=v(y) 2个树 
-	cout<<tr[x].size+1<<endl;//子树x的大小就是val=v的点前面有几个点 
+	cout<<tr[x].size/子树x的大小就是val=v的点前面有几个点 
 	root=merge(x,y);
 }
 void getval(int k){//查询排名为k的节点的值

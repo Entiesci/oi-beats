@@ -3,6 +3,7 @@ theme:
     features:
         - navigation.tabs
     name: "material"
+    custom_dir: overrides
     logo: images/logo.svg
     icon: images/logo.svg
     palette:

@@ -36,11 +36,11 @@ SAT问题，即给出若干个与x_n有关的命题，命题内部只有或，�
 
 2-SAT问题，即每个命题内部只有两个变量x_i,x_j。我们要判断并给出解。不是NPC问题。
 
-![image.png](2-SAT+125b0bcb-46ff-4adb-a51c-fe715a0eea40/image.png)
+![image.png](2-SAT/image.png)
 
 注意a=0时的特殊情况
 
-![image.png](2-SAT+125b0bcb-46ff-4adb-a51c-fe715a0eea40/image 1.png)
+![image.png](2-SAT/image 1.png)
 
 把2-SAT转化为图如图（一个命题→两条有向边）
 
@@ -60,7 +60,7 @@ SAT问题，即给出若干个与x_n有关的命题，命题内部只有或，�
 
 首先如果存在块包含a,-b,c，那么一定存在块包含-a,b,-c。即每个块都存在与之相反的完全相同的块。
 
-![image.png](2-SAT+125b0bcb-46ff-4adb-a51c-fe715a0eea40/image 2.png)
+![image.png](2-SAT/image 2.png)
 
 题型可以会给出3种关系
 
@@ -75,7 +75,7 @@ SAT问题，即给出若干个与x_n有关的命题，命题内部只有或，�
 注意！文章中的`→`是一个二元关系符号，而不是日常中的“推出”。可以理解为“能推出”，它表示两个值之间的关系。真值表如下
 
 
-    ![image.png](2-SAT+125b0bcb-46ff-4adb-a51c-fe715a0eea40/image 3.png)
+    ![image.png](2-SAT/image 3.png)
 
 ---
 

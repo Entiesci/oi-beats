@@ -12,11 +12,11 @@
 
 ## 例题 #1
 
-![image.png](K短路算法+e34c1ea9-6819-4673-8c60-1f71708de8cb/image.png)
+![image.png](K短路算法/image.png)
 
 做法
 
-![image.png](K短路算法+e34c1ea9-6819-4673-8c60-1f71708de8cb/image 1.png)
+![image.png](K短路算法/image 1.png)
 
 注：三元组为（当前代价+估价，当前点编号，当前点到起点的距离）
 
@@ -26,7 +26,7 @@
 
 注意这些
 
-![image.png](K短路算法+e34c1ea9-6819-4673-8c60-1f71708de8cb/image 2.png)
+![image.png](K短路算法/image 2.png)
 
 敲一遍代码
 
@@ -74,7 +74,7 @@ void djstr(){
 		for(int i=rh[u];i;i=ne[i]){
 			int v=to[i];
 			if(f[v]>f[u]+w[i]){
-				f[v]=f[u]+w[i];//f[v]是点v到t的当前距离(当前的djstr是预处理估价函数的,把t当作起点)，也是其估价函数 
+				f[v]=f[u]/f[v]是点v到t的当前距离(当前的djstr是预处理估价函数的,把t当作起点)，也是其估价函数 
 				q.push(make_pair(-f[v],v));
 			}
 		}

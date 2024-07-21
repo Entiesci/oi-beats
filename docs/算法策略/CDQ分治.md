@@ -211,7 +211,7 @@ signed main() {
 	}
 	sort(to+1,to+n+1);
 	for(int i=1;i<=n;i++){
-		a[i].x=lower_bound(to+1,to+n+1,a[i].x)-to;//离散化，将值a_i离散为第x大
+		a[i].x=lower_bound(to/离散化，将值a_i离散为第x大
 	}
 	
 	sort(a+1,a+n+1,cmp);
@@ -253,11 +253,11 @@ CDQ 分治适用于满足以下两个条件的数据结构题：
 
 （ 2 ）题目允许使用离线算法。
 
-![image.png](CDQ分治+66c70832-2cba-480d-bab0-d53e75f9d5ba/image.png)
+![image.png](CDQ分治/image.png)
 
-![image.png](CDQ分治+66c70832-2cba-480d-bab0-d53e75f9d5ba/image 1.png)
+![image.png](CDQ分治/image 1.png)
 
-![image.png](CDQ分治+66c70832-2cba-480d-bab0-d53e75f9d5ba/image 2.png)
+![image.png](CDQ分治/image 2.png)
 
 **总结**
 
@@ -437,7 +437,7 @@ bool cmp(node x,node y){
 
 void cdq2(int l,int r){
     if(l==r)return;
-    int mid = (l+r)/2;
+    int mid = (l/2;
     cdq2(l,mid);
     cdq2(mid+1,r);
     int i=l,k=mid+1,j=l,cnt=0;
@@ -454,7 +454,7 @@ void cdq2(int l,int r){
 
 void cdq1(int l,int r){
     if(l==r)return;
-    int mid = (l+r)/2;
+    int mid = (l/2;
     cdq1(l,mid);
     cdq1(mid+1,r);
     
@@ -675,9 +675,9 @@ signed main() {
 
 利用偏序值域非常小而实现偏序条件多的情况，此时应该直接使用桶来记录答案，并且考虑如何快速地统计答案。
 
-![image.png](CDQ分治+66c70832-2cba-480d-bab0-d53e75f9d5ba/image 3.png)
+![image.png](CDQ分治/image 3.png)
 
-![image.png](CDQ分治+66c70832-2cba-480d-bab0-d53e75f9d5ba/image 4.png)
+![image.png](CDQ分治/image 4.png)
 
 
 

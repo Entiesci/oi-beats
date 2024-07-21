@@ -29,9 +29,18 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
 ```
 \+(.*)
+\+[0-9a-z](.*)
 ```
 
 ## 重命名原则：
 
 - 文件名末尾不能出现空格
 - 主文件夹需要clear，子文件夹不得修改名称
+
+## 更新原则
+
+在更新时，先将原docs文件夹重命名为docsOld，然后复制入新版本docs
+
+## 自定义 Theme
+
+http://mkdoc-material.llango.com/customization/#_3

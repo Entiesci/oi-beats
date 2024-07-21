@@ -59,7 +59,7 @@ caaaba
       - ctrl+D : choose this and dump to the next
       - ctrl+Shift+L : choose all like this
       - ctrl+K then ctrl+W: close all
-      - Alt+la/ra : move mouse to pre/nxt pos'
+      - Alt/nxt pos'
 	  
 */
 #include <bits/stdc++.h>
@@ -279,7 +279,7 @@ Impossible
       - ctrl+D : choose this and dump to the next
       - ctrl+Shift+L : choose all like this
       - ctrl+K then ctrl+W: close all
-      - Alt+la/ra : move mouse to pre/nxt pos'
+      - Alt/nxt pos'
 	  
 */
 #include <bits/stdc++.h>
@@ -381,7 +381,7 @@ void solve(){
             }
 
             for(int j=r;j>=l;j--){
-                mn[j]=min(mn[j+1],a[j]);//后缀min
+                mn[j]=min(mn[j/后缀min
                 cnt[a[j]]++;
             }
 
@@ -461,4 +461,131 @@ signed main() {
 可怜的小 c 并不会做这道题，于是只好请求你来帮忙。
 
 对于 $100 \%$ 的数据，$1 \le k \le n \le 500$。
+
+---
+
+```C++
+/*                                                                                
+                      Keyblinds Guide
+     				###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt/nxt pos'
+	  
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+
+// #define innt int
+// #define inr int
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9') {
+		if (ch == '-')
+			ff = -1;
+		ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+	if (out < 0)
+		putchar('-'), out = -out;
+	if (out > 9)
+		write(out / 10);
+	putchar(out % 10 + '0');
+}
+
+#define ell dbg('\n')
+const char el='\n';
+const bool enable_dbg = 1;
+template <typename T,typename... Args>
+void dbg(T s,Args... args) {
+	if constexpr (enable_dbg){
+    cerr << s << ' ';
+		if constexpr (sizeof...(Args))
+			dbg(args...);
+	}
+}
+
+const int N = 1e3 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+int f[N][N][6];
+int n,K;
+string s;
+
+int cmp(int a,int b){
+    if((s[a]=='('||s[a]=='?')&&(s[b]==')'||s[b]=='?'))return 1;
+    return 0;
+}
+
+void momo(int l,int r){
+    for(int i=0;i<=5;i++){
+        f[l][r][i]%=MOD;
+    }
+}
+
+void solve(){
+    n=rd,K=rd;
+    cin>>s;
+    s=" "+s;
+    for(int i=1;i<=n;i++)f[i][i-1][0]=1;
+    rep(len,1,n){
+        rep(l,1,n-len+1){
+            int r=l+len-1;
+            if(len<=K) f[l][r][0]=f[l][r-1][0]&&(s[r]=='*'||s[r]=='?');
+            momo(l,r);
+            if(len>=2){
+                if(cmp(l,r)) f[l][r][1]=(f[l+1][r-1][0]+f[l+1][r-1][2]+f[l+1][r-1][3]+f[l+1][r-1][4]);
+                rep(i,l,r-1){
+                    f[l][r][2]+=f[l][i][3]*f[i+1][r][0];
+                    f[l][r][3]+=(f[l][i][2]+f[l][i][3])*f[i+1][r][1];
+                    f[l][r][4]+=(f[l][i][4]+f[l][i][5])*f[i+1][r][1];
+                    f[l][r][5]+=f[l][i][4]*f[i+1][r][0];
+                    momo(l,r);
+                }
+            }
+            f[l][r][5]+=f[l][r][0];
+            f[l][r][3]+=f[l][r][1];
+            momo(l,r);
+        }
+    }
+
+
+    cout<<f[1][n][3]<<endl;
+
+}
+
+signed main() {
+    int T=1;
+    while(T--){
+    	solve();
+    }
+    return 0;
+}
+```
 

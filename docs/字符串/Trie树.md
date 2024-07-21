@@ -31,7 +31,7 @@ Trie树，是一种树形结构，是一种哈希树的变种。典型应用是�
 
 ## 思路
 
-![image.png](Trie树+dfc14b8d-7a95-4407-857a-5bf9668400ad/image.png)
+![image.png](Trie树/image.png)
 
 
 **数据结构**
@@ -81,6 +81,10 @@ int find(char s[]){
 }
 ```
 
+**清空**
+
+注意根节点（1或者0节点）也要清空！虽然不记录cnt，但是记录了s，而那些s已经被删除。
+
 ---
 
 ## 例题 #1
@@ -127,8 +131,8 @@ struct tree{
 int nend[MAXN],sum[MAXN];
 int getch(char c){
 	int ch;
-		if(c>='a')ch=c-'a'+10;// 10~35,a~z
-		else if(c>='A')ch=c-'A'+36;//36~61,A~Z
+		if(c>='a')ch=c-'a'/ 10~35,a~z
+		else if(c>='A')ch=c-'A'/36~61,A~Z
 		else ch=c-'0'; //0~9,0~9
 		return ch;
 }
@@ -176,6 +180,165 @@ int main(){
 	}
 	return 0;
 } 
+```
+
+## 例题 #2 Phone List
+
+题面翻译
+
+给定$n$个长度不超过$10$的数字串，判断是否有两个字符串$A$和$B$,满足$A$是$B$的前缀，若有，输出`NO`，若没有，输出`YES`。
+
+Translated by @wasa855
+
+```C++
+/*                                                                                
+                      Keyblinds Guide
+     				###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt/nxt pos'
+	  
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define ull unsigned long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+
+// #define innt int
+#define itn int
+// #define inr intw
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9') {
+		if (ch == '-')
+			ff = -1;
+		ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+	if (out < 0)
+		putchar('-'), out = -out;
+	if (out > 9)
+		write(out / 10);
+	putchar(out % 10 + '0');
+}
+
+#define ell dbg('\n')
+const char el='\n';
+const bool enable_dbg = 1;
+template <typename T,typename... Args>
+void dbg(T s,Args... args) {
+	if constexpr (enable_dbg){
+    cerr << s;
+    if(1)cerr<<' ';
+		if constexpr (sizeof...(Args))
+			dbg(args...);
+	}
+}
+
+#define zerol = 1
+#ifdef zerol
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() { cerr << endl; }
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) { for (auto v: a) cerr << v << ' '; err(x...); }
+template<typename T, typename... A>
+void err(T a, A... x) { cerr << a << ' '; err(x...); }
+#else
+#define dbg(...)
+#endif
+
+
+const int N = 3e5 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+int f;
+
+namespace Trie{
+    struct node{
+        int s[12];
+        int cnt;
+        int end;
+
+        void init(){
+            cnt=end=0;
+            memset(s,0,sizeof s);
+        }
+    }t[N];
+    int tot=0;
+
+    void init(){
+        for(int i=0;i<=tot;i++)memset(t[i].s,0,sizeof t[i].s),t[i].cnt=0,t[i].end=0;
+        tot=0;
+    }
+
+
+    void insert(string s){
+        int x=0;
+        for(int i=0;i<s.size();i++){
+            int cur=s[i]-'0';
+            if(!t[x].s[cur])t[x].s[cur]=++tot,t[tot].init();
+            x=t[x].s[cur];
+            t[x].cnt++;
+            if(t[x].end)f=1;
+        }
+        if(t[x].cnt>1)f=1;
+        t[x].end++;
+    }
+}using namespace Trie;
+
+void solve(){
+    itn n=rd;
+    init();
+    f=0;
+    for(int i=1;i<=n;i++){
+        string s;
+        cin>>s;
+        insert(s);
+    }
+    if(f){
+        puts("NO");
+    }else{
+        puts("YES");
+    }
+
+    
+}
+
+signed main() {
+    // freopen(".in","r",stdin);
+    // freopen(".in","w",stdout);
+
+    int T=rd;
+    while(T--){
+    	solve();
+    }
+    return 0;
+}
 ```
 
 ## **匹配子串（后缀Trie）**
@@ -370,7 +533,7 @@ signed main() {
 
 我们看到01trie是对每一个数字把其二进制加入trie树得到的。
 
-![image.png](Trie树+dfc14b8d-7a95-4407-857a-5bf9668400ad/image 1.png)
+![image.png](Trie树/image 1.png)
 
 当我们要查询所有数字中对x异或的最大值，那么我们就从低位到高位、同时从trie根节点往下按贪心策略（x当前位为1，那么走0，反之走1）走。
 

@@ -2,7 +2,7 @@
 
 ### **最大公因数**
 
-![v2-59ac8410625b8f4f90aa9aa07fd5e55a_b.jpg](GCD与LCM+3a49cee9-1262-4890-b5d6-4c0c3b9d463b/v2-59ac8410625b8f4f90aa9aa07fd5e55a_b.jpg)
+![v2-59ac8410625b8f4f90aa9aa07fd5e55a_b.jpg](GCD与LCM/v2-59ac8410625b8f4f90aa9aa07fd5e55a_b.jpg)
 
 ### **最小公倍数**
 

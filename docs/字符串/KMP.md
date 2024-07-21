@@ -121,7 +121,7 @@ void get_z(char s[],int n){
 		if(i<=r)z[i]=min(z[i-l+1],r-i+1);
 		while(s[1+z[i]]==s[i+z[i]])z[i]++;
 		
-		if(i+z[i]-1>r)l=i,r=i+z[i]-1;//转移box 
+		if(i/转移box 
 	}
 }
 
@@ -131,7 +131,7 @@ void get_p(char s[],char t[],int n,int m){
 		if(i<=r)p[i]=min(z[i-l+1],r-i+1);
 		while(s[1+p[i]]==t[i+p[i]]&&1+p[i]<=n&&i+p[i]<=m)p[i]++;
 		
-		if(i+p[i]-1>r)l=i,r=i+p[i]-1;//转移box 
+		if(i/转移box 
 	}
 }
 
@@ -163,7 +163,7 @@ signed main(){
 z 函数
 对于一个长度为 n 的字符串 s 。$ z_i$表示 $s $与其后缀 $s[ i , n ] $的最长公共前缀 （ LCP ） 的长度
 
-![image.png](KMP+2a5de329-21e9-4931-8bb4-b32fadc32ee2/image.png)
+![image.png](KMP/image.png)
 
 暴力计算自然是O(n^2)
 
@@ -171,7 +171,7 @@ z 函数
 
 手扶着铁窗~~我望~~外边~~~
 
-![image.png](KMP+2a5de329-21e9-4931-8bb4-b32fadc32ee2/image 1.png)
+![image.png](KMP/image 1.png)
 
 对于 i, 我们称区间$ [i,i+ z[i]- 1 ]$ 是的匹配段 ， 也可以叫 Z-box
 算法过程中我们维护右端点最靠右的匹配段 。 为了方便 ， 记作[l, r ] 。 s [l,r]一定等于 s  的前缀 。
@@ -181,15 +181,15 @@ z 函数
 
 **算法流程**
 
-![image.png](KMP+2a5de329-21e9-4931-8bb4-b32fadc32ee2/image 2.png)
+![image.png](KMP/image 2.png)
 
 对比一下？马拉车如下：
 
-![image.png](KMP+2a5de329-21e9-4931-8bb4-b32fadc32ee2/image 3.png)
+![image.png](KMP/image 3.png)
 
 我们来解释一下
 
-![image.png](KMP+2a5de329-21e9-4931-8bb4-b32fadc32ee2/image 4.png)
+![image.png](KMP/image 4.png)
 
 1. 我们可以保证s[1,r-l+1]=s[l,r]，但是其余部分我们不能保证。如果i在box内
 (1) 如z[i-l+1]<r-i+1，说明z[i-l+1]的对应的字符串全部在box内，所以我们可以保证z[i-l+1]可以完美转移到z[i]
@@ -201,7 +201,7 @@ z 函数
 
 求出 $z[i]$ 后 ， 如果 $i + z[i] - 1 > r$, 则更新盒子 $l = i , r = i + z [i]-1$。为什么呢？因为i + z[i] - 1 代表当前z[i]的对应串的右端点。如果i + z[i] - 1 > r，就说明对应串的右端点伸出了当前的box
 
-![image.png](KMP+2a5de329-21e9-4931-8bb4-b32fadc32ee2/image 5.png)
+![image.png](KMP/image 5.png)
 
 很明显，以左图为例，红色box区间已经没有用处了，而现在我们知道蓝色区间对应相等，那么我们就可以把box转移到[l',r']
 
@@ -214,7 +214,7 @@ void get_z(char s[],int n){
 	for(int i=2;i<=n;i++){
 		if(i<=r)z[i]=min(z[i-l+1],r-i+1);
 		while(s[1+z[i]]==s[i+z[i]])z[i]++;
-		if(i+z[i]-1>r)l=i;r=i+z[i]-1;//转移box 
+		if(i/转移box 
 	}
 }
 ```
@@ -236,7 +236,7 @@ void get_p(char s[],char p[],int n,int m){
 		if(i<=r)p[i]=min(z[i-l+1],r-i+1);
 		while(s[1+p[i]]==t[i+p[i]]&&1+p[i]<=n&&i+p[i]<=m)p[i]++;
 		
-		if(i+p[i]-1>r)l=i;r=i+p[i]-1;//转移box 
+		if(i/转移box 
 	}
 }
 ```
