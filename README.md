@@ -38,13 +38,13 @@
 
 而如果你想要引用这个 GitHub 仓库，可以使用如下的 bibtex：
 
-    @misc{oiwiki,
+    @misc{oibeats,
       author = {OI Beats Team},
       title = {OI Beats},
       year = {2024},
       publisher = {GitHub},
       journal = {GitHub Repository},
-      howpublished = {\url{https://github.com/OI-wiki/OI-wiki}},
+      howpublished = {\url{[https://github.com/OI-wiki/OI-wiki](https://github.com/Ntsc-Yrx/oi-beats/tree/main)}},
     }
 
 * * *
