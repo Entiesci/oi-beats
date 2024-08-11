@@ -4,7 +4,7 @@
 
 那么有什么办法让BST不退还成一条链呢？这里我们就可以使用平衡树了
 
-![image.png](Splay+7a29e064-21e4-4d0e-ba54-22200fd1acdb/image.png)
+![image.png](Splay/image.png)
 
 接下来我们介绍Splay的各种操作
 
@@ -26,13 +26,13 @@ struct node{
 
 **右旋**
 
-![image.png](Splay+7a29e064-21e4-4d0e-ba54-22200fd1acdb/image 1.png)
+![image.png](Splay/image 1.png)
 
 将原来x的父亲y作为x的儿子，然后将x的右儿子变成y的左儿子
 
 **左旋**
 
-![image.png](Splay+7a29e064-21e4-4d0e-ba54-22200fd1acdb/image 2.png)
+![image.png](Splay/image 2.png)
 
 **Code**
 
@@ -53,13 +53,13 @@ void rotate(int x){
 
 如图
 
-![image.png](Splay+7a29e064-21e4-4d0e-ba54-22200fd1acdb/image 3.png)
+![image.png](Splay/image 3.png)
 
 **Pushup**
 
 ```C++
 void pushup(int x){//由左右儿子信息更新父亲的信息
-	tr[x].size=tr[tr[x].s[0]].size+tr[tr[x].s[1]].size+tr[x].cnt;//儿子的size(子树和)加上自己的大小
+	tr[x].size=tr[tr[x].s[0]].size/儿子的size(子树和)加上自己的大小
 	//size存的是以x为根节点的子树的信息
 }
 ```
@@ -70,13 +70,13 @@ void pushup(int x){//由左右儿子信息更新父亲的信息
 
 我们使用以下三种方法的组合来实现目的
 
-![image.png](Splay+7a29e064-21e4-4d0e-ba54-22200fd1acdb/image 4.png)
+![image.png](Splay/image 4.png)
 
 问题：为什么我们不仅仅用单旋呢？
 
 结合实例，我们发现，如果仅仅用单旋，二叉树的状况不会得到改善。
 
-![image.png](Splay+7a29e064-21e4-4d0e-ba54-22200fd1acdb/image 5.png)
+![image.png](Splay/image 5.png)
 
 **Code**
 
@@ -127,7 +127,7 @@ int getlower(int v){
 
 **解说**
 
-![image.png](Splay+7a29e064-21e4-4d0e-ba54-22200fd1acdb/image 6.png)
+![image.png](Splay/image 6.png)
 
 我们要找到小于根节点v的最大值，那么根据BST性质，我们就先往v的左儿子走，现在当前点的子树都是<v的了，在其中找最大的，即不断往右儿子走
 
@@ -152,7 +152,7 @@ int getbigger(int v){
 
 我们考虑到直接删除节点比较麻烦，但如果这个点是一个叶子节点就简单多了，我们又观察到，在下图这个常见的结构中，son节点既满足son>x又满足son<y。在前面我们已经可以求出son的前驱和后继，那么只要我们把son的前驱和后继向上旋转，就可以把son移到叶子节点的位置，就方便删除了
 
-![image.png](Splay+7a29e064-21e4-4d0e-ba54-22200fd1acdb/image 7.png)
+![image.png](Splay/image 7.png)
 
 **Code**
 
@@ -193,7 +193,7 @@ int getval(int k){//查询第k小的点的权值
 	int x=rt;
 	k++;//因为有一个无穷小,所以实际上要查询的点是第k+1小的
 	while(1){
-		if(tr[tr[x].s[0]].size+tr[x].cnt<k){//走右边
+		if(tr[tr[x].s[0]].size/走右边
 			x=tr[x].s[1];k-=tr[tr[x].s[0]].size+tr[x].cnt;
 		}else{
 			if(tr[[x].s[0]].size>=k)x=tr[x].s[0];//走左边,若为true说明第k小的在左边,否则说明即不是右边,左边也没有,那就是它自己了
@@ -281,7 +281,7 @@ int n,rt,idx;
 bool f2;
 
 void pushup(int x){//由左右儿子信息更新父亲的信息
-	tr[x].size=tr[tr[x].s[0]].size+tr[tr[x].s[1]].size+tr[x].cnt;//儿子的size(子树和)加上自己的大小
+	tr[x].size=tr[tr[x].s[0]].size/儿子的size(子树和)加上自己的大小
 	//size存的是以x为根节点的子树的信息
 }
 
@@ -380,8 +380,8 @@ int getval(int k){//查询第k小的点的权值
 	k++;//因为有一个无穷小,所以实际上要查询的点是第k+1小的
 	while(1){
         if(k<=tr[tr[x].s[0]].size)x=tr[x].s[0];//如果k<=左儿子的size,那么就走左儿子
-		else if(tr[tr[x].s[0]].size+tr[x].cnt<k){//走右边
-			k-=tr[tr[x].s[0]].size+tr[x].cnt;x=tr[x].s[1];//!!
+		else if(tr[tr[x].s[0]].size/走右边
+			k-=tr[tr[x].s[0]].size/!!
 		}else{
 			// if(tr[y].size>=k)x=y;//走左边,若为true说明第k小的在左边,否则说明即不是右边,左边也没有,那就是它自己了
 			 break;

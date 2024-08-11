@@ -56,7 +56,7 @@ $x'a'+y'b'=gcd(a',b')=gcd(a,b)$
 
 => $b'=a\%b =a-[a/b]*b,a'=b$   代入
 
-=> $x'b+y'(a-[a/b]*b)=gcd(a,b)$
+=> $x'b/b]*b)=gcd(a,b)$
 
 => $(x'-y'*[a/b])b+y'a=gcd(a,b)=xa+yb$
 
@@ -119,10 +119,10 @@ signed main() {
 			if(x<0)k=ceil((1.00-x)/p),x+=p*k,y-=q*k;
 			else k=(x-1)/p,x-=p*k,y+=q*k;
 			if(y>0){
-				printf("%lld %lld %lld %lld %lld\n",(y-1)/q+1,x,(y-1)%q+1,x+(y-1)/q*p,y);
+				printf("%lld %lld %lld %lld %lld\n",(y-1)/q/q*p,y);
 				
 			}else{
-				printf("%lld %lld\n",x,y+q*(ll)ceil((1.0-y)/q));
+				printf("%lld %lld\n",x,y/q));
 			}
 		}
 		
@@ -141,14 +141,14 @@ signed main() {
 
 输入：
 
-```Plain Text
+```C++
 1
 64 36 4
 ```
 
 当代码运行到////AC/////处时：
 
-```Plain Text
+```C++
 d=4,x=4,y=-7
 ```
 
@@ -172,19 +172,17 @@ $ax+by=c$
 
 那么我们知道了一组特解x',y'后，通解的表达式是什么呢？
 
-```Plain Text
+$ax'+by'=gcd(a,b)$
 
-ax'+by'=gcd(a,b)
+$a(x'+b)+b(y'-a)=gcd(a,b)$
 
-a(x'+b)+b(y'-a)=gcd(a,b)
+$a(x'/d)=gcd(a,b)$
 
-a(x'+b/d)+b(y'-a/d)=gcd(a,b)
+$a(x'/d)=gcd(a,b) $
 
-a(x'+t\*b/d)+b(y'-t\*a/d)=gcd(a,b)  //t为任意整数
+t为任意整数。
 
-```
-
-故$a(x'+t*b/d)+b(y'-t*a/d)=gcd(a,b)$仍然有整数解
+故$a(x'/d)=gcd(a,b)$仍然有整数解
 
 所以$a*x + b*y = gcd(a,b)$的通解为
 
@@ -275,10 +273,10 @@ signed main() {
 			if(x<0)k=ceil((1.00-x)/p),x+=p*k,y-=q*k;
 			else k=(x-1)/p,x-=p*k,y+=q*k;
 			if(y>0){
-				printf("%lld %lld %lld %lld %lld\n",(y-1)/q+1,x,(y-1)%q+1,x+(y-1)/q*p,y);
+				printf("%lld %lld %lld %lld %lld\n",(y-1)/q/q*p,y);
 				
 			}else{
-				printf("%lld %lld\n",x,y+q*(ll)ceil((1.0-y)/q));
+				printf("%lld %lld\n",x,y/q));
 			}
 		}
 		

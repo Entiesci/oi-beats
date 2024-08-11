@@ -131,8 +131,8 @@ struct tree{
 int nend[MAXN],sum[MAXN];
 int getch(char c){
 	int ch;
-		if(c>='a')ch=c-'a'/ 10~35,a~z
-		else if(c>='A')ch=c-'A'/36~61,A~Z
+		if(c>='a')ch=c-'a'+10;// 10~35,a~z
+		else if(c>='A')ch=c-'A'+36;//36~61,A~Z
 		else ch=c-'0'; //0~9,0~9
 		return ch;
 }
@@ -201,7 +201,7 @@ Translated by @wasa855
       - ctrl+D : choose this and dump to the next
       - ctrl+Shift+L : choose all like this
       - ctrl+K then ctrl+W: close all
-      - Alt/nxt pos'
+      - Alt+la/ra : move mouse to pre/nxt pos'
 	  
 */
 #include <bits/stdc++.h>
@@ -371,6 +371,58 @@ signed main() {
 
 注意空间，和线段树一样是开死了的。
 
+不标准的trie，WA
+
+```C++
+
+namespace trie{
+    struct ndoe{
+        int s[2];
+        int cnt,val;
+    }t[N];
+    int idx=1;
+    void insert(int m){
+        // while(m){
+        //     int cur=m&1;
+        //     if(!t[x].s[cur])t[x].s[cur]=++idx;
+        //     x=t[x].s[cur];
+        //     t[x].cnt++;
+        //     m>>=1;
+        // }
+    }
+
+    void del(int m){
+
+        // while(m--){
+        //     int cur=m&1;
+        //     x=t[x].s[cur];
+        //     t[x].cnt--;
+        //     m>>=1;
+        // }
+    }
+
+    int query(int m){
+        int x=1;
+        // int res=0;
+        // while(1){
+        //     int cur=m&1;
+        //     int f=0;
+        //     if(t[x].s[1^cur]&&t[t[x].s[1^cur]].cnt)x=t[x].s[1^cur],f=1^cur;
+        //     else x=t[x].s[cur],f=cur;
+        //     if(!t[x].cnt)break;
+        //     res<<=1;
+        //     res|=cur^f;
+        //     m>>=1;
+        // }
+        // return res;
+        
+    }
+}using namespace trie;
+
+```
+
+标准trie
+
 ```C++
 /*                                                                                
                       Keyblinds Guide
@@ -448,20 +500,12 @@ namespace trie{
     void insert(int m){
         int x=1;
         for(int i=63;~i;i--){
-            int v=m>>i&1ll;
+            int v=m>>i&1ll; //注意！不要漏了ll，特别是写((1ll<<i)&a)时
             if(!t[x].s[v])t[x].s[v]=++idx;
             x=t[x].s[v];
             t[x].cnt++;
         }
         t[x].val=m;
-
-        // while(m){
-        //     int cur=m&1;
-        //     if(!t[x].s[cur])t[x].s[cur]=++idx;
-        //     x=t[x].s[cur];
-        //     t[x].cnt++;
-        //     m>>=1;
-        // }
     }
 
     void del(int m){
@@ -471,29 +515,10 @@ namespace trie{
             x=t[x].s[v];
             t[x].cnt--;
         }
-
-        // while(m--){
-        //     int cur=m&1;
-        //     x=t[x].s[cur];
-        //     t[x].cnt--;
-        //     m>>=1;
-        // }
     }
 
     int query(int m){
         int x=1;
-        // int res=0;
-        // while(1){
-        //     int cur=m&1;
-        //     int f=0;
-        //     if(t[x].s[1^cur]&&t[t[x].s[1^cur]].cnt)x=t[x].s[1^cur],f=1^cur;
-        //     else x=t[x].s[cur],f=cur;
-        //     if(!t[x].cnt)break;
-        //     res<<=1;
-        //     res|=cur^f;
-        //     m>>=1;
-        // }
-        // return res;
         for(int i=63;~i;i--){
             int v=m>>i&1ll;
             if(t[x].s[v^1]&&t[t[x].s[v^1]].cnt)x=t[x].s[v^1];
@@ -540,6 +565,8 @@ signed main() {
 ## 可持久化01trie
 
 参考[课程 | 树上问题](https://flowus.cn/ef4b3baf-5965-403c-b945-941120260c4a)[TJOI2018] 异或
+
+
 
 
 

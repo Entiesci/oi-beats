@@ -74,7 +74,7 @@ void djstr(){
 		for(int i=rh[u];i;i=ne[i]){
 			int v=to[i];
 			if(f[v]>f[u]+w[i]){
-				f[v]=f[u]/f[v]是点v到t的当前距离(当前的djstr是预处理估价函数的,把t当作起点)，也是其估价函数 
+				f[v]=f[u]+w[i];//f[v]是点v到t的当前距离(当前的djstr是预处理估价函数的,把t当作起点)，也是其估价函数 
 				q.push(make_pair(-f[v],v));
 			}
 		}

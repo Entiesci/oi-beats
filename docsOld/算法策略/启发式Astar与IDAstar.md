@@ -2,23 +2,23 @@
 
 ## 概述
 
-![image.png](启发式Astar与IDAstar+5e4d8b95-457d-40d5-ab5a-f47e82c4e77e/image.png)
+![image.png](启发式Astar与IDAstar/image.png)
 
 共性：
 
-![image.png](启发式Astar与IDAstar+5e4d8b95-457d-40d5-ab5a-f47e82c4e77e/image 1.png)
+![image.png](启发式Astar与IDAstar/image 1.png)
 
 # A*
 
-![image.png](启发式Astar与IDAstar+5e4d8b95-457d-40d5-ab5a-f47e82c4e77e/image 2.png)
+![image.png](启发式Astar与IDAstar/image 2.png)
 
 具体题目具体分析：
 
-![image.png](启发式Astar与IDAstar+5e4d8b95-457d-40d5-ab5a-f47e82c4e77e/image 3.png)
+![image.png](启发式Astar与IDAstar/image 3.png)
 
 做法
 
-![image.png](启发式Astar与IDAstar+5e4d8b95-457d-40d5-ab5a-f47e82c4e77e/image 4.png)
+![image.png](启发式Astar与IDAstar/image 4.png)
 
 注：三元组为（当前代价+估价，当前点编号，当前点到起点的距离）
 
@@ -28,7 +28,7 @@
 
 注意这些
 
-![image.png](启发式Astar与IDAstar+5e4d8b95-457d-40d5-ab5a-f47e82c4e77e/image 5.png)
+![image.png](启发式Astar与IDAstar/image 5.png)
 
 敲一遍代码
 
@@ -76,7 +76,7 @@ void djstr(){
 		for(int i=rh[u];i;i=ne[i]){
 			int v=to[i];
 			if(f[v]>f[u]+w[i]){
-				f[v]=f[u]+w[i];//f[v]是点v到t的当前距离(当前的djstr是预处理估价函数的,把t当作起点)，也是其估价函数 
+				f[v]=f[u]/f[v]是点v到t的当前距离(当前的djstr是预处理估价函数的,把t当作起点)，也是其估价函数 
 				q.push(make_pair(-f[v],v));
 			}
 		}
@@ -130,19 +130,19 @@ signed main(){
 
 同样的，具体题目具体分析：
 
-![image.png](启发式Astar与IDAstar+5e4d8b95-457d-40d5-ab5a-f47e82c4e77e/image 6.png)
+![image.png](启发式Astar与IDAstar/image 6.png)
 
 我们可以很明显的发现提示**迭代加深**的字眼：
 
-![image.png](启发式Astar与IDAstar+5e4d8b95-457d-40d5-ab5a-f47e82c4e77e/image 7.png)
+![image.png](启发式Astar与IDAstar/image 7.png)
 
 
 
-![image.png](启发式Astar与IDAstar+5e4d8b95-457d-40d5-ab5a-f47e82c4e77e/image 8.png)
+![image.png](启发式Astar与IDAstar/image 8.png)
 
 注意观察为什么要÷2
 
-![image.png](启发式Astar与IDAstar+5e4d8b95-457d-40d5-ab5a-f47e82c4e77e/image 9.png)
+![image.png](启发式Astar与IDAstar/image 9.png)
 
 ### 知识扩展：双向BFS
 
@@ -156,11 +156,11 @@ signed main(){
 
  
 
-![image.png](启发式Astar与IDAstar+5e4d8b95-457d-40d5-ab5a-f47e82c4e77e/image 10.png)
+![image.png](启发式Astar与IDAstar/image 10.png)
 
 考察以下案例
 
-![image.png](启发式Astar与IDAstar+5e4d8b95-457d-40d5-ab5a-f47e82c4e77e/image 11.png)
+![image.png](启发式Astar与IDAstar/image 11.png)
 
 我们发现了3个错误连接，分别为**1-4，5-2，3-6**
 
@@ -168,7 +168,7 @@ signed main(){
 
 怎么样，是不是想法很简单？
 
-![image.png](启发式Astar与IDAstar+5e4d8b95-457d-40d5-ab5a-f47e82c4e77e/image 12.png)
+![image.png](启发式Astar与IDAstar/image 12.png)
 
 IDA*算法需要具体题目具体讨论，没有固定的代码模板，这里也就不写了
 

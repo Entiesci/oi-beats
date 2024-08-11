@@ -44,3 +44,10 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 ## 自定义 Theme
 
 http://mkdoc-material.llango.com/customization/#_3
+
+## 更新步骤
+
+- 复制文件夹
+- 删除所有文件的文件名后缀 `\+\w+-\w+-\w+-\w+-\w+`->` `
+- 使用vscode删除文件中的链接后缀 `\+\w+-\w+-\w+-\w+-\w+`->` `
+- 将 脚本 文件夹内的文件复制到 docs 中

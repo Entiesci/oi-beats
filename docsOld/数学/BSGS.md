@@ -85,7 +85,7 @@ signed main() {
 
 独立分开枚举$i,j$都是$O(\sqrt m)$的复杂度。
 
-![image.png](BSGS+e432ca55-08c0-44b0-b667-bc8c8cfdf851/image.png)
+![image.png](BSGS/image.png)
 
 ```C++
 /*

@@ -16,7 +16,7 @@
 
 **初始化**
 
-![image.png](manacher+马拉车算法+e4100bf1-57ef-493a-addb-11ba2bb08a2a/image.png)
+![image.png](manacher+马拉车算法/image.png)
 
 Code
 
@@ -35,13 +35,13 @@ void init(){
 
 **优化数组**
 
-![image.png](manacher+马拉车算法+e4100bf1-57ef-493a-addb-11ba2bb08a2a/image 1.png)
+![image.png](manacher+马拉车算法/image 1.png)
 
 注释：d[i]记录长度的一半，向上取整（即$(len+1)\div 2$），即类似圆的半径，包含中间的那个字符
 
 在“加速盒子”中，当枚举到点i=6时，加速盒子的区间变成$[i-d_i+1=3,i+d_i-1=9]$，当枚举到点$j(j>i,j<i+d_i-1)$时，d[j]就可以直接从d[2\times i-j]转移过来。但注意，对于边界的点d[i+d_i-1=9]不能直接转移，这个请看下面的分析。盒子外的暴力。
 
-![image.png](manacher+马拉车算法+e4100bf1-57ef-493a-addb-11ba2bb08a2a/image 2.png)
+![image.png](manacher+马拉车算法/image 2.png)
 
 情况
 
@@ -49,7 +49,7 @@ void init(){
 
 
 
-![image.png](manacher+马拉车算法+e4100bf1-57ef-493a-addb-11ba2bb08a2a/image 3.png)
+![image.png](manacher+马拉车算法/image 3.png)
 
 
 
@@ -65,7 +65,7 @@ void init(){
 
 转移以下两幅图表达方式是等效的，作者可能在不经意间转换表达方式哦。
 
-![image.png](manacher+马拉车算法+e4100bf1-57ef-493a-addb-11ba2bb08a2a/image 4.png)
+![image.png](manacher+马拉车算法/image 4.png)
 
 **Code**
 
@@ -75,16 +75,16 @@ void getd(){
 	d[1]=1;
 	int l,r=1;//r只要小于2即可,目的是让下面第一次循环在i<=r不成立
 	for(int i=2;i<=ls;i++){
-		if(i<=r)d[i]=min(d[r-i+l],r-i+1);//转移d[i]且判定是否超出r
-		while(s[i-d[i]]==s[i+d[i]])d[i]++;//如果d[i]没有超出r,那么第一次while判定就不成立,该语句不会执行.如果i本来就在盒子外面,则上面一句话不会执行,直接到本句话开始暴力
-		if(i+d[i]-1>r)l=i-d[i]+1,r=i+d[i]-1;//转移盒子
+		if(i<=r)d[i]=min(d[r-i/转移d[i]且判定是否超出r
+		while(s[i-d[i]]==s[i/如果d[i]没有超出r,那么第一次while判定就不成立,该语句不会执行.如果i本来就在盒子外面,则上面一句话不会执行,直接到本句话开始暴力
+		if(i/转移盒子
 	}
 }
 ```
 
 各部分说明
 
-![image.png](manacher+马拉车算法+e4100bf1-57ef-493a-addb-11ba2bb08a2a/image 5.png)
+![image.png](manacher+马拉车算法/image 5.png)
 
 该算法时间复杂度可以证明为$O(n)$，因为你考虑i+d[i]，如果i+d[i]>r，那么才会执行while，然后又会将r修改为i+d[i]，即每次while运行一次，就会让r向右移动一位，r从1往右移动，到n停止，就n次。也就是说到会执行while时，i+d[i]一定是递增的，所以i+d[i] 只会从1递增到n，一共n次。这里描述不当，请仔细体会。
 
@@ -102,7 +102,7 @@ void getd(){
 #define rtn return
 using namespace std;
 
-const int N=2e7+2e6+5;//注意两倍空间 
+const int N=2e7/注意两倍空间 
 const int M=1e5;
 const int Mod=1e5;
 const int INF=1e5;
@@ -127,9 +127,9 @@ void getd(){
 	d[1]=1;
 	int l,r=1;//r只要小于2即可,目的是让下面第一次循环在i<=r不成立
 	for(int i=2;i<=ls;i++){
-		if(i<=r)d[i]=min(d[r-i+l],r-i+1);//转移d[i]且判定是否超出r
-		while(s[i-d[i]]==s[i+d[i]])d[i]++;//如果d[i]没有超出r,那么第一次while判定就不成立,该语句不会执行.如果i本来就在盒子外面,则上面一句话不会执行,直接到本句话开始暴力
-		if(i+d[i]-1>r)l=i-d[i]+1,r=i+d[i]-1;//转移盒子
+		if(i<=r)d[i]=min(d[r-i/转移d[i]且判定是否超出r
+		while(s[i-d[i]]==s[i/如果d[i]没有超出r,那么第一次while判定就不成立,该语句不会执行.如果i本来就在盒子外面,则上面一句话不会执行,直接到本句话开始暴力
+		if(i/转移盒子
 	}
 }
 
@@ -154,7 +154,7 @@ signed main(){
 
 ## 对比算法
 
-![image.png](manacher+马拉车算法+e4100bf1-57ef-493a-addb-11ba2bb08a2a/image 6.png)
+![image.png](manacher+马拉车算法/image 6.png)
 
 
 

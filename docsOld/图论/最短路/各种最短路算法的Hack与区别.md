@@ -24,7 +24,7 @@
 
 参见下表。表中每一行描述了一个子任务。其中前六个子任务与单源最短路相关，子任务 7,8 与神秘问题相关。每个任务所占分数见下表。
 
-![https://cdn.luogu.com.cn/upload/pic/4428.png](各种最短路算法的Hack与区别+e506c4b7-761d-4dfc-849e-8aa08a0095a2/4428.png)
+![https://cdn.luogu.com.cn/upload/pic/4428.png](各种最短路算法的Hack与区别/4428.png)
 
 ### 思路
 

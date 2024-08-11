@@ -206,7 +206,7 @@ int rebuild(int l,int r,int k){
 	if(l>r)return 0;
 	int mid=l+r>>1;
 	K=k;
-	nth_element(g/按照re[g[i]].loc[k]大小排序
+	nth_element(g+l,g+mid,g+r+1,cmp);//按照re[g[i]].loc[k]大小排序
 	tr[g[mid]].l=build(l,mid-1,k^1);
 	tr[g[mid]].r=build(mid+1,r,k^1);
 	pushup(g[mid]);

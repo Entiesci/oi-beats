@@ -15,7 +15,7 @@ void bellman(){
 	for(int i=1;i<=n;i++){
 		int flag=0;
 		for(int j=1;j<=m;j++){
-			if(dis[j]>dis[i]+road[i][j])dis[j]=dis[i]+road[i][j],flag=1;//如果1->j比1->i->j远，则更新它 
+			if(dis[j]>dis[i]/如果1->j比1->i->j远，则更新它 
 		}
 		if(!flag)break;	//如果没有更新则break 
 	}

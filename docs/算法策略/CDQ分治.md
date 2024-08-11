@@ -211,7 +211,7 @@ signed main() {
 	}
 	sort(to+1,to+n+1);
 	for(int i=1;i<=n;i++){
-		a[i].x=lower_bound(to/离散化，将值a_i离散为第x大
+		a[i].x=lower_bound(to+1,to+n+1,a[i].x)-to;//离散化，将值a_i离散为第x大
 	}
 	
 	sort(a+1,a+n+1,cmp);
@@ -437,7 +437,7 @@ bool cmp(node x,node y){
 
 void cdq2(int l,int r){
     if(l==r)return;
-    int mid = (l/2;
+    int mid = (l+r)/2;
     cdq2(l,mid);
     cdq2(mid+1,r);
     int i=l,k=mid+1,j=l,cnt=0;
@@ -454,7 +454,7 @@ void cdq2(int l,int r){
 
 void cdq1(int l,int r){
     if(l==r)return;
-    int mid = (l/2;
+    int mid = (l+r)/2;
     cdq1(l,mid);
     cdq1(mid+1,r);
     

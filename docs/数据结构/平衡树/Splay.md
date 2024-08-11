@@ -59,7 +59,7 @@ void rotate(int x){
 
 ```C++
 void pushup(int x){//由左右儿子信息更新父亲的信息
-	tr[x].size=tr[tr[x].s[0]].size/儿子的size(子树和)加上自己的大小
+	tr[x].size=tr[tr[x].s[0]].size+tr[tr[x].s[1]].size+tr[x].cnt;//儿子的size(子树和)加上自己的大小
 	//size存的是以x为根节点的子树的信息
 }
 ```
@@ -193,7 +193,7 @@ int getval(int k){//查询第k小的点的权值
 	int x=rt;
 	k++;//因为有一个无穷小,所以实际上要查询的点是第k+1小的
 	while(1){
-		if(tr[tr[x].s[0]].size/走右边
+		if(tr[tr[x].s[0]].size+tr[x].cnt<k){//走右边
 			x=tr[x].s[1];k-=tr[tr[x].s[0]].size+tr[x].cnt;
 		}else{
 			if(tr[[x].s[0]].size>=k)x=tr[x].s[0];//走左边,若为true说明第k小的在左边,否则说明即不是右边,左边也没有,那就是它自己了
@@ -281,7 +281,7 @@ int n,rt,idx;
 bool f2;
 
 void pushup(int x){//由左右儿子信息更新父亲的信息
-	tr[x].size=tr[tr[x].s[0]].size/儿子的size(子树和)加上自己的大小
+	tr[x].size=tr[tr[x].s[0]].size+tr[tr[x].s[1]].size+tr[x].cnt;//儿子的size(子树和)加上自己的大小
 	//size存的是以x为根节点的子树的信息
 }
 
@@ -380,8 +380,8 @@ int getval(int k){//查询第k小的点的权值
 	k++;//因为有一个无穷小,所以实际上要查询的点是第k+1小的
 	while(1){
         if(k<=tr[tr[x].s[0]].size)x=tr[x].s[0];//如果k<=左儿子的size,那么就走左儿子
-		else if(tr[tr[x].s[0]].size/走右边
-			k-=tr[tr[x].s[0]].size/!!
+		else if(tr[tr[x].s[0]].size+tr[x].cnt<k){//走右边
+			k-=tr[tr[x].s[0]].size+tr[x].cnt;x=tr[x].s[1];//!!
 		}else{
 			// if(tr[y].size>=k)x=y;//走左边,若为true说明第k小的在左边,否则说明即不是右边,左边也没有,那就是它自己了
 			 break;

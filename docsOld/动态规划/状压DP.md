@@ -86,15 +86,15 @@ Kiana 最近沉迷于一款神奇的游戏无法自拔。
 
 暴力的话就是
 
-![image.png](状压DP+60456607-3106-48b4-93ac-cec48858ae26/image.png)
+![image.png](状压DP/image.png)
 
-![image.png](状压DP+60456607-3106-48b4-93ac-cec48858ae26/image 1.png)
+![image.png](状压DP/image 1.png)
 
 左图中每一条紫色块就是一个点，白线就是抛物线。块覆盖的白线表示该条抛物线可以覆盖该点。我们解决问题就是要找最少的白线使得每一块上都有白线经过。
 
 本题的dp就是记忆化搜索。记$f_s$来保存状态为s时的res防止重复搜索。
 
-![image.png](状压DP+60456607-3106-48b4-93ac-cec48858ae26/image 2.png)
+![image.png](状压DP/image 2.png)
 
 注意验证二次函数合法性：$a<0,x1≠x2$
 
@@ -172,7 +172,7 @@ signed main(){
 				int cnt=0;
 				for(int k=0;k<n;k++){
 					double x=q[k].x,y=q[k].y;
-					if(cmp(a*x*x+b*x,y))cnt+=1<<k;//标记经过
+					if(cmp(a*x*x/标记经过
 				}
 				pa[i][j]=cnt;
 
@@ -239,7 +239,7 @@ PHHP
 
 在每一格平原地形上最多可以布置一支炮兵部队（山地上不能够部署炮兵部队）；一支炮兵部队在地图上的攻击范围如图中黑色区域所示：
 
-![https://cdn.luogu.com.cn/upload/pic/1881.png](状压DP+60456607-3106-48b4-93ac-cec48858ae26/1881.png)
+![https://cdn.luogu.com.cn/upload/pic/1881.png](状压DP/1881.png)
 
 如果在地图中的灰色所标识的平原上部署一支炮兵部队，则图中的黑色的网格表示它能够攻击到的区域：沿横向左右各两格，沿纵向上下各两格。
 
@@ -298,7 +298,7 @@ vector<int> s;//状态
 
 bool check(int s){
 	for(int i=0;i<m;i++){
-		if((s>>i&1)&&((s>>i+1&1)||(s>>i+2&1)))return 0;//只有当前这一位是1才需要判定与第i-1,i-2行是否合法
+		if((s>>i&1)&&((s>>i/只有当前这一位是1才需要判定与第i-1,i-2行是否合法
 	}
 	return 1;
 }
@@ -388,7 +388,7 @@ NOIP2017 D2T2
 
 为了加快转移过程，我们可以预处理g(i,j)为从点i到点集j的最小距离
 
-![image.png](状压DP+60456607-3106-48b4-93ac-cec48858ae26/image 3.png)
+![image.png](状压DP/image 3.png)
 
 
 
@@ -404,7 +404,7 @@ for(int i=1;i<1<<n;i++){
 
 图示
 
-![image.png](状压DP+60456607-3106-48b4-93ac-cec48858ae26/image 4.png)
+![image.png](状压DP/image 4.png)
 
 ---
 
@@ -451,7 +451,7 @@ vector<int> s;//状态
 
 bool check(int s){
 	for(int i=0;i<m;i++){
-		if((s>>i&1)&&((s>>i+1&1)||(s>>i+2&1)))return 0;//只有当前这一位是1才需要判定与第i-1,i-2行是否合法
+		if((s>>i&1)&&((s>>i/只有当前这一位是1才需要判定与第i-1,i-2行是否合法
 	}
 	return 1;
 }
@@ -502,7 +502,7 @@ signed main(){
 				}
 			}
 			if(res>=INF)continue;
-			for(int k=1;k<n;k++)f[i][k]=min(f[i][k],f[r][k-1]+res*k);//k为层数
+			for(int k=1;k<n;k++)f[i][k]=min(f[i][k],f[r][k-1]/k为层数
 			
 		}
 	}
@@ -524,4 +524,229 @@ PHHP
 ```
 
 对于 $ 100\%$ 的数据： $1 \le n \le 12$，$0 \le m \le 10^3$，$v \le  5\times 10^5$。
+
+## 练习 #4 [NOI2015] 寿司晚宴
+
+题目描述
+
+为了庆祝 NOI 的成功开幕，主办方为大家准备了一场寿司晚宴。小 G 和小 W 作为参加 NOI 的选手，也被邀请参加了寿司晚宴。
+
+在晚宴上，主办方为大家提供了 $n−1$ 种不同的寿司，编号 $1,2,3,\ldots,n-1$，其中第 $i$ 种寿司的美味度为 $i+1$。（即寿司的美味度为从 $2$ 到 $n$）
+
+现在小 G 和小 W 希望每人选一些寿司种类来品尝，他们规定一种品尝方案为不和谐的当且仅当：小 G 品尝的寿司种类中存在一种美味度为 $x$ 的寿司，小 W 品尝的寿司中存在一种美味度为 $y$ 的寿司，而 $x$ 与 $y$ 不互质。
+
+现在小 G 和小 W 希望统计一共有多少种和谐的品尝寿司的方案（对给定的正整数 $p$ 取模）。注意一个人可以不吃任何寿司。
+
+输入格式
+
+输入文件的第 $1$ 行包含 $2$ 个正整数 $n, p$ 中间用单个空格隔开，表示共有 $n$ 种寿司，最终和谐的方案数要对 $p$ 取模。
+
+输出格式
+
+输出一行包含 $1$ 个整数，表示所求的方案模 $p$ 的结果。
+
+![https://cdn.luogu.com.cn/upload/pic/1506.png](状压DP/1506.png)
+
+**勘误：$0 < p \le 10^9 $**
+
+---
+
+题意：
+
+求方案数，使得两个人选择的数字（[2,n]的子集）两两互质。
+
+---
+
+要让两个人选的数字全部互质，那么有一个显然的充要条件：甲选的数字的质因数集合和乙选的数字的质因数集合没有交集
+
+如果是n<30，那么范围内的质数很少，我们可以状态压缩
+
+记f_{i,S_1,S_2}为考虑i个数字时，甲集合的质因数集合为S_1，乙集合的质因数集合为 S_2时的方案数。压去第一维。
+
+如果是n≤500，发现每一个数，其$>\sqrt{500}$的质数只有一个，所以我们单独记录这个质数。
+
+然后，我们把2-n这些数按照大质因子大小排序，这样令大质因子相同的数排在一起（也就是不能甲乙同时选的）
+
+我们记录三个相同数组：dp[S1​][S2​],f1[][],f2[][]，因为小质因数只有8个，所以0≤S1​,S2​≤255
+
+对于每一段大质因子相同的数，我们在这一段开始的时候把dp的值赋给f1和f2，然后在这一段内部用刷表法推f1和f2，其中f1表示的就是这个大质因子让第一个人选，f2就是这个大质因子让第二个人选。
+
+这一段数推完以后，再把f1f2合并到dp里面，dp[S1​][S2​]=f1[S1​][S2​]+f2[S1​][S2​]−dp[S1​][S2​]
+
+这里减掉一个dp是因为两种情况会重复统计两个人都不选的情况（也就是原来的dp[S_1][S_2]的值），减掉即可。
+
+---
+
+```C++
+/*                                                                                
+                      Keyblinds Guide
+     				###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt/nxt pos'
+	  
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+
+// #define innt int
+#define itn int
+// #define inr intw
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9') {
+		if (ch == '-')
+			ff = -1;
+		ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+	if (out < 0)
+		putchar('-'), out = -out;
+	if (out > 9)
+		write(out / 10);
+	putchar(out % 10 + '0');
+}
+
+#define ell dbg('\n')
+const char el='\n';
+const bool enable_dbg = 1;
+template <typename T,typename... Args>
+void dbg(T s,Args... args) {
+	if constexpr (enable_dbg){
+    cerr << s;
+    if(1)cerr<<' ';
+		if constexpr (sizeof...(Args))
+			dbg(args...);
+	}
+}
+
+#define zerol = 1
+#ifdef zerol
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() { cerr << endl; }
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) { for (auto v: a) cerr << v << ' '; err(x...); }
+template<typename T, typename... A>
+void err(T a, A... x) { cerr << a << ' '; err(x...); }
+#else
+#define dbg(...)
+#endif
+
+
+const int N = 5e2+ 5;
+const int INF = 1e18;
+const int M = 1e7;
+ int MOD = 1e9 + 7;
+
+
+int n;
+
+
+int p[11]={0,2,3,5,7,11,13,17,19,23};
+
+struct node{
+    int big,s;
+    int v;
+
+    void init(){
+        int t=v;
+        
+        big=-1;//唯一一个大质数单独处理
+        for(int i=1;i<=8;i++){
+            if(t%p[i]) continue;
+            s|=(1<<i-1);
+            while(t%p[i]==0) t/=p[i];
+        }
+        if(t!=1) big=t; 
+    }
+}a[N];
+
+
+bool cmp(node a,node b){
+    return a.big<b.big;
+}
+
+
+int f[N][N],f1[N][N],f2[N][N];
+
+void solve(){
+    n=rd,MOD=rd;
+    for(int i=1;i<n;i++){
+        a[i].v=i+1;
+        a[i].init();
+    }
+
+    sort(a+1,a+n,cmp);
+
+    f[0][0]=1;
+
+    for(int i=1;i<n;i++){
+        if(i==1||a[i].big!=a[i-1].big||a[i].big==-1){
+            memcpy(f1,f,sizeof f1);
+            memcpy(f2,f,sizeof f2);
+        }
+
+        for(int j=255;~j;j--){
+            for(int k=255;~k;k--){
+                if(j&k)continue;
+                if((a[i].s&j)==0) f2[j][k|a[i].s]=(f2[j][k|a[i].s]+f2[j][k]+MOD)%MOD;
+                if((a[i].s&k)==0) f1[j|a[i].s][k]=(f1[j|a[i].s][k]+f1[j][k]+MOD)%MOD;
+            }
+        }
+
+        if(i==n-1||a[i].big!=a[i+1].big||a[i].big==-1){
+            for(int j=255;~j;j--){
+                for(int k=255;~k;k--){
+                    if(j&k)continue;
+                    f[j][k]=(f1[j][k]+f2[j][k]+MOD-f[j][k]+MOD)%MOD;
+                }
+            }
+        }
+    }
+    int ans=0;
+    for(int j=255;~j;j--){
+        for(int k=255;~k;k--){
+            if(j&k)continue;
+            if(f[j][k])ans=(ans+f[j][k])%MOD;
+        }
+    }
+
+    cout<<ans<<endl;
+}
+
+signed main() {
+    // freopen(".in","r",stdin);
+    // freopen(".in","w",stdout);
+
+    int T=1;
+    while(T--){
+    	solve();
+    }
+    return 0;
+}
+```
 

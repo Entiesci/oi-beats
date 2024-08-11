@@ -172,7 +172,7 @@ signed main(){
 				int cnt=0;
 				for(int k=0;k<n;k++){
 					double x=q[k].x,y=q[k].y;
-					if(cmp(a*x*x/标记经过
+					if(cmp(a*x*x+b*x,y))cnt+=1<<k;//标记经过
 				}
 				pa[i][j]=cnt;
 
@@ -298,7 +298,7 @@ vector<int> s;//状态
 
 bool check(int s){
 	for(int i=0;i<m;i++){
-		if((s>>i&1)&&((s>>i/只有当前这一位是1才需要判定与第i-1,i-2行是否合法
+		if((s>>i&1)&&((s>>i+1&1)||(s>>i+2&1)))return 0;//只有当前这一位是1才需要判定与第i-1,i-2行是否合法
 	}
 	return 1;
 }
@@ -451,7 +451,7 @@ vector<int> s;//状态
 
 bool check(int s){
 	for(int i=0;i<m;i++){
-		if((s>>i&1)&&((s>>i/只有当前这一位是1才需要判定与第i-1,i-2行是否合法
+		if((s>>i&1)&&((s>>i+1&1)||(s>>i+2&1)))return 0;//只有当前这一位是1才需要判定与第i-1,i-2行是否合法
 	}
 	return 1;
 }
@@ -502,7 +502,7 @@ signed main(){
 				}
 			}
 			if(res>=INF)continue;
-			for(int k=1;k<n;k++)f[i][k]=min(f[i][k],f[r][k-1]/k为层数
+			for(int k=1;k<n;k++)f[i][k]=min(f[i][k],f[r][k-1]+res*k);//k为层数
 			
 		}
 	}
@@ -588,7 +588,7 @@ PHHP
       - ctrl+D : choose this and dump to the next
       - ctrl+Shift+L : choose all like this
       - ctrl+K then ctrl+W: close all
-      - Alt/nxt pos'
+      - Alt+la/ra : move mouse to pre/nxt pos'
 	  
 */
 #include <bits/stdc++.h>

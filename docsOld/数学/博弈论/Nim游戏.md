@@ -1,16 +1,16 @@
 # Nim游戏
 
-![image.png](Nim游戏+d1119ea9-5203-47ab-b089-ea3a002433c1/image.png)
+![image.png](Nim游戏/image.png)
 
-![image.png](Nim游戏+d1119ea9-5203-47ab-b089-ea3a002433c1/image 1.png)
+![image.png](Nim游戏/image 1.png)
 
 ### 定理1
 
 一定可以从一个必胜态制造处一个必败态留给对手
 
-![image.png](Nim游戏+d1119ea9-5203-47ab-b089-ea3a002433c1/image 2.png)
+![image.png](Nim游戏/image 2.png)
 
-![image.png](Nim游戏+d1119ea9-5203-47ab-b089-ea3a002433c1/image 3.png)
+![image.png](Nim游戏/image 3.png)
 
 很显然，如果第k位为1的数有偶数个，那么异或和为0
 
