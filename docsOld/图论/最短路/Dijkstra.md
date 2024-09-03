@@ -45,7 +45,7 @@ void djstr(int rt) {
 		for(int i=0;i<e[u].size();i++){
 			int v=e[u][i].nxt,w=e[u][i].dis;
 			if(!vis[v]&&dis[u]+w<dis[v]){
-				dis[v]=dis[u]/更新
+				dis[v]=dis[u]+w;	//更新
 				pq.push(make_pair(-dis[v],v));
 			}
 		}
@@ -103,7 +103,7 @@ void djstr(int rt) {
         vis[u]=1;
 		for(int j=h[u]; j; j=edge[j].next) {
 			if(!vis[edge[j].to]&&dis[u]+edge[j].dis<dis[edge[j].to]){
-				dis[edge[j].to]=dis[u]/更新
+				dis[edge[j].to]=dis[u]+edge[j].dis;	//更新
 				pq.push(make_pair(-dis[edge[j].to],edge[j].to));
 			}
 				

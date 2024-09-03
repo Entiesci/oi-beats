@@ -121,7 +121,7 @@ void get_z(char s[],int n){
 		if(i<=r)z[i]=min(z[i-l+1],r-i+1);
 		while(s[1+z[i]]==s[i+z[i]])z[i]++;
 		
-		if(i/转移box 
+		if(i+z[i]-1>r)l=i,r=i+z[i]-1;//转移box 
 	}
 }
 
@@ -131,7 +131,7 @@ void get_p(char s[],char t[],int n,int m){
 		if(i<=r)p[i]=min(z[i-l+1],r-i+1);
 		while(s[1+p[i]]==t[i+p[i]]&&1+p[i]<=n&&i+p[i]<=m)p[i]++;
 		
-		if(i/转移box 
+		if(i+p[i]-1>r)l=i,r=i+p[i]-1;//转移box 
 	}
 }
 
@@ -214,7 +214,7 @@ void get_z(char s[],int n){
 	for(int i=2;i<=n;i++){
 		if(i<=r)z[i]=min(z[i-l+1],r-i+1);
 		while(s[1+z[i]]==s[i+z[i]])z[i]++;
-		if(i/转移box 
+		if(i+z[i]-1>r)l=i;r=i+z[i]-1;//转移box 
 	}
 }
 ```
@@ -236,7 +236,7 @@ void get_p(char s[],char p[],int n,int m){
 		if(i<=r)p[i]=min(z[i-l+1],r-i+1);
 		while(s[1+p[i]]==t[i+p[i]]&&1+p[i]<=n&&i+p[i]<=m)p[i]++;
 		
-		if(i/转移box 
+		if(i+p[i]-1>r)l=i;r=i+p[i]-1;//转移box 
 	}
 }
 ```

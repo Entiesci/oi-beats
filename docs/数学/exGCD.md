@@ -34,17 +34,17 @@
 
 令$a'=b,b'=a\%b$
 
-=> $x'a'+y'b'=gcd(a',b')=gcd(a,b)$
+→ $x'a'+y'b'=gcd(a',b')=gcd(a,b)$
 
 $gcd(a,b)$不断向下，会出现$a=0$
 
 $ax+by=gcd(a,b)$
 
-=> $x*0+y*b=gcd(0,b)=b$
+$x*0+y*b=gcd(0,b)=b$
 
-=> $0*0+1*b=b$
+$0*0+1*b=b$
 
-=> 我们就规定$x=0,y=1$
+我们就规定$x=0,y=1$
 
 此时我们得到了当前不定方程(a=0)的x,y
 
@@ -54,11 +54,13 @@ $a'=b$ , $b'=a\%b$
 
 $x'a'+y'b'=gcd(a',b')=gcd(a,b)$
 
-=> $b'=a\%b =a-[a/b]*b,a'=b$   代入
+→ $b'=a\%b =a-[a/b]*b,a'=b$   
 
-=> $x'b+y'(a-[a/b]*b)=gcd(a,b)$
+代入
 
-=> $(x'-y'*[a/b])b+y'a=gcd(a,b)=xa+yb$
+→ $x'b+y'(a-[a/b]*b)=gcd(a,b)$
+
+→ $(x'-y'*[a/b])b+y'a=gcd(a,b)=xa+yb$
 
 因此可以得到递推式：$x=y',y=x'-y'*[a/b]$
 
@@ -195,9 +197,7 @@ $t为任意整数。
 
 ### 实际操作
 
-【模板】二元一次不定方程 (exgcd)
-
-## 例题 #1
+## 例题 #1 【模板】二元一次不定方程 (exgcd)
 
 给定不定方程
 
@@ -218,7 +218,7 @@ $x$ 的最小正整数值即所有 $x$ 为正整数的整数解中 $x$ 的最小
 ### 预备知识：计算gcd
 
 **方法**
-辗转相除法
+辗转相除法，或者使用自带的`__gcd()`
 **代码**
 
 ```C++
@@ -246,44 +246,44 @@ ll exgcd(ll a,ll b,ll &x,ll &y){
 ### 解题方法
 
 ```C++
-#include<bits/stdc++.h>
-using namespace std;
-#define ll long long
-ll T,a,b,c,d,x,y,k,p,q;
+  #include<bits/stdc++.h>
+  using namespace std;
+  #define ll long long
+  ll T,a,b,c,d,x,y,k,p,q;
 
-ll exgcd(ll a,ll b,ll &x,ll &y){	//注意后面2个有取地址符！！！
-	ll tmp=a;
-	if(!b)x=1,y=0;
-	else {
-		tmp=exgcd(b,a%b,y,x);
-		y-=a/b*x;
-	}
-	return tmp;
-}
-signed main() {
-	cin>>T;
-	while(T--){
-		scanf("%lld%lld%lld",&a,&b,&c);
-		x=y=0;
-		d=exgcd(a,b,x,y);
-		if(c%d)printf("-1\n");
-		else{
-			x*=c/d,y*=c/d;
-			p=b/d,q=a/d;
-			if(x<0)k=ceil((1.00-x)/p),x+=p*k,y-=q*k;
-			else k=(x-1)/p,x-=p*k,y+=q*k;
-			if(y>0){
-				printf("%lld %lld %lld %lld %lld\n",(y-1)/q+1,x,(y-1)%q+1,x+(y-1)/q*p,y);
-				
-			}else{
-				printf("%lld %lld\n",x,y+q*(ll)ceil((1.0-y)/q));
-			}
-		}
-		
-	}
-	
+  ll exgcd(ll a,ll b,ll &x,ll &y){	//注意后面2个有取地址符！！！
+      ll tmp=a;
+      if(!b)x=1,y=0;
+      else {
+          tmp=exgcd(b,a%b,y,x);
+          y-=a/b*x;
+      }
+      return tmp;
+  }
+  signed main() {
+      cin>>T;
+      while(T--){
+          scanf("%lld%lld%lld",&a,&b,&c);
+          x=y=0;
+          d=exgcd(a,b,x,y);
+          if(c%d)printf("-1\n");
+          else{
+              x*=c/d,y*=c/d;
+              p=b/d,q=a/d;
+              if(x<0)k=ceil((1.00-x)/p),x+=p*k,y-=q*k;
+              else k=(x-1)/p,x-=p*k,y+=q*k;
+              if(y>0){
+                  printf("%lld %lld %lld %lld %lld\n",(y-1)/q+1,x,(y-1)%q+1,x+(y-1)/q*p,y);
 
-	return 0;
-}
+              }else{
+                  printf("%lld %lld\n",x,y+q*(ll)ceil((1.0-y)/q));
+              }
+          }
+
+      }
+
+
+      return 0;
+  }
 ```
 

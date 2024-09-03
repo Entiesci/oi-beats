@@ -1,3 +1,6 @@
+[F05 Manacher(马拉车)_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV173411V7Ai/?spm_id_from=333.999.0.0)
+
+
 # manacher 马拉车算法
 
 ### 算法用途

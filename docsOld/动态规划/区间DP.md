@@ -59,7 +59,7 @@ caaaba
       - ctrl+D : choose this and dump to the next
       - ctrl+Shift+L : choose all like this
       - ctrl+K then ctrl+W: close all
-      - Alt/nxt pos'
+      - Alt+la/ra : move mouse to pre/nxt pos'
 	  
 */
 #include <bits/stdc++.h>
@@ -279,7 +279,7 @@ Impossible
       - ctrl+D : choose this and dump to the next
       - ctrl+Shift+L : choose all like this
       - ctrl+K then ctrl+W: close all
-      - Alt/nxt pos'
+      - Alt+la/ra : move mouse to pre/nxt pos'
 	  
 */
 #include <bits/stdc++.h>
@@ -381,7 +381,7 @@ void solve(){
             }
 
             for(int j=r;j>=l;j--){
-                mn[j]=min(mn[j/后缀min
+                mn[j]=min(mn[j+1],a[j]);//后缀min
                 cnt[a[j]]++;
             }
 
@@ -475,7 +475,7 @@ signed main() {
       - ctrl+D : choose this and dump to the next
       - ctrl+Shift+L : choose all like this
       - ctrl+K then ctrl+W: close all
-      - Alt/nxt pos'
+      - Alt+la/ra : move mouse to pre/nxt pos'
 	  
 */
 #include <bits/stdc++.h>

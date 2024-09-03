@@ -75,9 +75,9 @@ void getd(){
 	d[1]=1;
 	int l,r=1;//r只要小于2即可,目的是让下面第一次循环在i<=r不成立
 	for(int i=2;i<=ls;i++){
-		if(i<=r)d[i]=min(d[r-i/转移d[i]且判定是否超出r
-		while(s[i-d[i]]==s[i/如果d[i]没有超出r,那么第一次while判定就不成立,该语句不会执行.如果i本来就在盒子外面,则上面一句话不会执行,直接到本句话开始暴力
-		if(i/转移盒子
+		if(i<=r)d[i]=min(d[r-i+l],r-i+1);//转移d[i]且判定是否超出r
+		while(s[i-d[i]]==s[i+d[i]])d[i]++;//如果d[i]没有超出r,那么第一次while判定就不成立,该语句不会执行.如果i本来就在盒子外面,则上面一句话不会执行,直接到本句话开始暴力
+		if(i+d[i]-1>r)l=i-d[i]+1,r=i+d[i]-1;//转移盒子
 	}
 }
 ```
@@ -102,7 +102,7 @@ void getd(){
 #define rtn return
 using namespace std;
 
-const int N=2e7/注意两倍空间 
+const int N=2e7+2e6+5;//注意两倍空间 
 const int M=1e5;
 const int Mod=1e5;
 const int INF=1e5;
@@ -127,9 +127,9 @@ void getd(){
 	d[1]=1;
 	int l,r=1;//r只要小于2即可,目的是让下面第一次循环在i<=r不成立
 	for(int i=2;i<=ls;i++){
-		if(i<=r)d[i]=min(d[r-i/转移d[i]且判定是否超出r
-		while(s[i-d[i]]==s[i/如果d[i]没有超出r,那么第一次while判定就不成立,该语句不会执行.如果i本来就在盒子外面,则上面一句话不会执行,直接到本句话开始暴力
-		if(i/转移盒子
+		if(i<=r)d[i]=min(d[r-i+l],r-i+1);//转移d[i]且判定是否超出r
+		while(s[i-d[i]]==s[i+d[i]])d[i]++;//如果d[i]没有超出r,那么第一次while判定就不成立,该语句不会执行.如果i本来就在盒子外面,则上面一句话不会执行,直接到本句话开始暴力
+		if(i+d[i]-1>r)l=i-d[i]+1,r=i+d[i]-1;//转移盒子
 	}
 }
 

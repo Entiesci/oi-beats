@@ -26,11 +26,251 @@ $\rm John$ 想知道，如果不考虑草地的总块数，那么，一共有多
 
 一个整数，即牧场分配总方案数除以 $100,000,000$ 的余数。
 
+## 例题 #2 DAG定向计数 [CEOI2019] Amusement Park
 
+题目描述
+
+有一个含 $n$ 个点，$m$ 条边的有向图，图无重边，无自环，两点之间不成环。
+
+现在我们想改变一些边的方向，使得该有向图无环。
+
+您需要求出，每一种改变方向后使得该有向图无环的方案的需改变边的数量之和 $\bmod\ 998244353$ 之后的答案。
+
+输入格式
+
+第一行为两个整数 $n,m$。
+
+接下来 $m$ 行，一行两个整数 $a_i,b_i$，表示有一条起点为 $a_i$，终点为 $b_i$ 的有向边。
+
+输出格式
+
+仅一行一个整数，表示每一种改变方向后使得该有向图无环的方案的需改变边的数量之和 $\bmod\ 998244353$ 之后的答案。
+
+|子任务编号|限制|分值|
+|-|-|-|
+|1|$n\le 3$|$7$|
+|2|$n\le 6$|$12$|
+|3|$n\le 10$|$23$|
+|4|$n\le 15$|$21$|
+|5|无特殊限制|$37$|
+
+#### 说明
+
+本题译自 [Central-European Olympiad in Informatics 2019](https://ceoi.sk/) [Day 2](https://ceoi.sk/tasks/) [T1 Amusement Park](https://ceoi.sk/static/statements/amusementpark-ENG.pdf)。
 
 ---
 
-摘抄[学习笔记 | 状态压缩](https://flowus.cn/669740a8-0bb3-46a3-a3c6-a875ff11ba81)
+预备结论：
+
+对于一种 DAG 方案，将所有边翻转后还是一个合法的 DAG。二因为所有边都被翻转了，所以两种方法对于原图要翻转的边数为 $m$。
+
+设翻转某些边使得成为有向无环图（DAG）的方案数为 $ans$，则我们要求 $ans×m\div 2$。
+
+所以本题和原图的边的方向无关。
+
+于是原题在转化为：给你一个无向图，要求给边定向，求最后得到的 DAG 的数量。
+
+
+
+这里我们考虑状态压缩。
+
+$f_i$ 表示将 $i$ 集合内的点和边变成一个 DAG 的方案数量。
+
+那么我们怎么样才可以转移呢？首先我们要知道初始状态：对于每一个左右一个点的集合，其方案数为 $1$。
+
+于是现在我们就需要从一个或者几个小的 DAG 转移到一个大的 DAG 上。可以考虑**拓扑排序**的流程，是逐个从 DAG 中剔除入度为 $0$ 的点。这种方法可以把一个大的 DAG 转移成一个更小的子 DAG。那么我们反向这个过程。
+
+我们采用填表法，用 $i$ 的子集来更新 $i$。
+
+那么这个子集是随便选的吗？不是！我们每次都需要选择一些入度为 $0$ 的点的集合 $j$，也就是说我们要选择的子集上一个**独立集**。具体来说，就是没有任何边链接了这个子集 $j$ 内的两个点。这样可以保证向 $i-j$ 这个集合内加入 $j$ 这些点后不会产生环。
+
+
+
+
+
+yvs
+
+于是我们就有 $f_i =\sum_{j⫅i} f(j)dp_{i-j}$。但是很显然会算重，因为我们枚举的一些 $j$ 可能又是另外一些 $j$ 的子集（下称更大的为 $j'$），而 $j'$ 又是从 $j$ 转移来的，这样就多转移了。
+
+那么我们就上容斥呗，咋容斥？我们按子集大小来看：
+
+大小为 $2$ 的子集包含大小为 $1,2$ 的子集，大小为 $3$ 的子集包含大小为 $1,2,3$ 的子集……那么我们把大小为 $i$ 的子集看作 $\{1,2,\dots,i\},\dots,\{n-i+1,n-i+2,\dots,n\}$，现在我们要容斥得一个集合 $\{1,2\dots,n\}$，就是加上所有大小为奇数的集合，减去所有大小为偶数的集合！
+
+所以容斥就出来了。
+
+```C++
+/*                                                                                
+                      Keyblinds Guide
+     				###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt+la/ra : move mouse to pre/nxt pos'
+	  
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define ull unsigned long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+
+// #define innt int
+#define itn int
+// #define inr intw
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9') {
+		if (ch == '-')
+			ff = -1;
+		ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+	if (out < 0)
+		putchar('-'), out = -out;
+	if (out > 9)
+		write(out / 10);
+	putchar(out % 10 + '0');
+}
+
+#define ell dbg('\n')
+const char el='\n';
+const bool enable_dbg = 1;
+template <typename T,typename... Args>
+void dbg(T s,Args... args) {
+	if constexpr (enable_dbg){
+    cerr << s;
+    if(1)cerr<<' ';
+		if constexpr (sizeof...(Args))
+			dbg(args...);
+	}
+}
+
+#define zerol = 1
+#ifdef zerol
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() { cerr << endl; }
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) { for (auto v: a) cerr << v << ' '; err(x...); }
+template<typename T, typename... A>
+void err(T a, A... x) { cerr << a << ' '; err(x...); }
+#else
+#define dbg(...)
+#endif
+
+
+const int N = 20;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 998244353;
+
+
+int op[1<<N],f[1<<N];
+int n,m;
+
+struct node{
+    itn a,b;
+}t[400];
+
+int ban[1<<N];
+
+void init(){
+    op[0]=MOD-1;
+    for(int i=1;i<(1<<n);i++){
+        op[i]=MOD-op[i&(i-1)];
+    }
+}
+
+inline int ksm(int a,int b){
+    int res=1;
+    while(b){
+        if(b&1)res=res*a%MOD;
+        b>>=1;
+        a=a*a%MOD;
+    }
+    return res;
+}
+
+
+
+void solve(){
+     n=rd,m=rd;
+    //  if (n!=10)assert(0);
+
+    init();
+
+
+    for(int i=1;i<=m;i++){
+        t[i].a=rd-1;
+        t[i].b=rd-1;
+    }
+
+    for(int i=1;i<(1<<n);i++){
+        for(int j=1;j<=m;j++){
+            if((i&(1<<t[j].a))&&(i&(1<<t[j].b))){
+                ban[i]=1;
+                break;
+            }
+        }
+    }
+
+    f[0]=1;
+    for(int i=1;i<(1<<n);i++){
+        for(int j=i;j;j=((j-1)&i)){
+            //枚举i的子集，参考了https://oi-wiki.org/math/binary-set/#遍历所有掩码的子掩码
+            if(ban[j])continue;
+            // ban[j]=0表示j集合内的点完全独立
+            f[i]+=f[i^j]*op[j]%MOD;
+            f[i]%=MOD;
+        }
+    }
+
+    int ans=f[(1<<n)-1];
+    ans=ans*m%MOD*ksm(2,MOD-2)%MOD;
+    
+// 在所有方案中，总能找到一种方案的反方案，两者总共翻转了 
+// m 条边，设翻转某些边使得成为有向无环图（DAG）的方案数为 
+// ans，则我们要求 ans×m/2
+
+    cout<<ans<<endl;
+}
+
+
+signed main() {
+    // freopen(".in","r",stdin);
+    // freopen(".in","w",stdout);
+
+    int T=1;
+    while(T--){
+    	solve();
+    }
+    return 0;
+}
+```
+
+---
+
+> 摘抄[学习笔记 | 状态压缩](https://flowus.cn/669740a8-0bb3-46a3-a3c6-a875ff11ba81)
 
 ## 练习 #1 [NOIP2016 提高组] 愤怒的小鸟
 

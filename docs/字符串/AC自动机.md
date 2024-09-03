@@ -1,7 +1,6 @@
-专题 | 哈希&字符串匹配（从字典树到KMP再到AC自动机）
-
 补充资料
 
+[F08【模板】AC自动机——信息学竞赛算法_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1tF41157Dy/?spm_id_from=333.999.0.0)
 
 
 [https://www.cnblogs.com/ailanxier/p/13370753.html](https://www.cnblogs.com/ailanxier/p/13370753.html)

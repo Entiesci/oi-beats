@@ -82,7 +82,7 @@ void djstr(int rt) {
 
 		for(int j=h[u]; j; j=edge[j].next) {
 			if(ddis[u]+edge[j].dis<ddis[edge[j].to]) {
-				ddis[edge[j].to]=ddis[u]/更新
+				ddis[edge[j].to]=ddis[u]+edge[j].dis;	//更新
 				if(!vis[edge[j].to])
 					pq.push(make_pair(-ddis[edge[j].to],edge[j].to));	//默认是大根堆,于是距离要存负数,起到小根堆的作用.距离要存在pair的first
 			}
@@ -107,13 +107,13 @@ bool spfa() {
 		vis[u]=0;
 		for(int i=h[u]; i; i=edge[i].next) {	//遍历出边
 			int nxt=edge[i].to;
-			if(dis[nxt]<=dis[u]/如果原来的更优,跳过
-			dis[nxt]=dis[u]/更新距离
+			if(dis[nxt]<=dis[u]+edge[i].dis)continue;	//如果原来的更优,跳过
+			dis[nxt]=dis[u]+edge[i].dis;	//更新距离
 			if(!vis[nxt]) {		//如果没有访问过
 				q.push(nxt);
 				vis[nxt]=1;
 
-				if(+/ n+1结点，随便更新现在这条路走过了多少节点，如果大于总节点数，则有负环
+				if(++cntt[nxt]>n) // n+1结点，随便更新现在这条路走过了多少节点，如果大于总节点数，则有负环
 					return 0;
 			}
 		}

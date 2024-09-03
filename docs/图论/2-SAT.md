@@ -1,3 +1,6 @@
+[D35【模板】2-SAT_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1kE421w7XR/?spm_id_from=333.999.0.0)
+
+
 
 
 摘抄[学习笔记 | 2-SAT](https://flowus.cn/602583fc-c202-4748-92b3-b54631b6f5bb)

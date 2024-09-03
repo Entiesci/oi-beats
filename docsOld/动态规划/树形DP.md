@@ -207,7 +207,7 @@ void solve(){
 			if((i*2)>n){
 				//说明是叶子节点
 				f[i][j][0]=dis[i][j]*a[fa(i,j)];//直接从i往上跳到i的第j级祖先
-				f[i][j][1]=(dis[i][j]/直接从i往上跳到i的第j级祖先然后到另一个儿子，a只使用另一个儿子的a
+				f[i][j][1]=(dis[i][j]+dis[bro(i,j)][1])*a[bro(i,j)];//直接从i往上跳到i的第j级祖先然后到另一个儿子，a只使用另一个儿子的a
 			}
 			else if((i*2+1)>n){
 				//右儿子不存在
@@ -543,7 +543,7 @@ signed main(){
       - ctrl+D : choose this and dump to the next
       - ctrl+Shift+L : choose all like this
       - ctrl+K then ctrl+W: close all
-      - Alt/nxt pos'
+      - Alt+la/ra : move mouse to pre/nxt pos'
 	  
 */
 #include <bits/stdc++.h>
@@ -715,7 +715,7 @@ signed main() {
       - ctrl+D : choose this and dump to the next
       - ctrl+Shift+L : choose all like this
       - ctrl+K then ctrl+W: close all
-      - Alt/nxt pos'
+      - Alt+la/ra : move mouse to pre/nxt pos'
 	  
 */
 #include <bits/stdc++.h>

@@ -100,7 +100,7 @@ signed main(){
         int x=rd,y=rd,d=rd;
         for(int j=0;j<=K;j++) {
             add(x+j*n,y+j*n,d),add(y+j*n,x+j*n,d);
-            if(j<K) add(x/2);
+            if(j<K) add(x+j*n,y+(j+1)*n,d/2),add(y+j*n,x+(j+1)*n,d/2);
         }
     }
 	spfa();

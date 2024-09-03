@@ -1,3 +1,6 @@
+[F06 字典树(Trie)——信息学竞赛算法_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1yA4y1Z74t/?spm_id_from=333.999.0.0)
+
+
 # 字典树 Trie
 
 > 多模式串，多询问串

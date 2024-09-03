@@ -61,17 +61,18 @@ $t为任意整数。
 
 对于同余方程组：
 
-- $x≡a1(\mod m_1)$
+$x≡a1\pmod {m_1}$
 
-- $x≡a2(\mod m_2)$
+$x≡a2\pmod {m_2}$
 
 转化为不定方程组
 
-- $x=m_1p+a_1$
+$x=m_1p+a_1$
 
-- $x=m_2q+a_2$
+$x=m_2q+a_2$
 
 联立2方程
+
 $m_1p+a_1=m_2q+a_2$
 $m_1p-m_2q=a_2-a_1$
 
@@ -81,15 +82,15 @@ $m_1p-m_2q=a_2-a_1$
 
 $ax+by=c$,c必须是gcd(a,b)的倍数
 
-因此仅当$gcd(m1,m2)|(a2-a1)$时不定方程有解，负责无解
+因此仅当$gcd(m1,m2)|(a2-a1)$时不定方程有解，否则无解
 
 如果有解，我们就可以很轻松地使用exgcd求出方程的一组特解
 
-- $p=p'*(a_2-a_1)/gcd$
+$p=p'*(a_2-a_1)/gcd$
 
-- $q=q'*(a_2-a_1)/gcd$
+$q=q'*(a_2-a_1)/gcd$
 
-> 为什么要$*(a2-a1)/gcd$ ？$p'$不就是一组特解吗？
+> 为什么要乘上$(a2-a1)/gcd$ ？$p'$不就是一组特解吗？
 
 => 注意！我们这里的  $m_1p-m_2q=a_2-a_1$ ，并不是$ax+by=gcd(a,b)$!!!
 在$ax+by=gcd(a,b)$中，a,b互质，相当于$ax+by=1$，即上式中$a2-a1=1$
@@ -106,7 +107,9 @@ $Q=q-k*m2/gcd$
 
 代回 $x=m_1p+a_1$
 
-$x=m_1(p+k*m_2/gcd)+a_1=m_1p+k*m_1m_2/gcd+a_1=m_1p+k*lcm(m_1,m_2)+a_1$
+$\begin{align*}
+x&=m_1(p+k*m_2/gcd)+a_1\\&=m_1p+k*m_1m_2/gcd+a_1\\&=m_1p+k*lcm(m_1,m_2)+a_1
+\end{align*}$
 
 我们又可以把这个方程转化为一个同余方程
 
@@ -119,11 +122,17 @@ $x≡m_1p+a_1(\mod lcm(m_1,m_2))$
 代码如下
 
 ```C++
+#include<bits/stdc++.h>
+using namespace std;
+#define ll __int128
+const int N=1e5+5;
+ll m[N],a[N];
+int n;
 ll exgcd(ll a,ll b,ll &x,ll &y){
 	if(b==0){
 		x=1,y=0;return a;//辗转相除法结束，a就是gcd(原a,原b)
 	}
-	ll nowgcd=exgcd(b,a%b,x,y)
+	ll nowgcd=exgcd(b,a%b,x,y);
    ll tmpx=x,tmpy=y;	//此时x,y还是x',y',存下来后面要用
 	//反代回去，求上一层的x,y
 	x=tmpy;
@@ -134,25 +143,30 @@ ll exgcd(ll a,ll b,ll &x,ll &y){
 ll excrt(ll m[],ll a[]){
 	ll p,q,m1,m2,a1,a2;
 	m1=m[1],a1=a[1];
-    //合并思路：不断把式A2...An与式A1合并
-	for(int i=1;i<=n;i++){
+  //合并思路：不断把式A2...An与式A1合并
+	for(int i=2;i<=n;i++){
 		m2=m[i],a2=a[i];
-		ll d=exgcd(m1,m2,a1,a2);
+		ll d=exgcd(m1,m2,p,q);
 		if((a2-a1)%d){
 			return -1;
 		}
 		p=p*(a2-a1)/d;
-		p=(p%(m2/d)+m2/d)%(m2/d);	//p可能是负数，要处理为最小的正整数（原理是通解公式）
+		p=(p%(m2/d)+m2/d)%(m2/d);//p可能是负数，要处理为最小的正整数（原理是通解公式）
 		a1=m1*p+a1;
 		m1=m1*m2/d;
 	}
 	return (a1%m1+m1)%m1;
 }
-```
-
-```C++
-inv[1]=1;printf("%d\n",inv[1]);
- 	for(int i=2;i<=n;i++){
- 		inv[i]=(p-p/i)*inv[p%i]%p;
+int main(){
+//	freopen("P4777_13.in","r",stdin);
+	cin>>n;
+	for(int i=1;i<=n;i++){
+		long long mm,aa;
+		cin>>mm>>aa;
+		m[i]=mm,a[i]=aa;
+	}
+	cout<<(long long)excrt(m,a);
+	return 0;
+}
 ```
 
