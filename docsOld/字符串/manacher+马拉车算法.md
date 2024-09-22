@@ -1,3 +1,6 @@
+[F05 Manacher(马拉车)_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV173411V7Ai/?spm_id_from=333.999.0.0)
+
+
 # manacher 马拉车算法
 
 ### 算法用途
@@ -16,7 +19,15 @@
 
 **初始化**
 
-![image.png](manacher+马拉车算法/image.png)
+### 改造字符串
+
+在字符之间和串两端插入#，改造后都变成**奇回文串**，方便统一处理。
+
+|奇回文串 aba|#a#b#a#|
+|-|-|
+|偶回文串 abba|#a#b#b#a#|
+
+s[0] = '$' 是哨兵（边界）。
 
 Code
 
@@ -35,21 +46,35 @@ void init(){
 
 **优化数组**
 
-![image.png](manacher+马拉车算法/image 1.png)
+![image.png](manacher+马拉车算法/image.png)
 
 注释：d[i]记录长度的一半，向上取整（即$(len+1)\div 2$），即类似圆的半径，包含中间的那个字符
 
-在“加速盒子”中，当枚举到点i=6时，加速盒子的区间变成$[i-d_i+1=3,i+d_i-1=9]$，当枚举到点$j(j>i,j<i+d_i-1)$时，d[j]就可以直接从d[2\times i-j]转移过来。但注意，对于边界的点d[i+d_i-1=9]不能直接转移，这个请看下面的分析。盒子外的暴力。
-
-![image.png](manacher+马拉车算法/image 2.png)
-
-情况
+在“加速盒子”中，当枚举到点i=6时，加速盒子的区间变成$[i-d_i+1=3,i+d_i-1=9]$，当枚举到点$j(j>i,j<i+d_i-1)$时，d[j]就可以直接从$d[2\times i-j$]转移过来。但注意，对于边界的点$d[i+d_i-1=9]$不能直接转移，这个请看下面的分析。盒子外的暴力。
 
 
 
+**算法流程**
 
 
-![image.png](manacher+马拉车算法/image 3.png)
+计算完前i - 1个d函数，维护盒子[l,r]
+
+1. 如果i <= r(在盒内)，i的**对称点**为r-i+l，
+(1)若$d[r-i+l]\leq r-i+1$，则$d[i]=d[i-l+1]$。
+(2)若$d[r-i+l]\geq r-i+1$，则令$d[i]=r-i+1$,从r+1往后暴力枚举。
+
+2. 如果i > r(在盒外)，则从i开始暴力枚举。
+
+3. 求出d[i]后，如果$i+d[i]-1>r$，则更新盒子$l=i-d[i]+1,r=l+d[i]-1$
+
+
+**情况**
+
+
+
+
+
+![image.png](manacher+马拉车算法/image 1.png)
 
 
 
@@ -65,7 +90,7 @@ void init(){
 
 转移以下两幅图表达方式是等效的，作者可能在不经意间转换表达方式哦。
 
-![image.png](manacher+马拉车算法/image 4.png)
+![image.png](manacher+马拉车算法/image 2.png)
 
 **Code**
 
@@ -84,7 +109,7 @@ void getd(){
 
 各部分说明
 
-![image.png](manacher+马拉车算法/image 5.png)
+![image.png](manacher+马拉车算法/image 3.png)
 
 该算法时间复杂度可以证明为$O(n)$，因为你考虑i+d[i]，如果i+d[i]>r，那么才会执行while，然后又会将r修改为i+d[i]，即每次while运行一次，就会让r向右移动一位，r从1往右移动，到n停止，就n次。也就是说到会执行while时，i+d[i]一定是递增的，所以i+d[i] 只会从1递增到n，一共n次。这里描述不当，请仔细体会。
 
@@ -154,7 +179,7 @@ signed main(){
 
 ## 对比算法
 
-![image.png](manacher+马拉车算法/image 6.png)
+![image.png](manacher+马拉车算法/image 4.png)
 
 
 

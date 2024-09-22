@@ -1,3 +1,6 @@
+[A12 ST表 RMQ问题_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1Sj411o7jp/?spm_id_from=333.999.0.0)
+
+
 [https://blog.csdn.net/weixin_43914593/article/details/109500135](https://blog.csdn.net/weixin_43914593/article/details/109500135)
 
 # ST表

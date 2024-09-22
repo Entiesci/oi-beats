@@ -26,6 +26,120 @@ $\rm John$ 想知道，如果不考虑草地的总块数，那么，一共有多
 
 一个整数，即牧场分配总方案数除以 $100,000,000$ 的余数。
 
+---
+
+```C++
+/*                                                                                
+                      Keyblinds Guide
+     				###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt+la/ra : move mouse to pre/nxt pos'
+	  
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define preb push_back
+#define mp make_pair
+#define int long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+
+// #define innt int
+// #define inr int
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9') {
+		if (ch == '-')
+			ff = -1;
+		ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+	if (out < 0)
+		putchar('-'), out = -out;
+	if (out > 9)
+		write(out / 10);
+	putchar(out % 10 + '0');
+}
+
+#define ell dbg('\n')
+const char el='\n';
+const bool enable_dbg = 1;
+template <typename T,typename... Args>
+void dbg(T s,Args... args) {
+	if constexpr (enable_dbg){
+    cerr << s << ' ';
+		if constexpr (sizeof...(Args))
+			dbg(args...);
+	}
+}
+
+const int N = 3e5 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e8;
+
+int f[13][1<<12];
+int g[1<<12],h[1<<12];
+int a[13][13];
+int F[13];
+
+void solve()
+{
+    int n=rd,m=rd;
+	for(int i=1;i<=n;i++)
+		for(int j=1;j<=m;j++)
+			a[i][j]=rd;
+	for(int i=1;i<=n;i++)
+		for(int j=1;j<=m;j++)
+			F[i]=(F[i]<<1)+a[i][j];
+	for(int i=0;i<(1<<m);i++){
+		if(!(i&(i>>1))&&!(i&(i<<1))){
+			g[i]=1;
+			if((i&F[1])==i) f[1][i]=1;
+		}
+	}
+	for(int x=2;x<=n;x++)
+		for(int j=0;j<(1<<m);j++)
+			if(((j&F[x-1])==j)&&g[j])
+				for(int k=0;k<(1<<m);k++)
+					if(((k&F[x])==k)&&!(j&k)&&g[k]){
+						f[x][k]=(f[x][k]+f[x-1][j])%MOD;
+					}
+	int ans=0;
+	for(int i=0;i<(1<<m);i++)
+		ans=(ans+f[n][i])%MOD;
+	printf("%d\n",ans);
+}
+
+signed main() {
+    int T=1;
+    while(T--){
+    	solve();
+    }
+    return 0;
+}
+```
+
 ## 例题 #2 DAG定向计数 [CEOI2019] Amusement Park
 
 题目描述
@@ -88,7 +202,7 @@ $f_i$ 表示将 $i$ 集合内的点和边变成一个 DAG 的方案数量。
 
 
 
-yvs
+
 
 于是我们就有 $f_i =\sum_{j⫅i} f(j)dp_{i-j}$。但是很显然会算重，因为我们枚举的一些 $j$ 可能又是另外一些 $j$ 的子集（下称更大的为 $j'$），而 $j'$ 又是从 $j$ 转移来的，这样就多转移了。
 
@@ -268,554 +382,49 @@ signed main() {
 }
 ```
 
----
-
-> 摘抄[学习笔记 | 状态压缩](https://flowus.cn/669740a8-0bb3-46a3-a3c6-a875ff11ba81)
-
-## 练习 #1 [NOIP2016 提高组] 愤怒的小鸟
-
-题目背景
-
-NOIP2016 提高组 D2T3
+## 例题 #3 三进制状态压缩 [CEOI2002] Bugs Integrated,Inc.
 
 题目描述
 
-Kiana 最近沉迷于一款神奇的游戏无法自拔。
+Bugs Integrated,Inc. 是高级存储芯片的主要制造商。他们正在开始生产新的 6 TB Q-RAM 芯片。每个芯片由以 2×3 的矩形排列的六个方形硅片块组成。Q-RAM 芯片的制造方式是将一块长方形的大硅片分成 N×M 个方形硅片块。然后仔细测试所有方形硅片块，坏的用黑色标记。
 
-简单来说，这款游戏是在一个平面上进行的。
+![https://cdn.luogu.com.cn/upload/image_hosting/qqjfauh0.png](状压DP/qqjfauh0.png)
 
-有一架弹弓位于 $(0,0)$ 处，每次 Kiana 可以用它向第一象限发射一只红色的小鸟，小鸟们的飞行轨迹均为形如 $y=ax^2+bx$ 的曲线，其中 $a,b$ 是 Kiana 指定的参数，且必须满足 $a < 0$，$a,b$ 都是实数。
-
-当小鸟落回地面（即 $x$ 轴）时，它就会瞬间消失。
-
-在游戏的某个关卡里，平面的第一象限中有 $n$ 只绿色的小猪，其中第 $i$ 只小猪所在的坐标为 $\left(x_i,y_i \right)$。
-
-如果某只小鸟的飞行轨迹经过了 $\left( x_i, y_i \right)$，那么第 $i$ 只小猪就会被消灭掉，同时小鸟将会沿着原先的轨迹继续飞行；
-
-如果一只小鸟的飞行轨迹没有经过 $\left( x_i, y_i \right)$，那么这只小鸟飞行的全过程就不会对第 $i$ 只小猪产生任何影响。
-
-例如，若两只小猪分别位于 $(1,3)$ 和 $(3,3)$，Kiana 可以选择发射一只飞行轨迹为 $y=-x^2+4x$ 的小鸟，这样两只小猪就会被这只小鸟一起消灭。
-
-而这个游戏的目的，就是通过发射小鸟消灭所有的小猪。
-
-这款神奇游戏的每个关卡对 Kiana 来说都很难，所以 Kiana 还输入了一些神秘的指令，使得自己能更轻松地完成这个游戏。这些指令将在【输入格式】中详述。
-
-假设这款游戏一共有 $T$ 个关卡，现在 Kiana 想知道，对于每一个关卡，至少需要发射多少只小鸟才能消灭所有的小猪。由于她不会算，所以希望由你告诉她。
+最后，将硅片切割成存储芯片。每个芯片由 2×3（或 3×2）单位方形硅片块组成。当然，任何芯片都不能包含任何坏的（标记的）方形硅片块。它可能不能将硅片切割成每一个好的方形硅片块都成为某些存储芯片的一部分。该公司希望尽可能少地浪费好方形硅片块。因此他们想知道如何切割硅片以尽可能多地切出芯片。
+现您将获得几个硅片的尺寸和其每个硅片所有坏方形硅片块的列表。你的任务是编写一个程序，计算每个硅片最多可以从其切下的芯片数量。
 
 输入格式
 
-第一行包含一个正整数 $T$，表示游戏的关卡总数。
-
-下面依次输入这 $T$ 个关卡的信息。每个关卡第一行包含两个非负整数 $n,m$，分别表示该关卡中的小猪数量和 Kiana 输入的神秘指令类型。接下来的 $n$ 行中，第 $i$ 行包含两个正实数 $x_i,y_i$，表示第 $i$ 只小猪坐标为 $(x_i,y_i)$。数据保证同一个关卡中不存在两只坐标完全相同的小猪。
-
-如果 $m=0$，表示 Kiana 输入了一个没有任何作用的指令。
-
-如果 $m=1$，则这个关卡将会满足：至多用 $\lceil n/3 + 1 \rceil$ 只小鸟即可消灭所有小猪。
-
-如果 $m=2$，则这个关卡将会满足：一定存在一种最优解，其中有一只小鸟消灭了至少 $\lfloor n/3 \rfloor$ 只小猪。
-
-保证 $1\leq n \leq 18$，$0\leq m \leq 2$，$0 < x_i,y_i < 10$，输入中的实数均保留到小数点后两位。
-
-上文中，符号 $\lceil c \rceil$ 和 $\lfloor c \rfloor$ 分别表示对 $c$ 向上取整和向下取整，例如：$\lceil 2.1 \rceil = \lceil 2.9 \rceil = \lceil 3.0 \rceil = \lfloor 3.0 \rfloor = \lfloor 3.1 \rfloor = \lfloor 3.9 \rfloor = 3$。
-
-### 思路
-
-我们要求出使用最少的抛物线覆盖所有点。首先明确两个点（除(0,0)）可以确定一条抛物线，两个点x不相同。那么一共就只有$n^2$条抛物线。我们要用数学方法求出每条抛物线经过了那些点
-
-是典型的重复覆盖问题。用dancing links是最优解。
-
-暴力的话就是
-
-![image.png](状压DP/image.png)
-
-![image.png](状压DP/image 1.png)
-
-左图中每一条紫色块就是一个点，白线就是抛物线。块覆盖的白线表示该条抛物线可以覆盖该点。我们解决问题就是要找最少的白线使得每一块上都有白线经过。
-
-本题的dp就是记忆化搜索。记$f_s$来保存状态为s时的res防止重复搜索。
-
-![image.png](状压DP/image 2.png)
-
-注意验证二次函数合法性：$a<0,x1≠x2$
-
----
-
-```C++
-/*
-Edit by Ntsc.
-*/
-
-#include<bits/stdc++.h>
-using namespace std;
-#define int long long
-#define pb push_back
-#define ull unsigned long long
-#define pii pair<int, int>
-#define pf first
-#define ps second
-
-#define rd read()
-#define ot write
-#define nl putchar('\n')
-inline int rd{
-	int xx=0,ff=1;
-	char ch=getchar();
-	while(ch<'0'||ch>'9') {if(ch=='-') ff=-1;ch=getchar();}
-	while(ch>='0'&&ch<='9') xx=xx*10+(ch-'0'),ch=getchar();
-	return xx*ff;
-}
-inline void write(int out){
-	if(out<0) putchar('-'),out=-out;
-	if(out>9) write(out/10);
-	putchar(out%10+'0');
-}
-
-const int N=1e3+5;
-const int M=5e6+5;
-const int INF=2e9+5;
-const int MOD=1e9+7;
-const int BASE=17737;
-bool f1;
-int f[M],n,m;
-
-vector<int> s;//状态
-int pa[N][N];
-struct node{
-	double x,y;
-}q[N];
-
-bool cmp(double a,double b){
-	if(fabs(a-b)<0.000001)return 1;
-	return 0;
-}
-
-signed main(){
-    // freopen("P5431_1.in", "r", stdin);
-    // freopen("chfran.out", "w", stdout);
-    // ios::sync_with_stdio(false);
-    // cin.tie(0);cout.tie(0);
-	int T=rd;
-	while(T--){
-		n=rd,m=rd;
-		for(int i=0;i<n;i++)cin>>q[i].x>>q[i].y;
-		memset(pa,0,sizeof pa);
-		for(int i=0;i<n;i++){
-			pa[i][i]=1<<i;
-			for(int j=0;j<n;j++){
-				double x1=q[i].x,y1=q[i].y;
-				double x2=q[j].x,y2=q[j].y;
-				if(cmp(x1,x2))continue;//注意eps不能用==
-				double a=(y1/x1-y2/x2)/(x1-x2);
-				// cerr<<"a="<<a<<endl;
-				if(a>=0)continue;
-				double b=(y1/x1)-a*x1;
-				int cnt=0;
-				for(int k=0;k<n;k++){
-					double x=q[k].x,y=q[k].y;
-					if(cmp(a*x*x+b*x,y))cnt+=1<<k;//标记经过
-				}
-				pa[i][j]=cnt;
-
-			}
-		}
-
-		memset(f,0x3f,sizeof(f));
-		f[0]=0;
-		for(int i=0;i+1<1<<n;i++){
-			int x=0;
-			for(int j=0;j<n;j++){
-				if(!(i>>j&1)){x=j;break;}
-			}
-			for(int j=0;j<n;j++)f[i|pa[x][j]]=min(f[i]+1,f[i|pa[x][j]]);
-		}
-
-		cout<<f[(1<<n)-1]<<endl;
-	}
-    return 0;
-}
-/*
-5 4
-PHPP
-PPHH
-PPPP
-PHPP
-PHHP
-
-*/
-```
-
-【数据范围】
-
-|测试点编号|$n\leqslant$|$m=$|$T\leqslant$|
-|-|-|-|-|
-|$1$|$2$|$0$|$10$|
-|$2$|$2$|$0$|$30$|
-|$3$|$3$|$0$|$10$|
-|$4$|$3$|$0$|$30$|
-|$5$|$4$|$0$|$10$|
-|$6$|$4$|$0$|$30$|
-|$7$|$5$|$0$|$10$|
-|$8$|$6$|$0$|$10$|
-|$9$|$7$|$0$|$10$|
-|$10$|$8$|$0$|$10$|
-|$11$|$9$|$0$|$30$|
-|$12$|$10$|$0$|$30$|
-|$13$|$12$|$1$|$30$|
-|$14$|$12$|$2$|$30$|
-|$15$|$15$|$0$|$15$|
-|$16$|$15$|$1$|$15$|
-|$17$|$15$|$2$|$15$|
-|$18$|$18$|$0$|$5$|
-|$19$|$18$|$1$|$5$|
-|$20$|$18$|$2$|$5$|
-
-## 练习 #2 [NOI2001] 炮兵阵地
-
-题目描述
-
-司令部的将军们打算在 $N\times M$ 的网格地图上部署他们的炮兵部队。
-
-一个 $N\times M$ 的地图由 $N$ 行 $M$ 列组成，地图的每一格可能是山地（用 $\texttt{H}$ 表示），也可能是平原（用 $\texttt{P}$ 表示），如下图。
-
-在每一格平原地形上最多可以布置一支炮兵部队（山地上不能够部署炮兵部队）；一支炮兵部队在地图上的攻击范围如图中黑色区域所示：
-
-![https://cdn.luogu.com.cn/upload/pic/1881.png](状压DP/1881.png)
-
-如果在地图中的灰色所标识的平原上部署一支炮兵部队，则图中的黑色的网格表示它能够攻击到的区域：沿横向左右各两格，沿纵向上下各两格。
-
-图上其它白色网格均攻击不到。从图上可见炮兵的攻击范围不受地形的影响。
-
-现在，将军们规划如何部署炮兵部队，在防止误伤的前提下（保证任何两支炮兵部队之间不能互相攻击，即任何一支炮兵部队都不在其他支炮兵部队的攻击范围内），在整个地图区域内最多能够摆放多少我军的炮兵部队。
-
-### 思路
-
-假如我们只考虑竖直方向，那么我们在考虑第i行时要知道i-1,i-2行的状态。如果在第j列，i-1或者i-2行有炮兵，那么第i行就不能摆炮兵。同时炮兵不能在山地上
-
-记录$f_{i,j,k}$为考虑第i行，第i-1,i行的状态分别为j,k的合法状态的最大状态数。为了知道i-1,i-2行的状态，我们从$f_{i-1}$转移来即可。
-
----
-
-```C++
-/*
-Edit by Ntsc.
-*/
-
-#include<bits/stdc++.h>
-using namespace std;
-#define int long long
-#define pb push_back
-#define ull unsigned long long
-#define pii pair<int, int>
-#define pf first
-#define ps second
-
-#define rd read()
-#define ot write
-#define nl putchar('\n')
-inline int rd{
-	int xx=0,ff=1;
-	char ch=getchar();
-	while(ch<'0'||ch>'9') {if(ch=='-') ff=-1;ch=getchar();}
-	while(ch>='0'&&ch<='9') xx=xx*10+(ch-'0'),ch=getchar();
-	return xx*ff;
-}
-inline void write(int out){
-	if(out<0) putchar('-'),out=-out;
-	if(out>9) write(out/10);
-	putchar(out%10+'0');
-}
-
-const int N=1e3+5;
-const int M=2e3+5;
-const int INF=2e9+5;
-const int MOD=1e9+7;
-const int BASE=17737;
-bool f1;
-int f[2][M][M],cnt[M],n,m;
-int g[N];//每一行的山地状态
-
-vector<int> s;//状态
-
-bool check(int s){
-	for(int i=0;i<m;i++){
-		if((s>>i&1)&&((s>>i+1&1)||(s>>i+2&1)))return 0;//只有当前这一位是1才需要判定与第i-1,i-2行是否合法
-	}
-	return 1;
-}
-int count(int x){//计算x的二进制下有几个1
-	int res=0;
-	while(x){
-		res+=x&1;
-		x>>=1;
-	}
-	return res;
-}
-
-signed main(){
-    // freopen("P5431_1.in", "r", stdin);
-    // freopen("chfran.out", "w", stdout);
-    // ios::sync_with_stdio(false);
-    // cin.tie(0);cout.tie(0);
-    
-    n=rd,m=rd;
-	for(int i=0;i<n;i++){
-		for(int j=0;j<m;j++){
-			char c;
-			cin>>c;
-			if(c=='H')g[i]+=1<<j;
-		}
-	}
-	for(int i=0;i<1<<m;i++){
-		if(check(i)){
-			s.pb(i);
-			cnt[i]=count(i);
-		}
-	}
-	// cerr<<s.size()<<endl;
-	// cerr<<"OK";
-
-	for(int i=0;i<n+2;i++){
-		for(int j=0;j<s.size();j++){
-			for(int k=0;k<s.size();k++){
-				for(int u=0;u<s.size();u++){
-					int a=s[u],b=s[j],c=s[k];
-					// cerr<<"U";
-					if((a&b)||(a&c)||(b&c))continue;
-					if(g[i]&c)continue;
-					// cerr<<"K";
-					f[i&1][j][k]=max(f[i&1][j][k],f[i-1&1][u][j]+cnt[c]);
-				}
-			}
-		}
-	}
-	cout<<f[n+1&1][0][0];
-
-    return 0;
-}
-/*
-
-
-*/
-```
-
-对于 $100\%$ 的数据，$1 \leq N\le 100$，$1 \leq M\le 10$，保证字符仅包含 `P` 与 `H`。
-
-## 练习 #3 [NOIP2017 提高组] 宝藏
-
-题目背景
-
-NOIP2017 D2T2
-
-题目描述
-
-参与考古挖掘的小明得到了一份藏宝图，藏宝图上标出了 $n$ 个深埋在地下的宝藏屋， 也给出了这 $n$ 个宝藏屋之间可供开发的 $m$ 条道路和它们的长度。
-
-小明决心亲自前往挖掘所有宝藏屋中的宝藏。但是，每个宝藏屋距离地面都很远，也就是说，从地面打通一条到某个宝藏屋的道路是很困难的，而开发宝藏屋之间的道路则相对容易很多。
-
-小明的决心感动了考古挖掘的赞助商，赞助商决定免费赞助他打通一条从地面到某个宝藏屋的通道，通往哪个宝藏屋则由小明来决定。
-
-在此基础上，小明还需要考虑如何开凿宝藏屋之间的道路。已经开凿出的道路可以 任意通行不消耗代价。每开凿出一条新道路，小明就会与考古队一起挖掘出由该条道路所能到达的宝藏屋的宝藏。另外，小明不想开发无用道路，即两个已经被挖掘过的宝藏屋之间的道路无需再开发。
-
-新开发一条道路的代价是 $\mathrm{L} \times \mathrm{K}$。其中 $L$ 代表这条道路的长度，$K$ 代表从赞助商帮你打通的宝藏屋到这条道路起点的宝藏屋所经过的宝藏屋的数量（包括赞助商帮你打通的宝藏屋和这条道路起点的宝藏屋） 。
-
-请你编写程序为小明选定由赞助商打通的宝藏屋和之后开凿的道路，使得工程总代价最小，并输出这个最小值。
-
-### 思路
-
-可以抽象为一颗树，答案即类似最小生成树。但是这里的路径等价是不固定的，对于起点的长度\times 路径长度。
-
-定义状态f_{i,j}为树的前j层的点集为i时的最小值。~~然后我们枚举第j+1层的点集s，计算出i，根据f_{i,j}计算出f_{i|s,j+1}~~然后我们从i中枚举子集s作为第j层的点集，计算出前j-1层的点集为i\^s，然后根据f_{i\^s,j-1}计算出f_{i,j}。；
-
-为了加快转移过程，我们可以预处理g(i,j)为从点i到点集j的最小距离
-
-![image.png](状压DP/image 3.png)
-
-
-
-一个枚举子集的小技巧，复杂度O(2^{n+1})
-
-```C++
-for(int i=1;i<1<<n;i++){
-    for(int j=i-1&i;j;j=j-1&i){
-        //枚举i的子集
-    }
-}
-```
-
-图示
-
-![image.png](状压DP/image 4.png)
-
----
-
-```C++
-/*
-Edit by Ntsc.
-*/
-
-#include<bits/stdc++.h>
-using namespace std;
-#define int long long
-#define pb push_back
-#define ull unsigned long long
-#define pii pair<int, int>
-#define pf first
-#define ps second
-
-#define rd read()
-#define ot write
-#define nl putchar('\n')
-inline int rd{
-	int xx=0,ff=1;
-	char ch=getchar();
-	while(ch<'0'||ch>'9') {if(ch=='-') ff=-1;ch=getchar();}
-	while(ch>='0'&&ch<='9') xx=xx*10+(ch-'0'),ch=getchar();
-	return xx*ff;
-}
-inline void write(int out){
-	if(out<0) putchar('-'),out=-out;
-	if(out>9) write(out/10);
-	putchar(out%10+'0');
-}
-
-const int N=1e2+5;
-const int M=5e3+5;
-const int INF=2e9+5;
-const int MOD=1e9+7;
-const int BASE=17737;
-bool f1;
-int f[M][N],dis[N][N],n,m;
-int g[N][M];//每一行的山地状态
-
-vector<int> s;//状态
-
-bool check(int s){
-	for(int i=0;i<m;i++){
-		if((s>>i&1)&&((s>>i+1&1)||(s>>i+2&1)))return 0;//只有当前这一位是1才需要判定与第i-1,i-2行是否合法
-	}
-	return 1;
-}
-int count(int x){//计算x的二进制下有几个1
-	int res=0;
-	while(x){
-		res+=x&1;
-		x>>=1;
-	}
-	return res;
-}
-
-signed main(){
-    // freopen("P5431_1.in", "r", stdin);
-    // freopen("chfran.out", "w", stdout);
-    // ios::sync_with_stdio(false);
-    // cin.tie(0);cout.tie(0);
-
-	n=rd,m=rd;
-	memset(dis,0x3f,sizeof dis);
-	for(int i=0;i<n;i++)dis[i][i]=0;
-	for(int i=1;i<=m;i++){
-		int a=rd-1,b=rd-1,c=rd;//偏移
-		dis[a][b]=dis[b][a]=min(c,dis[a][b]);
-	}
-	memset(g,0x3f,sizeof g);
-	for(int i=0;i<n;i++){
-		for(int j=0;j<1<<n;j++){
-			for(int k=0;k<n;k++){
-				if(j>>k&1)g[i][j]=min(g[i][j],dis[i][k]);
-			}
-		}
-	}
-
-	memset(f,0x3f,sizeof f);
-	for(int i=0;i<n;i++){
-		f[1<<i][0]=0;
-	}
-	
-	for(int i=1;i<1<<n;i++){
-		for(int j=i-1&i;j;j=j-1&i){
-			//枚举i的子集
-			int r=i^j,res=0;
-			for(int k=0;k<n;k++){
-				if(j>>k&1){
-					res+=g[k][r];
-					if(res>=INF)break;
-				}
-			}
-			if(res>=INF)continue;
-			for(int k=1;k<n;k++)f[i][k]=min(f[i][k],f[r][k-1]+res*k);//k为层数
-			
-		}
-	}
-
-	int ans=INF;
-	for(int i=0;i<n;i++)ans=min(ans,f[(1<<n)-1][i]);
-    cout<<ans<<endl;
-    return 0;
-}
-/*
-5 4
-PHPP
-PPHH
-PPPP
-PHPP
-PHHP
-
-*/
-```
-
-对于 $ 100\%$ 的数据： $1 \le n \le 12$，$0 \le m \le 10^3$，$v \le  5\times 10^5$。
-
-## 练习 #4 [NOI2015] 寿司晚宴
-
-题目描述
-
-为了庆祝 NOI 的成功开幕，主办方为大家准备了一场寿司晚宴。小 G 和小 W 作为参加 NOI 的选手，也被邀请参加了寿司晚宴。
-
-在晚宴上，主办方为大家提供了 $n−1$ 种不同的寿司，编号 $1,2,3,\ldots,n-1$，其中第 $i$ 种寿司的美味度为 $i+1$。（即寿司的美味度为从 $2$ 到 $n$）
-
-现在小 G 和小 W 希望每人选一些寿司种类来品尝，他们规定一种品尝方案为不和谐的当且仅当：小 G 品尝的寿司种类中存在一种美味度为 $x$ 的寿司，小 W 品尝的寿司中存在一种美味度为 $y$ 的寿司，而 $x$ 与 $y$ 不互质。
-
-现在小 G 和小 W 希望统计一共有多少种和谐的品尝寿司的方案（对给定的正整数 $p$ 取模）。注意一个人可以不吃任何寿司。
-
-输入格式
-
-输入文件的第 $1$ 行包含 $2$ 个正整数 $n, p$ 中间用单个空格隔开，表示共有 $n$ 种寿司，最终和谐的方案数要对 $p$ 取模。
+第一行由一个整数 $D$ 组成，表示硅片的数量。接下来 $D$ 个部分，每个部分描述一个硅片。每个部分的第一行包含三个整数 $N$，$M$，$K$，其间由单个空格分隔。$N$ 是硅片的长度，$M$ 是它的高度，$K$ 是硅片中坏方硅片块的数量。以下 $K$ 行包含一个坏方硅片块列表。每行包含两个整数 $x$ 和 $y$，表示一个坏方硅片块的坐标（左上角的坐标为（$1,1$），左下角是 （$N,M$））。
 
 输出格式
 
-输出一行包含 $1$ 个整数，表示所求的方案模 $p$ 的结果。
+每行输出每个硅片最多可以从其切下的芯片数量。
 
-![https://cdn.luogu.com.cn/upload/pic/1506.png](状压DP/1506.png)
+#### 数据规模与约定
 
-**勘误：$0 < p \le 10^9 $**
+对于 $100 \%$ 的数据，$1 \leq D \leq 5$，$1 \leq N \leq 150$，$1 \leq M \leq 10$，$0 \leq K \leq M×N$，$1 \leq x \leq N$，$1 \leq y \leq M$。
 
----
+#### 样例说明
 
-题意：
+![https://cdn.luogu.com.cn/upload/image_hosting/v4ugwh72.png](状压DP/v4ugwh72.png)
 
-求方案数，使得两个人选择的数字（[2,n]的子集）两两互质。
+#### 题目说明
 
----
-
-要让两个人选的数字全部互质，那么有一个显然的充要条件：甲选的数字的质因数集合和乙选的数字的质因数集合没有交集
-
-如果是n<30，那么范围内的质数很少，我们可以状态压缩
-
-记f_{i,S_1,S_2}为考虑i个数字时，甲集合的质因数集合为S_1，乙集合的质因数集合为 S_2时的方案数。压去第一维。
-
-如果是n≤500，发现每一个数，其$>\sqrt{500}$的质数只有一个，所以我们单独记录这个质数。
-
-然后，我们把2-n这些数按照大质因子大小排序，这样令大质因子相同的数排在一起（也就是不能甲乙同时选的）
-
-我们记录三个相同数组：dp[S1​][S2​],f1[][],f2[][]，因为小质因数只有8个，所以0≤S1​,S2​≤255
-
-对于每一段大质因子相同的数，我们在这一段开始的时候把dp的值赋给f1和f2，然后在这一段内部用刷表法推f1和f2，其中f1表示的就是这个大质因子让第一个人选，f2就是这个大质因子让第二个人选。
-
-这一段数推完以后，再把f1f2合并到dp里面，dp[S1​][S2​]=f1[S1​][S2​]+f2[S1​][S2​]−dp[S1​][S2​]
-
-这里减掉一个dp是因为两种情况会重复统计两个人都不选的情况（也就是原来的dp[S_1][S_2]的值），减掉即可。
+来源于 CENTRAL-EUROPEAN OLYMPIAD IN INFORMATICS 2002 的 [Bugs Integrated,Inc.](https://web.ics.upjs.sk/ceoi/documents/tasks/bugs-tsk.pdf)。
+由 @[求学的企鹅](/user/271784) 翻译整理。
 
 ---
+
+这道题一看就是状态压缩，但是我们很明显要处理连续3行的状态。结合数据范围，我们发现我们不太能分别枚举前两行的状态，因此我们考虑使用别的方法。
+
+如果芯片只能横着放，那么状态压缩还是很好解决的。如果是竖着放呢？那么我们就需要标记一下当前是这个芯片的第几行了。比如说我们以2作为芯片的第一行，0作为最后一行，那么转移时1下面只能放0，0下面可以随便放。
+
+于是我们把**三进制数**作为状态。
+
+于是我们记录$f_{i,j}$为第i行放置芯片的状态为j时的已经填好的芯片的数量的最优值。
+
+于是我们在转移时枚举一下上一行的方案，然后刷表法转移。用dfs求出在上一行的限制下，这一行的所有方案即可。
 
 ```C++
 /*                                                                                
@@ -839,7 +448,8 @@ using namespace std;
 #define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
 #define pb push_back
 #define mp make_pair
-#define int long long
+// #define int long long
+#define ull unsigned long long
 #define pii pair<int, int>
 #define ps second
 #define pf first
@@ -897,86 +507,360 @@ void err(T a, A... x) { cerr << a << ' '; err(x...); }
 #endif
 
 
-const int N = 5e2+ 5;
-const int INF = 1e18;
-const int M = 1e7;
- int MOD = 1e9 + 7;
+const int N = 155 + 5;
+const int INF = 1e9;
+const int M = 1e5;
+const int MOD = 1e9 + 7;
 
+int pw[N];
+bool ban[N][N];
+int f[2][M];
+int p[N][N];
 
-int n;
-
-
-int p[11]={0,2,3,5,7,11,13,17,19,23};
-
-struct node{
-    int big,s;
-    int v;
-
+namespace morebit{
+    //三进制工具包
+    int base=3;
+    
     void init(){
-        int t=v;
-        
-        big=-1;//唯一一个大质数单独处理
-        for(int i=1;i<=8;i++){
-            if(t%p[i]) continue;
-            s|=(1<<i-1);
-            while(t%p[i]==0) t/=p[i];
+        pw[0]=1;
+        for(int i=1;i<=15;i++){
+            pw[i]=pw[i-1]*base;
         }
-        if(t!=1) big=t; 
     }
-}a[N];
+
+    bool vis[M][12];
+    itn g[M][12];
+    inline int getw(int x,itn loc){
+        if(vis[x][loc])return g[x][loc];
+        vis[x][loc]=1;
+        // int xx=x,ll=loc;
+        // while(loc){
+        //     x/=3;
+        //     loc--;
+        // }
+        // // cdbg("gw",x%3);
+        return g[x][loc]=(x/pw[loc])%3;
+    }
+    
+}using namespace morebit;
 
 
-bool cmp(node a,node b){
-    return a.big<b.big;
+inline bool safe(int a,int b,int x,int y){
+    b++,y++;
+    // if(p[x][y]-p[x][b-1]-p[a-1][y]+p[a-1][b-1])cdbg(a,b,x,y);
+    return p[x][y]-p[x][b-1]-p[a-1][y]+p[a-1][b-1]==0;
 }
 
+int n,m,K;
 
-int f[N][N],f1[N][N],f2[N][N];
+
+void dfs(int x,int pre,int y,int sum,int now){
+    // y\in[0,m-1]
+    // if(sum)cdbg(sum);
+    if(y==-1){
+        // if(x==2&&sum>1)cdbg(sum);
+        f[x&1][now]=max(f[x&1][now],sum+f[(x-1)&1][pre]);
+        return ;
+    }
+    int cur=getw(pre,y);
+    if(cur&&ban[x][y+1])return ;
+    if(cur==2){
+        dfs(x,pre,y-1,sum,now*3+1);
+    }
+    if(cur==1){
+        // cdbg(x,y,"cur=0");
+        dfs(x,pre,y-1,sum,now*3);
+        // if(y>=1&&x>2)if(getw(pre,y)==1&&getw(pre,y-1)==1)if(safe(x-2,y-1,x,y))dfs(x,pre,y-2,sum+1,now*3*3);    //竖chip最后一行
+        // if(y>=2&&x>1){
+        //     // if(pre==728)cdbg(x,getw(pre,y),getw(pre,y-1),getw(pre,y-2),y);
+        //     if(getw(pre,y)==1&&getw(pre,y-1)==1&&getw(pre,y-2)==1){
+        //         // cdbg("OK");
+        //         if(safe(x-1,y-2,x,y))dfs(x,pre,y-3,sum+1,now*3*3*3);    //横chip最后一行
+        //     }
+            
+        // }
+
+    }if(cur==0){
+        dfs(x,pre,y-1,sum,now*3);
+        if(y>=2&&x<=n-1)if(!ban[x][y+1]&&!ban[x][y]&&!ban[x][y-1])if(getw(pre,y-1)==0&&getw(pre,y-2)==0)dfs(x,pre,y-3,sum+1,((now*3+1)*3+1)*3+1);
+        if(y>=1&&x<=n-2)if(!ban[x][y+1]&&!ban[x][y])if(getw(pre,y-1)==0)dfs(x,pre,y-2,sum+1,(now*3+2)*3+2);
+    }
+}
 
 void solve(){
-    n=rd,MOD=rd;
-    for(int i=1;i<n;i++){
-        a[i].v=i+1;
-        a[i].init();
+     n=rd,m=rd,K=rd;
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++)ban[i][j]=0;
     }
 
-    sort(a+1,a+n,cmp);
+    for(int i=1;i<=K;i++){
+        int x=rd,y=rd;
+        ban[x][y]=1;
+    }    
 
-    f[0][0]=1;
+    
 
-    for(int i=1;i<n;i++){
-        if(i==1||a[i].big!=a[i-1].big||a[i].big==-1){
-            memcpy(f1,f,sizeof f1);
-            memcpy(f2,f,sizeof f2);
-        }
 
-        for(int j=255;~j;j--){
-            for(int k=255;~k;k--){
-                if(j&k)continue;
-                if((a[i].s&j)==0) f2[j][k|a[i].s]=(f2[j][k|a[i].s]+f2[j][k]+MOD)%MOD;
-                if((a[i].s&k)==0) f1[j|a[i].s][k]=(f1[j|a[i].s][k]+f1[j][k]+MOD)%MOD;
-            }
-        }
+    // for(int i=1;i<=n;i++){
+    //     for(int j=1;j<=m;j++){
+    //         p[i][j]=p[i-1][j]+p[i][j-1]-p[i-1][j-1]+ban[i][j];
+    //     }
+    // }
+    memset(f,-0x3f3f,sizeof f);
+    // for(int i=1;i<pw[m];i++)f[0][i]=-INF;
+    f[0][0]=0;
+    for(int i=1;i<=n;i++){
+        for(int j=0;j<pw[m];j++)f[i&1][j]=-INF;
 
-        if(i==n-1||a[i].big!=a[i+1].big||a[i].big==-1){
-            for(int j=255;~j;j--){
-                for(int k=255;~k;k--){
-                    if(j&k)continue;
-                    f[j][k]=(f1[j][k]+f2[j][k]+MOD-f[j][k]+MOD)%MOD;
-                }
-            }
+        for(int j=0;j<pw[m];j++){
+            // cdbg(j);
+            if (f[(i-1)&1][j]<0) continue;
+            dfs(i,j,m-1,0,0);
         }
     }
-    int ans=0;
-    for(int j=255;~j;j--){
-        for(int k=255;~k;k--){
-            if(j&k)continue;
-            if(f[j][k])ans=(ans+f[j][k])%MOD;
-        }
-    }
-
-    cout<<ans<<endl;
+    // cdbg(f[3][0]);
+    write(f[n&1][0]);
+    puts("");
+    // cout<<f[n&1][0]<<endl;
 }
+
+signed main() {
+    // freopen(".in","r",stdin);
+    // freopen(".in","w",stdout);
+
+    init();
+
+    int T=rd;
+    while(T--){
+    	solve();
+    }
+    return 0;
+}gai
+```
+
+当然这种题目也有记录前两行状态方案的方法，但是时空复杂度不优秀。可以参考练习 #2
+
+同样可以使用本题的刷表法的还有练习 #5
+
+## 练习
+
+[状态压缩练习题单](%E7%8A%B6%E5%8E%8BDP/%E7%8A%B6%E6%80%81%E5%8E%8B%E7%BC%A9%E7%BB%83%E4%B9%A0%E9%A2%98%E5%8D%95%204e08e2aa-98ef-4c66-b409-254027bf4b24.md)
+
+## 子集dp（sos dp）
+
+通常用来解决丢每个i求$f_i=\sum_ {j\in i}a_j$的计数问题，可以在$O(n \log m)$内解决。
+
+### 例题 #1 [COCI2011-2012#6] KOŠARE
+
+题目描述
+
+在一个废弃的阁楼里放置有 $n$ 个箱子，这些箱子里存放着 $m$ 种玩具。对于第 $i$ 个箱子，它里面有 $k_i$ 个玩具（不同的箱子里可能有相同的玩具）。
+
+现在你需要选出一部分箱子，使得它们中共有 $m$ 种玩具（即所有种类的玩具都包含）。求选择的方案总数（$\bmod\ 10^9+7$）。
+
+输入格式
+
+输入第一行包含两个整数 $n,m$。
+
+接下来的 $n$ 行，每行首先输入一个整数 $k_i$；接下来 $k_i$ 个数表示第 $i$ 个箱子里所含的玩具情况。
+
+输出格式
+
+输入一行一个整数，为方案总数（$\bmod\ 10^9+7$）。
+
+- 对于 $100\%$ 的数据，保证 $1\le n\le 1\times 10^6$，$1\le m\le 20$，$0\le k_i\le m$。
+
+---
+
+首先我们对题目进行若干转换，将所有箱子的集合取反。问题变为又多少种选择方法，使得选择的集合的交集为空。
+
+先定义f_i为以i为子集的箱子个数，g_i为有多少种箱子的组合，使得i是它们的并的子集。
+
+那么可以得到g_i=2^{f_i}-1，即我们在f_i这些箱子里面任意选≥1个即可满足要求。
+
+那么怎么样求f_i呢？我们定义a_i为集合为i的箱子个数，现在我们要求
+
+$f_i=\sum_ {i\in j}a_j$。
+
+这里我们应该使用一个叫做**子集dp**的东西。
+
+我们定义$h_{i,j}$为只有前j位 （这里的第j位指的是$2^{j-1}$处）和i可能不同，并且i属于箱子的集合 这样的箱子的个数。那么初始化有$h_{i,0}=a_i$。
+
+怎么样递推呢？若i的第j位为1，那么因为要求的i是箱子的子集，所以这里的箱子的第i为只能为1，即$h_{i,j}=h_{i,j-1}$。
+
+若i的第j位为0，那么箱子的这一位可以是1也可以是0.如果箱子的这一位是0，那么就是$h_{i,j-1}$；如果是1，那么就是$h_{i~\text{xor}~2^{j-1},j-1}$。
+
+那么最后得到$f_i=h_{i,m}$，这里的m是题目中的位数上限
+
+
+
+求出h,f,g后，我们就可以得到答案了。因为$g_i$为有多少种箱子的组合，使得i是它们的并的子集，而我们要求的是有多少种箱子的组合，使得i是它们的并，我们就按集合容斥，最后的答案：集合中没有0的方案=集合中至少0个1的方案-至少一个1的方案+...
+
+```C++
+/*                                                                                
+                      Keyblinds Guide
+     				###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this && dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt+la/ra : move mouse to pre/nxt pos'
+	  
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define ull unsigned long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+
+
+// #define innt int
+#define itn int
+// #define inr intw
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9') {
+		if (ch == '-')
+			ff = -1;
+		ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+	if (out < 0)
+		putchar('-'), out = -out;
+	if (out > 9)
+		write(out / 10);
+	putchar(out % 10 + '0');
+}
+
+#define ell dbg('\n')
+const char el='\n';
+const bool enable_dbg = 1;
+template <typename T,typename... Args>
+void dbg(T s,Args... args) {
+	if constexpr (enable_dbg){
+    cerr << s;
+    if(1)cerr<<' ';
+		if constexpr (sizeof...(Args))
+			dbg(args...);
+	}
+}
+
+#define zerol = 1
+#ifdef zerol
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() { cerr << endl; }
+template<template<typename...> class T, typename c, typename... A>
+void err(T<c> a, A... x) { for (auto v: a) cerr << v << ' '; err(x...); }
+template<typename T, typename... A>
+void err(T a, A... x) { cerr << a << ' '; err(x...); }
+#else
+#define dbg(...)
+#endif
+
+
+const int N = 2e6+5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9+7;
+
+
+int f[N];//表示状态 i 是多少个箱子状态的子集
+itn g[N];//表示状态 i 是多少种 箱子状态交集的子集
+int cnt[N];
+int ans;
+int s[N];
+
+int h[N][2];
+
+inline int ksm(int a,int b){
+	int res=1;
+	while(b){
+		if(b&1)res=res*a%MOD;
+		b>>=1;
+		a=a*a%MOD;
+	}
+	return res;
+}
+
+
+inline int popcnt(int x){
+	int res=0;
+	while(x){
+		res+=x&1;
+		x>>=1;
+	}
+	return res;
+}
+
+
+void solve(){
+	int n=rd,m=rd;
+	for(int i=1;i<=n;i++){
+		int k=rd;
+		for(int j=1;j<=k;j++){
+			int l=rd-1;
+			s[i]|=(1<<l);
+		}
+	}
+
+	for(int i=1;i<=n;i++){
+		s[i]^=((1<<m)-1);
+		cnt[s[i]]++;
+	}
+
+	for(int i=0;i<(1<<m);i++){
+		h[i][0]=cnt[i];
+	}
+
+	for(int i=1;i<=m;i++){
+		for(int j=0;j<(1<<m);j++){
+			if(j&(1<<(i-1))){
+				h[j][i&1]=h[j][(i-1)&1];
+			}else{
+				h[j][i&1]=(h[j][(i-1)&1]+h[j^(1<<(i-1))][(i-1)&1])%MOD;
+
+			}
+		}
+	}
+
+	for(int i=0;i<(1<<m);i++){
+		f[i]=h[i][m&1];
+		g[i]=(ksm(2,f[i])+MOD-1)%MOD;
+	}
+
+
+	for(int i=0;i<(1<<m);i++){
+		int op=0;
+		if(popcnt(i)&1)op=-1;
+		else op=1;
+		ans+=op*g[i];
+		ans=(ans%MOD+MOD)%MOD;
+	}
+
+	cout<<ans<<endl;
+
+}
+
 
 signed main() {
     // freopen(".in","r",stdin);

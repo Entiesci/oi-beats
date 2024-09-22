@@ -589,3 +589,193 @@ signed main() {
 }
 ```
 
+## 环形DP
+
+### 例题 #1 [USACO05JAN] Naptime G
+
+题目描述
+
+贝茜是一只非常缺觉的奶牛．她的一天被平均分割成 $N$ 段（$3 \leq N \leq 3830$），但是她要用其中的 $B$ 段时间（$2 \leq B \lt N$）睡觉。每段时间都有一个效用值 $U_i$（$0 \leq U_i \leq 2 \times 10^5$），只有当她睡觉的时候，才会发挥效用。
+
+有了闹钟的帮助，贝茜可以选择任意的时间入睡，当然，她只能在时间划分的边界处入睡、醒来。
+
+贝茜想使所有睡觉效用的总和最大。不幸的是，每一段睡眠的第一个时间阶段都是“入睡”阶段，而旦不记入效用值。
+
+时间阶段是不断循环的圆（一天一天是循环的嘛），假如贝茜在时间 $N$ 和时间 $1$ 睡觉，那么她将得到时间 $1$ 的效用值。
+
+输入格式
+
+第一行两个整数 $N,B$。
+
+接下来 $N$ 行，每行一个整数，表示第 $i$ 个时段的效用值。
+
+---
+
+环形dp通常有两种解决方法
+
+- 破环为链，复制一份置于其后。
+
+这样做可以使得我们把环形dp转化为区间dp，最后取长度为n的所有答案中的最优值即可。
+
+- 枚举边界情况
+
+这样做我们就需要分类讨论，但是也可以解决环形这条麻烦。
+
+本题我们发现，因为区间dp是 $O(n^2)$的，不允许我们采用方法1，所以我们就采用方法2.
+
+我们进行两次dp，第一次强制不选第n和第1个小时。第二次强制选第n和第1个小时。然后在最后的答案中选择最大值即可。
+
+```C++
+
+
+/*
+                      Keyblinds Guide
+     				###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt+la/ra : move mouse to pre/nxt pos'
+
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define pb push_back
+#define mp make_pair
+//#define int long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+#define ull unsigned long long
+
+#define itn int
+// #define inr int
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9') {
+		if (ch == '-')
+			ff = -1;
+		ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+	if (out < 0)
+		putchar('-'), out = -out;
+	if (out > 9)
+		write(out / 10);
+	putchar(out % 10 + '0');
+}
+
+#define ell dbg('\n')
+const char el='\n';
+const bool enable_dbg = 1;
+template <typename T,typename... Args>
+void dbg(T s,Args... args) {
+	if constexpr (enable_dbg){
+    if(1)cerr<<' ';
+    cerr << s;
+		if constexpr (sizeof...(Args))
+			dbg(args...);
+	}
+}
+
+#define zerol = 1
+#ifdef zerol
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() { cerr << endl; }
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) { for (auto v: a) cerr << v << ' '; err(x...); }
+template<typename T, typename... A>
+void err(T a, A... x) { cerr << a << ' '; err(x...); }
+#else
+#define dbg(...)
+#endif
+
+
+const int N = 3.9e3 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+bool FLA;
+
+
+
+ itn f[N][N][2];
+ itn a[N];
+ int n,m;
+
+
+bool FLB;
+
+
+
+void runDp(){
+	for(itn i=2;i<=n;i++){
+		for(int j=0;j<=m;j++){
+			f[i][j][0]=max(f[i-1][j][0],f[i-1][j][1]);
+			if(j-1>=0)f[i][j][1]=max(f[i-1][j-1][0],f[i-1][j-1][1]+a[i]);
+		}
+	}
+}
+
+void solve(){
+    cerr<<((&FLB)-(&FLA))/1024.0/1024.0<<" Mib"<<endl;
+    
+    n=rd,m=rd;
+    for(int i=1;i<=n;i++){
+    	a[i]=rd;
+	}
+	
+	memset(f,-0x3f3f,sizeof f);
+	f[1][0][0]=0;
+	f[1][1][1]=0;
+	
+	runDp();
+	
+	itn ans=max(f[n][m][0],f[n][m][1]);
+	
+	memset(f,-0x3f3f,sizeof f);
+	
+	f[1][1][1]=a[1];
+	runDp();
+	
+	ans=max(ans,f[n][m][1]);
+	
+	
+	cout<<ans<<endl;
+}
+
+signed main() {
+    // freopen(".in","r",stdin);
+    // freopen(".in","w",stdout);
+
+    int T=1;
+    while(T--){
+    	solve();
+    }
+    return 0;
+}
+```
+
+## 练习
+
+[模板 | [NOI1995] 石子合并](%E5%8C%BA%E9%97%B4DP/%E6%A8%A1%E6%9D%BF++++NOI1995++%E7%9F%B3%E5%AD%90%E5%90%88%E5%B9%B6%20d7b6161d-e72d-4d33-9c3b-d4f4e6890c33.md)
+
+[Sequence of Balls](%E5%8C%BA%E9%97%B4DP/Sequence+of+Balls%20d5dc4ce8-0195-4297-b5fe-758c2dfc4a58.md)
+

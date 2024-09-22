@@ -1,10 +1,152 @@
 # 数位DP
 
+数位DP是一种处理数字相关问题的动态规划方法。它通常用于解决以下类型的问题：
+
+1. 计算在给定范围内，满足某些特定数位条件的数字个数。
+
+2. 求解某个数位问题的具体方案数。
+
+3. 找出满足特定数位性质的数字。
+
+数位DP的核心思想是将数字的每一位分开考虑，使用记忆化搜索（通常是递归的形式）来避免重复计算，从而提高效率。
+
+
+
+以下是数位DP的一般步骤：
+
+1. **数位分离**：将数字的每一位分离出来，存储在一个数组中，便于单独处理每一位。
+
+2. **递归搜索**：定义一个递归函数，该函数的参数通常包括当前处理到哪一位、前面处理的状态（比如是否越界、当前数字是否已经使用了某个数字等）。
+
+3. **记忆化**：为了避免重复计算，通常会使用一个数组或者哈希表来存储已经计算过的状态。
+
+4. **状态转移**：在递归函数中，根据当前的状态和可选的数字，递归地计算出所有可能的情况。
+
+## 例题 #1 统计问题 The Counting Problem
+
+**【题目描述】**
+
+给定两个整数 $a$ 和 $b$，求 $a$ 和 $b$ 之间的所有数字中 $0$ ~ $9$ 出现次数。
+
+例如，$a$ = $1024$，$b$ = $1032$，则 $a$ 和 $b$ 之间共有 $9$ 个数如下：
+
+`1024 1025 1026 1027 1028 1029 1030 1031 1032`
+
+其中 `0` 出现 $10$ 次，`1` 出现 $10$ 次，`2` 出现 $7$ 次，`3` 出现 $3$ 次等等……
+
+**【输入格式】**
+
+输入包含至多 $500$ 行数据。每组输入数据占一行，包含两个整数 $a$ 和 $b$（$0<a,b<100000000$），以 `0 0` 作为结尾，且该行不作处理。
+
+**【输出格式】**
+
+每组数据输出一个结果，每个结果占一行，包含十个用空格隔开的数字，第一个数字表示 `0` 出现的次数，第二个数字表示 `1` 出现的次数，以此类推。
+
+---
+
+
+
+```C++
+/*
+CB Ntsc111
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define uint unsigned int
+#define pii pair<int, int>
+#define pf to
+#define ps second
+#define int long long
+
+#define err cerr << "Error"
+#define rd read()
+
+#define ot write
+#define nl putchar('\n')
+int read() {
+  int xx = 0, ff = 1;
+  char ch = getchar();
+  while (ch < '0' || ch > '9') {
+    if (ch == '-')
+      ff = -1;
+    ch = getchar();
+  }
+  while (ch >= '0' && ch <= '9')
+    xx = xx * 10 + (ch - '0'), ch = getchar();
+  return xx * ff;
+}
+void write(int out) {
+  if (out < 0)
+    putchar('-'), out = -out;
+  if (out > 9)
+    write(out / 10);
+  putchar(out % 10 + '0');
+}
+
+const int M = 800;
+const int mxxlog = 10;
+int MOD = 1e9 + 57;
+const int N = 1000100;
+
+int a, b, n;
+int num[105];
+int dp[30][1000][9];
+int dfs(int pos, int sum, bool lim, bool h, int d) {
+    if (pos == -1) {
+        return sum;
+    }
+    if (!lim && !h && ~dp[pos][sum][d])
+        return dp[pos][sum][d];
+    int End, ans = 0;
+    End = lim ? num[pos] : 9;
+    for (int i = 0; i <= End; ++i)
+        ans += dfs(pos - 1, sum + ((!h || i) && i == d), lim && i == num[pos],
+                h && i == 0, d);
+    if (!lim && !h)
+        dp[pos][sum][d] = ans;
+    return ans;
+}
+int cal(int x, int d) {
+    memset(dp, -1, sizeof(dp));
+    int pos = 0;
+    while (x) {
+        num[pos++] = x % 10;
+        x /= 10;
+    }
+    return dfs(pos - 1, 0, 1, 1, d);
+}
+void solve() {
+    a = rd, b = rd;
+    if(a>b)swap(a,b);
+    if(a+b==0)exit(0);
+    for (int i = 0; i <= 9; ++i)
+        printf("%lld ", cal(b, i) - cal(a - 1, i));
+    puts("");
+
+  return ;
+}
+
+
+
+signed main(){
+    while(1){
+        solve();
+    }
+    return 0;
+}
+```
+
+
+
+
+
 摘抄[学习笔记 | 数位DP](https://flowus.cn/3b672d07-ba95-4030-aa38-d846d36bead1)
 
 ---
 
-## 例题 #1 1081. 度的数量
+## 练习 #1 1081. 度的数量
 
 求给定区间 [X,Y] 中满足下列条件的整数个数：这个数恰好等于 K 个互不相等的 B 的整数次幂之和。
 
@@ -136,7 +278,7 @@ signed main(){
 */
 ```
 
-## 例题 #2 | [SCOI2009] windy 数
+## 练习 #2 | [SCOI2009] windy 数
 
 题目描述
 
@@ -238,7 +380,7 @@ signed main(){
 
 对于全部的测试点，保证 $1 \leq a \leq b \leq 2 \times 10^9$。
 
-## 例题 #3 | [ZJOI2010] 排列计数
+## 练习 #3 | [ZJOI2010] 排列计数
 
 题目描述
 
@@ -390,7 +532,7 @@ signed main (){
 
 
 
-## 例题 #4 [SDOI2014] 数数
+## 练习 #4 [SDOI2014] 数数
 
 题目描述
 

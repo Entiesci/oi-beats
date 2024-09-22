@@ -1,14 +1,238 @@
-CRT
-
 补充资料
 
 [https://www.cnblogs.com/ailanxier/p/13370753.html](https://www.cnblogs.com/ailanxier/p/13370753.html)
+
+
+
+我们有若干组$x≡z_i\pmod {m_i}$需要求解，我们先把它们化为不定方程的形式：
+
+x=z_i+b_im_i。这时我们还不能直接求解，如果直接求解，我们就要面对多个无穷集取交集的问题了。
+
+我们考虑联立两个这样的不定方程，有
+
+$b_im_i-b_jm_j=z_i-z_j$。这里我们可以求出b_i,b_j的一组特解spe(b_i),spe(b_j)。有什么用呢？
+
+$sol(b_i)=spe(b_i)+k*m_j/gcd$
+
+$x=z_i+(spe(b_i)+k*m_j/gcd)\times m_i$
+
+$x=z_i+m_i spe(b_i)+k*lcm$
+
+$x=z_i+m_ispe(b_i)\pmod {lcm}$
+
+这样我们就把两个方程合并在一起了。更多的情况一个个合并即可。注意要判断$b_im_i-b_jm_j=z_i-z_j$是否有解（ax+by=m←>gcd(a,b)|m）
 
 # CRT
 
 孙子定理是中国古代求解一次同余式组（见同余）的方法。是数论中一个重要定理。又称中国余数定理。
 
-![343_1576490077743_2B4D67EE859892B169FF34D4BA697A72](CRT与exCRT/343_1576490077743_2B4D67EE859892B169FF34D4BA697A72)
+中国剩余定理(Chinese Remainder Theorem, CRT)可求解如下形式的一元线性同余方程组（其中$n_1,n_2,\cdots,n_k$两两互质）：
+
+
+$\begin{cases}x\equiv a_1{\pmod{n_1}}\\x\equiv a_2{\pmod{n_2}}\\\vdots\\x\equiv a_k{\pmod{n_k}}\end{cases}$
+
+过程
+
+1. 计算所有模数的积 $n$;
+
+2. 对于第 $i$ 个方程:
+a. 计算$m_i=\frac{n}{n_i}$;
+
+    b. 计算$m_i$在模$n_i$意义下的逆元$m_i^{-1}$;
+
+    注：计算a在mod p时的逆元
+
+        $a\times inv==1(mod p)$
+
+        $a\times inv+bp==1$
+
+        用exgcd求解即可。注意到a,p互质，所以$\gcd(a,p)$实际上就是1
+
+    c. 计算$c_i=m_im_i^{-1}$（不要对$n_i$取模）。
+
+1. 方程组在模$n$意义下的唯一解为：$x=\sum_{i=1}^{k}a_ic_i{\pmod{n}}$。
+
+## 例题 #1 [TJOI2009] 猜数字
+
+题目描述
+
+现有两组数字，每组 $k$ 个。
+
+第一组中的数字分别用 $a_1,a_2,\cdots ,a_k$ 表示，第二组中的数字分别用 $b_1,b_2,\cdots ,b_k$ 表示。
+
+其中第二组中的数字是两两互素的。求最小的 $n\in \mathbb{N}$，满足对于 $\forall i\in [1,k]$，有 $b_i | (n-a_i)$。
+
+输入格式
+
+第一行一个整数 $k$。
+
+第二行 $k$ 个整数，表示：$a_1,a_2,\cdots ,a_k$。
+
+第三行 $k$ 个整数，表示：$b_1,b_2,\cdots ,b_k$。
+
+输出格式
+
+输出一行一个整数，为所求的答案 $n$。
+
+对于 $100\%$ 的数据：
+
+$1\le k \le 10$，$|a_i|\le 10^9$，$1\le b_i\le 6\times 10^3$，$\prod_{i=1}^k b_i\le 10^{18}$。
+
+---
+
+注意$\prod b_i$是$10^{18}$范围，所以取模后乘还是会爆LL，请使用int128或者快速乘。
+
+```C++
+/*                                                                                
+                      Keyblinds Guide
+     				###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this && dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt+la/ra : move mouse to pre/nxt pos'
+	  
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define ull unsigned long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+
+
+// #define innt int
+#define itn long long
+// #define inr intw
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9') {
+		if (ch == '-')
+			ff = -1;
+		ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+	if (out < 0)
+		putchar('-'), out = -out;
+	if (out > 9)
+		write(out / 10);
+	putchar(out % 10 + '0');
+}
+
+#define ell dbg('\n')
+const char el='\n';
+const bool enable_dbg = 1;
+template <typename T,typename... Args>
+void dbg(T s,Args... args) {
+	if constexpr (enable_dbg){
+    cerr << s;
+    if(1)cerr<<' ';
+		if constexpr (sizeof...(Args))
+			dbg(args...);
+	}
+}
+
+#define zerol = 1
+#ifdef zerol
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() { cerr << endl; }
+template<template<typename...> class T, typename c, typename... A>
+void err(T<c> a, A... x) { for (auto v: a) cerr << v << ' '; err(x...); }
+template<typename T, typename... A>
+void err(T a, A... x) { cerr << a << ' '; err(x...); }
+#else
+#define dbg(...)
+#endif
+
+
+const int N = 1e5+5;
+const int INF = 1e18;
+const int M = 1e7;
+ int MOD = 1e9+7;
+
+int x,y;
+
+int exgcd(int a,int b,int &x,int &y){
+	// cdbg(a,b);
+	if(b==0){
+		x=1,y=0;
+		return b;
+	}
+	int t=exgcd(b,a%b,x,y);
+	int tx=x,ty=y;
+	x=ty;
+	y=tx-(a/b)*ty;
+	return t;
+}
+
+int inv(int a,int p){
+	//计算a在mod p时的逆元
+	// a*inv==1(mod p)
+	// a*inv+bp==1
+	exgcd(a,p,x,y);
+	return x;
+}
+
+int a[N],b[N],c[N],d[N];
+itn ans;
+
+void solve(){
+	int n=rd;
+	for(int i=1;i<=n;i++)a[i]=rd;
+	for(int i=1;i<=n;i++)b[i]=rd;
+
+	itn B=1;
+	for(int i=1;i<=n;i++){
+		B*=b[i];
+	}
+
+	for(int i=1;i<=n;i++){
+		d[i]=B/b[i];
+
+		c[i]=(__int128)d[i]%B*inv(d[i],b[i])%B;
+	}
+
+	for(int i=1;i<=n;i++){
+		ans+=(__int128)c[i]*a[i]%B; //B可能是1e18，因此一定要用int128
+		// ans%=B;
+		ans=(ans%B+B)%B;
+	}
+
+
+	cout<<ans<<endl;
+	
+}
+
+signed main() {
+    // freopen(".in","r",stdin);
+    // freopen(".in","w",stdout);
+
+    int T=1;
+    while(T--){
+    	solve();
+    }
+    return 0;
+}
+```
 
 # exCRT
 

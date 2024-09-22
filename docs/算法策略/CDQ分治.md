@@ -679,5 +679,9 @@ signed main() {
 
 ![image.png](CDQ分治/image 4.png)
 
+更多：
 
+[CDQ练习题单 #1](CDQ%E5%88%86%E6%B2%BB/CDQ%E7%BB%83%E4%B9%A0%E9%A2%98%E5%8D%95+#1%20fbb2f528-956b-4ace-8645-bb1468f355ff.md)
+
+[CDQ分治题单 #2](CDQ%E5%88%86%E6%B2%BB/CDQ%E5%88%86%E6%B2%BB%E9%A2%98%E5%8D%95+#2%20f4d663e4-f9c5-4b54-9940-6d57bd830494.md)
 

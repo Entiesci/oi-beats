@@ -1,18 +1,20 @@
-[桥（割边）](Tarjan.md)
+[桥（割边）](Tarjan/%E6%A1%A5%EF%BC%88%E5%89%B2%E8%BE%B9%EF%BC%89%20900132fa-060c-4807-80a8-d500ec00ab1d.md)
 
-[边双连通分量](Tarjan.md)
+[边双连通分量](Tarjan/%E8%BE%B9%E5%8F%8C%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F%20eccf67a4-654e-42a2-b81a-fba52c1a3299.md)
 
-[割点（割顶）](Tarjan.md)
+[割点（割顶）](Tarjan/%E5%89%B2%E7%82%B9%EF%BC%88%E5%89%B2%E9%A1%B6%EF%BC%89%20cb153393-9749-4dda-aa21-498c5b6fa71f.md)
 
-[点双连通分量](Tarjan.md)
+[点双连通分量](Tarjan/%E7%82%B9%E5%8F%8C%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F%20908f4753-957f-42c2-b791-de4110782ea3.md)
 
-[强连通分量](Tarjan.md)
+[强连通分量](Tarjan/%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F%207333256a-3137-4ee7-8ec2-517b40f2139d.md)
 
-[缩点（强连通分量）](Tarjan.md)
+[缩点（强连通分量）](Tarjan/%E7%BC%A9%E7%82%B9%EF%BC%88%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F%EF%BC%89%20f7b494b0-c997-47e1-8bfa-7ac1dd778296.md)
 
-[圆方树与仙人掌](Tarjan.md)
+[圆方树与仙人掌](Tarjan/%E5%9C%86%E6%96%B9%E6%A0%91%E4%B8%8E%E4%BB%99%E4%BA%BA%E6%8E%8C%205f196f67-49a2-48ce-b00f-381b91448d23.md)
 
-[Kosaraju 算法](Tarjan.md)
+[Kosaraju 算法](Tarjan/Kosaraju+%E7%AE%97%E6%B3%95%20961aa4bf-ec71-4b11-bd85-f7a736451bdf.md)
 
-[练习](Tarjan.md)
+[练习](Tarjan/%E7%BB%83%E4%B9%A0%208b9c4aba-48ac-45d6-bc44-f36609eaf904.md)
+
+
 

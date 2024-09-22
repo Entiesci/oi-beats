@@ -35,9 +35,9 @@ $1\leq n, m\leq 10^6$ , 前 $3$ 个点卡小错误，后面 $5$ 个点卡效率�
 
 ## 2-SAT
 
-SAT问题，即给出若干个与x_n有关的命题，命题内部只有或，总命题为这些命题相与。求出一组x_n使得总命题为true。是NPC问题。
+SAT问题，即给出若干个与x_n有关的命题，命题内部只有或，总命题为这些命题相与。求出一组$x_n$使得总命题为true。是NPC问题。
 
-2-SAT问题，即每个命题内部只有两个变量x_i,x_j。我们要判断并给出解。不是NPC问题。
+2-SAT问题，即每个命题内部只有两个变量$x_i,x_j$。我们要判断并给出解。不是NPC问题。
 
 ![image.png](2-SAT/image.png)
 
@@ -47,15 +47,15 @@ SAT问题，即给出若干个与x_n有关的命题，命题内部只有或，�
 
 把2-SAT转化为图如图（一个命题→两条有向边）
 
--x_1→x_3表示如果x_1=0，那么x_3一定为1，即表示一种推导关系。
+$-x_1→x_3$表示如果$x_1=0$，那么$x_3$一定为1，即表示一种推导关系。（$-$代表非）
 
-那么我们把问题中所有的命题都转化为同一幅图中的有向边后，就会发现几组推导关系。那么此时我们只需要判断是否存在某个x_i从x_i可以推导到-x_i**并且**-x_i可以推导到x_i。如果存在，则不成立。
+那么我们把问题中所有的命题都转化为同一幅图中的有向边后，就会发现几组推导关系。那么此时我们只需要判断是否存在某个$x_i$从$x_i$可以推导到$-x_i$**并且**$-x_i$可以推导到$x_i$。如果存在，则不成立。
 
 这其实是强连通分量的关系。可以类比noip2023T2三值逻辑。
 
 给出解的方法：
 
-确保有解后，我们执行缩点，然后进行topo排序。对于x_i，如果x_i的topo序更靠后，那么x_i=1，反之x_i=0
+确保有解后，我们执行缩点，然后进行topo排序。对于$x_i$，如果$x_i$的topo序更靠后，那么$x_i=1$，反之$x_i=0$
 
 实现中，我们可以用缩点后每个点的scc编号来代替topo序。
 
@@ -67,13 +67,13 @@ SAT问题，即给出若干个与x_n有关的命题，命题内部只有或，�
 
 题型可以会给出3种关系
 
-- x_i\^x_j（^为逻辑与），这种就是我们上面讨论的，可以转化为-x_i→x_j,-x_j→x_i
+- $x_i~\text{xor} ~x_j$，这种就是我们上面讨论的，可以转化为$-x_i→x_j,-x_j→x_i$
 
-- x_i→x_j，那么就是-x_i\^x_j
+- $x_i→x_j$，那么就是$-x_i~\text{xor} ~x_jx_j$
 
-- x_i=1，那么就是x_i\^x_i
+- $x_i=1$，那么就是$x_i~\text{xor} ~x_jx_i$
 
-- x_i=0，就是-x_i\^-x_i
+- $x_i=0$，就是$-x_i~\text{xor} ~x_j-x_i$
 
 注意！文章中的`→`是一个二元关系符号，而不是日常中的“推出”。可以理解为“能推出”，它表示两个值之间的关系。真值表如下
 
@@ -390,4 +390,227 @@ signed main() {
 |$18$|$\le 5\times 10^4$|$0$|$\le 10^5$|无|
 |$19$|$\le 5\times 10^4$|$\le 8$|$\le 10^5$|$S$ 中只包含 $x$ 或 $c$|
 |$20$|$\le 5\times 10^4$|$\le 8$|$\le 10^5$|无|
+
+## 例题 #3 Katu Puzzle
+
+题目描述
+
+Katu Puzzle 以一个有向图 $G(V, E)$ 的形式给出，其中每条边 $e(a, b)$ 都被标记为一个布尔运算符 $\text{op}$（AND, OR, XOR 之一）以及一个整数 $c$（$0 \leq c \leq 1$）。如果可以为每个顶点 $V_i$ 找到一个值 $X_i$（$0 \leq X_i \leq 1$），使得对于每条边 $e(a, b)$ 由 $\text{op}$ 和 $c$ 标记的情况下，以下公式成立：
+
+$X_a \ \text{op} \ X_b = c$
+
+那么这个 Katu 是可解的。
+
+给定一个 Katu Puzzle，你的任务是确定它是否可解。
+
+输入格式
+
+第一行包含两个整数 $N$（$1 \leq N \leq 100$）和 $M$（$0 \leq M \leq 10,000$），分别表示顶点的数量和边的数量。
+
+接下来的 $M$ 行中，每行包含三个整数 $a$（$0 \leq a < N$），$b$（$0 \leq b < N$），$c$ 以及一个操作符 $\text{op}$，描述这条边。
+
+输出格式
+
+输出一行，包含 $\texttt{YES}$ 或 $\texttt{NO}$。
+
+---
+
+因为本题的所有值只能是0或者1，所以就是一个简单的2-SAT问题。
+
+我们分类讨论
+
+- a and b=1，那么我们建边$a=1\leftrightarrows b=1$
+
+- a and b=0，那么$a=1\leftrightarrows b=0,a=0\leftrightarrows b=1$
+
+- a or b=1，那么a=0→ b=1,b=0→a=1，注意这里是单向边。
+
+- a or b=0，那么$a=0\leftrightarrows b=0$
+
+- a xor  b=1，那么$a=0\leftrightarrows b=1,a=1\leftrightarrows b=0$
+
+- a xor b=0，那么$a=0\leftrightarrows b=0,a=1\leftrightarrows b=1$
+
+但是我们发现，我们貌似还需要一些约束，否则可能会出现无解的情况。即我们在约束a and b=1时，我们没有处理a=0的不合法情况。约束or=0时间，a=1我们也没法处理。
+
+那么我们怎么样处理这个不合法的情况呢？即我们要约束a=1。那么我们就新建一个虚点t，命题连向t表示命题为真。因此就可以通过t构架处不合法。
+
+- a and b=1，那么a=1→t,a=0→t
+
+- a or b=0，那么a=0→ t,b=0→ t
+
+```C++
+/*                                                                                
+                      Keyblinds Guide
+     				###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt+la/ra : move mouse to pre/nxt pos'
+	  
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define ull unsigned long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+
+// #define innt int
+#define itn int
+// #define inr intw
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9') {
+		if (ch == '-')
+			ff = -1;
+		ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+	if (out < 0)
+		putchar('-'), out = -out;
+	if (out > 9)
+		write(out / 10);
+	putchar(out % 10 + '0');
+}
+
+#define ell dbg('\n')
+const char el='\n';
+const bool enable_dbg = 1;
+template <typename T,typename... Args>
+void dbg(T s,Args... args) {
+	if constexpr (enable_dbg){
+    cerr << s;
+    if(1)cerr<<' ';
+		if constexpr (sizeof...(Args))
+			dbg(args...);
+	}
+}
+
+#define zerol = 1
+#ifdef zerol
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() { cerr << endl; }
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) { for (auto v: a) cerr << v << ' '; err(x...); }
+template<typename T, typename... A>
+void err(T a, A... x) { cerr << a << ' '; err(x...); }
+#else
+#define dbg(...)
+#endif
+
+
+const int N = 3e5 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+
+
+vector<int> e[N];
+
+
+void add(int a,int b){
+    e[a].pb(b);
+
+}
+
+
+itn scc[N],stk[N],instk[N],dfn[N],low[N];
+int tim;
+int top;
+int sccCnt;
+
+void tarjan(int x){
+    low[x]=dfn[x]=++tim;
+    instk[x]=1;
+    stk[++top]=x;
+    for(auto v:e[x]){
+        if(dfn[v]&&instk[v])low[x]=min(low[x],dfn[v]);
+        else if(!dfn[v]){
+            tarjan(v);
+            low[x]=min(low[x],low[v]);
+        }
+    }
+
+    if(low[x]==dfn[x]){
+        int y;
+        sccCnt++;
+        do{
+            y=stk[top--];
+            scc[y]=sccCnt;
+
+        }while(x!=y);
+    }
+}
+
+
+string s;
+
+void solve(){
+    int n=rd,m=rd;
+    for(int i=1;i<=m;i++){
+        int a=rd+1,b=rd+1,c=rd;
+        cin>>s;
+        if(s[0]=='A'){
+            if(c)add(a,0),add(0,a),add(b,0),add(0,b);
+            else add(a,b+n),add(b,a+n);
+        }if(s[0]=='O'){
+            if(c)add(a+n,b),add(0,a),add(b,0);
+            else add(a+n,0),add(0,a+n),add(b+n,0),add(0,b+n);
+        }if(s[0]=='X'){
+            if(c) add(a,b+n),add(b+n,a),add(a+n,b),add(b,a+n);
+			else add(a,b),add(b,a),add(a+n,b+n),add(b+n,a+n);
+        }
+    }
+    
+
+    for(int i=0;i<=n*2;i++){
+        if(!dfn[i])tarjan(i);
+    }
+
+
+    int f=0;
+    for(int i=1;i<=n;i++){
+        if(scc[i]==scc[i+n]){
+            cout<<"NO"<<endl;
+            return ;
+        }
+    }
+
+
+    cout<<"YES"<<endl;
+}
+
+signed main() {
+    // freopen(".in","r",stdin);
+    // freopen(".in","w",stdout);
+
+    int T=1;
+    while(T--){
+    	solve();
+    }
+    return 0;
+}
+```
 

@@ -1,8 +1,40 @@
 # 数位DP
 
-摘抄[学习笔记 | 数位DP](https://flowus.cn/3b672d07-ba95-4030-aa38-d846d36bead1)
+数位 DP 是一种处理数字相关问题的动态规划方法。它通常用于解决以下类型的问题：
 
----
+1. 计算在给定范围内，满足某些特定数位条件的数字个数。
+
+2. 求解某个数位问题的具体方案数。
+
+3. 找出满足特定数位性质的数字。
+
+数位 DP 的核心思想是将数字的每一位分开考虑，使用记忆化搜索（通常是递归的形式）来避免重复计算，从而提高效率。
+
+
+
+以下是数位DP的一般步骤：
+
+1. **数位分离**：将数字的每一位分离出来，存储在一个数组中，便于单独处理每一位。
+
+2. **递归搜索**：定义一个递归函数，该函数的参数通常包括当前处理到哪一位、前面处理的状态（比如是否越界、当前数字是否已经使用了某个数字等）。
+
+3. **记忆化**：为了避免重复计算，通常会使用一个数组或者哈希表来存储已经计算过的状态。
+
+4. **状态转移**：在递归函数中，根据当前的状态和可选的数字，递归地计算出所有可能的情况。
+
+## 模型
+
+> 模型1：单链往下，快速计算
+
+可以参考例题 #1
+
+当我们到达一个lim=0的状态，此时后面的数字我们都可以随便填，那么我们通常可以使用组合数来计算出有多少种填写的方案，直接返回即可。
+
+> 模型2：全部搜索，记忆化优化
+
+如果我们仅仅是一直往下，那么我们就相当于将所有数字都搜索了一遍，时间复杂度是O(N)的。
+
+但是如果我们使用了记忆化搜索，那么我们就将自己复杂度压缩到了所有状态数，通常情况是$O(32^k)$，k是一个≤4的常数。
 
 ## 例题 #1 1081. 度的数量
 
@@ -26,13 +58,7 @@
 
 在考虑数位dp时，按照前若干位是否达到上界且当前位是否填上界（因为这取决于后面的剩余位能否任意填），可以按照数字的每一位转化为树形结构来考虑。
 
-
-
-
-
 ![image.png](数位DP/image.png)
-
-
 
 
 
@@ -136,7 +162,430 @@ signed main(){
 */
 ```
 
-## 例题 #2 | [SCOI2009] windy 数
+## 例题 #2 [USACO14OPEN] Odometer S
+
+农民约翰的牛正开始一个美妙的旅程。牛车的里程表上显示一个整数表示里程，旅程开始时里程数为 $X(100\le X\le 10^{18})$，结束时里程数为 $Y(X\le Y\le 10^{18})$。每当里程表显示一个有趣的数时（包括起点和终点数），牛们会发出愉快的叫声。
+
+对于一个里程数的每一位，如果有至少一半的数字时相同的，则这个里程数一个有趣的数。例如：$3223$ 和 $110$ 是有趣的数，而 $97791$ 和 $123$ 则不是。
+
+请计算，整个旅程中，牛们会发出多少吃愉快的叫声。
+
+---
+
+我的博客
+
+本文知识点参考于：[oi-beats/数位 dp](https://ntsc-yrx.github.io/oi-beats/site/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%95%B0%E4%BD%8DDP/)，[个人博客](https://ntsc.flowus.cn/)。
+
+知识点摘录
+
+数位 DP 是一种处理数字相关问题的动态规划方法。它通常用于解决以下类型的问题：
+
+1. 计算在给定范围内，满足某些特定数位条件的数字个数。
+
+2. 求解某个数位问题的具体方案数。
+
+3. 找出满足特定数位性质的数字。
+
+数位 DP 的核心思想是将数字的每一位分开考虑，使用记忆化搜索（通常是递归的形式）来避免重复计算，从而提高效率。
+
+本题是比较复杂的数位 dp，那么第一个难点就是任何定义状态。
+
+题目要求我们求出至少一半的数字是相同的数字的个数，为了方便记录是那个数字，我们就像枚举那个超过一半的数字的值。
+
+这里注意我们可能会重复计算类似 `aabb` 的数字，后面我们要减去。
+
+那么先定义框架。
+
+`dfs(len,val,cntVal,cntOth,zero,lim)` 表示从高到低考虑到第 $len$ 位，枚举的超过一半的数字为 $val$，个数为 $cntVal$，其他的数字的个数为 $cntOth$（不含前导 $0$），当前位是否可以填 $0$，当前位是否 $lim$。
+
+这里提供一个记忆化搜索的数位 dp 模板，适合记忆，方便扩展。
+
+```C++
+int dfs(int x,...,bool zero,bool lim){
+
+    //当前填第x位（从高到低），前面是否全是前导0，当前位之前是否全部顶格
+    if(f[x][...][zero][lim]!=-1)return f[x][...][zero][lim];
+    
+    if(!x)return f[x][...][zero][lim]=...;
+    int res=0;
+    int l=zero?1:0;
+    int r=lim?digit[x]:9; 
+    for(int i=l;i<=r;i++){
+        res+=dfs(x-1,...,0,(lim&&i==r)?1:0);
+    }
+    if(zero){
+        res+=dfs(x-1,...,1,0);
+    }
+
+    f[x][...][zero][lim]=res;
+    return res;
+}
+
+```
+
+当写出状态后，我们的转移其实并没有多困难。
+
+我们只需要在所有可用数字中枚举当前位可以填什么，然后对状态值进行一些改变就可以递归下去了。
+
+统计答案：我们在 $len=0$ 时统计答案就行了！
+
+```C++
+
+int dfs(int x,int num,int cnt,int cntOth,bool zero,bool lim){
+    if(f[x][cnt][cntOth][zero][lim]!=-1)return f[x][cnt][cntOth][zero][lim];
+    
+    if(!x)return f[x][cnt][cntOth][zero][lim]=(cnt&&cnt>=cntOth);
+    int res=0;
+    int l=zero?1:0;
+    int r=lim?digit[x]:9;
+    for(int i=l;i<=r;i++){
+        res+=dfs(x-1,num,cnt+(i==num),cntOth+(i!=num),0,(lim&&i==r)?1:0);
+    }
+    if(zero){
+        res+=dfs(x-1,num,cnt,cntOth,1,0);
+    }
+
+    f[x][cnt][cntOth][zero][lim]=res;
+    return res;
+}
+
+```
+
+计算 `aabb` 个数的时候，我们先枚举 $a,b$ 然后计算。有个很 naive 的想法是我们直接组合数计算不就行了？但是注意文明不能超过某一个上限，所以还是到数位 dp。
+
+```C++
+int dfs2(int x,int num1,int num2,int cnt,int cntOth,bool zero,bool lim){
+    if(g[x][cnt][cntOth][zero][lim]!=-1)return g[x][cnt][cntOth][zero][lim];
+    // if(num1==1&&num2==2)cdbg(x,num1,num2,cnt,cntOth,zero,lim);
+    
+    if(!x)return g[x][cnt][cntOth][zero][lim]=(cnt&&cnt==cntOth);
+    int res=0;
+    int l=zero?1:0;
+    int r=lim?digit[x]:9;
+    for(int i=l;i<=r;i++){
+        if(i!=num1&&i!=num2)continue;
+        res+=dfs2(x-1,num1,num2,cnt+(i==num1),cntOth+(i==num2),0,(lim&&i==r)?1:0);
+    }
+    if(zero){
+        res+=dfs2(x-1,num1,num2,cnt,cntOth,1,0);
+    }
+
+    g[x][cnt][cntOth][zero][lim]=res;
+    return res;
+}
+```
+
+下面是完整代码：
+
+```C++
+/*
+                      Keyblinds Guide
+     				###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+getId then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt+la/ra : move mouse to pre/nxt pos'
+
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define pb push_back
+#define int long long
+#define ull unsigned long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+#define mp make_pair
+
+// #define innt int
+#define itn int
+// #define inr intw
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read() {
+	int xx = 0, ff = 1;
+	char ch = getchar();
+	while (ch < '0' || ch > '9') {
+		if (ch == '-')
+			ff = -1;
+		ch = getchar();
+	}
+	while (ch >= '0' && ch <= '9')
+		xx = xx * 10 + (ch - '0'), ch = getchar();
+	return xx * ff;
+}
+void write(int out) {
+	if (out < 0)
+		putchar('-'), out = -out;
+	if (out > 9)
+		write(out / 10);
+	putchar(out % 10 + '0');
+}
+
+#define ell dbg('\n')
+const char el='\n';
+const bool enable_dbg = 1;
+template <typename T,typename... Args>
+void dbg(T s,Args... args) {
+	if constexpr (enable_dbg) {
+		cerr << s;
+		if(1)cerr<<' ';
+		if constexpr (sizeof...(Args))
+			dbg(args...);
+	}
+}
+
+#define zerol = 1
+#ifdef zerol
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() {
+	cerr << endl;
+}
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) {
+	for (auto v: a) cerr << v << ' ';
+	err(x...);
+}
+template<typename T, typename... A>
+void err(T a, A... x) {
+	cerr << a << ' ';
+	err(x...);
+}
+#else
+#define dbg(...)
+#endif
+
+
+
+const int N = 50 + 10;
+const int INF = 2e9;
+const int M = 1e3 + 10;
+const int MOD = 1e9 + 7;
+
+int f[33][33][33][2][2];
+int g[33][33][33][2][2];
+int digit[N];
+
+int dfs(int x,int num,int cnt,int cntOth,bool zero,bool lim){
+    if(f[x][cnt][cntOth][zero][lim]!=-1)return f[x][cnt][cntOth][zero][lim];
+    
+    if(!x)return f[x][cnt][cntOth][zero][lim]=(cnt&&cnt>=cntOth);
+    int res=0;
+    int l=zero?1:0;
+    int r=lim?digit[x]:9;
+    for(int i=l;i<=r;i++){
+        res+=dfs(x-1,num,cnt+(i==num),cntOth+(i!=num),0,(lim&&i==r)?1:0);
+    }
+    if(zero){
+        res+=dfs(x-1,num,cnt,cntOth,1,0);
+    }
+
+    f[x][cnt][cntOth][zero][lim]=res;
+    return res;
+}
+
+
+int dfs2(int x,int num1,int num2,int cnt,int cntOth,bool zero,bool lim){
+    if(g[x][cnt][cntOth][zero][lim]!=-1)return g[x][cnt][cntOth][zero][lim];
+    // if(num1==1&&num2==2)cdbg(x,num1,num2,cnt,cntOth,zero,lim);
+    
+    if(!x)return g[x][cnt][cntOth][zero][lim]=(cnt&&cnt==cntOth);
+    int res=0;
+    int l=zero?1:0;
+    int r=lim?digit[x]:9;
+    for(int i=l;i<=r;i++){
+        if(i!=num1&&i!=num2)continue;
+        res+=dfs2(x-1,num1,num2,cnt+(i==num1),cntOth+(i==num2),0,(lim&&i==r)?1:0);
+    }
+    if(zero){
+        res+=dfs2(x-1,num1,num2,cnt,cntOth,1,0);
+    }
+
+    g[x][cnt][cntOth][zero][lim]=res;
+    return res;
+}
+
+int calc(int x){
+    // cdbg(x);
+    int a=0,b=0;
+
+    int len=0;
+    while(x){
+        digit[++len]=x%10;
+        x/=10;
+    }
+
+    for(int i=0;i<=9;i++){
+        memset(f,-1,sizeof f);   
+        a+=dfs(len,i,0,0,1,1);
+    }
+
+    for(int i=0;i<=9;i++){
+        for(int j=i+1;j<=9;j++){
+            memset(g,-1,sizeof g);
+            b+=dfs2(len,i,j,0,0,1,1);
+        }
+    }
+
+    // cdbg(a,b);
+
+    return a-b;
+}
+
+void solve(){
+    int l=rd,r=rd;
+
+    cout<<calc(r)-calc(l-1)<<endl;
+}
+
+
+signed main() {
+    // freopen("kujou.in","r",stdin);
+    // freopen("kujou.out","w",stdout);
+
+    int T=1;
+    while(T--){
+    	solve();
+    }
+
+    return 0;
+}
+
+```
+
+摘抄[学习笔记 | 数位DP](https://flowus.cn/3b672d07-ba95-4030-aa38-d846d36bead1)
+
+---
+
+
+
+## 练习 #1 统计问题 The Counting Problem
+
+**【题目描述】**
+
+给定两个整数 $a$ 和 $b$，求 $a$ 和 $b$ 之间的所有数字中 $0$ ~ $9$ 出现次数。
+
+例如，$a$ = $1024$，$b$ = $1032$，则 $a$ 和 $b$ 之间共有 $9$ 个数如下：
+
+`1024 1025 1026 1027 1028 1029 1030 1031 1032`
+
+其中 `0` 出现 $10$ 次，`1` 出现 $10$ 次，`2` 出现 $7$ 次，`3` 出现 $3$ 次等等……
+
+**【输入格式】**
+
+输入包含至多 $500$ 行数据。每组输入数据占一行，包含两个整数 $a$ 和 $b$（$0<a,b<100000000$），以 `0 0` 作为结尾，且该行不作处理。
+
+**【输出格式】**
+
+每组数据输出一个结果，每个结果占一行，包含十个用空格隔开的数字，第一个数字表示 `0` 出现的次数，第二个数字表示 `1` 出现的次数，以此类推。
+
+---
+
+
+
+```C++
+/*
+CB Ntsc111
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define uint unsigned int
+#define pii pair<int, int>
+#define pf to
+#define ps second
+#define int long long
+
+#define err cerr << "Error"
+#define rd read()
+
+#define ot write
+#define nl putchar('\n')
+int read() {
+  int xx = 0, ff = 1;
+  char ch = getchar();
+  while (ch < '0' || ch > '9') {
+    if (ch == '-')
+      ff = -1;
+    ch = getchar();
+  }
+  while (ch >= '0' && ch <= '9')
+    xx = xx * 10 + (ch - '0'), ch = getchar();
+  return xx * ff;
+}
+void write(int out) {
+  if (out < 0)
+    putchar('-'), out = -out;
+  if (out > 9)
+    write(out / 10);
+  putchar(out % 10 + '0');
+}
+
+const int M = 800;
+const int mxxlog = 10;
+int MOD = 1e9 + 57;
+const int N = 1000100;
+
+int a, b, n;
+int num[105];
+int dp[30][1000][9];
+int dfs(int pos, int sum, bool lim, bool h, int d) {
+    if (pos == -1) {
+        return sum;
+    }
+    if (!lim && !h && ~dp[pos][sum][d])
+        return dp[pos][sum][d];
+    int End, ans = 0;
+    End = lim ? num[pos] : 9;
+    for (int i = 0; i <= End; ++i)
+        ans += dfs(pos - 1, sum + ((!h || i) && i == d), lim && i == num[pos],
+                h && i == 0, d);
+    if (!lim && !h)
+        dp[pos][sum][d] = ans;
+    return ans;
+}
+int cal(int x, int d) {
+    memset(dp, -1, sizeof(dp));
+    int pos = 0;
+    while (x) {
+        num[pos++] = x % 10;
+        x /= 10;
+    }
+    return dfs(pos - 1, 0, 1, 1, d);
+}
+void solve() {
+    a = rd, b = rd;
+    if(a>b)swap(a,b);
+    if(a+b==0)exit(0);
+    for (int i = 0; i <= 9; ++i)
+        printf("%lld ", cal(b, i) - cal(a - 1, i));
+    puts("");
+
+  return ;
+}
+
+
+
+signed main(){
+    while(1){
+        solve();
+    }
+    return 0;
+}
+```
+
+## 练习 #2 [SCOI2009] windy 数
 
 题目描述
 
@@ -238,7 +687,7 @@ signed main(){
 
 对于全部的测试点，保证 $1 \leq a \leq b \leq 2 \times 10^9$。
 
-## 例题 #3 | [ZJOI2010] 排列计数
+## 练习 #3 [ZJOI2010] 排列计数
 
 题目描述
 
@@ -390,7 +839,7 @@ signed main (){
 
 
 
-## 例题 #4 [SDOI2014] 数数
+## 练习 #4 [SDOI2014] 数数
 
 题目描述
 

@@ -1,3 +1,6 @@
+[F03【模板】KMP 算法——信息学竞赛算法_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1Ag411o7US/?spm_id_from=333.999.0.0)
+
+
 # KMP算法
 
 ### 百科介绍

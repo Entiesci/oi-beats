@@ -1,3 +1,6 @@
+[D32 树上启发式合并 CF600E Lomsat gelral_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1Ac411F7Y1/?spm_id_from=333.999.0.0)
+
+
 # 树上dsu（树上启发式合并）
 
 ## 定义

@@ -1,20 +1,17 @@
-专题 | 哈希&字符串匹配（从字典树到KMP再到AC自动机）
-
 补充资料
 
+[F08【模板】AC自动机——信息学竞赛算法_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1tF41157Dy/?spm_id_from=333.999.0.0)
 
 
 [https://www.cnblogs.com/ailanxier/p/13370753.html](https://www.cnblogs.com/ailanxier/p/13370753.html)
+
+[https://www.cnblogs.com/hyfhaha/p/10802604.html](https://www.cnblogs.com/hyfhaha/p/10802604.html)
 
 # AC自动机
 
 > 单模式串，多询问串
 
 多模式串，多询问串请见字典树
-
-### 补充资料
-
-[https://www.cnblogs.com/hyfhaha/p/10802604.html](https://www.cnblogs.com/hyfhaha/p/10802604.html)
 
 ### 百科介绍
 
@@ -286,19 +283,13 @@ void topu(){
 ————————————————
 [https://blog.csdn.net/lisonglisonglisong/article/details/45543451](https://blog.csdn.net/lisonglisonglisong/article/details/45543451)
 
-### 例题
+## 例题 #1 AC 自动机（二次加强版）
 
-## AC 自动机（二次加强版）
-
-## 配乐
-
-*百战成诗2023*
-
-## 题目描述
+题目描述
 
 给你一个文本串 $S$ 和 $n$ 个模式串 $T_{1 \sim n}$，请你分别求出每个模式串 $T_i$ 在 $S$ 中出现的次数。
 
-## 输入格式
+输入格式
 
 第一行包含一个正整数 $n$ 表示模式串的个数。
 
@@ -308,41 +299,17 @@ void topu(){
 
 **数据不保证任意两个模式串不相同**。
 
-## 输出格式
+输出格式
 
 输出包含 $n$ 行，其中第 $i$ 行包含一个非负整数表示 $T_i$ 在 $S$ 中出现的次数。
 
-## 样例 #1
-
-### 样例输入 #1
-
-```C++
-5
-a
-bb
-aa
-abaa
-abaaa
-abaaabaa
-```
-
-### 样例输出 #1
-
-```C++
-6
-0
-3
-2
-1
-```
-
-## 提示
-
 对于 $100 \%$ 的数据，$1 \le n \le 2 \times {10}^5$，$T_{1 \sim n}$ 的长度总和不超过 $2 \times {10}^5$，$S$ 的长度不超过 $2 \times {10}^6$。
 
-## Solution
+---
 
-### 补充知识点:`char* s`和`char s[]`的区别
+### 补充知识点
+
+`char* s`和`char s[]`的区别：
 
 [https://blog.csdn.net/weibo1230123/article/details/80278828](https://blog.csdn.net/weibo1230123/article/details/80278828)
 
@@ -453,8 +420,4 @@ signed main() {
 }
 
 ```
-
-# 后缀平衡树
-
-[其它平衡树](https://flowus.cn/9fdf7962-0706-4e16-9e5e-250e2f144e09)
 

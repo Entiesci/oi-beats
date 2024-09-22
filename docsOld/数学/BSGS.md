@@ -1,77 +1,56 @@
-BSGS
+BSGS~~北上广深~~
 
-# BSGS 北上广深算法（bushi
+# BSGS 大步小步算法
 
-给定一个质数 $p$，以及一个整数 $b$，一个整数 $n$，现在要求你计算一个最小的非负整数 $l$，满足 $b^l \equiv n \pmod p$。
+## BSGS求解二元一次不定方程
 
-## 扩展欧拉定理
-
-定义 $a^b \equiv \begin{cases} a^{b \bmod \varphi(m)},                &\gcd(a,m) =  1,                   \\ a^b,                                   &\gcd(a,m)\ne 1, b <   \varphi(m), \\ a^{(b \bmod \varphi(m)) + \varphi(m)}, &\gcd(a,m)\ne 1, b \ge \varphi(m). \end{cases} \pmod m$
-
-欧拉定理：若 $\gcd(a, m) = 1$，则 $a^{\varphi(m)} \equiv 1 \pmod{m}$。
-
-我们把ex欧拉的第一个性质拿出来，即$a^b \equiv a^{b \bmod \varphi(m)}   \pmod m,   \gcd(a,m) =  1$，那么我们知道，我们$a^b \pmod m$的循环节就应该是$\varphi(m)$。所以一个方法就是我们暴力枚举$b=0\sim \varphi(m)$即可。复杂度为 O(m)。
-
-## 扩展欧拉定理的应用
-
-给你三个正整数，$a,m,b$，你需要求：$a^b \bmod m$
-
-【数据范围】
-对于 $100\%$ 的数据，$1\le a \le 10^9$，$1\le b \le 10^{20000000}，1\le m \le 10^8$。
+求关于x的同余方程 $ax\equiv1\pmod{b}$ 的最小正整数解。
 
 ---
 
-我们首先求出 $\varphi (m)$。对于求一个数字的phi值，我们可以直接根据定义来求解。
+BSGS（Baby-step giant-step）算法是一种用于解决离散对数问题的算法，但也可以被应用于求解某些形式的二元一次不定方程。二元一次不定方程通常指的是形如 $ax + by = c$ 的方程，其中 $x$ 和 $y$ 是未知数，$a$、$b$ 和 $c$ 是已知的整数。
+要使用BSGS算法求解二元一次不定方程 $ax + by = c$，首先需要确保该方程有解。一个必要条件是 $c$ 必须是 $a$ 和 $b$ 的最大公约数（gcd）的倍数。如果 $\text{gcd}(a, b) \nmid c$，则方程无解。
+以下是使用BSGS算法求解 $ax + by = c$ 的步骤：
 
-然后我们就可以在输入b时顺便对b取模了。注意次数在对phi取模后还要加上一个phi。不是对2\times phi取模！！
+1. **计算gcd**：计算 $a$ 和 $b$ 的最大公约数 $d$。如果 $d \nmid c$，则方程无解。
+
+2. **化简方程**：将方程 $ax + by = c$ 除以 $d$，得到新的方程 $\frac{a}{d}x + \frac{b}{d}y = \frac{c}{d}$。
+
+3. **求解化简后的方程**：现在我们假设 $\text{gcd}(\frac{a}{d}, \frac{b}{d}) = 1$，这样我们可以使用BSGS算法求解。以下是BSGS算法的步骤：
+a. **Baby-step**：计算并存储一系列的值 $\frac{a}{d} \times 0, \frac{a}{d} \times 1, \frac{a}{d} \times 2, \ldots, \frac{a}{d} \times m$，其中 $m$ 是一个适当的界限。
+b. **Giant-step**：计算并检查一系列的值 $\frac{c}{d} - \frac{b}{d} \times n$，其中 $n$ 是从 0 到 $m$ 的整数。对于每个这样的值，检查它是否在 baby-step 中计算过的值的集合中。
+c. **找到解**：如果找到一个匹配的值，那么我们可以解出 $x$ 和 $y$。
+
+4. **回代原方程**：一旦我们找到 $\frac{a}{d}x + \frac{b}{d}y = \frac{c}{d}$ 的解，我们可以将其乘以 $d$ 来得到原方程 $ax + by = c$ 的解。
+请注意，BSGS算法通常用于解决离散对数问题，对于二元一次不定方程，通常使用扩展欧几里得算法更为直接和高效。扩展欧几里得算法可以直接求解形如 $ax + by = \text{gcd}(a, b)$ 的方程，如果 $c$ 是 $\text{gcd}(a, b)$ 的倍数，那么可以通过扩展欧几里得算法找到特解，然后通过调整特解来找到原方程的所有解。
 
 ```C++
-int getphi(int x)
-{
-	int ans=1,num=1;
-	for(int i=2;i*i<=x;i++)
-	{
-		if(!(x%i))
-		{
-			num=i-1,x/=i;
-			while(!(x%i)) num=num*i,x/=i;
-			ans=num*ans;
+map<int ,int > cnt;
+void solve(){
+    itn a=rd,b=rd;
+    itn B=sqrt(b);
+    for(itn i=B;~i;i--){
+    	cnt[a*i%b]=i;
+	}
+	
+	for(int i=0;i<=b/B;i++){
+		itn t=i*B%b*a%b;
+		t=(b+1-t)%b;
+		if(cnt.find(t)!=cnt.end()){
+			cout<<cnt[t]+i*B<<endl;
+			exit(0);
 		}
 	}
-	if(x!=1) ans=ans*(x-1);
-	return ans;
-}
-
-int cal(string s,int MOD){
-    int res=0,f=0;
-    for(auto c:s){
-        // dbg(c);
-        res=(res*10+c-'0');
-        if(res>=MOD)res%=MOD,f=1;
-    }
-    if(!f)return res;
-    return res+MOD;
-}
-string s;
-void solve(){
-    a=rd,MOD=rd;
-    cin>>s;
-    int b=cal(s,getphi(MOD));
-
-    cout<<ksm(a,b)<<endl;
-}
-
-
-signed main() {
-    int T=1;
-    while(T--){
-    	solve();
-    }
-    return 0;
 }
 ```
 
-## BSGS
+但是要注意，BSGS是有局限的。它的数据不能超过10^7，否则会爆空间。比如说下面一道题就不能应用了。
+
+## BSGS的其它应用
+
+给定一个质数 $p$，以及一个整数 $b$，一个整数 $n$，现在要求你计算一个最小的非负整数 $l$，满足 $b^l \equiv n \pmod p$。
+
+---
 
 我们现在来考虑优化。令$b=ip-j,p=\lceil\sqrt m\rceil,i\in [1,p],j\in[0,p-1]$。这样的话我们b的取值恰好为$b\in[1,m]$，对于b=0我们特判即可。
 
