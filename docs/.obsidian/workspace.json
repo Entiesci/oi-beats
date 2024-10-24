@@ -1,0 +1,155 @@
+{
+  "main": {
+    "id": "b6abf791b80a8bd6",
+    "type": "split",
+    "children": [
+      {
+        "id": "7f7cd1fde0069a32",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "373d65a0c5b3dd7d",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2e3c19120df4ceca",
+    "type": "split",
+    "children": [
+      {
+        "id": "81d9275c12fd2143",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b65e02a89585706f",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "7bb8dd266d746d01",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "9084e01d9694d241",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "8ccef623183f648b",
+    "type": "split",
+    "children": [
+      {
+        "id": "c4c0cec47ae7bbfd",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8dbac242475bdf6d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "73541fcacba4ad70",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "101792cd4d9a5dbf",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "3f1608562141a0e5",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false
+    }
+  },
+  "active": "373d65a0c5b3dd7d",
+  "lastOpenFiles": [
+    "数据结构/块状链表.md",
+    "算法快闪+f1697d69-d2dd-4f06-9bc3-ffed436e0740.md",
+    "考前注意+a6274146-df3e-4ed9-a824-7997266f71b1.md",
+    "数学+73df3e17-05ca-452c-ba4c-0601a2cc6a75.md",
+    "数据结构+69406636-fbda-4abe-a02f-02af36c0c4a7.md",
+    "图论+b91af97f-02cc-4ba8-a19c-e672b6ab3a54.md",
+    "字符串+5b232b2c-66ba-4fdc-83b6-dcf5709a2506.md",
+    "算法基础+5ea93640-22d7-464d-912a-a825435f83d8.md",
+    "树论+a50264be-b0f8-49fa-aa7a-036ccd123e6c.md",
+    "算法策略+787ad288-a1b3-4b4f-8166-e877ae2ab187.md",
+    "动态规划+82abeba3-4fca-4e60-b73f-1895cceb48ac.md"
+  ]
+}
