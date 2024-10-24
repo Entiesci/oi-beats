@@ -171,9 +171,168 @@ signed main(){
 
 ```
 
-## 例题
+## 例题 #
 
-[Codeforces Round 934 (Div. 2) 6/7](https://flowus.cn/e10d71e3-dae9-4472-87df-751db5292af0) E
+[Codeforces Round 934 (Div. 2) 6/7](https://flowus.cn/e10d71e3-dae9-4472-87df-751db5292af0) D
+
+如果至少存在一个长度为 $k$ 的子串 $^\dagger$ 不是回文 $^\ddagger$ ，则称字符串 $t$ 为 $k$ (-good)。让 $f(t)$ 表示所有 $k$ 的值之和，使得字符串 $t$ 是 $k$ -good。
+
+给你一个长度为 $n$ 的字符串 $s$ 。您需要回答以下问题中的 $q$ 个：
+
+- 给定 $l$ 和 $r$ ( $l<r$ ), 求 $f(s _ ls _ {l + 1}\ldots s _ r)$ 的值。
+
+$^\dagger$ 字符串 $z$ 的子串是来自 $z$ 的连续字符段。例如，" $\mathtt{defor}$ "、" $\mathtt{code}$ "和" $\mathtt{o}$ "都是" $\mathtt{codeforces}$ "的子串，而" $\mathtt{codes}$ "和" $\mathtt{aaa}$ "不是。
+
+$^\ddagger$ 回文字符串是指前后读法相同的字符串。例如，字符串" $\texttt{z}$ "、" $\texttt{aa}$ "和" $\texttt{tacocat}$ "是回文字符串，而" $\texttt{codeforces}$ "和" $\texttt{ab}$ "不是。
+
+思路
+
+想到了马拉车，但是没有想到逆向思维：考虑什么情况下这个子串不是k好的——那么就是这子串的所有长度为k的子串都是回文串。也想到了只有`abab`和`aaaa`的情况，但是没有思路实现。
+
+---
+
+事实上到了这一步就可以开始直接性质了，不是什么预处理，离线，也不是什么区间查询，就是性质。
+
+我们考虑每一个k和字符串s是不是k好的串
+
+- 首先s不可能是1好的串
+
+- 如果k=n（s的长度），那么就要求s是一个回文串。否则s就是一个n好的串。
+
+- 除此之外，如果k是奇数，那么就要求s是一个交替串，`ababa`。否则s就是一个k好的串。
+
+- 如果k是偶数，那么就要求s只由一个字符组成。否则s就是一个k好的串。
+
+那么怎么样快速判断呢？
+
+预处理啊。首先对于k=n的情况，用马拉车算法处理一下每个点往两边扩展得到的最远的回文串即可。
+
+对于判断s是不是只有一个字符，那么预处理时把原字符串按连续的相同字母拆分，编号，查询时看看头尾的编号是否相同即可。
+
+对于判断s是不是交替串，那么可以记录位置i后面的哪一个位置开始不满足$s_i=s_{i+2}$。这个可以倒序扫一遍处理。
+
+## 代码时间
+
+```C++
+
+#include <bits/stdc++.h>
+#include <queue>
+#define rep(l, r, i) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(r, l, i) for (int i = r, END##i = l; i >= END##i; --i)
+using namespace std;
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+
+#define X(j) i[j]
+#define Y(j) (dp[j] + (i[j] + L) * (i[j] + L))
+
+#define rd read()
+int read() {
+  int xx = 0, ff = 1;
+  char ch = getchar();
+  while (ch < '0' || ch > '9') {
+    if (ch == '-')
+      ff = -1;
+    ch = getchar();
+  }
+  while (ch >= '0' && ch <= '9')
+    xx = xx * 10 + (ch - '0'), ch = getchar();
+  return xx * ff;
+}
+void write(int out) {
+  if (out < 0)
+    putchar('-'), out = -out;
+  if (out > 9)
+    write(out / 10);
+  putchar(out % 10 + '0');
+}
+
+const int N = 3e5 + 5;
+const int INF = 1e18;
+
+vector<int> manacher_odd(string s) {
+    int n = s.size();
+    s = "$" + s + "^";
+    vector<int> p(n + 2);
+    int l = 1, r = 1;
+    for(int i = 1; i <= n; i++) {
+        p[i] = max(0ll, min(r - i, p[l + (r - i)]));
+        while(s[i - p[i]] == s[i + p[i]]) {
+            p[i]++;
+        }
+        if(i + p[i] > r) {
+            l = i - p[i], r = i + p[i];
+        }
+    }
+    return vector<int>(begin(p) + 1, end(p) - 1);
+}
+
+vector<int> manacher(string s) {
+    string t;
+    for(auto c: s) {
+        t += string("#") + c;
+    }
+    auto res = manacher_odd(t + "#");
+    return vector<int>(begin(res) + 1, end(res) - 1);
+}
+
+#define int long long
+
+void solve() 
+{
+    int n=rd, q=rd;
+
+    string s; cin >> s;
+    auto v = manacher(s);
+    for (auto &x : v) x--;
+
+    // we also need to know if all same, and all alternating 
+    set <int> s1, s2;
+    for (int i = 0; i < n - 1; i++){
+        if (s[i] != s[i + 1]) s1.insert(i);
+        if (i != n - 1 && s[i] != s[i + 2]) s2.insert(i);
+    }
+
+    while (q--){
+        int l=rd-1, r=rd-1;
+        if (l == r){
+            cout << 0 << "\n";
+            continue;
+        }
+        
+        int len = r - l + 1;
+
+        int ans=0;
+        auto it = s1.lower_bound(l);
+        if (it == s1.end() || (*it) >= r){
+            ans = 0;
+        } else {
+            it = s2.lower_bound(l);
+            if (it == s2.end() || (*it) >= r - 1){
+                ans = ((len - 1)/ 2) * (((len - 1) / 2) + 1);
+            } else {
+                ans =  len * (len - 1) / 2 - 1;
+            }
+        }
+
+        if (v[l + r] < (r - l + 1)) ans += len;
+
+        cout << ans << "\n";
+    }
+}
+
+signed main() {
+  int T=rd;
+  while(T--){
+    solve();
+  }
+  return 0;
+}
+```
 
 
 

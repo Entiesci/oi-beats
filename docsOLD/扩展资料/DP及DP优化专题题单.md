@@ -10444,5 +10444,5 @@ $1\leq n\leq 50000$。
 
 # CDQ分治
 
-[CDQ分治题单](https://flowus.cn/f4d663e4-f9c5-4b54-9940-6d57bd830494)
+[CDQ分治题单 #2](https://flowus.cn/f4d663e4-f9c5-4b54-9940-6d57bd830494)
 

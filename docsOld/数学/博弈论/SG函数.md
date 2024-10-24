@@ -7,16 +7,23 @@
 ### 适用范围
 
 
+**有向图游戏**
+给定一个有向无环图，图中只有一个起点，在起点上放一个棋子，两个玩家轮流沿着有向边推动棋子，每次走一步，不能走的玩家失败。
 
-![image.png](SG函数/image.png)
 
 ### 运算定义
 
-![image.png](SG函数/image 1.png)
+
+mex运算（minimum exlusion）
+$mex(S)$为不属于集合$S$中的最小非负整数， $mex(S)=min\{x|x\in N,x\notin S\}$ 例如，$mex(\{0,1,2\})=3，mex(\{1,2\})=0$
+
 
 ### 函数定义
 
-![image.png](SG函数/image 2.png)
+
+SG函数
+设状态（节点）x有k个后继状态（子节点）$y_1,y_2,...,y_k,\\$
+$SG(x)=mex(\{SG(y_1),SG(y_2),...,SG(y_k)\})$
 
 对于某个节点,若其SG为0,则该点的玩家必败.反正必胜
 
@@ -24,13 +31,17 @@
 
 我们来进行以下对SG函数的求解练习
 
-![image.png](SG函数/image 3.png)
+![image.png](SG函数/image.png)
 
 图中绿色数字即该点的SG值，请注意，图2的根节点1的SG值为0.请结合定义思考。
 
 ### 状态
 
-![image.png](SG函数/image 4.png)
+SG定理：
+由n个有向图游戏组成的组合游戏，设起点分别为$s_{1}$，$s_{2}$，…… ，$s_{n}$。
+当$SG(s_{1})\oplus SG(s_{2})\oplus … \oplus SG(s_{n})\neq 0$时，先手必胜；反之，先手必败。
+
+
 
 让我们结合图2进行具体分析：
 
@@ -48,11 +59,17 @@
 
 对于多个有向图组成的组合游戏,如图,根据定理得先手必胜.因为先手一定可以找到一个走法,让场上3颗棋子的所在位置的SG异或和=0,给对手一个必败态.接下来无论对手怎么走,都会留下一个必胜态给先手
 
-![image.png](SG函数/image 5.png)
+![image.png](SG函数/image 1.png)
 
 ### 整理总结
 
-![image.png](SG函数/image 6.png)
+1. 必胜态的后继状态至少存在一个必败态
+
+2. 必败态的后继状态均为必胜态
+
+3. 终态$0\oplus0...\oplus0=0$
+
+
 
 ### 实现方法 STL_Set
 
@@ -87,27 +104,27 @@ list<int> a(n, n + 5); // 将数组n的前5个元素作为集合a的初值
 
 ### 例题 #1
 
-![image.png](SG函数/image 7.png)
+![image.png](SG函数/image 2.png)
 
 例题简单,直接快照
 
-![image.png](SG函数/image 8.png)
+![image.png](SG函数/image 3.png)
 
 注:每个节点的子节点都是这个节点取了 $a_i$ 个石子后剩下的石子数量
 
-![image.png](SG函数/image 9.png)
+![image.png](SG函数/image 4.png)
 
 回顾下普通Nim游戏
 
-![image.png](SG函数/image 10.png)
+![image.png](SG函数/image 5.png)
 
 ### 例题 #2
 
-![image.png](SG函数/image 11.png)
+![image.png](SG函数/image 6.png)
 
 算法
 
-![image.png](SG函数/image 12.png)
+![image.png](SG函数/image 7.png)
 
 $mex$的第一个部分即按行剪的结果,第2部分即按列剪的结果
 
@@ -115,7 +132,7 @@ $mex$的第一个部分即按行剪的结果,第2部分即按列剪的结果
 
 因为最终的叶子节点的剩余纸片长宽 $≥2$ ,因此$mex$中 $2≤i$ 
 
-![image.png](SG函数/image 13.png)
+![image.png](SG函数/image 8.png)
 
 有2个$2,4$?
 

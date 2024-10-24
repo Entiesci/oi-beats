@@ -20,7 +20,7 @@ $x=z_i+m_i spe(b_i)+k*lcm$
 
 $x=z_i+m_ispe(b_i)\pmod {lcm}$
 
-这样我们就把两个方程合并在一起了。更多的情况一个个合并即可。注意要判断b_im_i-b_jm_j=z_i-z_j是否有解（ax+by=m←>gcd(a,b)|m）
+这样我们就把两个方程合并在一起了。更多的情况一个个合并即可。注意要判断$b_im_i-b_jm_j=z_i-z_j$是否有解（ax+by=m←>gcd(a,b)|m）
 
 # CRT
 
@@ -42,11 +42,11 @@ a. 计算$m_i=\frac{n}{n_i}$;
 
     注：计算a在mod p时的逆元
 
-        a\times inv==1(mod p)
+        $a\times inv==1(mod p)$
 
-        a\times inv+bp==1
+        $a\times inv+bp==1$
 
-        用exgcd求解即可。注意到a,p互质，所以\gcd(a,p)实际上就是1
+        用exgcd求解即可。注意到a,p互质，所以$\gcd(a,p)$实际上就是1
 
     c. 计算$c_i=m_im_i^{-1}$（不要对$n_i$取模）。
 
@@ -80,7 +80,7 @@ $1\le k \le 10$，$|a_i|\le 10^9$，$1\le b_i\le 6\times 10^3$，$\prod_{i=1}^k 
 
 ---
 
-注意\prod b_i是10^{18}范围，所以取模后乘还是会爆LL，请使用int128或者快速乘。
+注意$\prod b_i$是$10^{18}$范围，所以取模后乘还是会爆LL，请使用int128或者快速乘。
 
 ```C++
 /*                                                                                

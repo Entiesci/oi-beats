@@ -629,3 +629,54 @@ It is guaranteed that the solution exists.
 
 In the first sample test we swap numbers on positions 3 and 4 and permutation $p$ becomes 4 2 3 1. We pay $|3-4|=1$ coins for that. On second turn we swap numbers on positions 1 and 3 and get permutation $3241$ equal to $s$ . We pay $|3-1|=2$ coins for that. In total we pay three coins.
 
+## [DBOI2019] 德丽莎世界第一可爱
+
+### 题目背景
+
+```C++
+众所周知，德丽莎世界第一可爱。
+——zhengrunzhe
+```
+
+你正在打崩坏$3$，突然家长来了，于是你装作在打数据结构题。
+
+### 题目描述
+
+有$n$个崩坏兽，每个崩坏兽有五个属性值：$health$生命力，$energy$能量力，$attack$攻击力，$defense$防御力，$collapse$崩坏能。
+
+德丽莎可以任选一只崩坏兽展开攻击 假如她干掉了崩坏兽$i$ 那么她会收获$collapse[i]$的可爱值 由于德丽莎越战越勇 她打的下一只崩坏兽$j$ 需要满足$health[j]\geq health[i] , energy[j]\geq energy[i] , attack[j]\geq attack[i] , defense[j]\geq defense[i]$。
+
+请你帮帮德丽莎计算一下她能够获得的最大可爱值。
+
+### 思路
+
+求四维权值最大不降链。
+
+可以很快想到一个 $O(n^2)$ 的做法，那就是对于每个数按第一维排序，然后暴力找到合法前缀最大值（dp转移即可），更新这个数的答案。
+
+那么实际上就是个三维偏序问题。
+
+---
+
+那么快速求满足n维偏序关系的所有数字中的最值，我们就用kd树罢了。
+
+```C++
+
+```
+
+### 输入格式
+
+第一行一个正整数$n$。
+
+接下来$n$行，第$i+1$行五个整数$health[i],energy[i],attack[i],defense[i],collapse[i]$，代表着第$i$只崩坏兽的属性值。
+
+### 输出格式
+
+一行一个整数，代表最大可爱值（必须击杀至少一只崩坏兽），答案保证不会超过long long范围($2^{63}-1$)。
+
+$1\leq n\leq 50000$。
+
+对于 $100\%$ 的数据，满足 $|\mathrm{health}_i|, |\mathrm{energy}_i|, |\mathrm{attack_i}|, |\mathrm{defense}_i| \le 10^5$，$| \mathrm{collapse}_i|\le 10^9$。
+
+题目提供者：$\color{red}{zhengrunzhe}$
+

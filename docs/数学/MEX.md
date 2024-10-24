@@ -46,25 +46,126 @@ Day 1 Problem A.
 
 对于全部数据，$1\le t\le 200$，$1\le n\le 50$，$0\le f_i\le 10^{16}$。
 
-- 子任务一（$5$ 分）：$n\le 2$。
+---
 
-- 子任务二（$17$ 分）：$n\le 20$。
+dfs(x,k) 求出使得[0,x]的cnt都>=k的最少操作次数
 
-- 子任务三（$7$ 分）：$f_i=0$。
+从n开始搜索
 
-- 子任务四（$9$ 分）：$f_i\le 1$。
+如果a[x]>k，那么直接返回dfs(x-1,k)
 
-- 子任务五（$20$ 分）：$f_i\le 2\times 10^3$。
+否则我们就需要操作来使得a[x]=k
 
-- 子任务六（$9$ 分）：$f_0\le 10^{16}$ 且 $\forall j\ne 0,f_j=0$。
+即dfs(x-1,k-a[x] +k)注意前面要贡献k-a[x]，还要保留自己的k
 
-- 子任务七（$10$ 分）：$\exists i,f_i\le 10^{16}$ 且 $\forall j\ne i,f_j=0$。
+合并代价为k-a[x]
 
-- 子任务八（$23$ 分）：无特殊限制。
+```C++
+/*                                                                                
+                      Keyblinds Guide
+     				###################
+      @Ntsc 2024
 
-[https://codeforces.com/contest/1935/problem/B](https://codeforces.com/contest/1935/problem/B)
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt+la/ra : move mouse to pre/nxt pos'
+	  
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+
+// #define innt int
+// #define inr int
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9') {
+		if (ch == '-')
+			ff = -1;
+		ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+	if (out < 0)
+		putchar('-'), out = -out;
+	if (out > 9)
+		write(out / 10);
+	putchar(out % 10 + '0');
+}
+
+#define ell dbg('\n')
+const char el='\n';
+const bool enable_dbg = 1;
+template <typename T,typename... Args>
+void dbg(T s,Args... args) {
+	if constexpr (enable_dbg){
+    cerr << s << ' ';
+		if constexpr (sizeof...(Args))
+			dbg(args...);
+	}
+}
+
+const int N = 3e3 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+
+int a[N];
+
+/*
+
+*/
+
+int dfs(int x,int k){
+	if(!x)return 0;
+	if(a[x]>=k)return dfs(x-1,k);
+	return dfs(x-1,k+k-a[x])+k-a[x];
+}
+
+void solve(){
+	int n=rd;
+	for(int i=1;i<=n;i++){
+		a[i]=rd;
+	}
+	cout<<dfs(n,1)+1<<endl;
+
+
+}
+
+signed main(){
+	int T=rd;
+	while(T--){
+		solve();
+	}
+
+	return 0;
+}
+```
 
 ## 例题 #2 Informatics in MAC
+
+[https://codeforces.com/contest/1935/problem/B](https://codeforces.com/contest/1935/problem/B)
 
 在硕士援助中心，Nyam-Nyam 接受了一项信息学方面的家庭作业。
 
@@ -83,6 +184,99 @@ $^{\dagger}$ 将数组划分为 $k$ 个子数段的定义是 $k$ 对整数 $(l_1
 - 数组 $[3, 1, 0, 1]$ 中的 $\operatorname{MEX}$ 是 $2$ ，因为 $0$ 和 $1$ 属于数组，而 $2$ 不属于数组。
 
 - 数组 $[0, 3, 1, 2]$ 中的 $\operatorname{MEX}$ 是 $4$ ，因为 $0$ 、 $1$ 、 $2$ 和 $3$ 属于数组，而 $4$ 不属于数组。
+
+---
+
+```C++
+#include <bits/stdc++.h>
+#include <queue>
+#define rep(l, r, i) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(r, l, i) for (int i = r, END##i = l; i >= END##i; --i)
+using namespace std;
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+
+#define X(j) i[j]
+#define Y(j) (dp[j] + (i[j] + L) * (i[j] + L))
+
+#define rd read()
+int read() {
+  int xx = 0, ff = 1;
+  char ch = getchar();
+  while (ch < '0' || ch > '9') {
+    if (ch == '-')
+      ff = -1;
+    ch = getchar();
+  }
+  while (ch >= '0' && ch <= '9')
+    xx = xx * 10 + (ch - '0'), ch = getchar();
+  return xx * ff;
+}
+void write(int out) {
+  if (out < 0)
+    putchar('-'), out = -out;
+  if (out > 9)
+    write(out / 10);
+  putchar(out % 10 + '0');
+}
+
+const int N = 1e5 + 5;
+const int INF = 1e18;
+struct node {
+  int a, b;
+} e[N];
+
+bool cmp(node a, node b) { return a.b < b.b; }
+int n, a[N];
+int cnt[N],h[N],q[N];
+int stk[N], top;
+
+signed main(){
+  int T=rd;
+  while(T--){
+    int n=rd;
+    for(int i=1;i<=n;i++){
+      a[i]=rd;
+    }
+    int anc=0;
+    for(int i=1;i<=n;i++){
+      cnt[a[i]]++;
+      stk[++top]=a[i];
+      while(cnt[anc])anc++;
+      q[i]=anc;
+    }
+
+    // for(int i=1;i<=n;i++)cerr<<q[i]<<' ';
+    // cerr<<endl;
+
+    while(top)cnt[stk[top--]]=0;
+
+    int ans=0;
+    for(int i=n;i;i--){
+      cnt[a[i]]++;
+      stk[++top]=a[i];
+      while(cnt[ans])ans++;
+      h[i]=ans;
+    }
+    while(top)cnt[stk[top--]]=0;
+    int f=0;
+    for(int i=1;i<n;i++){
+      if(q[i]==h[i+1])f=i;
+    }
+    if(!f)cout<<-1<<endl;
+    else{
+      cout<<2<<endl;
+      cout<<1<<' '<<f<<endl;
+      cout<<f+1<<' '<<n<<endl;
+    }
+  }
+
+}
+```
 
 ## 例题 #3 Mex
 
