@@ -317,5 +317,164 @@ signed main(){
 
 我们有一个dfs栈，它可以动态维护一条从当前节点到树根的栈，并且在栈上维护前缀和等数据。那么就可以做本题了。
 
+### 练习 #1 Kay and Snowflake
 
+题面翻译
+
+输入一棵树,判断每一棵子树的重心是哪一个节点.
+
+---
+
+现有题解给出的都是基于重心位置的单调性的写法：我们已经处理出了 $x$ 的所有 $son$ 的子树的重心，那么只需要从这些重心往上跳，就可以找到 $x$ 的重心。因为都是往上跳且每个点最多被跳一次，所以复杂度 $O(n)$。
+
+考虑每个点可以作为哪些点的重心。我们知道点 $v$ 的子树大小为 $sz_v$，记 $mx=\max_{u\in son(v)}(sz_u)$。于是 $v$ 作为 $x$ 的重心当且仅当：
+
+- $x$ 在 $1$ 到 $v$ 的路径上。
+
+- $sz_v\times2+1≥sz_{x}≥mx\times 2$。
+
+于是我们可以在 dfs 栈上二分。进一步优化可以在栈上用用双指针。因为一棵树最多两个重心，所以赋值暴力赋即可。
+
+```C++
+// Problem: Kay and Snowflake
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/CF685B
+// Memory Limit: 250 MB
+// Time Limit: 3000 ms
+// Challenger: Erica N
+// ----
+// 
+#include<bits/stdc++.h>
+
+using namespace std;
+#define rd read()
+#define ull unsigned long long
+#define int long long 
+#define pb push_back
+#define itn int
+#define ps second 
+#define pf first
+
+
+#define rd read()
+int read()
+{
+  int xx = 0, ff = 1;
+  char ch = getchar();
+  while (ch < '0' || ch > '9')
+  {
+    if (ch == '-')
+      ff = -1;
+    ch = getchar();
+  }
+  while (ch >= '0' && ch <= '9')
+    xx = xx * 10 + (ch - '0'), ch = getchar();
+  return xx * ff;
+}
+#define zerol = 1
+#ifdef zerol
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() {
+	cerr << endl;
+}
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) {
+	for (auto v: a) cerr << v << ' ';
+	err(x...);
+}
+template<typename T, typename... A>
+void err(T a, A... x) {
+	cerr << a << ' ';
+	err(x...);
+}
+#else
+#define dbg(...)
+#endif
+const int N=2e5+5;
+const ull P=137;
+const int INF=1e18+7;
+/*
+
+策略
+
+
+*/	
+
+vector<int> e[N];
+int ans[N],s[N],top;
+int sz[N];
+
+
+void add(int a,int b){
+	e[a].pb(b);
+}
+
+
+void dfs(int x){
+	sz[x]=1;
+	for(auto v:e[x]){
+		dfs(v);
+		sz[x]+=sz[v];
+	}
+}
+
+int get(int l,int r,int v){
+	int res=top+1;
+	while(l<=r){
+		int mid=l+r>>1;
+		if(sz[s[mid]]<=v)res=mid,r=mid-1;
+		else l=mid+1;
+	}
+	return res;
+}
+
+int getu(int l,int r,int v){
+	int res=0;
+	while(l<=r){
+		int mid=l+r>>1;
+		if(sz[s[mid]]>=v)res=mid,l=mid+1;
+		else r=mid-1;
+	}
+	return res;
+}
+
+
+void dfs2(int x){
+	s[++top]=x;
+	int mx=0;
+	int sum=0;
+	for(auto v:e[x]){
+		dfs2(v);
+		mx=max(mx,sz[v]);
+		sum+=sz[v];
+	}
+	int mn=mx*2;
+	mx=sum*2+1;
+	int l=get(1,top,mx);
+	int r=getu(1,top,mn);
+	// cdbg(x,mx,mn,l,r);
+	for(int i=l;i<=r;i++){
+		ans[s[i]]=x;
+	}
+	top--;
+}
+
+signed main(){
+	int n=rd,q=rd;
+	
+	
+	for(int i=2;i<=n;i++){
+		add(rd,i);
+	}
+	
+	
+	dfs(1);
+	dfs2(1);
+	
+	while(q--){
+		int x=rd;
+		cout<<ans[x]<<endl;
+	}	
+}
+```
 

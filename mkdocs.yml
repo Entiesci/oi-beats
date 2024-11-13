@@ -62,4 +62,4 @@ extra_css:
 
 plugins:
   - search
-  - print-site
+#   - print-site

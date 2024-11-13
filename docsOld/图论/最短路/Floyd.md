@@ -226,8 +226,137 @@ signed main() {
 
 ```
 
-## 注意伪全源最短路（可用dijkstra跑若干次）
+## 伪全源最短路
+
+可用dijkstra跑若干次
 
 [www.luogu.com.cn](https://www.luogu.com.cn/problem/P5764)
 
+
+## 记录路径的floyd
+
+给定一个完全图，已知两点之间的距离，以及通过某个点的时间（起点和终点不需要花费时间）。你需要回答一些询问，输出两点之间的最短路径，同时需要输出方案。如果有多个方案，输出字典序最小的方案。
+
+```C++
+/*  Erica N  */
+#include <bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define ull unsigned long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+#define itn int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;char ch = getchar();
+    while (ch < '0' || ch > '9') {if (ch == '-')ff = -1; ch = getchar();}
+    while (ch >= '0' && ch <= '9')xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() { cerr << endl; }
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) { for (auto v: a) cerr << v << ' '; err(x...); }
+template<typename T, typename... A>
+void err(T a, A... x) { cerr << a << ' '; err(x...); }
+
+
+const int N = 3e3 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+int ans[N];
+int d[N][N];
+int pre[N][N];
+int nxt[N][N];
+int w[N];
+
+void solve(){
+    int n=rd,m=rd;
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=n;j++){
+            d[i][j]=rd;
+        }
+    }
+
+    for(int i=1;i<=n;i++){
+        w[i]=rd;
+    }
+
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=n;j++){
+            pre[i][j]=i;
+            nxt[i][j]=j;
+        }
+    }
+
+
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=n;j++){
+            if(i==j)continue;
+            d[i][j]+=w[i];
+        }
+    }
+
+
+
+    for(int k=1;k<=n;k++){
+        for(itn i=1;i<=n;i++){
+            for(int j=1;j<=n;j++){
+                if(d[i][j]>d[i][k]+d[k][j]){
+                    d[i][j]=d[i][k]+d[k][j];
+                    pre[i][j]=pre[k][j];
+                    nxt[i][j]=nxt[i][k];
+                }else if(d[i][j]==d[i][k]+d[k][j]&&nxt[i][j]>nxt[i][k]){
+                    d[i][j]=d[i][k]+d[k][j];
+                    pre[i][j]=pre[k][j];
+                    nxt[i][j]=nxt[i][k];
+                }
+            }
+        }
+    }
+    // cdbg("OK");
+
+    int top=0;
+
+    while(m--){
+        int a=rd,b=rd;
+        int tb=b;
+        // cdbg(a,pre[a][a]);
+        printf("From %lld to %lld :\n",a,b);
+        printf("Path: ");
+        while(b!=a){
+            // cdbg(b,a);
+            ans[++top]=pre[a][b];
+            b=pre[a][b];
+        }
+
+        while(top){
+            cout<<ans[top--]<<"-->";
+        }
+        cout<<tb<<endl;
+        if(a==tb)printf("Total cost : %lld\n",0ll);
+        else printf("Total cost : %lld\n",d[a][tb]-w[a]);
+        if(m)cout<<endl;
+    }
+}
+
+signed main() {
+    // freopen(".in","r",stdin);
+    // freopen(".out","w",stdout);
+
+    int T=1;
+    while(T--){
+    	solve();
+    }
+    return 0;
+}
+```
 

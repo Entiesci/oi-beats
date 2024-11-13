@@ -6,11 +6,11 @@
 
 ## 例题 #1 区间回文串
 
-### 题目描述
+题目描述
 
 给你一个字符串s由小写字母组成，有q组询问，每组询问给你两个数，l和r，问在字符串区间l到r的字串中，包含多少回文串。
 
-### 输入格式
+输入格式
 
 第1行，给出s，s的长度小于5000
 
@@ -18,13 +18,15 @@
 
 第2至2+q行 给出每组询问的l和r
 
-### 输出格式
+输出格式
 
 输出每组询问所问的数量。
 
-样例输入1
 
-复制
+
+
+
+样例输入1
 
 ```C++
 caaaba
@@ -36,9 +38,9 @@ caaaba
 4 5
 ```
 
-样例输出1
 
-复制
+
+样例输出1
 
 ```C++
 1
@@ -47,6 +49,10 @@ caaaba
 4
 2
 ```
+
+---
+
+
 
 ```C++
 /*                                                                                
@@ -176,35 +182,159 @@ signed main() {
 }
 ```
 
-
-
 ## 例题 #2 括号构造
 
-#### 题目描述
-
 给出合法序列的定义:
-
 1.空序列是合法序列。
-
 2.如果S是合法序列,那(S)和[S]也是合法序列。
-
 3.如果A和B是合法序列，那么AB也是合法序列。
-
 例如,下面的字符串都是合法序列：
-
 (),[],(()),([]),()[],()[()]
-
 这几个则不是合法序列：
-
 (,[,],)(,([))
-
 现在，给出一些由"(",")","[","]"构成的序列，请添加尽量少的括号，得到一个合法序列
 
+---
 
+
+
+```C++
+/*
+                      Keyblinds Guide
+                                ###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt+la/ra : move mouse to pre/nxt pos'
+
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+
+// #define innt int
+// #define inr int
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read() {
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9') {
+        if (ch == '-')
+            ff = -1;
+        ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9') xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+    if (out < 0)
+        putchar('-'), out = -out;
+    if (out > 9)
+        write(out / 10);
+    putchar(out % 10 + '0');
+}
+
+#define ell dbg('\n')
+const char el = '\n';
+const bool enable_dbg = 1;
+template <typename T, typename... Args>
+void dbg(T s, Args... args) {
+    if constexpr (enable_dbg) {
+        cerr << s;
+        if (1)
+            cerr << ' ';
+        if constexpr (sizeof...(Args))
+            dbg(args...);
+    }
+}
+
+#define zerol = 1
+#ifdef zerol
+#define cdbg(x...)            \
+    do {                      \
+        cerr << #x << " -> "; \
+        err(x);               \
+    } while (0)
+void err() { cerr << endl; }
+template <template <typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) {
+    for (auto v : a) cerr << v << ' ';
+    err(x...);
+}
+template <typename T, typename... A>
+void err(T a, A... x) {
+    cerr << a << ' ';
+    err(x...);
+}
+#else
+#define dbg(...)
+#endif
+
+const int N = 3e2 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+string s, f[N][N];
+
+void solve() {
+    cin >> s;
+    int n = s.size();
+    s = " " + s;
+    for (int i = 1; i <= n; i++) {
+        if ((s[i] == '(') || s[i] == ')')
+            f[i][i] = "()";
+        else
+            f[i][i] = "[]";  //缺省匹配
+    }
+
+    for (int l = 2; l <= n; l++) {
+        for (int j = 1; j + l - 1 <= n; j++) {
+            int r = l + j - 1;
+            if (s[j] == '(' && s[r] == ')' || s[j] == '[' && s[r] == ']')
+                f[j][r] = s[j] + f[j + 1][r - 1] + s[r];
+            for (int k = j; k < r; k++) {
+                string t = f[j][k] + f[k + 1][r];
+                if ((f[j][r] == "") || t.size() < f[j][r].size())
+                    f[j][r] = t;
+            }
+        }
+    }
+
+    cout << f[1][n];
+}
+
+signed main() {
+    // freopen(".in","r",stdin);
+    // freopen(".in","w",stdout);
+
+    int T = 1;
+    while (T--) {
+        solve();
+    }
+    return 0;
+}
+```
 
 ## 例题 #3 俄罗斯套娃
 
-#### 题目描述
+题目描述
 
 是一些从外到里大小递减的传统的俄罗斯木头玩偶组成的。当你打开一个俄罗斯套娃时，里面就会露出一个同样的俄罗斯套娃，再打开，就会再露出一个，不断重复。
 
@@ -222,15 +352,13 @@ signed main() {
 
 求将n个玩偶重新拼成一些完好的俄罗斯套娃的最小代价。
 
-### 输入格式
+输入格式
 
 第一行一个数n，第二行包含n个数，依次表示每个玩偶的大小。
 
 如果答案存在，输出一个数表示将n个玩偶重新拼成一些完好的俄罗斯套娃的最小代价。否则输出“Impossible”
 
 样例输入1
-
-复制
 
 ```C++
 7
@@ -239,15 +367,11 @@ signed main() {
 
 样例输出1
 
-复制
-
 ```C++
 Impossible
 ```
 
 样例输入2
-
-复制
 
 ```C++
 7
@@ -256,13 +380,11 @@ Impossible
 
 样例输出2
 
-复制
-
 ```C++
 7
 ```
 
-### 数据限制
+数据限制
 
 1<=n<=500 , 1<=玩偶大小<=500
 
@@ -764,6 +886,127 @@ void solve(){
 signed main() {
     // freopen(".in","r",stdin);
     // freopen(".in","w",stdout);
+
+    int T=1;
+    while(T--){
+    	solve();
+    }
+    return 0;
+}
+```
+
+## 二维区间DP
+
+### 例题 #1 切蛋糕 Cake slicing
+
+有一个n行m列(1<=n,m<=20)的网络蛋糕上有k个樱桃。每次可以用一刀沿着网络线把蛋糕切成两块，并且只能够直切不能拐弯。要求最后每一块蛋糕上恰好有一个樱桃，且切割线总长度最小。
+
+输入输出格式
+
+输入格式:每次输入有若干组数据。每组数据第一行有三个正整数n m k(行，列，樱桃个数)，之后的k行每行两个正整数(樱桃的坐标)
+
+输出格式:输出有若干行，对应每组数据。每行输出两个正整数(id,最小的切割长度)
+
+---
+
+二维区间dp，通常的合并方式（转移方式）是将一个大矩形分割为两个小矩形来转移。状态我们需要表示为当前负责的区间（矩形）
+
+算法实现我们通常用记忆化搜索（dfs）
+
+```C++
+/*  Erica N  */
+#include <bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define ull unsigned long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+#define itn int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;char ch = getchar();
+    while (ch < '0' || ch > '9') {if (ch == '-')ff = -1; ch = getchar();}
+    while (ch >= '0' && ch <= '9')xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() { cerr << endl; }
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) { for (auto v: a) cerr << v << ' '; err(x...); }
+template<typename T, typename... A>
+void err(T a, A... x) { cerr << a << ' '; err(x...); }
+
+
+const int N = 3e1 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+int x[N];
+int y[N];
+int f[N][N][N][N];
+int p[N][N];
+
+inline int check(int x,int y,int a,int b){
+    return p[a][b]-p[a][y-1]-p[x-1][b]+p[x-1][y-1];
+}
+
+int dfs(int x,int y,int a,int b){
+    if(INF>f[x][y][a][b])return f[x][y][a][b];
+    if(check(x,y,a,b)==1)return f[x][y][a][b]=0;
+
+    for(int i=x;i<a;i++){
+        if(check(x,y,i,b)>=1&&check(i+1,y,a,b)>=1){
+            f[x][y][a][b]=min(f[x][y][a][b],dfs(x,y,i,b)+dfs(i+1,y,a,b)+b-y+1);
+        }
+    }
+
+    
+    for(int i=y;i<b;i++){
+        if(check(x,y,a,i)>=1&&check(x,i+1,a,b)>=1){
+            f[x][y][a][b]=min(f[x][y][a][b],dfs(x,y,a,i)+dfs(x,i+1,a,b)+a-x+1);
+        }
+    }
+
+    return f[x][y][a][b];
+}
+
+void solve(){
+    int n,m,K;
+    int T=0;
+    while(cin>>n>>m>>K){
+        T++;
+        printf("Case %lld: ",T);
+        memset(p,0,sizeof p);
+        for(int i=1;i<=n;i++){
+            int x=rd,y=rd;
+            p[x][y]=1;
+        }
+
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                p[i][j]+=p[i-1][j]+p[i][j-1]-p[i-1][j-1];
+            }
+        }
+
+        memset(f,0x3f3f,sizeof f);
+
+        cout<<dfs(1,1,n,m)<<endl;
+    }
+
+
+
+}
+
+signed main() {
+    // freopen(".in","r",stdin);
+    // freopen(".out","w",stdout);
 
     int T=1;
     while(T--){

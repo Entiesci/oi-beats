@@ -15,8 +15,6 @@ $ 1 \leq n \leq 10^5$，$1 \leq a_i, b_i, c_i \le k \leq 2 \times 10^5 $。
 
 ## CDQ分治
 
-[https://oi-wiki.org/misc/cdq-divide/](https://oi-wiki.org/misc/cdq-divide/)
-
 我们先从二维偏序来引入。
 
 ## **二维偏序**

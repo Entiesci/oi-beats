@@ -3,6 +3,10 @@
 
 # 树上dsu（树上启发式合并）
 
+## 并列页面
+
+[启发式合并](https://flowus.cn/11a9811c-b987-4433-a564-05965d98b2e9)中也有大量例题讲解。
+
 ## 定义
 
 树上DSU（Disjoint Set Union）是一种数据结构，它是在并查集（DSU）的基础上，结合了树的结构特点而形成的一种高级数据结构。它主要用于处理一些与树结构相关的动态连通性问题，例如网络流中的最小割、最大流问题，以及处理一些图论中的动态问题。
@@ -46,6 +50,251 @@
     1. `u k`：询问在以 $u$ 为根的子树中，出现次数 $\ge k$ 的颜色有多少种。
 
 - $2\le n\le 10^5$，$1\le m\le 10^5$，$1\le c_i,k\le 10^5$。
+
+---
+
+```C++
+
+
+/*
+                      Keyblinds Guide
+     				###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt+la/ra : move mouse to pre/nxt pos'
+
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define pb push_back
+#define mp make_pair
+//#define int long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+#define ull unsigned long long
+
+#define itn int
+// #define inr int
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9') {
+		if (ch == '-')
+			ff = -1;
+		ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+	if (out < 0)
+		putchar('-'), out = -out;
+	if (out > 9)
+		write(out / 10);
+	putchar(out % 10 + '0');
+}
+
+//#define ell dbg('\n')
+//const char el='\n';
+//const bool enable_dbg = 1;
+//template <typename T,typename... Args>
+//void dbg(T s,Args... args) {
+//	if constexpr (enable_dbg){
+//    if(1)cerr<<' ';
+//    cerr << s;
+//		if constexpr (sizeof...(Args))
+//			dbg(args...);
+//	}
+//}
+
+#define zerol = 1
+#ifdef zerol
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() { cerr << endl; }
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) { for (auto v: a) cerr << v << ' '; err(x...); }
+template<typename T, typename... A>
+void err(T a, A... x) { cerr << a << ' '; err(x...); }
+#else
+#define dbg(...)
+#endif
+
+
+const int N = 5e5 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+struct _query{
+	int c,id;
+};
+
+vector<_query> q[N];
+vector<int> e[N];
+
+void add(int x,int y){
+	e[x].pb(y);
+	e[y].pb(x);
+}
+
+
+int dfn[N],_dfn[N],rdfn[N],sz[N],son[N];
+int tim;
+int cnt[N];
+int c[N];
+int cntq[N];
+int ans[N];
+
+
+
+namespace SGT{
+	int t[N<<2];
+	
+	void pushup(int x){
+		t[x]=t[x<<1]+t[x<<1|1];
+	}
+	void change(int x,int l,int r,int p,int v){
+		if(p==0)return ;//!
+		if(l==r){
+			t[x]+=v;
+			return ;
+		}
+		int mid=l+r>>1;
+		if(p<=mid)change(x<<1,l,mid,p,v);
+		else change(x<<1|1,mid+1,r,p,v);
+		pushup(x);
+	}
+	
+	
+	int query(int x,int l,int r,int pl,int pr){
+		if(pl<=l&&pr>=r)return t[x];
+		int mid=l+r>>1;
+		int res=0;
+		if(pl<=mid)res+=query(x<<1,l,mid,pl,pr);
+		if(pr>mid)res+=query(x<<1|1,mid+1,r,pl,pr);
+		return res;
+	}
+}using namespace SGT;
+
+void dfs(int x,int fa){
+	sz[x]=1;
+	dfn[x]=++tim;
+	
+	_dfn[tim]=x;
+	for(auto v:e[x]){
+		if(v==fa)continue;
+		dfs(v,x);
+		if(!son[x]||sz[son[x]]<sz[v])son[x]=v;
+		sz[x]+=sz[v];
+	}
+	
+	
+	rdfn[x]=tim;
+}
+
+void addval(itn x){
+	
+	change(1,1,100000,cnt[c[x]],-1);
+	cnt[c[x]]++;
+	change(1,1,100000,cnt[c[x]],1);
+}
+
+void delval(int x){
+	change(1,1,100000,cnt[c[x]],-1);
+	cnt[c[x]]--;
+	change(1,1,100000,cnt[c[x]],1);
+}
+
+void dfs2(int x,int fa,int save){
+	
+	for(auto v:e[x]){
+		if(v==fa)continue;
+		if(v==son[x])continue;
+		
+		dfs2(v,x,0);
+	}
+//	memset(cnt,0,sizeof cnt);
+	if(son[x])
+		dfs2(son[x],x,1);
+		
+	for(auto v:e[x]){
+		if(v==fa||v==son[x])continue;
+		for(int i=dfn[v];i<=rdfn[v];i++){
+			addval(_dfn[i]);
+		}
+	}
+	
+	addval(x);//!!!
+	
+	for(auto qq:q[x]){
+//		cdbg(qq.c);
+		ans[qq.id]=query(1,1,100000,qq.c,100000);
+	}
+	
+	if(!save){
+		
+		for(int i=dfn[x];i<=rdfn[x];i++){//!!
+			delval(_dfn[i]);
+		}
+		
+	}
+	
+	
+}
+
+
+void solve(){
+	int n=rd,m=rd;
+	for(int i=1;i<=n;i++){
+		c[i]=rd;
+	}
+	for(int i=1;i<n;i++){
+		add(rd,rd);
+	}
+	
+	for(int i=1;i<=m;i++){
+		int u=rd;
+		int c=rd;
+		q[u].pb({c,i});
+	}
+	
+	
+	dfs(1,0);
+	dfs2(1,0,0);
+	
+	for(int i=1;i<=m;i++){
+		cout<<ans[i]<<endl;
+	}
+	
+}
+
+signed main() {
+    // freopen(".in","r",stdin);
+    // freopen(".in","w",stdout);
+
+    int T=1;
+    while(T--){
+    	
+    	solve();
+    }
+    return 0;
+}
+```
 
 ## 例题 #2
 
