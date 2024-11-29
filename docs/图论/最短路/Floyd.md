@@ -131,7 +131,7 @@ signed main(){
 }
 ```
 
-## k路floyd矩阵乘法优化
+## 【floyd本质】k路floyd矩阵乘法优化
 
 给定一张 $T$ 条边的无向连通图，求从 $S$ 到 $E$ 经过 $N$ 条边的最短路长度。
 
@@ -357,6 +357,149 @@ signed main() {
     	solve();
     }
     return 0;
+}
+```
+
+## 【floyd本质】顺序加点最短路 灾后重建
+
+给出 B 地区的村庄数 $N$，村庄编号从 $0$ 到 $N-1$，和所有 $M$ 条公路的长度，公路是双向的。并给出第 $i$ 个村庄重建完成的时间 $t_i$，你可以认为是同时开始重建并在第 $t_i$ 天重建完成，并且在当天即可通车。若 $t_i$ 为 $0$ 则说明地震未对此地区造成损坏，一开始就可以通车。之后有 $Q$ 个询问 $(x,y,t)$，对于每个询问你要回答在第 $t$ 天，从村庄 $x$ 到村庄 $y$ 的最短路径长度为多少。如果无法找到从 $x$ 村庄到 $y$ 村庄的路径，经过若干个已重建完成的村庄，或者村庄 $x$ 或村庄 $y$ 在第 $t$ 天仍未重建完成，则需要输出 $-1$。
+
+输入格式
+
+第一行包含两个正整数 $N,M$，表示了村庄的数目与公路的数量。
+
+第二行包含 $N$ 个非负整数 $t_0,t_1,\cdots,t_{N-1}$，表示了每个村庄重建完成的时间，数据保证了 $t_0 \le t_1 \le \cdots \le t_{N-1}$。
+
+接下来 $M$ 行，每行 $3$ 个非负整数 $i,j,w$，$w$ 不超过 $10000$，表示了有一条连接村庄 $i$ 与村庄 $j$ 的道路，长度为 $w$，保证 $i\neq j$，且对于任意一对村庄只会存在一条道路。
+
+接下来一行也就是 $M+3$ 行包含一个正整数 $Q$，表示 $Q$ 个询问。
+
+接下来 $Q$ 行，每行 $3$ 个非负整数 $x,y,t$，询问在第 $t$ 天，从村庄 $x$ 到村庄 $y$ 的最短路径长度为多少，数据保证了 $t$ 是不下降的。
+
+输出格式
+
+共 $Q$ 行，对每一个询问 $(x,y,t)$ 输出对应的答案，即在第 $t$ 天，从村庄 $x$ 到村庄 $y$ 的最短路径长度为多少。如果在第 $t$ 天无法找到从 $x$ 村庄到 $y$ 村庄的路径，经过若干个已重建完成的村庄，或者村庄 $x$ 或村庄 $y$ 在第 $t$ 天仍未修复完成，则输出 $-1$。
+
+- 对于 $100\%$ 的数据，有 $1\le N\le 200$，$0\le M\le \dfrac{N\times(N-1)}{2}$，$1\le Q\le 50000$，所有输入数据涉及整数均不超过 $10^5$。
+
+---
+
+考虑将点按修复顺序重新标号，然后每次floyd时仅将两次询问中间修复好的点作为中转点k来松弛即可。
+
+```C++
+// Problem: P1119 灾后重建
+// Contest: Luogu
+// URL: https://www.luogu.com.cn/problem/P1119
+// Memory Limit: 125 MB
+// Time Limit: 1000 ms
+// Challenger: Erica N
+// ----
+// 
+#include<bits/stdc++.h>
+
+using namespace std;
+#define rd read()
+#define ull unsigned long long
+#define int long long 
+#define pb push_back
+#define itn int
+#define ps second 
+#define pf first
+
+
+#define rd read()
+int read(){
+  int xx = 0, ff = 1;char ch = getchar();
+  while (ch < '0' || ch > '9'){
+    if (ch == '-')ff = -1;
+    ch = getchar();
+  }
+  while (ch >= '0' && ch <= '9')xx = xx * 10 + (ch - '0'), ch = getchar();
+  return xx * ff;
+}
+#define zerol = 1
+#ifdef zerol
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() {cerr << endl;}
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) {
+	for (auto v: a) cerr << v << ' ';err(x...);
+}
+template<typename T, typename... A>
+void err(T a, A... x) {
+	cerr << a << ' ';err(x...);
+}
+#else
+#define dbg(...)
+#endif
+const int N=2e3+5;
+const ull P=137;
+const int INF=1e18+7;
+/*
+
+策略
+
+
+*/	
+
+int d[N][N];
+pair<int,int> p[N];
+int id[N];
+
+signed main(){
+	int n=rd;
+	int m=rd;
+	for(int i=1;i<=n;i++){
+		p[i]={rd,i};
+	}
+	sort(p+1,p+n+1);
+	
+	
+	for(int i=1;i<=n;i++){
+		id[p[i].ps]=i;
+	}
+	
+	
+	memset(d,0x3f3f,sizeof d);
+	
+	for(int i=1;i<=m;i++){
+		int a=id[rd+1],b=id[rd+1],c=rd;
+		d[a][b]=min(d[a][b],c);
+		d[b][a]=min(d[b][a],c);//!!
+		// cdbg(a,b,c);
+	}
+	
+	for(int i=1;i<=n;i++){
+		d[i][i]=0;
+	}
+	
+	
+	
+	int q=rd;
+	int lst=0;
+	int cur=0;
+	while(q--){
+		int a=rd,b=rd,t=rd;
+		while(cur<n&&p[cur+1].pf<=t)cur++;
+		for(int k=lst+1;k<=cur;k++){
+			for(int i=1;i<=n;i++){
+				for(int j=1;j<=n;j++){
+					d[i][j]=min(d[i][j],d[i][k]+d[k][j]);
+				}
+			}
+		}
+		
+		// cdbg(lst,cur);
+		
+		lst=cur;
+		
+		a=id[a+1],b=id[b+1];
+		
+		// cdbg(d[a][b]);
+		
+		if(p[a].pf>t||p[b].pf>t||d[a][b]>=INF)puts("-1");
+		else cout<<d[a][b]<<endl;
+	}
 }
 ```
 

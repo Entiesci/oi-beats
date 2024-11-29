@@ -140,7 +140,134 @@ signed main() {
 }
 ```
 
-## 例题 #2 DAG定向计数 [CEOI2019] Amusement Park
+## 例题 #2 图上计数状态压缩 A Simple Task
+
+求无向图中的简单环个数，保证不存在重边和自环。
+
+简单环：除起点外，其余的点都只出现一次的回路。
+
+---
+
+```C++
+/*                                                                                
+                      Keyblinds Guide
+     				###################
+      @Ntsc 2024
+
+      - Ctrl+Alt+G then P : Enter luogu problem details
+      - Ctrl+Alt+B : Run all cases in CPH
+      - ctrl+D : choose this and dump to the next
+      - ctrl+Shift+L : choose all like this
+      - ctrl+K then ctrl+W: close all
+      - Alt+la/ra : move mouse to pre/nxt pos'
+	  
+*/
+#include <bits/stdc++.h>
+#include <queue>
+using namespace std;
+
+#define rep(i, l, r) for (int i = l, END##i = r; i <= END##i; ++i)
+#define per(i, r, l) for (int i = r, END##i = l; i >= END##i; --i)
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+
+// #define innt int
+// #define inr int
+// #define mian main
+// #define iont int
+
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;
+    char ch = getchar();
+    while (ch < '0' || ch > '9') {
+		if (ch == '-')
+			ff = -1;
+		ch = getchar();
+    }
+    while (ch >= '0' && ch <= '9')
+      xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+void write(int out) {
+	if (out < 0)
+		putchar('-'), out = -out;
+	if (out > 9)
+		write(out / 10);
+	putchar(out % 10 + '0');
+}
+
+
+const int N = 2e1 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+// vector<int> e[N];
+
+int r[N][N];
+
+void add(int a,int b){
+    // e[a].push_back(b);
+    // e[b].push_back(a);
+    //有时候哦并不需要vector村的
+    a--,b--;
+    r[a][b]=r[b][a]=1;
+}
+
+inline int lowbit(int x){
+    return x&-x;
+}
+
+
+int f[1<<20][N];
+int ans;
+
+void solve(){
+    int n=rd,m=rd;
+    for(int i=1;i<=m;i++){
+        int a=rd,b=rd;
+        add(a,b);
+    }
+
+    for(int i=0;i<n;i++){
+        f[1<<i][i]=1;
+    }
+
+    for(int i=1;i<(1<<n);i++){
+        for(int j=0;j<n;j++){
+            if(!f[i][j])continue;//一定要排除非法路径
+            for(int k=0;k<n;k++){//枚举j的出点
+                if(!r[j][k])continue;
+                if((1<<k)<lowbit(i))continue;//我们定义i的lowbit为路径起点，起点只能枚举，在dp过程中不可以通过访问新点的方法更改起点，为了去重
+                if((1<<k)&i){//之前访问过，即在i集合里
+                    if((1<<k)==lowbit(i))ans+=f[i][j];
+                }else{
+                    f[i|1<<k][k]+=f[i][j];
+                }
+            }
+        }
+    }
+
+    cout<<(ans-m)/2<<endl;
+}
+
+signed main() {
+    int T=1;
+    while(T--){
+    	solve();
+    }
+    return 0;
+}
+```
+
+
+
+## 练习 #1 DAG定向计数 [CEOI2019] Amusement Park
 
 题目描述
 
@@ -648,7 +775,7 @@ signed main() {
 
 ## 子集dp（sos dp）
 
-通常用来解决丢每个i求$f_i=\sum_ {j\in i}a_j$的计数问题，可以在$O(n \log m)$内解决。
+通常用来解决对每个i求$f_i=\sum_ {j\in i}a_j$的计数问题，可以在$O(n \log m)$内解决。
 
 ### 例题 #1 [COCI2011-2012#6] KOŠARE
 
@@ -676,7 +803,7 @@ signed main() {
 
 先定义f_i为以i为子集的箱子个数，g_i为有多少种箱子的组合，使得i是它们的并的子集。
 
-那么可以得到g_i=2^{f_i}-1，即我们在f_i这些箱子里面任意选≥1个即可满足要求。
+那么可以得到$g_i=2^{f_i}-1$，即我们在f_i这些箱子里面任意选≥1个即可满足要求。
 
 那么怎么样求f_i呢？我们定义a_i为集合为i的箱子个数，现在我们要求
 
@@ -873,4 +1000,26 @@ signed main() {
     return 0;
 }
 ```
+
+### 练习 #1 Jzzhu and Numbers
+
+给出一个长度为 $n$ 的序列 $a_1,a_2, \cdots, a_n$。求构造出一个序列 $i_1 < i_2 < ... < i_k(1\le{k}\le{n})$ 使得 $a_{i_1}\&a_{i_2}\&\cdots \&a_{i_k}=0$（其中 $\&$ 表示按位与）的方案数模 $10^9+7$ 。
+
+也就是从 $\{a_i\}$ 里面选出一个非空子集使这些数按位与起来为 $0$。
+
+1<=n<=10^6
+
+---
+
+很经典的子集dp了。询问：问有多少中S的子集A选取方法，使得A的交集为空。很明显每个数a_i又可以看作一个集合，所以发现是子集的子集问题，我们考虑sos dp。
+
+设 f_i为以i为子集的a的个数，g_i为有多少个子集A使得i是A中a的并集的子集。
+
+有g_i=2^{f_i}-1。
+
+于是现在要求f_i。定义cnt_i为a=i的a的个数。那么$f_i=\sum_{i\in j}cnt_j$。和例题 #1 一样的去做即可。
+
+
+
+
 

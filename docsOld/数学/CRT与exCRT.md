@@ -387,7 +387,7 @@ int main(){
 	for(int i=1;i<=n;i++){
 		long long mm,aa;
 		cin>>mm>>aa;
-		m[i]=mm,a[i]=aa;
+		m[i]=mm,a[i]=aa;// x==a %m
 	}
 	cout<<(long long)excrt(m,a);
 	return 0;

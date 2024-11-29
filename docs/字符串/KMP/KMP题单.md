@@ -366,12 +366,13 @@ signed main(){
 	
 	for(int i=1;i<=n;i++){
 		int len=i-nxt[i];
-		int d=i/len;
+		int d=i/len;//周期
 		if(i%len){
-			if(d/K-d%K>0)cout<<1;
+			if(d/K>d%K)cout<<1; //解释：要分成K分，每一份为d/K，只有最后多出来的不足d/K，和i%len的部分接起来才不会超出新的一份的长度，才合法。
+          //注意到i%len的部分的部分是不足1的。
 			else cout<<0;
 		}else{
-			if(d/K-d%K>=0)cout<<1;
+			if(d/K-d%K>=0)cout<<1; 
 			else cout<<0;
 		}
 		

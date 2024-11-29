@@ -1,6 +1,6 @@
 # 广搜
 
-
+如果是以距离（即走过的格子数为距离，或者是每走一步距离就+1）为权，可以直接使用queue，但是如果每走一步的代价不同，则应该使用优先队列。
 
 ## 例题 #1 走迷宫
 
@@ -471,7 +471,7 @@ signed main(){
 
 ## 01bfs
 
-![image.png](广搜/image.png)
+![image.png](广搜+bfs/image.png)
 
 ## 双向bfs
 
@@ -717,6 +717,97 @@ signed main() {
 
     return 0;
 }
+
+```
+
+## 练习
+
+### #1 最短路建模+01边权最短路 Small Multiple
+
+对于任意非负整数x和m(2≤m)，定义fm(x)为x在m进制下的各位数字之和。给定两个整数k,m(2≤m≤10)，你需要计算在所有k的倍数的正数x中,fm(x)的最小值。
+
+输入第一行包含两个整数k,m(2≤m≤10)。
+
+在一行中输出一个整数，表示答案。
+
+对于30%的数据，1≤k≤100
+
+对于100%的数据，1≤k≤10^6
+
+---
+
+```C++
+/*  Erica N  */
+#include <bits/stdc++.h>
+using namespace std;
+#define pb push_back
+#define mp make_pair
+#define int long long
+#define ull unsigned long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+#define itn int
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;char ch = getchar();
+    while (ch < '0' || ch > '9') {if (ch == '-')ff = -1; ch = getchar();}
+    while (ch >= '0' && ch <= '9')xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+// void write(int out) {
+// 	if (out < 0)
+// 		putchar('-'), out = -out;
+// 	if (out > 9)
+// 		write(out / 10);
+// 	putchar(out % 10 + '0');
+// }
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() { cerr << endl; }
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) { for (auto v: a) cerr << v << ' '; err(x...); }
+template<typename T, typename... A>
+void err(T a, A... x) { cerr << a << ' '; err(x...); }
+
+
+const int N = 3e6 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+
+list<pii> q;
+bitset<N> vis;
+int n,m;
+
+void bfs(){
+    q.pb({1,1});
+    vis[1]=1;
+    while(q.size()){
+        int x=q.front().pf,v=q.front().ps; //余数，值
+        q.pop_front();
+        if(!x){
+            cout<<v<<endl;
+            exit(0);
+        }
+        if(!vis[m*x%n]){
+            q.push_front({m*x%n,v});
+            vis[m*x%n]=1;
+        }
+        if(!vis[(x+1)%n])q.push_back({(x+1)%n,v+1});
+    }
+}
+
+signed main() {
+    // freopen(".in","r",stdin);
+    // freopen(".out","w",stdout);
+
+
+     n=rd,m=10;
+    bfs();
+
+}
+
 
 ```
 

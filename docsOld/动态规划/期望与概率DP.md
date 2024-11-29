@@ -124,6 +124,137 @@ signed main() {
 }
 ```
 
+### **例题 #2 地雷爆炸**
+
+**【题目描述】**
+
+机(too)智(young)的小 D 发明了一种子母式地雷，由于分裂引信 没有研制成功，每颗地雷会在一小时后自爆，并且有pi的几率分裂成 i 颗小地雷，分裂的小地雷同样具有分裂和自爆的性质。
+
+小 D 突然 YY 出一道题，你需要回答在地雷埋下 m 个小时内（包 括第 m 个小时）全部爆炸的几率。
+
+**【输入格式】**
+
+输入数据第 1 行包含 2 个正整数 n 和 m，接下来一行 n 个实数 pi，
+
+表示分裂出 i 个小地雷的几率，保证 pi≠0
+
+**【输出格式】**
+
+一行仅一个数，m 个小时内（包括第 m 个小时）地雷全部爆炸的几率，保留 4 位小数。
+
+**【样例输入】**
+
+6 3
+
+0.00447010 0.64182590 0.34123410 0.01028470 0.00118920 0.00099600
+
+**【样例输出】**
+
+0.0092
+
+**【数据规模】**
+
+对于 30%的数据，1<=m,n<=6
+
+对于 100%的数据，1<=m<n<=300
+
+**【时空限制】**
+
+1s，128MB
+
+---
+
+期望dp难在定义和转移。
+
+定义f_{i,j}为在第i天时，剩余j个炸弹，且这些炸弹可以在要求时间内全部爆炸的概率。那么有f_{m,0}=1，要求f_{0,1}。
+
+考虑到$f_{i,j}=f_{i,j-1}f_{i,1},f_{i,1}=\prod p_jf_{i+1,j}$，转移即可。
+
+```C++
+// Problem: A. 地雷爆炸
+// Contest: undefined - NOIP2024训练赛 02
+// URL: http://noi.ac/contest/1154/problem/2053
+// Memory Limit: 1024 MB
+// Time Limit: 1000 ms
+// Challenger: Erica N
+// ----
+// 
+#include<bits/stdc++.h>
+
+using namespace std;
+#define rd read()
+#define ull unsigned long long
+#define int long long 
+#define pb push_back
+#define itn int
+#define ps second 
+#define pf first
+
+
+#define rd read()
+int read(){
+  int xx = 0, ff = 1;char ch = getchar();
+  while (ch < '0' || ch > '9'){
+    if (ch == '-')ff = -1;
+    ch = getchar();
+  }
+  while (ch >= '0' && ch <= '9')xx = xx * 10 + (ch - '0'), ch = getchar();
+  return xx * ff;
+}
+#define zerol = 1
+#ifdef zerol
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() {cerr << endl;}
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) {
+	for (auto v: a) cerr << v << ' ';err(x...);
+}
+template<typename T, typename... A>
+void err(T a, A... x) {
+	cerr << a << ' ';err(x...);
+}
+#else
+#define dbg(...)
+#endif
+const int N=3e2+5;
+const ull P=137;
+const int INF=1e18+7;
+/*
+
+策略
+
+
+*/	
+
+
+double p[N],sp;
+double f[N][N];
+signed main(){
+	int n=rd,m=rd;
+	for(int i=0;i<n;i++){
+		cin>>p[i];
+	}
+	
+	
+	f[m][0]=1;
+	for(int i=m-1;~i;i--){
+		f[i][0]=1;
+		for(int j=0;j<=n;j++){
+			f[i][1]+=f[i+1][j]*p[j];
+		}
+		
+		for(int j=2;j<=n;j++){
+			f[i][j]=f[i][j-1]*f[i][1];
+		}
+	}
+	
+	
+	printf("%.4lf",f[0][1]);
+	
+	
+}
+```
+
 ## 期望DP
 
 ### 例题 #1 Assimilation IV
@@ -317,6 +448,8 @@ signed main() {
 3 2 3 6
 */
 ```
+
+## 题单
 
 [期望DP练习](%E6%9C%9F%E6%9C%9B%E4%B8%8E%E6%A6%82%E7%8E%87DP/%E6%9C%9F%E6%9C%9BDP%E7%BB%83%E4%B9%A0%2053618300-f38a-4ae9-b6fb-b1eb5cdc00d7.md)
 

@@ -32,7 +32,7 @@ Trie树，是一种树形结构，是一种哈希树的变种。典型应用是�
 (5) 在某个结点处，关键词的所有字母已被取出，则读取附在该结点上的信息，即完成查找。
 其他操作类似处理
 
-## 思路
+## 实现
 
 ![image.png](Trie树/image.png)
 
@@ -568,6 +568,160 @@ signed main() {
 ## 可持久化01trie
 
 参考[课程 | 树上问题](https://flowus.cn/ef4b3baf-5965-403c-b945-941120260c4a)[TJOI2018] 异或
+
+## Trie上dfs [AHOI2005] 病毒检测
+
+每个 RNA 片段都是由 `A`、`C`、`T`、`G` 组成的序列。科学家们也总结出了 Samuel 星球上的“病毒模版片段”。一个模版片段是由 `A`、`C`、`T`、`G` 的序列加上通配符 `*` 和 `?` 来表示。其中 `*` 的意思是可以匹配上 $0$ 个或任意多个字符，而 `?` 的意思是匹配上任意一个字母。
+
+如果一个 RNA 片段能够和“病毒模版片段”相匹配，那么这个 RNA 片段就是未知的病毒。
+
+例如，假设 “病毒模版片段”为 `A*G?C`。RNA 片段：`AGTC`，`AGTGTC` 都是未知的病毒，而 RNA 片段 `AGTGC` 则不是病毒。
+
+由于，机器人搜集的这些 RNA 片段中除去病毒的其他部分都具有非常高的研究价值。所以科学家们希望能够分辨出其中哪些 RNA 片段不是病毒，并将不是病毒的 RNA 片段运回宇宙空间站继续进行研究。
+
+输入格式
+
+共 $N+2$ 行输入。
+
+第一行有一个字符串，由 `A`、`C`、`T`、`G`、`*`、`?` 组成，表示“病毒模版片段”。“病毒模版片段”的长度不超过 $1000$。
+
+第二行有一个整数 $N$，表示机器人搜集到的 RNA 片段的数目。
+
+随后的 $N$ 行，每一行有一个字符串，由 `A`、`C`、`T`、`G` 组成，表示一个 RNA 片段。
+
+输出格式
+
+只有一行输出，为整数 $M$，即不是病毒的 RNA 片段的数目。
+
+对于所有数据，$0 < N < 500$。
+
+特别的：
+
+- 每个 RNA 片段的长度不超过 $500$；
+
+- “病毒模版片段”和 RNA 片段的长度都至少为 $1$。
+
+```C++
+/*  Erica N  */
+#include <bits/stdc++.h>
+using namespace std;
+#define pb push_back
+#define endl '\n'
+#define mp make_pair
+#define int long long
+#define ull unsigned long long
+#define pii pair<int, int>
+#define ps second
+#define pf first
+#define itn int
+#define rd read()
+int read(){
+    int xx = 0, ff = 1;char ch = getchar();
+    while (ch < '0' || ch > '9') {if (ch == '-')ff = -1; ch = getchar();}
+    while (ch >= '0' && ch <= '9')xx = xx * 10 + (ch - '0'), ch = getchar();
+    return xx * ff;
+}
+// void write(int out) {
+// 	if (out < 0)
+// 		putchar('-'), out = -out;
+// 	if (out > 9)
+// 		write(out / 10);
+// 	putchar(out % 10 + '0');
+// }
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() { cerr << endl; }
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) { for (auto v: a) cerr << v << ' '; err(x...); }
+template<typename T, typename... A>
+void err(T a, A... x) { cerr << a << ' '; err(x...); }
+
+
+const int N = 3e5 + 5;
+const int INF = 1e18;
+const int M = 1e7;
+const int MOD = 1e9 + 7;
+
+
+int ans;
+string s;
+
+inline int id(char c){
+    if(c=='A')return 0;
+    if(c=='C')return 1;
+    if(c=='G')return 2;
+    if(c=='T')return 3;
+    return 4;
+}
+
+
+bitset<505> vis[N];
+
+namespace Trie{
+    struct Node{
+        int s[5]={0};
+        int cnt;
+    }t[N];
+    int tot=1;
+
+    void insert(string s){
+        int x=1;
+        for(auto v:s){
+            // cdbg(x);
+            if(!t[x].s[id(v)])t[x].s[id(v)]=++tot;
+            x=t[x].s[id(v)];
+        }
+        t[x].cnt++;
+        
+    }
+
+    void dfs(itn x,int p){
+        if(p==s.size()){
+            ans+=t[x].cnt;
+            t[x].cnt=0;
+            return ;
+        }
+
+        if(vis[x][p])return ;
+        vis[x][p]=1;
+        for(int i=0;i<4;i++){
+            if(!t[x].s[i])continue;
+            if(id(s[p])==i||s[p]=='?')dfs(t[x].s[i],p+1);
+            else if(s[p]=='*'){
+                dfs(t[x].s[i],p);
+                dfs(t[x].s[i],p+1);
+            }
+        }
+
+        if(s[p]=='*')dfs(x,p+1);
+    }
+}using namespace Trie;
+
+signed main() {
+    // freopen(".in","r",stdin);
+    // freopen(".out","w",stdout);
+
+    cin>>s;
+    int n=rd;
+    // for(int i=1;i<N;i++){
+    //     memset(t[i].s,0,sizeof t[i].s);
+    // }
+    for(int i=1;i<=n;i++){
+        string t;
+        cin>>t;
+        insert(t);
+    }
+
+    // cdbg("OK");
+
+
+    dfs(1,0);
+
+    cout<<n-ans<<endl;
+    
+
+
+}
+```
 
 
 

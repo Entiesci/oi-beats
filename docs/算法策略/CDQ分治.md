@@ -661,6 +661,367 @@ signed main() {
 
 这就是CDQ的嵌套。对于处理4个关键字的偏序（四维偏序），我们就需要三层嵌套。对于高维偏序，我们也可以这样嵌套下去。
 
+## 数据结构维护偏序约束
+
+### 例题 #1 最近点查询
+
+![image.png](CDQ分治/image 3.png)
+
+当然我们可以选择cdq或者kdtree来解决这个问题。但是我们这里思考其它的方法。
+
+那么首先我们就可以想到拆分绝对值的方法，于是我们需要把所有的点分为4个象限。但是如果要同时维护4个象限的貌似不容易，于是我们先考虑维护左边两个象限。
+
+我们可以将点和询问按x排序，使得回答当前询问时已知点都在询问点的左侧。然后我们用线段树维护y，即可在上下两个象限各自求出答案了。
+
+![image.png](CDQ分治/image 4.png)
+
+右侧的两个象限反过来做一次即可。
+
+```C++
+// Problem: G. 最近点查询
+// Contest: LibreOJ - 20241116周赛
+// URL: http://www.nfls.com.cn:20035/contest/2115/problem/7
+// Memory Limit: 512 MB
+// Time Limit: 3000 ms
+// Challenger: Erica N
+// ----
+// 
+#include<bits/stdc++.h>
+
+using namespace std;
+#define rd read()
+#define ull unsigned long long
+#define int long long 
+#define pb push_back
+#define itn int
+#define ps second 
+#define pf first
+
+
+#define rd read()
+int read(){
+  int xx = 0, ff = 1;char ch = getchar();
+  while (ch < '0' || ch > '9'){
+    if (ch == '-')ff = -1;
+    ch = getchar();
+  }
+  while (ch >= '0' && ch <= '9')xx = xx * 10 + (ch - '0'), ch = getchar();
+  return xx * ff;
+}
+
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() {cerr << endl;}
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) {
+	for (auto v: a) cerr << v << ' ';err(x...);
+}
+template<typename T, typename... A>
+void err(T a, A... x) {
+	cerr << a << ' ';err(x...);
+}
+
+const int N=2e5+5;
+const ull P=137;
+const int INF=1e18+7;
+/*
+
+策略
+
+
+*/	
+
+
+int c[N],b[N],toc,tob;
+
+
+inline void mix(int &a,int b,int op){
+	if(a==-1)a=b;
+	else if(op)a=max(a,b);
+	else a=min(a,b);
+}
+
+namespace SGT{
+	struct Bag{
+		int d[2];
+	}tr[N<<2];
+	
+	void pushup(int x,int op){
+		if(op==1){
+			tr[x].d[0]=min(tr[x<<1].d[0],tr[x<<1|1].d[0]);
+			tr[x].d[1]=max(tr[x<<1].d[1],tr[x<<1|1].d[1]);
+			
+		}else{
+			tr[x].d[0]=max(tr[x<<1].d[0],tr[x<<1|1].d[0]);
+			tr[x].d[1]=min(tr[x<<1].d[1],tr[x<<1|1].d[1]);
+		}
+	}
+	int query(int x,int l,int r,int pl,int pr,int tp,int op){
+		if(pl<=l&&pr>=r){
+			return tr[x].d[tp]; 
+		}
+		int mid=l+r>>1;
+		int res=-1;
+		if(pl<=mid)mix(res,query(x<<1,l,mid,pl,pr,tp,op),op);
+		if(pr>mid) mix(res,query(x<<1|1,mid+1,r,pl,pr,tp,op),op);
+		return res;
+	}
+	void change(int x,int l,int r,int p,Bag v,int op){
+		if(l==r){
+			tr[x]=v;
+			return ;
+		}
+		int mid=l+r>>1;
+		if(p<=mid)change(x<<1,l,mid,p,v,op);
+		else change(x<<1|1,mid+1,r,p,v,op);
+		pushup(x,op);
+	}
+	
+	void init(int x,int l,int r){
+		if(l==r){
+			tr[x].d[0]=tr[x].d[1]=-1;
+			return ;
+		}
+		int mid=l+r>>1;
+		init(x<<1,l,mid);
+		init(x<<1|1,mid+1,r);
+		pushup(x,0);
+	}
+	
+	
+}using namespace SGT;
+
+int ans[N];
+
+struct Node{
+	int x,y;
+	int id;
+}t[N],q[N];
+bool cmp(Node a,Node b){
+	return a.x<b.x;
+}
+
+int find(int x){
+	return lower_bound(b+1,b+tob+1,x)-b;
+}
+
+
+int findd(int x){
+	return lower_bound(c+1,c+toc+1,x)-c;
+}
+signed main(){
+	int n=rd;
+	for(int i=1;i<=n;i++){
+		t[i]={rd,rd};
+		b[++tob]=t[i].x;
+		c[++toc]=t[i].y;
+	}
+	
+	int m=rd;
+	for(int i=1;i<=m;i++){
+		q[i]={rd,rd,i};
+		b[++tob]=q[i].x;
+		c[++toc]=q[i].y;
+	}
+	
+	
+	sort(b+1,b+tob+1);
+	sort(c+1,c+toc+1);
+	tob=unique(b+1,b+tob+1)-b-1;
+	toc=unique(c+1,c+toc+1)-c-1;
+	
+	for(int i=1;i<=n;i++){
+		t[i]={find(t[i].x),findd(t[i].y)};
+	}
+	for(int i=1;i<=m;i++){
+		q[i]={find(q[i].x),findd(q[i].y)};
+	}
+	
+	
+	
+	sort(t+1,t+n+1,cmp);
+	sort(q+1,q+n+1,cmp);
+	
+	init(1,1,toc);
+	int cur=1;
+	for(int i=1;i<=m;i++){
+		int x=q[i].x,y=q[i].y;
+		while(t[cur].x<=q[i].x&&cur<=n){
+			Bag a;
+			a.d[0]=t[cur].x+t[cur].y;
+			a.d[1]=-t[cur].x+t[cur].y;
+			change(1,1,toc,t[cur].y,a,0);//加点
+			cur++;
+		}
+		int res=min(x+y-query(1,1,toc,1,y,0,1),x-y+query(1,1,toc,y,toc,1,0));
+		ans[q[i].id]=min(ans[q[i].id],res);
+	}
+	
+	init(1,1,toc);
+	memset(ans,0x3f3f,sizeof ans);
+	cur=n;
+	for(int i=m;i;i--){
+		int x=q[i].x,y=q[i].y;
+		while(t[cur].x<=q[i].x&&cur){
+			
+			Bag a;
+			a.d[0]=t[cur].x+t[cur].y;
+			a.d[1]=-t[cur].x+t[cur].y;
+			change(1,1,toc,t[cur].y,a,1);//加点
+			cur++;
+		}
+		int res=min(-x+y-query(1,1,toc,1,y,1,0),query(1,1,toc,y,toc,0,1)-x-y);
+		ans[q[i].id]=min(ans[q[i].id],res);
+	}
+	
+	
+	for( int i=1;i<=m;i++){
+		cout<<ans[i]<<endl;
+	}
+}
+```
+
+```C++
+// Problem: G. 最近点查询
+// Contest: LibreOJ - 20241116周赛
+// URL: http://www.nfls.com.cn:20035/contest/2115/problem/7
+// Memory Limit: 512 MB
+// Time Limit: 3000 ms
+// Challenger: Erica N
+// ----
+// 
+#include<bits/stdc++.h>
+
+using namespace std;
+#define rd read()
+#define ull unsigned long long
+#define int long long 
+#define pb push_back
+#define itn int
+#define ps second 
+#define pf first
+
+
+#define rd read()
+int read(){
+  int xx = 0, ff = 1;char ch = getchar();
+  while (ch < '0' || ch > '9'){
+    if (ch == '-')ff = -1;
+    ch = getchar();
+  }
+  while (ch >= '0' && ch <= '9')xx = xx * 10 + (ch - '0'), ch = getchar();
+  return xx * ff;
+}
+
+#define cdbg(x...) do { cerr << #x << " -> "; err(x); } while (0)
+void err() {cerr << endl;}
+template<template<typename...> class T, typename t, typename... A>
+void err(T<t> a, A... x) {
+	for (auto v: a) cerr << v << ' ';err(x...);
+}
+template<typename T, typename... A>
+void err(T a, A... x) {
+	cerr << a << ' ';err(x...);
+}
+
+const int N=2e5+5;
+const ull P=137;
+const int INF=1e18+7;
+/*
+
+策略
+
+
+*/	
+
+
+
+struct Node{
+	int x,y,id;
+};
+vector<Node> t;
+
+int ans[N];
+
+
+namespace BIT{
+	int c[N];
+	void change(itn x,int v){
+		while(x<N){
+			c[x]=max(c[x],v);
+			x+=x&-x;
+		}
+	}
+	itn query(int x){
+		int res=-INF;
+		while(x){
+			res=max(res,c[x]);
+			x-=x&-x;
+		}
+		return res;
+	}
+	
+	void init(){
+		memset(c,-0x3f3f,sizeof c);
+	}
+	
+}using namespace BIT;
+
+
+
+bool cmp(Node a,Node b){
+	if(a.x==b.x)return a.id<b.id;
+	return a.x<b.x;
+}
+
+void solve(){
+	init();
+	vector<int> pos;
+	sort(t.begin(),t.end(),cmp);
+	for(auto [x,y,id]:t){
+		pos.pb(y);
+	}
+	
+	sort(pos.begin(),pos.end());
+	pos.erase(unique(pos.begin(),pos.end()),pos.end());
+	
+	for(auto [x,y,id]:t){
+		int cur=lower_bound(pos.begin(),pos.end(),y)-pos.begin()+1;
+		if(id){
+			ans[id]=min(ans[id],x+y-query(cur));
+		}else{
+			change(cur,x+y);
+		}
+	}
+	
+}
+
+signed main(){
+	int n=rd;
+	for(int i=1;i<=n;i++){
+		t.pb({rd,rd,0});
+	}
+	int m=rd;
+	for(int i=1;i<=m;i++){
+		t.pb({rd,rd,i});
+	}
+	memset(ans,0x3f3f,sizeof ans);
+	
+	solve();
+	for(auto &[x,y,id]:t)y=-y;
+	solve();
+	for(auto &[x,y,id]:t)x=-x;
+	solve();
+	for(auto &[x,y,id]:t)y=-y;
+	solve();
+	
+	
+	for(int i=1;i<=m;i++){
+		cout<<ans[i]<<endl;
+	}
+	
+}
+```
+
 ## 练习
 
 [www.luogu.com.cn](https://www.luogu.com.cn/problem/P2365)
@@ -673,9 +1034,9 @@ signed main() {
 
 利用偏序值域非常小而实现偏序条件多的情况，此时应该直接使用桶来记录答案，并且考虑如何快速地统计答案。
 
-![image.png](CDQ分治/image 3.png)
+![image.png](CDQ分治/image 5.png)
 
-![image.png](CDQ分治/image 4.png)
+![image.png](CDQ分治/image 6.png)
 
 更多：
 

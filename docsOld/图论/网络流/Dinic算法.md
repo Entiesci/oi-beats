@@ -125,7 +125,7 @@ int dfs(int u,int mf){//当前点u,(这条路径上)走到u时的剩余流量
 int dinic(){//累加答案 
 	int ans=0;
 	while(bfs()){//可以找到增光路 
-		memcpy(cur,h,sizeof h);//请思考! 
+		memcpy(cur,h,sizeof h);//还原
 		ans+=dfs(s,1e9);//还是那句话'//源点的流量上限为无穷大,即源点能为后面提供无限大的流量' 
 	}
 	return ans;

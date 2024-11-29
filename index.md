@@ -1,6 +1,6 @@
 # Welcome to OI-Beats
 
-Build by NtscYrx(Github).
+Build by Entiesci(Github).
 
 [Visit OI-Beats / 访问网站](https://ntsc-yrx.github.io/oi-beats/site/)
 
